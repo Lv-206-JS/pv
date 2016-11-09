@@ -1,0 +1,25 @@
+{
+  "name": "pv",
+  "version": "1.0.0",
+  "description": "plan&view",
+  "main": "app.js",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {
+    "bower": "^1.8.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lv-206-JS/pv.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lv-206-JS/pv/issues"
+  },
+  "homepage": "https://github.com/Lv-206-JS/pv#readme"
+}
