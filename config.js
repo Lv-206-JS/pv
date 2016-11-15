@@ -1,6 +1,6 @@
 module.exports = {
 
     'secret': 'ILoveSoftServe',
-    'database': 'mongodb://localhost/GranttChartSS'
+    'database': 'mongodb://localhost/GrunttChartSS'
 
 };
