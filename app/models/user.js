@@ -1,5 +1,5 @@
 var mongoose    = require('mongoose');
-mongoose.connect('mongodb://localhost/RestApi');
+/*mongoose.connect('mongodb://localhost/RestApi');*/
 
 var Schema = mongoose.Schema;
 
