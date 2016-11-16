@@ -1,0 +1,23 @@
+{
+  "name": "Stub Project",
+  "calender": {
+    "hoursPerWorkingDay": 6
+  },
+  "tasks": [
+    {
+      "id": "t1",
+      "dependencies": [
+        {
+          "taskId": "t2",
+          "type": "finish-to-start"
+        }
+      ]
+    },
+    {
+      "id": "t2",
+      "dependencies": []
+    }
+  ],
+  "milestones": [],
+  "attachments": []
+}
