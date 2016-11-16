@@ -33,8 +33,8 @@ app.get('/setup', function(req, res) {
 
     // create a sample user
     var nick = new User({
-        firstname: 'vitalii',
-        lastname:  'sikora',
+        firstname: 'username',
+        lastname:  'userlastname',
         email:     'email@email.com',
         password:  'password'
     });

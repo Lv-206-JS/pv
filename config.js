@@ -1,6 +1,6 @@
 module.exports = {
 
     'secret': 'ILoveSoftServe',
-    'database': 'mongodb://localhost/GrunttChartSS'
+    'database': 'mongodb://ganttcharts:softserve@ds055905.mlab.com:55905/ganttcharts'
 
 };
