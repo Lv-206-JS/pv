@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 // use morgan to log requests to the console
 app.use(morgan('dev'));
-
+app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
     res.send('Hello! The API is at http://localhost:' + port + '/api');
@@ -94,10 +94,7 @@ apiRoutes.post('/authenticate', function(req, res) {
 
     });
 });
-// TODO: route to authenticate a user (POST http://localhost:8080/api/authenticate)
 
-// TODO: route middleware to verify a token
-// 
 apiRoutes.use(function(req, res, next) {
 
   // check header or url parameters or post parameters for token
@@ -125,6 +122,7 @@ apiRoutes.use(function(req, res, next) {
         success: false, 
         message: 'No token provided.' 
     });
+   /* res.render('errors/error');*/
     
   }
 });
