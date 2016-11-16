@@ -22,6 +22,9 @@
   "laxbreak": true,
   "expr": true,
   "globals": {
-    "require": true
+    "require": true,
+    "define": true,
+    "requirejs": true,
+    "PV": true
   }
 }

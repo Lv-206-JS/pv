@@ -1,5 +1,15 @@
 @import 'button';
+@import 'main-view';
+@import 'landing-view';
+@import "main-menu";
+@import "gantt-chart-view";
+@import "info-bar-view";
+@import "milestone-view";
 
-h1 {
-  color: #0f00dd;
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100% !important;
+  width: 100% !important;
+  overflow: hidden;
 }
