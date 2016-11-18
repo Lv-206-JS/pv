@@ -20,6 +20,12 @@ app.use(function (request, response, next) {
     next();
 });
 
+// loading routes for authentication
+var index = require('./rest/index');
+var user = require('./rest/user');
+var login = require('./rest/authorization/login');
+var signup = require('./rest/authorization/signup');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -38,12 +44,13 @@ app.use(session({
 app.use('/rest/hello', helloAPI);
 app.use('/rest/projects', projectAPI);
 
-// loading routes for authentication
 
-var index = require('./rest/index');
-var user = require('./rest/user');
-var login = require('./rest/authorization/login');
-var signup = require('./rest/authorization/signup');
+// attaching authentication routes to the application
+app.use(index);
+app.use(login);
+app.use(signup);
+app.use(user);
+
 
 app.use(/\/project.*/, express.static('./index.html'));
 app.use(express.static(__dirname));
