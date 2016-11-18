@@ -4,7 +4,7 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
-var projStub = require('./project-stub.json');
+var projStub = require('./projectsStub.json');
 
 //functions for
 function getDate() {
@@ -34,8 +34,8 @@ router.get('/', function (request, response) {
 //get one project
 router.get('/:id', function (request, response) {
     var stubCopy;
-    for (var i = 0, len = stub.length; i < len; i++) {
-        if(projStub[i].id === request.params.id) {
+    for (var i = 0, len = projStub.length; i < len; i++) {
+        if(projStub[i].id === +request.params.id) {
             stubCopy = projStub[i];
         }
     }
@@ -52,7 +52,6 @@ router.post('/', jsonParser, function (request, response) {
         "author": request.body.author,
         "startDate": request.body.startDate,
         "createDate": getDate(),
-        //on save will be changing <===== must be implement
         "modifiedDate": getDate()
     });
     response.send(projStubCopy);
