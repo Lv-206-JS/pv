@@ -4,6 +4,7 @@ var express = require('express');
 var app = express();
 var helloAPI = require('./rest/hello');
 var projectAPI = require('./rest/projects');
+var taskAPI = require('./rest/tasks');
 
 // Enable CORS for unit tests
 app.use(function (request, response, next) {
@@ -14,6 +15,7 @@ app.use(function (request, response, next) {
 
 app.use('/rest/hello', helloAPI);
 app.use('/rest/projects', projectAPI);
+app.use('/rest/projects',  taskAPI);
 
 app.use(/\/project.*/, express.static('./index.html'));
 app.use(express.static(__dirname));
