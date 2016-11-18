@@ -1,6 +1,14 @@
 'use strict';
 
 var express = require('express');
+
+//modules required for authentication
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+
+
 var app = express();
 var helloAPI = require('./rest/hello');
 var projectAPI = require('./rest/project');
