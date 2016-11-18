@@ -35,7 +35,7 @@ router.get('/', function (request, response) {
 router.get('/:id', function (request, response) {
     var stubCopy;
     for (var i = 0, len = projStub.length; i < len; i++) {
-        if(projStub[i].id === request.params.id) {
+        if(projStub[i].id === +request.params.id) {
             stubCopy = projStub[i];
         }
     }
@@ -52,7 +52,6 @@ router.post('/', jsonParser, function (request, response) {
         "author": request.body.author,
         "startDate": request.body.startDate,
         "createDate": getDate(),
-        //on save will be changing <===== must be implement
         "modifiedDate": getDate()
     });
     response.send(projStubCopy);
