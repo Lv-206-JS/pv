@@ -58,15 +58,33 @@ router.post('/', jsonParser, function (request, response) {
 });
 
 //update project
-router.put('/:id', function (request, response) {
-    var stub  = require('./project-stub.json');
-    response.send(stub);
+router.put('/:id', jsonParser, function (request, response) {
+    var element;
+    for (var i = 0, len = projStub.length; i < len; i++) {
+        if(projStub[i].id == request.params.id) {
+            element = i;
+        }
+    }
+    projStub[element].name = request.body.name;
+    projStub[element].description = request.body.description;
+    projStub[element].author = request.body.author;
+    projStub[element].startDate = request.body.startDate;
+    //on save will be changing <===== must be implement
+    projStub[element].modifiedDate = getDate();
+    response.send(projStub);
 });
 
 //delete project
 router.delete('/:id', function (request, response) {
-    var stub  = require('./project-stub.json');
-    response.send(stub);
+    var element;
+
+    for (var i = 0, len = projStub.length; i < len; i++) {
+        if(projStub[i].id == request.params.id) {
+            element = i;
+        }
+    }
+    projStub.splice(element,1);
+    response.send(projStub);
 });
 
 module.exports = router;
