@@ -1,5 +1,30 @@
-{
+[{
+  "id": "1",
   "name": "Stub Project",
+  "calender": {
+    "hoursPerWorkingDay": 6
+  },
+  "tasks": [
+    {
+      "taskIdA": "t1",
+      "dependencies": [
+        {
+          "taskIdB": "t2",
+          "type": "finish-to-start"
+        }
+      ]
+    },
+    {
+      "taskIdB": "t2",
+      "dependencies": []
+    }
+  ],
+  "milestones": [],
+  "attachments": []
+},
+{
+  "id": "2",
+  "name": "Stub Project 2",
   "calender": {
     "hoursPerWorkingDay": 6
   },
@@ -20,4 +45,4 @@
   ],
   "milestones": [],
   "attachments": []
-}
+}]
