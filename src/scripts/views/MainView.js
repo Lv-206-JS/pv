@@ -21,6 +21,7 @@ define([
             this.model.setUrl(this.projectId);
             this.model.fetch();
             this.model.on('change', _.bind(this.onChange, this));
+            this.renderViews();
         },
 
         onBackToLandingPage: function onBackToLandingPage() {
@@ -50,6 +51,7 @@ define([
         },
 
         onChange: function () {
+            this.$el.html('');
             this.renderViews();
         }
     });

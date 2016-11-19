@@ -10,44 +10,44 @@ define([
         },
 
         defaults: {
-            "id": 123,
-            "idCounter": 1,
-            "name": "RIA Project",
-            "description": "Cupiditate quibusdam perferendis est libero et iure officia.",
-            "author": "Julio Botsford",
-            "startDate": "2016-07-10T04:57:54.481Z",
-            "createDate": "2016-03-05T22:25:59.576Z",
-            "modifiedDate": "2016-11-17T20:38:08.036Z",
+            "id": 0,
+            "idCounter": 0,
+            "name": "default",
+            "description": "",
+            "author": "",
+            "startDate": "",
+            "createDate": "",
+            "modifiedDate": "",
             "milestones": [
                 {
-                    "name": "iste",
-                    "date": "2017-10-09T09:24:02.213Z"
+                    "name": "",
+                    "date": ""
                 },
                 {
-                    "name": "excepturi",
-                    "date": "2017-03-15T03:13:42.195Z"
+                    "name": "",
+                    "date": ""
                 },
                 {
-                    "name": "distinctio",
-                    "date": "2017-07-12T08:26:27.952Z"
+                    "name": "",
+                    "date": ""
                 }
             ],
             "settings": {
-                "dayDuration": 6,
+                "dayDuration": 0,
                 "weekend": [
-                    "Saturday",
-                    "Sunday"
+                    "",
+                    ""
                 ],
-                "icon": "http://lorempixel.com/640/480/food"
+                "icon": ""
             },
             "tasks": [
                 {
-                    "taskId": 11,
-                    "projectId": 123,
-                    "name": "est",
-                    "description": "Esse dolorum porro magnam consequatur molestiae nemo.",
-                    "estimateTime": 4,
-                    "resource": "Developer 1",
+                    "taskId": 0,
+                    "projectId": 0,
+                    "name": "",
+                    "description": "",
+                    "estimateTime": 0,
+                    "resource": "",
                     "dependsOn": [
                         {
                             "taskId": false,
@@ -56,30 +56,30 @@ define([
                     ],
                     "attachments": [
                         {
-                            "attachmentId": "a1",
-                            "fileName": "knowledge_user.uri",
-                            "mimetype": "application/x-sv4cpio"
+                            "attachmentId": "",
+                            "fileName": "",
+                            "mimetype": ""
                         }
                     ]
                 },
                 {
-                    "taskId": 12,
-                    "projectId": 123,
-                    "name": "voluptas",
-                    "description": "Soluta blanditiis id tenetur repellendus.",
-                    "estimateTime": 3,
-                    "resource": "Developer 2",
+                    "taskId": 0,
+                    "projectId": 0,
+                    "name": "",
+                    "description": "",
+                    "estimateTime": 0,
+                    "resource": "",
                     "dependsOn": [
                         {
-                            "taskId": 11,
-                            "type": "Finish-To-Start"
+                            "taskId": 0,
+                            "type": ""
                         }
                     ],
                     "attachments": [
                         {
-                            "attachmentId": "a2",
-                            "fileName": "payment_forward_personal_loan_account.less",
-                            "mimetype": "application/mbms-deregister+xml"
+                            "attachmentId": "",
+                            "fileName": "",
+                            "mimetype": ""
                         }
                     ]
                 }
@@ -87,8 +87,6 @@ define([
         }
 
     });
-    
-    var modelInstance = new MainViewModel();
 
     return MainViewModel;
 });
