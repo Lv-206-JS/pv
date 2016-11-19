@@ -22,7 +22,7 @@ app.use(function (request, response, next) {
 });
 
 // loading routes for authentication
-var index = require('./rest/index');
+// var index = require('./rest/index');
 var user = require('./rest/user');
 var login = require('./rest/authorization/login');
 var signup = require('./rest/authorization/signup');
@@ -48,7 +48,7 @@ app.use('/rest/projects',  taskAPI);
 
 
 // attaching authentication routes to the application
-app.use(index);
+// app.use(index);
 app.use(login);
 app.use(signup);
 app.use(user);
