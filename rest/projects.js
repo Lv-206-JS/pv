@@ -4,7 +4,7 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
-var projStub = require('./projectsStub.json');
+var projStub = require('./stub/projectsStub.json');
 
 //functions for working with
 function getDate() {
