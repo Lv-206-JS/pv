@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var projStub = require('./projectsStub.json');
 
-//functions for
+//functions for working with
 function getDate() {
     return new Date();
 }
@@ -35,7 +35,7 @@ router.get('/', function (request, response) {
 router.get('/:id', function (request, response) {
     var stubCopy;
     for (var i = 0, len = projStub.length; i < len; i++) {
-        if(projStub[i].id === +request.params.id) {
+        if(projStub[i].id == request.params.id) {
             stubCopy = projStub[i];
         }
     }

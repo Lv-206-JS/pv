@@ -12,6 +12,7 @@ var session = require('express-session');
 var app = express();
 var helloAPI = require('./rest/hello');
 var projectAPI = require('./rest/projects');
+var settingsAPI = require('./rest/settings');
 
 // Enable CORS for unit tests
 app.use(function (request, response, next) {
@@ -43,6 +44,7 @@ app.use(session({
 
 app.use('/rest/hello', helloAPI);
 app.use('/rest/projects', projectAPI);
+app.use('/rest/projects', settingsAPI);
 
 
 // attaching authentication routes to the application
