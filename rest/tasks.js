@@ -14,7 +14,7 @@ var jsonParser = bodyParser.json();
 //get all tasks
 router.get('/:pid/tasks/', function (request, response) {
     // get projects collection
-    var stub = require('./projectsStub.json');
+    var stub = require('./stubs/projectsStub.json');
     // create empty obj for current project
     var stubProj;
     // loop through projects to get current project obj
@@ -34,7 +34,7 @@ router.get('/:pid/tasks/', function (request, response) {
 //get one task
 router.get('/:pid/tasks/:tid', function (request, response) {
     // get projects collection
-    var stub = require('./projectsStub.json');
+    var stub = require('./stubs/projectsStub.json');
     // create empty obj for current project
     var stubProj, stubTask;
     // loop through projects to get current project obj
@@ -62,7 +62,7 @@ router.get('/:pid/tasks/:tid', function (request, response) {
 
 // create task
 router.post('/:pid/tasks/', jsonParser, function (request, response) {
-    var stub = require('./projectsStub.json');
+    var stub = require('./stubs/projectsStub.json');
     var stubProj;
     // loop through projects to get current project obj
     for (var i = 0, len = stub.length; i < len; i++) {
@@ -102,7 +102,7 @@ router.post('/:pid/tasks/', jsonParser, function (request, response) {
 // update task
 router.put('/:pid/tasks/:tid', jsonParser, function (request, response) {
     if (!request.body) {
-        var stub = require('./projectsStub.json');
+        var stub = require('./stubs/projectsStub.json');
         var stubProj, stubTask;
         // loop through projects to get current project obj
         for (var i = 0, len = stub.length; i < len; i++) {
@@ -153,7 +153,7 @@ router.put('/:pid/tasks/:tid', jsonParser, function (request, response) {
 
 // delete task
 router.delete('/:pid/tasks/:tid', function (request, response) {
-    var stub = require('./projectsStub.json');
+    var stub = require('./stubs/projectsStub.json');
     var stubProj;
     // loop through projects to get current project obj
     for (var i = 0, len = stub.length; i < len; i++) {
