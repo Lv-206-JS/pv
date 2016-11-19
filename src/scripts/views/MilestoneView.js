@@ -5,6 +5,9 @@ define(['backbone', 'JST'], function (Backbone, JST) {
         template: JST.MilestoneView,
         className: 'milestone-view',
 
+        initialize: function () {
+        },
+
         render: function render() {
             var me = this;
             me.$el.html(me.template({}));

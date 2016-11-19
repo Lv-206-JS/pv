@@ -27,7 +27,7 @@ define(['jquery', 'backbone', 'views/MainView', 'views/LandingView'], function (
             }
 
             if (!this.mainView) {
-                this.mainView = new MainView();
+                this.mainView = new MainView({projectId: projectId});
                 $('body').append(this.mainView.render().$el);
             }
         },
