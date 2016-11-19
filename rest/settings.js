@@ -4,7 +4,7 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
-var projStub = require('./stub/projectsStub.json');
+var projStub = require('./stubs/projectsStub.json');
 
 //get settings
 router.get('/:pid/settings', function (request, response) {
