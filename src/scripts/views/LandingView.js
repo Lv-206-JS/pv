@@ -5,7 +5,7 @@ define(['backbone', 'JST'], function (Backbone, JST) {
         template: JST.LandingView,
         className: 'landing-view',
         events: {
-            'click .go-to-project': 'onGoToProject'
+            'click .go-to-projects': 'onGoToProjects'
         },
 
         render: function render() {
@@ -14,8 +14,8 @@ define(['backbone', 'JST'], function (Backbone, JST) {
             return me;
         },
 
-        onGoToProject: function onGoToProject() {
-            PV.router.navigate('project/PROJECT-ID-HERE', {trigger: true});
+        onGoToProjects: function onGoToProjects() {
+            PV.router.navigate('projects', {trigger: true});
         }
     });
 

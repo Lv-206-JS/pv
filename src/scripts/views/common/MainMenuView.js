@@ -10,12 +10,9 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
         },
 
         render: function render() {
-            var me = this;
-            // var templateData = this.model.toJSON();
+            this.$el.html(this.template({name: this.name}));
 
-            me.$el.html(me.template({name: this.name}));
-
-            return me;
+            return this;
         }
     });
 
