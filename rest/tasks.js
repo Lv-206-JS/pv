@@ -4,12 +4,9 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
-// get projects collection
 var stub = require('./stubs/projectsStub.json');
-// create empty obj for current project
-var stubProj;
-// create empty obj for current task
-var stubTask;
+var stubProj, stubTask;
+
 /*
  * will be used when we will start use db`es
  * var MongoClient = require('mongodb').MongoClient;
@@ -24,6 +21,7 @@ var findProjectById = function (projId) {
             return project;
         }
     }
+    return false;
 };
 
 var findTaskById = function (taskId) {
@@ -34,39 +32,15 @@ var findTaskById = function (taskId) {
             return task;
         }
     }
+    return false;
 };
 
-
-//get all tasks
-router.get('/:pid/tasks/', function (request, response) {
-    stubProj = findProjectById(request.params.pid);
-    if(stubProj) {
-        response.send(stubProj.tasks);
-    }
-    else {
-        response.sendStatus(404);
-    }
-});
-
-//get one task
-router.get('/:pid/tasks/:tid', function (request, response) {
-    stubProj = findProjectById(request.params.pid);
-    if (stubProj) {
-        stubTask = findTaskById(request.params.tid);
-        if (stubTask) {
-            response.send(stubTask);
-        } else {
+router.route('/:pid/tasks/')
+    .post(jsonParser, function (request, response) {
+        stubProj = findProjectById(request.params.pid);
+        if (!stubProj) {
             response.sendStatus(404);
         }
-    } else {
-        response.sendStatus(404);
-    }
-});
-
-// create task
-router.post('/:pid/tasks/', jsonParser, function (request, response) {
-    stubProj = findProjectById(request.params.pid);
-    if (stubProj) {
         stubProj.tasks.push({
             "taskId": 3,
             "projectId": request.params.pid,
@@ -90,70 +64,82 @@ router.post('/:pid/tasks/', jsonParser, function (request, response) {
         });
         var length = stubProj.tasks.length;
         response.send(stubProj.tasks[length - 1]);
-    } else {
-        response.sendStatus(404);
-    }
-});
+    })
 
-// update task
-router.put('/:pid/tasks/:tid', jsonParser, function (request, response) {
-    if (request.body) {
+    .get(function (request, response) {
         stubProj = findProjectById(request.params.pid);
-        if (stubProj) {
-            stubTask = findTaskById(request.params.tid);
-            if (stubTask) {
-                stubTask = {
-                    "taskId": request.params.tid,
-                    "projectId": request.params.pid,
-                    "name": request.body.name,
-                    "description": request.body.description,
-                    "estimateTime": request.body.estimateTime,
-                    "resource": request.body.resource,
-                    "dependsOn": [
-                        {
-                            "taskId": request.body.dependsOn[0].taskId,
-                            "type": request.body.dependsOn[0].type
-                        }
-                    ],
-                    "attachments": [
-                        {
-                            "attachmentId": request.body.attachments[0].attachmentId,
-                            "fileName": request.body.attachments[0].fileName,
-                            "mimetype": request.body.attachments[0].mimetype
-                        }
-                    ]
-                };
-                response.send(stubTask);
-            } else {
-                response.sendStatus(404);
-            }
-        } else {
+        if (!stubProj) {
             response.sendStatus(404);
         }
-    } else {
-        response.sendStatus(404);
-    }
-});
+        response.send(stubProj.tasks);
+    });
 
-// delete task
-router.delete('/:pid/tasks/:tid', function (request, response) {
-    stubProj = findProjectById(request.params.pid);
-    if (stubProj) {
+//get one task
+router.route('/:pid/tasks/:tid')
+    .get(function (request, response) {
+        stubProj = findProjectById(request.params.pid);
+        if (!stubProj) {
+            response.sendStatus(404);
+        }
+        stubTask = findTaskById(request.params.tid);
+        if (!stubTask) {
+            response.sendStatus(404);
+        }
+        response.send(stubTask);
+    })
+
+    .put(jsonParser, function (request, response) {
+        if (!request.body) {
+            response.sendStatus(404);
+        }
+        stubProj = findProjectById(request.params.pid);
+        if (!stubProj) {
+            response.sendStatus(404);
+        }
+        stubTask = findTaskById(request.params.tid);
+        if (!stubTask) {
+            response.sendStatus(404);
+        }
+        stubTask = {
+            "taskId": request.params.tid,
+            "projectId": request.params.pid,
+            "name": request.body.name,
+            "description": request.body.description,
+            "estimateTime": request.body.estimateTime,
+            "resource": request.body.resource,
+            "dependsOn": [
+                {
+                    "taskId": request.body.dependsOn[0].taskId,
+                    "type": request.body.dependsOn[0].type
+                }
+            ],
+            "attachments": [
+                {
+                    "attachmentId": request.body.attachments[0].attachmentId,
+                    "fileName": request.body.attachments[0].fileName,
+                    "mimetype": request.body.attachments[0].mimetype
+                }
+            ]
+        };
+        response.send(stubTask);
+    })
+
+    .delete(function (request, response) {
+        stubProj = findProjectById(request.params.pid);
+        if (!stubProj) {
+            response.sendStatus(404);
+        }
         for (var i = 0, len = stubProj.tasks.length; i <len; i++) {
             if (stubProj.tasks[i].taskId == request.params.tid) {
                 stubTask = stubProj.tasks[i];
                 break;
             }
         }
-        if (stubTask) {
-            stubProj.tasks.splice(i, 1);
-            response.send(stubProj.tasks);
-        } else {
+        if (!stubTask) {
             response.sendStatus(404);
         }
-    } else {
-        response.sendStatus(404);
-    }
-});
+        stubProj.tasks.splice(i, 1);
+        response.send(stubProj.tasks);
+    });
 
 module.exports = router;
