@@ -21,7 +21,6 @@ define([
 
         render: function render() {
             this.$el.html(this.template({}));
-            // this.renderViews();
 
             return this;
         },

@@ -5,20 +5,19 @@ define([
 ], function (Backbone, _, JST) {
     'use strict';
 
-    var MainMenuView = Backbone.View.extend({
-        template: JST.MainMenuView,
-        className: 'main-menu',
+    var LandingMenuView = Backbone.View.extend({
+        template: JST.LandingMenuView,
+        className: 'landing-main-menu',
         events: {
             'click .go-to-projects': 'onGoToProjects'
         },
 
         initialize: function (options) {
-            this.name = options.name;
-            this.page = options.page;
+
         },
 
         render: function render() {
-            this.$el.html(this.template({name: this.name, page: this.page})); //displays project name
+            this.$el.html(this.template({}));
 
             return this;
         },
@@ -28,5 +27,5 @@ define([
         }
     });
 
-    return MainMenuView;
+    return LandingMenuView;
 });

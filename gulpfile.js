@@ -6,7 +6,7 @@ gulp.task('styles', function () {
     var sourcemaps = require('gulp-sourcemaps'),
         autoprefixer = require('gulp-autoprefixer'),
         sass = require('gulp-sass');
-    return gulp.src(['./src/sass/main.scss'])
+    return gulp.src(['./src/sass/**/*.scss'])
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(autoprefixer('last 2 version'))

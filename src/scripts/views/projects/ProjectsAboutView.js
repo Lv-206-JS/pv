@@ -1,4 +1,8 @@
-define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
+define([
+    'backbone',
+    'underscore',
+    'JST'
+], function (Backbone, _, JST) {
     'use strict';
 
     var ProjectsAboutView = Backbone.View.extend({
@@ -11,8 +15,6 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
 
         render: function render() {
             var projectData = this.model.toJSON();
-
-            console.log(projectData);
             this.$el.html(this.template(projectData));
 
             return this;

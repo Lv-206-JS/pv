@@ -9,7 +9,7 @@ define([
         template: JST['projects/ProjectsHeaderView'],
 
         initialize: function (options) {
-            // this.renderViews();
+
         },
 
         render: function render() {

@@ -1,16 +1,16 @@
 define([
     'jquery',
     'backbone',
-    'views/singleProject/ProjectView',
-    'views/LandingView',
-    'views/projects/MainProjectsView'
+        'views/LandingView',
+        'views/projects/MainProjectsView',
+        'views/singleProject/ProjectView'
 ],
 function (
     $,
     Backbone,
-    ProjectView,
     LandingView,
-    MainProjectsView
+    MainProjectsView,
+    ProjectView
 ) {
     'use strict';
 

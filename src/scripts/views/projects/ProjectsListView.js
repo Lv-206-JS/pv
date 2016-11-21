@@ -1,10 +1,14 @@
-define(['backbone', 'jquery', 'underscore', 'JST'], function (Backbone, $,  _, JST) {
+define([
+    'backbone',
+    'jquery',
+    'underscore',
+    'JST'
+], function (Backbone, $,  _, JST) {
     'use strict';
 
     var ProjectsListView = Backbone.View.extend({
         template: JST['projects/ProjectsListView'],
         className: 'projects-list',
-
         events: {
             'click .projects-list-item': 'onClick'
         },
@@ -21,7 +25,6 @@ define(['backbone', 'jquery', 'underscore', 'JST'], function (Backbone, $,  _, J
         },
 
         onClick: function (e) {
-            console.log(e);
             var target = $(e.currentTarget);
             var id = target.data('id');
             Backbone.Events.trigger('selectProject', id);

@@ -33,7 +33,7 @@ define([
         },
 
         renderViews: function () {
-            this.mainMenuView = new MainMenuView({name: this.model.get('name')}).render();
+            this.mainMenuView = new MainMenuView({name: this.model.get('name'), page: 'singleProject'}).render();
             this.$el.append(this.mainMenuView.$el);
             // Add loggedUser object to menu
 
