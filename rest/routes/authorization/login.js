@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var DB = require('../../dummyDB');
+var DB = require('../../../dummyDB');
 
 router.get('/login', function(req, res) {
   if(req.session.user) return res.redirect('/user/' + req.session.user.id);

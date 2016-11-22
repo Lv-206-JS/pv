@@ -3,7 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Project  = require('../mongoose').ProjectModel;
+var Project  = require('../../mongoose').ProjectModel;
 
 //Error handler function
 function handleError(response, reason, message, code) {

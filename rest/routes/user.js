@@ -1,7 +1,7 @@
 
 var express = require('express');
 var router = express.Router();
-var DB = require('../dummyDB');
+var DB = require('../../dummyDB');
 
 router.get('/user/:id', function(req, res, next) {
   if(!req.session.user) return res.redirect('/login');

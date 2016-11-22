@@ -42,9 +42,9 @@ app.use(session({
     resave : false
 }));
 
-app.use('/rest/routes/projects', projectAPI);
-app.use('/rest/routes/settings', settingsAPI);
-app.use('/rest/routes/tasks',  taskAPI);
+app.use('/rest/projects', projectAPI);
+app.use('/rest/settings', settingsAPI);
+app.use('/rest/tasks',  taskAPI);
 
 // attaching authentication routes to the application
 // app.use(index);
@@ -85,8 +85,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 //exporting  app to fire www
 module.exports = app;
-app.listen(9090);
-
