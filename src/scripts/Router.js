@@ -29,10 +29,8 @@ function (
                 this.view = null;
             }
 
-            if (!this.view) {
-                this.view = new LandingView();
-                $('body').append(this.view.render().$el);
-            }
+            this.view = new LandingView();
+            $('body').append(this.view.render().$el);
         },
 
         openProjects: function () {
@@ -53,6 +51,8 @@ function (
                 this.view.remove();
                 this.view = null;
             }
+
+            //TODO remove unneccessary check
 
             if (!this.view) {
                 this.view = new ProjectView({projectId: projectId});

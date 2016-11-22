@@ -7,12 +7,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-
+var mongoose = require('mongoose');
+mongoose.connect("localhost:27017/ganttcharts");
 
 var app = express();
-var projectAPI = require('./rest/projects');
-var settingsAPI = require('./rest/settings');
-var taskAPI = require('./rest/tasks');
+var projectAPI = require('./rest/routes/projects');
+var settingsAPI = require('./rest/routes/settings');
+var taskAPI = require('./rest/routes/tasks');
 
 // Enable CORS for unit tests
 app.use(function (request, response, next) {
@@ -23,9 +24,9 @@ app.use(function (request, response, next) {
 
 // loading routes for authentication
 // var index = require('./rest/index');
-var userAPI = require('./rest/user');
-var login = require('./rest/authorization/login');
-var signup = require('./rest/authorization/signup');
+var userAPI = require('./rest/routes/user');
+var login = require('./rest/routes/authorization/login');
+var signup = require('./rest/routes/authorization/signup');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,14 +44,14 @@ app.use(session({
 
 app.use('/rest/user', userAPI);
 app.use('/rest/projects', projectAPI);
-app.use('/rest/projects', settingsAPI);
-app.use('/rest/projects',  taskAPI);
+app.use('/rest/settings', settingsAPI);
+app.use('/rest/tasks',  taskAPI);
 
 // attaching authentication routes to the application
 // app.use(index);
 app.use(login);
 app.use(signup);
-// app.use(user);
+
 
 app.use(/\/project.*/, express.static('./index.html'));
 app.use(express.static(__dirname));
@@ -85,7 +86,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 //exporting  app to fire www
 module.exports = app;
-
