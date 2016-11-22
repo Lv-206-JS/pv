@@ -22,23 +22,6 @@ router.get('/:pid', function (request, response) {
         });
 });
 
-//add settings when project creating
-router.post('/:pid', function (request, response) {
-    var settings = {
-        "dayDuration" : request.body.dayDuration,
-        "weekend" : request.body.weekend,
-        "icon" : request.body.icon
-    };
-    Project.findOneAndUpdate({'id': request.params.pid}, {settings:settings}, function (err, project) {
-        if (!err) {
-            response.send({ status: 'OK', settings:project.settings});
-        }
-        else {
-            handleError(response, err, "Failed to create settings!");
-        }
-    });
-});
-
 //update project
 router.put('/:pid', function (request, response) {
     var settings = {
