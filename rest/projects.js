@@ -2,9 +2,8 @@
 
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-parser');
-var jsonParser = bodyParser.json();
-var projStub = require('./stubs/projectsStub');
+var mongoose = require('mongoose');
+var Project  = require('../mongoose').ProjectModel;
 
 //functions for working with
 function getDate() {
@@ -13,65 +12,72 @@ function getDate() {
 
 function increaseIdCounter () {
     var biggestId = 0;
-    for(var i = 0; i < projStub.length; i++) {
-        biggestId = Math.max(biggestId, projStub[i].id);
-    }
+    Project.findOne().sort('-id').exec(function(err, project) {
+        biggestId = project.id;
+    });
     return ++biggestId;
 }
 
-var findProjectById = function (projId) {
-    var project;
-    for (var i = 0, len = projStub.length; i < len; i++) {
-        if(projStub[i].id == projId) {
-            project = projStub[i];
-            return project;
-        }
-    }
-    return false;
+var projectProjection = {
+    milestones: false,
+    settings: false,
+    tasks: false
 };
 
-/*var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://ganttcharts:softserve@ds055905.mlab.com:55905/ganttcharts';*/
+//Error handler function
+function handleError(response, reason, message, code) {
+    console.log("ERROR: " + reason);
+    response.status(code || 500).json({"error": message});
+}
 
 //get all projects
-router.route('/')
-//create project
-    .post(jsonParser, function (request, response) {
-        var projStubCopy = projStub;
-        projStubCopy.push({
-            "id": increaseIdCounter(),
-            "name": request.body.name,
-            "description": request.body.description,
-            "author": request.body.author,
-            "startDate": request.body.startDate,
-            "createDate": getDate(),
-            "modifiedDate": getDate()
-        });
-        response.send(projStubCopy);
-    })
-
-    .get(function (request, response) {
-        var projStubCopy = projStub;
-        if (!projStubCopy) {
-            response.sendStatus(404);
+router.get('/', function (request, response) {
+    Project.find({}, projectProjection, function (err, projects) {
+        if(err){
+            handleError(response, err, "Failed to find projects!");
         }
-        response.send(projStubCopy);
+        response.send(projects);
     });
+});
 
-
+//create project
+router.post('/', function (request, response) {
+    var projectToCreate = new Project({
+        "id": increaseIdCounter(),
+        "name": request.body.name,
+        "description": request.body.description,
+        "author": request.body.author,
+        "startDate": request.body.startDate,
+        "createDate": getDate(),
+        "modifiedDate": getDate()
+    });
+    projectToCreate.save(function (err, project) {
+        if (err) {
+            handleError(response, err, "Failed to create project!");
+        }
+        else {
+            response.send({ status: 'OK', project:project});
+        }
+    });
+});
 
 //get one project
-router.route('/:id')
-    .get(function (request, response) {
-        var projStubCopy = findProjectById(request.params.id);
-        if (!projStubCopy) {
-            response.sendStatus(404);
+router.get('/:id', function (request, response) {
+    Project.find({'id': request.params.id}, projectProjection, function (err, project) {
+        if(project.length == 0) {
+            return handleError(response, err, "Failed to find project!", 404);
         }
-        response.send(projStubCopy);
-    })
+        if (!err) {
+            response.send({ status: 'OK', project:project });
+        } else {
+            return handleError(response, err, "Failed to send project!");
+        }
+    });
+});
+
 
 //update project
-    .put(jsonParser, function (request, response) {
+router.route('/:id').put(function (request, response) {
         var projStubCopy = findProjectById(request.params.id);
         if (!projStubCopy) {
             response.sendStatus(404);

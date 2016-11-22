@@ -34,6 +34,25 @@ gulp.task('jst', [], function () {
         .pipe(gulp.dest('./scripts/'));
 });
 
+gulp.task('build', ['styles', 'jst'], function () {
+    var livereload = require('gulp-livereload'),
+        open = require('gulp-open'),
+        options = {
+            uri: 'http://localhost:9090'
+        };
+
+    livereload.listen({
+        start: true,
+        port: 35729
+    });
+
+    gulp.watch('./src/sass/**/*.scss', ['styles']);
+    gulp.watch('./src/templates/**/*.ejs', ['jst']);
+    gulp.watch(['./styles/main.css', './scripts/*.js']).on('change', livereload.changed);
+
+});
+
+
 gulp.task('default', ['styles', 'jst'], function () {
     var livereload = require('gulp-livereload'),
         open = require('gulp-open'),

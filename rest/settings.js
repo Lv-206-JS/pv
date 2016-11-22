@@ -2,55 +2,58 @@
 
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-parser');
-var jsonParser = bodyParser.json();
-var projStub = require('./stubs/projectsStub.json');
+var mongoose = require('mongoose');
+var Project  = require('../mongoose').ProjectModel;
 
-var findProjectById = function (projId) {
-    var project;
-    for (var i = 0, len = projStub.length; i < len; i++) {
-        if(projStub[i].id == projId) {
-            project = projStub[i];
-            return project;
-        }
-    }
-    return false;
-};
+//Error handler function
+function handleError(response, reason, message, code) {
+    console.log("ERROR: " + reason);
+    response.status(code || 500).json({"error": message});
+}
 
 //get settings
-router.route('/:pid/settings')
-    .get(function (request, response) {
-        var settStubCopy = findProjectById(request.params.pid).settings;
-        if (!settStubCopy) {
-            response.sendStatus(404);
-        }
-        response.send(settStubCopy);
-    })
+router.get('/:pid', function (request, response) {
+        Project.find({'id': request.params.pid}, {'settings': 1}, function (err, settings) {
+            if (!err) {
+                response.send({ status: 'OK', settings:settings});
+            } else {
+                return handleError(response, err, "Failed to send settings!");
+            }
+        });
+});
 
 //add settings when project creating
-    .post(jsonParser, function (request, response) {
-        var settStubCopy = findProjectById(request.params.pid);
-        if (!settStubCopy) {
-            response.sendStatus(404);
+router.post('/:pid', function (request, response) {
+    var settings = {
+        "dayDuration" : request.body.dayDuration,
+        "weekend" : request.body.weekend,
+        "icon" : request.body.icon
+    };
+    Project.findOneAndUpdate({'id': request.params.pid}, {settings:settings}, function (err, project) {
+        if (!err) {
+            response.send({ status: 'OK', settings:project.settings});
         }
-        settStubCopy.settings = {
-            "dayDuration": request.body.dayDuration,
-            "weekend": request.body.weekend,
-            "icon": request.body.icon
-        };
-        response.send(settStubCopy.settings);
-    })
+        else {
+            handleError(response, err, "Failed to create settings!");
+        }
+    });
+});
 
 //update project
-    .put(jsonParser, function (request, response) {
-        var settStubCopy = findProjectById(request.params.pid).settings;
-        if (!settStubCopy) {
-            response.sendStatus(404);
+router.put('/:pid', function (request, response) {
+    var settings = {
+        "dayDuration" : request.body.dayDuration,
+        "weekend" : request.body.weekend,
+        "icon" : request.body.icon
+    };
+    Project.findOneAndUpdate({'id': request.params.pid}, {settings:settings}, function (err, project) {
+        if (!err) {
+            response.send({ status: 'OK', settings:project.settings});
         }
-        settStubCopy.dayDuration = request.body.dayDuration;
-        settStubCopy.weekend = request.body.weekend;
-        settStubCopy.icon = request.body.icon;
-        response.send(settStubCopy);
+        else {
+            handleError(response, err, "Failed to create settings!");
+        }
     });
+});
 
 module.exports = router;
