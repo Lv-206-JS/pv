@@ -7,7 +7,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-
+var mongoose = require('mongoose');
+mongoose.connect("localhost:27017/ganttcharts");
 
 var app = express();
 var projectAPI = require('./rest/projects');
