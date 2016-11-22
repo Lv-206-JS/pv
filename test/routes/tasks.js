@@ -40,6 +40,16 @@ describe('Test tasks routes', function() {
                     done();
                 });
         });
+
+        it('it should NOT GET tasks', function(done) {
+            chai.request(app)
+                .get('/888/')
+                .end(function (err, res) {
+                    res.should.have.status(404);
+                    res.body.length.should.be.eql(0);
+                    done();
+                });
+        });
     });
 
     /*
