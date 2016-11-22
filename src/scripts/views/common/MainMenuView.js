@@ -1,8 +1,9 @@
 define([
     'backbone',
     'underscore',
-    'JST'
-], function (Backbone, _, JST) {
+    'JST',
+    'models/UserModel'
+], function (Backbone, _, JST, userModel) {
     'use strict';
 
     var MainMenuView = Backbone.View.extend({
@@ -18,7 +19,8 @@ define([
         },
 
         render: function render() {
-            this.$el.html(this.template({name: this.name, page: this.page})); //displays project name
+            var user = userModel.toJSON();
+            this.$el.html(this.template({name: this.name, page: this.page, user: user})); //displays project name
 
             return this;
         },

@@ -1,4 +1,4 @@
-@import 'button';
+
 @import 'main-view';
 @import 'landing-view';
 @import "landing-main-menu";
@@ -13,4 +13,5 @@ html, body {
   height: 100% !important;
   width: 100% !important;
   overflow: hidden;
+  font-family: Verdana, Times, sans-serif;
 }

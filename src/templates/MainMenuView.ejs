@@ -1,8 +1,13 @@
-<button class="back-to-landing-view">HOME</button>
-<%if (page !== 'projects') { %>
-    <button class="go-to-projects">Projects</button>
-<% } %>
-<button class="sign-out-button">Sign Out</button>
-<%if (page !== 'projects') { %>
-    Project Name: <%= name %>
-<% } %>
+
+    <ul>
+        <li><img src="/images/logo.svg" alt="logo"><p>Plan&View</p></li>
+        <li><a class="back-to-landing-view">HOME</a></li>
+        <% if (page !== 'projects') { %>
+        <li><a class="go-to-projects">Projects</a></li>
+        <% } %>
+        <li><a class="sign-out-button">Sign Out</a></li>
+        <span>User Name: <%= user.name %></span>
+        <% if (page !== 'projects') { %>
+        <p>Project Name: <%= name %></p>
+        <% } %>
+    </ul>

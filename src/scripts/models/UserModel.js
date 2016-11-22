@@ -10,11 +10,13 @@ define([
         },
 
         defaults: {
+            'id': '0',
+            'name': '',
             'projectId': '0',
             'userId': '0',
             'role': 'author'
         }
     });
 
-    return UserModel;
+    return new UserModel();
 });

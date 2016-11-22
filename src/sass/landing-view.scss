@@ -1,4 +1,6 @@
 .landing-view {
+  display: flex;
+  flex-flow: column wrap;
   img {
     display: block;
     margin: 0 auto;

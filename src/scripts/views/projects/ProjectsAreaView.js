@@ -15,8 +15,8 @@ define([
             this.collection = new ProjectCollection();
             this.collection.fetch();
             this.collection.on('sync', _.bind(this.onSync, this));
-
-            Backbone.Events.on('selectProject', _.bind(this.onSelect, this))
+            Backbone.Events.off('selectProject');
+            Backbone.Events.on('selectProject', _.bind(this.onSelect, this));
         },
 
         render: function render() {
@@ -36,7 +36,6 @@ define([
         },
 
         onSync: function () {
-            // this.$el.html('');
             this.renderViews(this.collection.first().get('id'));
 
         },

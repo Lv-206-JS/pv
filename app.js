@@ -10,7 +10,6 @@ var session = require('express-session');
 
 
 var app = express();
-var helloAPI = require('./rest/hello');
 var projectAPI = require('./rest/projects');
 var settingsAPI = require('./rest/settings');
 var taskAPI = require('./rest/tasks');
@@ -24,7 +23,7 @@ app.use(function (request, response, next) {
 
 // loading routes for authentication
 // var index = require('./rest/index');
-var user = require('./rest/user');
+var userAPI = require('./rest/user');
 var login = require('./rest/authorization/login');
 var signup = require('./rest/authorization/signup');
 
@@ -42,7 +41,7 @@ app.use(session({
     resave : false
 }));
 
-app.use('/rest/hello', helloAPI);
+app.use('/rest/user', userAPI);
 app.use('/rest/projects', projectAPI);
 app.use('/rest/projects', settingsAPI);
 app.use('/rest/projects',  taskAPI);
@@ -51,7 +50,7 @@ app.use('/rest/projects',  taskAPI);
 // app.use(index);
 app.use(login);
 app.use(signup);
-app.use(user);
+// app.use(user);
 
 app.use(/\/project.*/, express.static('./index.html'));
 app.use(express.static(__dirname));

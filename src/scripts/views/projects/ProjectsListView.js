@@ -10,7 +10,8 @@ define([
         template: JST['projects/ProjectsListView'],
         className: 'projects-list',
         events: {
-            'click .projects-list-item': 'onClick'
+            'click .projects-list-item': 'onClick',
+            'click .projects-list-link': 'onSelectProject'
         },
 
         initialize: function (options) {
@@ -28,6 +29,12 @@ define([
             var target = $(e.currentTarget);
             var id = target.data('id');
             Backbone.Events.trigger('selectProject', id);
+        },
+
+        onSelectProject: function (e) {
+            var target = $(e.currentTarget);
+            var id = target.data('id');
+            PV.router.navigate('project/' + id, {trigger: true});
         }
     });
 
