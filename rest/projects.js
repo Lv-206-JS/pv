@@ -2,7 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var db = connect("localhost:27017/ganttcharts");
+/*mongoose.connect("localhost:27017/ganttcharts");*/
 var Project  = require('../mongoose').ProjectModel;
 
 //functions for working with
