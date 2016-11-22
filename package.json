@@ -4,15 +4,18 @@
   "description": "plan&view",
   "main": "app.js",
   "dependencies": {
-    "express": "^4.14.0",
-    "jade": "^1.11.0",
     "body-parser": "~1.8.1",
     "cookie-parser": "~1.3.3",
     "debug": "~2.0.0",
-    "express-session": "^1.9.3"
+    "express": "^4.14.0",
+    "express-session": "^1.9.3",
+    "jade": "^1.11.0",
+    "mongoose": "^4.6.8"
   },
   "devDependencies": {
     "bower": "^1.8.0",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-concat": "^2.6.1",
@@ -31,7 +34,8 @@
     "karma-jasmine": "^1.0.2",
     "karma-junit-reporter": "~1.0.0",
     "karma-opera-launcher": "~1.0.0",
-    "karma-safari-launcher": "~1.0.0"
+    "karma-safari-launcher": "~1.0.0",
+    "mocha": "^3.1.2"
   },
   "scripts": {
     "start": "node ./bin/www"
