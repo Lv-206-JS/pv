@@ -49,6 +49,9 @@ router.get('/:pid', function (request, response) {
 });
 
 router.post('/:pid', jsonParser, function (request, response) {
+    if (!request.body) {
+        response.sendStatus(404);
+    }
     stubProj = findProjectById(request.params.pid);
     if (!stubProj) {
         response.sendStatus(404);
@@ -57,26 +60,14 @@ router.post('/:pid', jsonParser, function (request, response) {
         "taskId": countId(stubProj.tasks),
         "projectId": request.params.pid,
         "name": request.body.name,
-        "description": (request.body.description) ? request.body.description : null,
+        "description": (request.body.description) ? request.body.description[0] : null,
         "estimateTime": request.body.estimateTime,
-        "resource": request.body.resource,
-        "dependsOn": [
-            {
-                "taskId": (request.body.dependsOn[0]) ? request.body.dependsOn[0].taskId : null,
-                "type": (request.body.dependsOn[0]) ? request.body.dependsOn[0].type : null
-            }
-        ],
-        "attachments": [
-            {
-                "attachmentId": (request.body.attachments[0]) ? countId(stubProj.tasks[taskId].attachments) : null,
-                "fileName": (request.body.attachments[0]) ? request.body.attachments[0].fileName : null,
-                "mimeType": (request.body.attachments[0]) ? request.body.attachments[0].mimeType : null
-            }
-        ]
+        "resource": request.body.resource
     });
+
     var i, length = stubProj.tasks.length;
     //check if dependency exists
-    if (request.body.dependsOn[0] === undefined) {
+    if (request.body.dependsOn === undefined) {
         stubProj.tasks.dependsOn.push({
             "taskId": null,
             "type": null
@@ -91,7 +82,7 @@ router.post('/:pid', jsonParser, function (request, response) {
         }
     }
     //check if attachment exists
-    if (request.body.attachments[0] === undefined) {
+    if (request.body.attachments === undefined) {
         stubProj.tasks.attachments.push({
             "attachmentId": null,
             "fileName": null,
@@ -141,24 +132,11 @@ router.put('/:pid/:tid', jsonParser, function (request, response) {
         "name": request.body.name,
         "description": (request.body.description) ? request.body.description : null,
         "estimateTime": request.body.estimateTime,
-        "resource": request.body.resource,
-        "dependsOn": [
-            {
-                "taskId": (request.body.dependsOn[0]) ? request.body.dependsOn[0].taskId : null,
-                "type": (request.body.dependsOn[0]) ? request.body.dependsOn[0].type : null
-            }
-        ],
-        "attachments": [
-            {
-                "attachmentId": (request.body.attachments[0]) ? countId(stubProj.tasks[taskId].attachments) : null,
-                "fileName": (request.body.attachments[0]) ? request.body.attachments[0].fileName : null,
-                "mimeType": (request.body.attachments[0]) ? request.body.attachments[0].mimeType : null
-            }
-        ]
+        "resource": request.body.resource
     });
     var i, length = stubProj.tasks.length;
     //check if dependency exists
-    if (request.body.dependsOn[0] === undefined) {
+    if (request.body.dependsOn === undefined) {
         stubProj.tasks.dependsOn.push({
             "taskId": null,
             "type": null
@@ -173,7 +151,7 @@ router.put('/:pid/:tid', jsonParser, function (request, response) {
         }
     }
     //check if attachment exists
-    if (request.body.attachments[0] === undefined) {
+    if (request.body.attachments === undefined) {
         stubProj.tasks.attachments.push({
             "attachmentId": null,
             "fileName": null,
