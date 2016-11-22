@@ -1,16 +1,16 @@
 define([
     'backbone',
     'JST',
-    '../models/ProjectModel',
-    'views/MainMenuView',
-    'views/MilestoneView',
-    'views/GanttChartView',
-    'views/InfoBarView'
+    'models/ProjectModel',
+    'views/common/MainMenuView',
+    'views/singleProject/MilestoneView',
+    'views/singleProject/GanttChartView',
+    'views/singleProject/InfoBarView'
 ], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttChartView, InfoBarView) {
     'use strict';
 
-    var MainView = Backbone.View.extend({
-        className: 'main-view',
+    var ProjectView = Backbone.View.extend({
+        className: 'main-view', //change later to project-view(single)
         events: {
             'click .back-to-landing-view': 'onBackToLandingPage'
         },
@@ -33,21 +33,20 @@ define([
         },
 
         renderViews: function () {
-            var me = this;
+            this.mainMenuView = new MainMenuView({name: this.model.get('name'), page: 'singleProject'}).render();
+            this.$el.append(this.mainMenuView.$el);
+            // Add loggedUser object to menu
 
-            me.mainMenu = new MainMenuView({name: this.model.get('name')}).render();
-            me.$el.append(me.mainMenu.$el);
+            this.milestoneView = new MilestoneView().render();
+            this.$el.append(this.milestoneView.$el);
 
-            me.milestoneView = new MilestoneView().render();
-            me.$el.append(me.milestoneView.$el);
+            this.ganttChartView = new GanttChartView().render();
+            this.$el.append(this.ganttChartView.$el);
 
-            me.ganttChartView = new GanttChartView().render();
-            me.$el.append(me.ganttChartView.$el);
+            this.infoBarView = new InfoBarView().render();
+            this.$el.append(this.infoBarView.$el);
 
-            me.infoBarView = new InfoBarView().render();
-            me.$el.append(me.infoBarView.$el);
-
-            return me;
+            return this;
         },
 
         onChange: function () {
@@ -56,5 +55,5 @@ define([
         }
     });
 
-    return MainView;
+    return ProjectView;
 });

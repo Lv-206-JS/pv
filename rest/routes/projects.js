@@ -1,10 +1,9 @@
 'use strict';
-
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-parser');
-var jsonParser = bodyParser.json();
-var projStub = require('./stubs/projectsStub');
+var mongoose = require('mongoose');
+/*mongoose.connect("localhost:27017/ganttcharts");*/
+var Project  = require('../mongoose').ProjectModel;
 
 //functions for working with
 function getDate() {
@@ -13,39 +12,37 @@ function getDate() {
 
 function increaseIdCounter () {
     var biggestId = 0;
-    for(var i = 0; i < projStub.length; i++) {
-        biggestId = Math.max(biggestId, projStub[i].id);
-    }
+    Project.findOne().sort('-id').exec(function(err, project) {
+        biggestId = project.id;
+    });
     return ++biggestId;
 }
 
-/*
-======= will be used when we will start use db`es =======
-var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://ganttcharts:softserve@ds055905.mlab.com:55905/ganttcharts';
-*/
+var projectProjection = {
+    milestones: false,
+    settings: false,
+    tasks: false
+};
+
+//Error handler function
+function handleError(response, reason, message, code) {
+    console.log("ERROR: " + reason);
+    response.status(code || 500).json({"error": message});
+}
 
 //get all projects
 router.get('/', function (request, response) {
-    var stubCopy = projStub;
-    response.send(stubCopy);
-});
-
-//get one project
-router.get('/:id', function (request, response) {
-    var stubCopy;
-    for (var i = 0, len = projStub.length; i < len; i++) {
-        if(projStub[i].id == request.params.id) {
-            stubCopy = projStub[i];
+    Project.find({}, projectProjection, function (err, projects) {
+        if(err){
+            handleError(response, err, "Failed to find projects!");
         }
-    }
-    response.send(stubCopy);
+        response.send(projects);
+    });
 });
 
 //create project
-router.post('/', jsonParser, function (request, response) {
-    var projStubCopy = projStub;
-    projStubCopy.push({
+router.post('/', function (request, response) {
+    var projectToCreate = new Project({
         "id": increaseIdCounter(),
         "name": request.body.name,
         "description": request.body.description,
@@ -54,37 +51,59 @@ router.post('/', jsonParser, function (request, response) {
         "createDate": getDate(),
         "modifiedDate": getDate()
     });
-    response.send(projStubCopy);
+    projectToCreate.save(function (err, project) {
+        if (err) {
+            handleError(response, err, "Failed to create project!");
+        }
+        else {
+            response.send({ status: 'OK', project:project});
+        }
+    });
 });
+
+//get one project
+router.get('/:id', function (request, response) {
+    Project.find({'id': request.params.id}, projectProjection, function (err, project) {
+        if(project.length == 0) {
+            return handleError(response, err, "Failed to find project!", 404);
+        }
+        if (!err) {
+            response.send({ status: 'OK', project:project });
+        } else {
+            return handleError(response, err, "Failed to send project!");
+        }
+    });
+});
+
 
 //update project
-router.put('/:id', jsonParser, function (request, response) {
-    var element;
-    for (var i = 0, len = projStub.length; i < len; i++) {
-        if(projStub[i].id == request.params.id) {
-            element = i;
+router.route('/:id').put(function (request, response) {
+        var projStubCopy = findProjectById(request.params.id);
+        if (!projStubCopy) {
+            response.sendStatus(404);
         }
-    }
-    projStub[element].name = request.body.name;
-    projStub[element].description = request.body.description;
-    projStub[element].author = request.body.author;
-    projStub[element].startDate = request.body.startDate;
-    //on save will be changing <===== must be implement
-    projStub[element].modifiedDate = getDate();
-    response.send(projStub);
-});
+        projStubCopy.name = request.body.name;
+        projStubCopy.description = request.body.description;
+        projStubCopy.author = request.body.author;
+        projStubCopy.startDate = request.body.startDate;
+        //on save will be changing <===== must be implement
+        projStubCopy.modifiedDate = getDate();
+        response.send(projStubCopy);
+    })
 
 //delete project
-router.delete('/:id', function (request, response) {
-    var element;
-
-    for (var i = 0, len = projStub.length; i < len; i++) {
-        if(projStub[i].id == request.params.id) {
-            element = i;
+    .delete(function (request, response) {
+        var projStubCopy = projStub;
+        for (var i = 0, len = projStubCopy.length; i < len; i++) {
+            if(projStubCopy[i].id == request.params.id) {
+                break;
+            }
         }
-    }
-    projStub.splice(element,1);
-    response.send(projStub);
-});
+        if (!projStubCopy[i]) {
+            response.sendStatus(404);
+        }
+        projStubCopy.splice(i,1);
+        response.send(projStubCopy);
+    });
 
 module.exports = router;

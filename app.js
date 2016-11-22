@@ -10,7 +10,6 @@ var session = require('express-session');
 
 
 var app = express();
-var helloAPI = require('./rest/routes/hello');
 var projectAPI = require('./rest/routes/projects');
 var settingsAPI = require('./rest/routes/settings');
 var taskAPI = require('./rest/routes/tasks');
