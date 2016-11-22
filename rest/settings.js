@@ -12,7 +12,7 @@ function handleError(response, reason, message, code) {
 }
 
 //get settings
-router.get('/:pid/settings', function (request, response) {
+router.get('/:pid', function (request, response) {
         Project.find({'id': request.params.pid}, {'settings': 1}, function (err, settings) {
             if (!err) {
                 response.send({ status: 'OK', settings:settings});
@@ -23,7 +23,7 @@ router.get('/:pid/settings', function (request, response) {
 });
 
 //add settings when project creating
-router.post('/:pid/settings', function (request, response) {
+router.post('/:pid', function (request, response) {
     var settings = {
         "dayDuration" : request.body.dayDuration,
         "weekend" : request.body.weekend,
@@ -40,7 +40,7 @@ router.post('/:pid/settings', function (request, response) {
 });
 
 //update project
-router.put('/:pid/settings', function (request, response) {
+router.put('/:pid', function (request, response) {
     var settings = {
         "dayDuration" : request.body.dayDuration,
         "weekend" : request.body.weekend,
