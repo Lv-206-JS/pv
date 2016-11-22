@@ -41,8 +41,9 @@ app.use(session({
     saveUninitialized: true,
     resave : false
 }));
-
+//TODO remove obsolete files
 app.use('/rest/hello', helloAPI);
+//TODO split rests for projects, tasks, settings, milestones
 app.use('/rest/projects', projectAPI);
 app.use('/rest/projects', settingsAPI);
 app.use('/rest/projects',  taskAPI);
