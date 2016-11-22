@@ -3,21 +3,8 @@ var express = require('express');
 var router = express.Router();
 var Project  = require('../../mongoose').ProjectModel;
 
-//functions for working with
-function getDate() {
-    return new Date();
-}
-
-function increaseIdCounter () {
-    var biggestId = 0;
-    Project.findOne().sort('-id').exec(function(err, project) {
-        biggestId = project.id;
-    });
-    return ++biggestId;
-}
 
 var projectProjection = {
-    milestones: false,
     settings: false,
     tasks: false
 };
@@ -28,13 +15,31 @@ function handleError(response, reason, message, code) {
     response.status(code || 500).json({"error": message});
 }
 
-//get all projects
-router.get('/', function (request, response) {
-    Project.find({}, projectProjection, function (err, projects) {
+//get all milestones
+router.get('/:pid', function (request, response) {
+    Project.find({'id': request.params.pid}, {'milestones': 1}, function (err, milestones) {
         if(err){
             handleError(response, err, "Failed to find projects!");
         }
-        response.send(projects);
+        response.send({ status: 'OK', milestones:milestones});
+    });
+});
+
+//get one milestone
+router.get('/:pid/:name', function (request, response) {
+    var singleMilestone;
+    Project.find({id: request.params.pid, 'milestones.name' : request.params.name}, function (err, milestone) {
+        if(err){
+            handleError(response, err, "Failed to find projects!");
+        }
+
+        // var len = milestones.milestones.length;
+        // for(var i = 0; i<len;i++) {
+        //     if (milestones.milestones[i].name == request.params.name)
+        //         singleMilestone = milestones.milestones[i];
+        // }
+        response.send({status: 'OK', singleMilestone: milestone});
+
     });
 });
 
@@ -81,7 +86,7 @@ router.put('/:id', function (request, response) {
         newStartDate = request.body.startDate,
         newModifiedDate = getDate();
     Project.findOneAndUpdate({'id': request.params.id}, {$set:{ name : newName, description : newDescription,
-    author : newAuthor, startDate : newStartDate, modifiedDate : newModifiedDate} }, { new: true }, function (err, project) {
+        author : newAuthor, startDate : newStartDate, modifiedDate : newModifiedDate} }, { new: true }, function (err, project) {
         if (!err) {
             response.send({ status: 'OK', project:project});
         }
