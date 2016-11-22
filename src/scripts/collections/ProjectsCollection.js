@@ -5,7 +5,7 @@ define([
     'use strict';
 
     var ProjectsCollection = Backbone.Collection.extend({
-        url: '/rest/routes/projects',
+        url: '/rest/projects',
         model: ProjectModel
     });
 

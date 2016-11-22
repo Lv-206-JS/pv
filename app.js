@@ -85,6 +85,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 //exporting  app to fire www
 module.exports = app;

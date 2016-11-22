@@ -71,7 +71,7 @@ describe('Test tasks routes', function() {
                 });
         });
 
-        it('it should NOT GET project with id = "10"', function(done) {
+        it('it should NOT GET settings with id = "10"', function(done) {
             chai.request(app)
                 .get('/123')
                 .end(function (err, res) {
