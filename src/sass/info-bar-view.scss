@@ -1,4 +1,25 @@
+$font-stack:    Helvetica, sans-serif;
+$primary-color: #333;
+$font-color: #fff;
+$primary-font-size: 14px;
+h3{
+  font-size: $primary-font-size;
+}
+h4{
+  font-size: $primary-font-size;
+}
+p{
+  font-size: $primary-font-size;
+}
 .info-bar-view {
-  background-color: blue;
-  height: 44px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: $primary-color;
+  font: $font-stack;
+  color: $font-color;
+  height: 100px;
+}
+.info-bar-item {
+
 }
