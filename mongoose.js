@@ -1,6 +1,7 @@
+var mongoose = require('mongoose');
 /*
 //=========== if you need to use global db, uncomment this strings ==========
-var mongoose    = require('mongoose');
+
 mongoose.connect('mongodb://ganttcharts:softserve@ds055905.mlab.com:55905/ganttcharts');
 */
 
