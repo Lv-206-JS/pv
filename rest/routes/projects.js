@@ -1,7 +1,7 @@
 'use strict';
 var express = require('express');
 var router = express.Router();
-var Project  = require('../mongoose').ProjectModel;
+var Project  = require('../../mongoose').ProjectModel;
 
 //functions for working with
 function getDate() {

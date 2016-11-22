@@ -4,9 +4,9 @@ define([
     'use strict';
 
     var ProjectViewModel = Backbone.Model.extend({
-        url: '/rest/projects/',
+        url: '/rest/routes/projects/',
         setUrl: function (id) {
-            this.url = '/rest/projects/' + id;
+            this.url = '/rest/routes/projects/' + id;
         },
 
         defaults: {
