@@ -61,12 +61,12 @@ router.post('/', function (request, response) {
 
 //get one project
 router.get('/:id', function (request, response) {
-    Project.find({'id': request.params.id}, projectProjection, function (err, project) {
+    Project.findOne({'id': request.params.id}, projectProjection, function (err, project) {
         if(project.length == 0) {
             return handleError(response, err, "Failed to find project!", 404);
         }
         if (!err) {
-            response.send({ status: 'OK', project:project });
+            response.send(project);
         } else {
             return handleError(response, err, "Failed to send project!");
         }
