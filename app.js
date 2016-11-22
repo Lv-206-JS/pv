@@ -10,10 +10,10 @@ var session = require('express-session');
 
 
 var app = express();
-var helloAPI = require('./rest/hello');
-var projectAPI = require('./rest/projects');
-var settingsAPI = require('./rest/settings');
-var taskAPI = require('./rest/tasks');
+var helloAPI = require('./rest/routes/hello');
+var projectAPI = require('./rest/routes/projects');
+var settingsAPI = require('./rest/routes/settings');
+var taskAPI = require('./rest/routes/tasks');
 
 // Enable CORS for unit tests
 app.use(function (request, response, next) {
@@ -24,9 +24,9 @@ app.use(function (request, response, next) {
 
 // loading routes for authentication
 // var index = require('./rest/index');
-var user = require('./rest/user');
-var login = require('./rest/authorization/login');
-var signup = require('./rest/authorization/signup');
+var user = require('./rest/routes/user');
+var login = require('./rest/routes/authorization/login');
+var signup = require('./rest/routes/authorization/signup');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -42,10 +42,9 @@ app.use(session({
     resave : false
 }));
 
-app.use('/rest/hello', helloAPI);
-app.use('/rest/projects', projectAPI);
-app.use('/rest/projects', settingsAPI);
-app.use('/rest/projects',  taskAPI);
+app.use('/rest/routes/projects', projectAPI);
+app.use('/rest/routes/settings', settingsAPI);
+app.use('/rest/routes/tasks',  taskAPI);
 
 // attaching authentication routes to the application
 // app.use(index);
@@ -89,4 +88,5 @@ app.use(function(err, req, res, next) {
 
 //exporting  app to fire www
 module.exports = app;
+app.listen(9090);
 
