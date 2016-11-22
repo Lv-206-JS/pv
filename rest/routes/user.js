@@ -1,7 +1,7 @@
 
 var express = require('express');
 var router = express.Router();
-var usersStub = require('./stubs/usersStub');
+var usersStub = require('../stubs/usersStub');
 
 router.get('/:id', function(req, res, next) {
   // if(!req.session.user) return res.redirect('/login');
