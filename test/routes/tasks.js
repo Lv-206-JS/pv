@@ -19,13 +19,6 @@ describe('Test tasks routes', function() {
         done();
     });
 
-    // beforeEach(function(done) {
-    //     if (request.param.pid == stub[0].id || request.param.pid == stub[1].id)
-    //         done();
-    //     else
-    //         done(err);
-    // });
-
     /*
      * Test the GET/:pid/ route
      */
@@ -79,7 +72,7 @@ describe('Test tasks routes', function() {
                 ]
             };
             chai.request(app)
-                .post('/123/')
+                .post('/123/11')
                 .send(task)
                 .end(function (err, res) {
                     res.should.have.status(200);

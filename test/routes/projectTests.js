@@ -19,7 +19,7 @@ describe('Test tasks routes', function() {
     describe('/GET project', function ()  {
         it('it should GET all the tasks', function(done) {
             chai.request(app)
-                .get('/')
+                .get('/rest/projects/')
                 .end(function (err, res) {
                     res.should.have.status(200);
                     res.body.should.be.a('array');

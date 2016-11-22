@@ -10,9 +10,9 @@ function getDate() {
 
 function increaseIdCounter () {
     var biggestId = 0;
-    Project.findOne().sort('-id').exec(function(err, project) {
+    /*Project.findOne().sort('-id').exec(function(err, project) {
         biggestId = project.id;
-    });
+    });*/
     return ++biggestId;
 }
 

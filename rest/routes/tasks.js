@@ -32,10 +32,22 @@ var findTaskById = function (taskId) {
     return null;
 };
 
-var countId = function (obj) {
-    var biggestId = 0, len = obj.length;
+var countTaskId = function () {
+    var biggestId = 0;
+    if (stubProj.tasks === undefined) return ++biggestId;
+    var len = stubProj.tasks.length;
     for(var i = 0; i < len; i++) {
-        biggestId = Math.max(biggestId, obj[i].id);
+        biggestId = Math.max(biggestId, stubProj.tasks[i].taskId);
+    }
+    return ++biggestId;
+};
+
+var countAttachmentId = function (taskId) {
+    var biggestId = 0;
+    if (stubProj.tasks[taskId].attachments === undefined) return ++biggestId;
+    var len = stubProj.tasks[taskId].attachments.length;
+    for(var i = 0; i < len; i++) {
+        biggestId = Math.max(biggestId, stubProj.tasks[taskId].attachments[i].attachmentId);
     }
     return ++biggestId;
 };
@@ -56,50 +68,45 @@ router.post('/:pid', jsonParser, function (request, response) {
     if (!stubProj) {
         response.sendStatus(404);
     }
+    var i, length = stubProj.tasks.length;
     stubProj.tasks.push({
-        "taskId": countId(stubProj.tasks),
+        "taskId": countTaskId(),
         "projectId": request.params.pid,
         "name": request.body.name,
-        "description": (request.body.description) ? request.body.description[0] : null,
+        "description": (request.body.description) ? request.body.description : null,
         "estimateTime": request.body.estimateTime,
-        "resource": request.body.resource
+        "resource": request.body.resource,
+        "dependsOn":[],
+        "attachments":[]
     });
-
-    var i, length = stubProj.tasks.length;
+    length = stubProj.tasks.length;
     //check if dependency exists
     if (request.body.dependsOn === undefined) {
-        stubProj.tasks.dependsOn.push({
-            "taskId": null,
-            "type": null
-        });
+        stubProj.tasks[length-1]["dependsOn"] = null;
     } else {
         //check multiple dependencies
         for (i = 0; request.body.dependsOn[i]; i++) {
-            "dependsOn".push({
-                "taskId": countId(stubProj.tasks[length - 1].dependsOn),
-                "type": request.body.dependsOn[0].type
-            });
+            stubProj.tasks[length-1]["dependsOn"][i] = {
+                "taskId": request.body.dependsOn[i].taskId,
+                "type": request.body.dependsOn[i].type
+            };
         }
     }
     //check if attachment exists
     if (request.body.attachments === undefined) {
-        stubProj.tasks.attachments.push({
-            "attachmentId": null,
-            "fileName": null,
-            "mimeType": null
-        });
+        stubProj.tasks[length-1]["attachments"] = null;
     }
     else {
         //check multiple attachments
-        for (i = 1; request.body.attachments[i]; i++) {
-            stubProj.tasks.attachments.push({
-                "attachmentId": countId(stubProj.tasks[length - 1].attachments),
+        for (i = 0; request.body.attachments[i]; i++) {
+            stubProj.tasks[length-1]["attachments"][i] = {
+                "attachmentId": countAttachmentId(length-1),
                 "fileName": request.body.attachments[i].fileName,
                 "mimeType": request.body.attachments[i].mimeType
-            });
+            };
         }
     }
-    response.send(stubProj.tasks[length - 1]);
+    response.send(stubProj.tasks[length-1]);
 });
 
 router.get('/:pid/:tid', function (request, response) {
@@ -122,55 +129,52 @@ router.put('/:pid/:tid', jsonParser, function (request, response) {
     if (!stubProj) {
         response.sendStatus(404);
     }
-    stubTask = findTaskById(request.params.tid);
+    for (var i = 0, len = stubProj.tasks.length; i <len; i++) {
+        if (stubProj.tasks[i].taskId == request.params.tid) {
+            stubTask = stubProj.tasks[i];
+            break;
+        }
+    }
     if (!stubTask) {
         response.sendStatus(404);
     }
-    stubProj.tasks.push({
-        "taskId": countId(stubProj.tasks),
+    stubProj.tasks[i] = {
+        "taskId": request.params.tid,
         "projectId": request.params.pid,
         "name": request.body.name,
         "description": (request.body.description) ? request.body.description : null,
         "estimateTime": request.body.estimateTime,
-        "resource": request.body.resource
-    });
-    var i, length = stubProj.tasks.length;
+        "resource": request.body.resource,
+        "dependsOn":[],
+        "attachments":[]
+    };
     //check if dependency exists
     if (request.body.dependsOn === undefined) {
-        stubProj.tasks.dependsOn.push({
-            "taskId": null,
-            "type": null
-        });
+        stubProj.tasks[i]["dependsOn"] = null;
     } else {
         //check multiple dependencies
-        for (i = 0; request.body.dependsOn[i]; i++) {
-            "dependsOn".push({
-                "taskId": countId(stubProj.tasks[length - 1].dependsOn),
-                "type": request.body.dependsOn[0].type
-            });
+        for (var j = 0; request.body.dependsOn[j]; j++) {
+            stubProj.tasks[i]["dependsOn"][j] = {
+                "taskId": request.body.dependsOn[j].taskId,
+                "type": request.body.dependsOn[j].type
+            };
         }
     }
     //check if attachment exists
     if (request.body.attachments === undefined) {
-        stubProj.tasks.attachments.push({
-            "attachmentId": null,
-            "fileName": null,
-            "mimeType": null
-        });
+        stubProj.tasks[i]["attachments"] = null;
     }
     else {
         //check multiple attachments
-        for (i = 1; request.body.attachments[i]; i++) {
-            stubProj.tasks.attachments.push({
-                "attachmentId": countId(stubProj.tasks[length - 1].attachments),
-                "fileName": request.body.attachments[i].fileName,
-                "mimeType": request.body.attachments[i].mimeType
-            });
+        for (j = 0; request.body.attachments[j]; j++) {
+            stubProj.tasks[i]["attachments"][j] = {
+                "attachmentId": countAttachmentId(i),
+                "fileName": request.body.attachments[j].fileName,
+                "mimeType": request.body.attachments[j].mimeType
+            };
         }
     }
-
-    stubProj.tasks[stubTask.taskId] = stubTask;
-    response.send(stubProj.tasks[stubTask.taskId]);
+    response.send(stubProj.tasks[i]);
 });
 
 router.delete('/:pid/:tid', function (request, response) {
