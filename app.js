@@ -7,12 +7,19 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var expressValidator = require('express-validator');
+var flash = require('connect-flash');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+//mongoose connection
 var mongoose = require('mongoose');
 mongoose.connect("localhost:27017/ganttcharts");
 
 var app = express();
 var projectAPI = require('./rest/routes/projects');
 var settingsAPI = require('./rest/routes/settings');
+var milestonesAPI = require('./rest/routes/milestones');
 var taskAPI = require('./rest/routes/tasks');
 
 // Enable CORS for unit tests
@@ -45,6 +52,7 @@ app.use(session({
 app.use('/rest/user', userAPI);
 app.use('/rest/projects', projectAPI);
 app.use('/rest/settings', settingsAPI);
+app.use('/rest/milestones',  milestonesAPI);
 app.use('/rest/tasks',  taskAPI);
 
 // attaching authentication routes to the application
@@ -86,5 +94,6 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
 //exporting  app to fire www
 module.exports = app;

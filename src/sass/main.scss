@@ -1,11 +1,17 @@
 
 @import 'main-view';
+@import 'single-project/project-view';
 @import 'landing-view';
-@import "landing-main-menu";
-@import "main-menu";
-@import "gantt-chart-view";
-@import "info-bar-view";
-@import "milestone-view";
+@import "landing-menu-view";
+@import "common/main-menu-view";
+@import "single-project/gantt-chart-view";
+@import "single-project/info-bar-view";
+@import "single-project/milestone-view";
+@import "projects/main-projects-view.scss";
+@import "projects/projects-about-view";
+@import "projects/projects-area-view";
+@import "projects/projects-header-view";
+@import "projects/projects-list-view";
 
 html, body {
   padding: 0;

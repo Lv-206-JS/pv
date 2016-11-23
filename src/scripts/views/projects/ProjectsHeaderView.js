@@ -6,7 +6,7 @@ define([
 
     var ProjectsHeaderView = Backbone.View.extend({
         className: 'projects-header-view',
-        template: JST['projects/ProjectsHeaderView'],
+        template: JST['projects:ProjectsHeaderView'],
 
         initialize: function (options) {
 
