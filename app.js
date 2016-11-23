@@ -7,8 +7,19 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var mongo = require('mongodb');
 var mongoose = require('mongoose');
 mongoose.connect("localhost:27017/ganttcharts");
+
+var exphbs = require('express-handlebars');
+var expressValidator = require('express-validator');
+var flash = require('connect-flash');
+var session = require('express-session');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+var db = mongoose.connection;
+
 
 var app = express();
 var projectAPI = require('./rest/routes/projects');
