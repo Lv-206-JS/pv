@@ -1,4 +1,3 @@
-
 var express = require('express');
 var router = express.Router();
 var Project  = require('../../mongoose').ProjectModel;
@@ -10,7 +9,7 @@ function getDate() {
 
 function increaseIdCounter () {
     var biggestId = 0;
-    Project.findOne().sort('-id').exec(function(err, project) {
+    Project.findOne().sort('-id').exec(function (err, project) {
         biggestId = project.id;
     });
     return ++biggestId;
