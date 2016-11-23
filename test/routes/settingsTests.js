@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var app = express();
+var app = require('../../app');
 
 //Require the dev-dependencies
 var chai = require('chai');
@@ -11,102 +11,91 @@ chai.use(chaiHttp);
 var mongoose = require('mongoose');
 var Project = require('../../mongoose').ProjectModel;
 
-describe('Test tasks routes', function() {
+describe('Test settings routes', function() {
 
     /*
      * Test the GET/ route
      */
-    describe('/GET project', function ()  {
-        it('it should GET all the tasks', function(done) {
+    describe('/GET/settings/:pid', function ()  {
+        it('it should have status 200', function(done) {
             chai.request(app)
-                .get('/')
+                .get('/rest/settings/123')
                 .end(function (err, res) {
                     res.should.have.status(200);
-                    res.body.should.be.a('array');
-                    res.body.length.should.be.eql(0);
+                    done();
+                });
+        });
+
+        it('it should be an object', function(done) {
+            chai.request(app)
+                .get('/rest/settings/123')
+                .end(function (err, res) {
+                    res.body.should.be.a('object');
+                    done();
+                });
+        });
+
+        it('it should have standart properties', function(done) {
+            chai.request(app)
+                .get('/rest/settings/123')
+                .end(function (err, res) {
+                    res.body.should.have.property('dayDuration').eql(100);
+                    res.body.should.have.property('weekend').eql(['Mon', 'Tue']);
+                    res.body.should.have.property('icon').eql('cool, very cool icon');
                     done();
                 });
         });
     });
 
     /*
-     * Test the POST/ route
+     * Test the /PUT/settings/:pid route
      */
-    describe('/POST project', function() {
-        it('it should POST a project', function(done) {
-            var project = {
-                "id": 12,
-                "name": 'projname',
-                "description": 'wow project',
-                "author": 'me',
-                "startDate": 1231,
-                "createDate": 1231,
-                "modifiedDate": 1231
+    describe('/PUT/settings/:pid', function() {
+        it('it should have status 200', function(done)  {
+            var settings =  {
+                dayDuration : 100,
+                weekend : ['Mon', 'Tue'],
+                icon : 'cool, very cool icon'
             };
-            chai.request(app)
-                .post('/')
-                .send(project)
-                .end(function (err, res) {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    res.body.should.have.property('status').eql('OK!');
-                    res.body.task.should.have.property('id');
-                    res.body.task.should.have.property('name');
-                    res.body.task.should.have.property('author');
-                    res.body.task.should.have.property('startDate');
-                    res.body.task.should.have.property('createDate');
-                    res.body.task.should.have.property('modifiedDate');
-                    done();
-                });
-        });
-
-        it('should not POST a project', function(done){
-            var project = {
-                "id": 12,
-                "name": 'projname',
-                "description": 'wow project',
-                "author": 'me',
-                "startDate": 1231,
-                "createDate": 1231,
-                "modifiedDate": 1231
-            };
-            chai.request(app)
-                .post('/')
-                .send(project)
+                chai.request(app)
+                .put('/rest/settings/123')
+                .send(settings)
                 .end(function(err, res) {
                     res.should.have.status(200);
+                    done();
+                });
+        });
+
+        it('it should be an object', function(done)  {
+            var settings =  {
+                dayDuration : 100,
+                weekend : ['Mon', 'Tue'],
+                icon : 'cool, very cool icon'
+            };
+            chai.request(app)
+                .put('/rest/settings/123')
+                .send(settings)
+                .end(function(err, res) {
                     res.body.should.be.a('object');
-                    res.body.should.have.property('error');
                     done();
                 });
         });
 
-    });
-    /*
-     * Test the GET/:id route
-     */
-    describe('/GET project', function ()  {
-        it('it should GET project with id = "123"', function(done) {
+        it('it should have standart properties', function(done)  {
+            var settings =  {
+                dayDuration : 100,
+                weekend : ['Mon', 'Tue'],
+                icon : 'cool, very cool icon'
+            };
             chai.request(app)
-                .get('/123')
-                .end(function (err, res) {
-                    res.should.have.status(200);
-                    res.body.should.be.an('object');
-                    res.body.id.should.be.eql(123);
-                    res.body.length.should.be.eql(0);
+                .put('/rest/settings/123')
+                .send(settings)
+                .end(function(err, res) {
+                    res.body.should.have.property('dayDuration').eql(100);
+                    res.body.should.have.property('weekend').eql(['Mon', 'Tue']);
+                    res.body.should.have.property('icon').eql('cool, very cool icon');
                     done();
                 });
         });
-
-        it('it should NOT GET project with id = "10"', function(done) {
-            chai.request(app)
-                .get('/123')
-                .end(function (err, res) {
-                    res.should.have.status(404);
-                    done();
-                });
-        });
-
     });
-
 });
