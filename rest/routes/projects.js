@@ -80,26 +80,33 @@ router.put('/:id', function (request, response) {
         newAuthor = request.body.author,
         newStartDate = request.body.startDate,
         newModifiedDate = getDate();
-    Project.findOneAndUpdate({'id': request.params.id}, {$set:{ name : newName, description : newDescription,
-    author : newAuthor, startDate : newStartDate, modifiedDate : newModifiedDate} }, { new: true }, function (err, project) {
-        if (!err) {
-            response.send({ status: 'OK', project:project});
-        }
-        else {
-            handleError(response, err, "Failed to create settings!");
-        }
-    });
+    if(!newName && !newDescription && !newAuthor && !newStartDate)
+        return handleError(response, "empty body", "Failed to update because of empty body!", 404);
+    else {
+        Project.findOneAndUpdate({'id': request.params.id}, {
+            $set: {
+                name: newName, description: newDescription,
+                author: newAuthor, startDate: newStartDate, modifiedDate: newModifiedDate
+            }
+        }, {new: true}, function (err, project) {
+            if (!project) {
+                return handleError(response, err, "Failed to find project!", 404);
+            }
+            if (!err) {
+                response.send(project);
+            }
+        });
+    }
 });
 
 //delete project
 router.delete('/:id',function (request, response) {
     Project.findOneAndRemove({'id': request.params.id}, function (err, project) {
-        if (!err) {
+        if (project){
             response.send({ status: 'OK'});
         }
-        else {
-            handleError(response, err, "Failed to create settings!");
-        }
+        else
+            handleError(response, err, "Failed to delete project!",404);
     });
 });
 
