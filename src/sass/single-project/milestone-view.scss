@@ -1,0 +1,54 @@
+.milestone-view {
+  background-color: brown;
+  height: 44px;
+}
+.project-length-wrap {
+  margin: auto;
+  width: 80%;
+  height: 3em;
+}
+.project-start-date {
+  float: left;
+}
+.project-end-date {
+  float: right;
+}
+.project-length {
+  margin: 4em;
+  height: inherit;
+  background-color: darkgray;
+  position: relative;
+}
+.project-milestone {
+  position: absolute;
+}
+.project-milestone-date {
+  position: absolute;
+  top: -1.5em;
+  width: 7em;
+  text-align: center;
+  left: -3.5em;
+}
+.project-milestone-label-wrap {
+  position: relative;
+  left: -16px;
+  top: 2em;
+}
+.project-milestone-label {
+  width: 0;
+  height: 0;
+  border: 16px solid transparent;
+  border-bottom-color: red;
+  position: relative;
+  top: -16px;
+}
+.project-milestone-label:after {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 16px;
+  width: 0;
+  height: 0;
+  border: 16px solid transparent;
+  border-top-color: red;
+}

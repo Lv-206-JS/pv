@@ -74,35 +74,42 @@ router.get('/:id', function (request, response) {
     });
 });
 
-
 //update project
-router.route('/:id').put(function (request, response) {
-        var projStubCopy = findProjectById(request.params.id);
-        if (!projStubCopy) {
-            response.sendStatus(404);
-        }
-        projStubCopy.name = request.body.name;
-        projStubCopy.description = request.body.description;
-        projStubCopy.author = request.body.author;
-        projStubCopy.startDate = request.body.startDate;
-        //on save will be changing <===== must be implement
-        projStubCopy.modifiedDate = getDate();
-        response.sendStatus(projStubCopy);
-    })
+router.put('/:id', function (request, response) {
+    var newName = request.body.name,
+        newDescription = request.body.description,
+        newAuthor = request.body.author,
+        newStartDate = request.body.startDate,
+        newModifiedDate = getDate();
+    if(!newName && !newDescription && !newAuthor && !newStartDate)
+        return handleError(response, "empty body", "Failed to update because of empty body!", 404);
+    else {
+        Project.findOneAndUpdate({'id': request.params.id}, {
+            $set: {
+                name: newName, description: newDescription,
+                author: newAuthor, startDate: newStartDate, modifiedDate: newModifiedDate
+            }
+        }, {new: true}, function (err, project) {
+            if (!project) {
+                return handleError(response, err, "Failed to find project!", 404);
+            }
+            if (!err) {
+                response.send(project);
+            }
+        });
+    }
+});
+
 
 //delete project
-    .delete(function (request, response) {
-        var projStubCopy = projStub;
-        for (var i = 0, len = projStubCopy.length; i < len; i++) {
-            if(projStubCopy[i].id == request.params.id) {
-                break;
-            }
+router.delete('/:id',function (request, response) {
+    Project.findOneAndRemove({'id': request.params.id}, function (err, project) {
+        if (project){
+            response.send({ status: 'OK'});
         }
-        if (!projStubCopy[i]) {
-            response.sendStatus(404);
-        }
-        projStubCopy.splice(i,1);
-        response.send(projStubCopy);
+        else
+            handleError(response, err, "Failed to delete project!",404);
     });
+});
 
 module.exports = router;
