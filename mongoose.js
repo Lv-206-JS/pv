@@ -8,7 +8,7 @@ mongoose.connect('mongodb://ganttcharts:softserve@ds055905.mlab.com:55905/ganttc
 var Schema = mongoose.Schema;
 
 var ProjectsSchema = new Schema({
-    id: {type: Number, required: false},
+    id: {type: String, required: false},
     idCounter: {type: Number, required: false},
     name: {type: String, required: false},
     description: {type: String, required: false},

@@ -1,4 +1,5 @@
 var express = require('express');
+var Guid = require('guid');
 var router = express.Router();
 var Project  = require('../../mongoose').ProjectModel;
 
@@ -7,20 +8,6 @@ function getDate() {
     return new Date();
 }
 
-function increaseIdCounter () {
-    var biggestId = 0;
-    Project.findOne().sort('-id').exec(function (err, project) {
-        biggestId = project.id;
-    });
-    return ++biggestId;
-}
-
-var projectProjection = {
-    milestones: false,
-    settings: false,
-    tasks: false
-};
-
 //Error handler function
 function handleError(response, message, code) {
     response.status(code || 500).json({"error": message});
@@ -28,12 +15,9 @@ function handleError(response, message, code) {
 
 //get all projects
 router.get('/', function (request, response) {
-    Project.find({}, projectProjection, function (err, projects) {
-        if(!projects) {
-            return handleError(response, "Failed to find project!", 404);
-        }
-        if(err){
-            handleError(response, "Failed to find projects!", 404);
+    Project.find({}, function (err, projects) {
+        if(!projects || err) {
+            return handleError(response, "Failed to find projects!", 404);
         }
         response.send(projects);
     });
@@ -42,7 +26,7 @@ router.get('/', function (request, response) {
 //create project
 router.post('/', function (request, response) {
     var projectToCreate = new Project({
-        "id": increaseIdCounter(),
+        "id": Guid.create().value,
         "name": request.body.name,
         "description": request.body.description,
         "author": request.body.author,
@@ -62,14 +46,12 @@ router.post('/', function (request, response) {
 
 //get one project
 router.get('/:id', function (request, response) {
-    Project.findOne({'id': request.params.id}, projectProjection, function (err, project) {
-        if(!project) {
+    Project.findOne({'id': request.params.id}, function (err, project) {
+        if(!project || err) {
             return handleError(response, "Failed to find project!", 404);
         }
-        if (!err) {
+        else {
             response.send(project);
-        } else {
-            handleError(response, "Failed to send project!");
         }
     });
 });
