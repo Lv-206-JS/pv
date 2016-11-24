@@ -18,7 +18,6 @@ mongoose.connect("localhost:27017/ganttcharts");
 
 var app = express();
 var projectAPI = require('./rest/routes/projects');
-var settingsAPI = require('./rest/routes/settings');
 var milestonesAPI = require('./rest/routes/milestones');
 var taskAPI = require('./rest/routes/tasks');
 
@@ -50,7 +49,6 @@ app.use(session({
 }));
 
 app.use('/rest/projects', projectAPI);
-app.use('/rest/settings', settingsAPI);
 app.use('/rest/milestones',  milestonesAPI);
 app.use('/rest/tasks',  taskAPI);
 

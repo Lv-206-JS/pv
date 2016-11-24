@@ -3,11 +3,6 @@ var Guid = require('guid');
 var router = express.Router();
 var Project  = require('../../mongoose').ProjectModel;
 
-//functions for working with
-function getDate() {
-    return new Date();
-}
-
 //Error handler function
 function handleError(response, message, code) {
     response.status(code || 500).json({"error": message});
@@ -17,22 +12,29 @@ function handleError(response, message, code) {
 router.get('/', function (request, response) {
     Project.find({}, function (err, projects) {
         if(!projects || err) {
-            return handleError(response, "Failed to find projects!", 404);
+            handleError(response, "Failed to find projects!", 404);
         }
-        response.send(projects);
+        else {
+            response.send(projects);
+        }
     });
 });
 
 //create project
 router.post('/', function (request, response) {
     var projectToCreate = new Project({
-        "id": Guid.create().value,
-        "name": request.body.name,
-        "description": request.body.description,
-        "author": request.body.author,
-        "startDate": request.body.startDate,
-        "createDate": getDate(),
-        "modifiedDate": getDate()
+        id: Guid.create().value,
+        name: request.body.name,
+        description: request.body.description,
+        author: request.body.author,
+        startDate: request.body.startDate,
+        createDate: new Date(),
+        modifiedDate: new Date(),
+        settings : {
+            dayDuration : request.body.settings.dayDuration,
+            weekend : request.body.settings.weekend,
+            icon : request.body.settings.icon
+        }
     });
     projectToCreate.save(function (err, project) {
         if (err) {
@@ -48,7 +50,7 @@ router.post('/', function (request, response) {
 router.get('/:id', function (request, response) {
     Project.findOne({'id': request.params.id}, function (err, project) {
         if(!project || err) {
-            return handleError(response, "Failed to find project!", 404);
+            handleError(response, "Failed to find project!", 404);
         }
         else {
             response.send(project);
@@ -58,39 +60,47 @@ router.get('/:id', function (request, response) {
 
 //update project
 router.put('/:id', function (request, response) {
-    var newName = request.body.name,
-        newDescription = request.body.description,
-        newAuthor = request.body.author,
-        newStartDate = request.body.startDate,
-        newModifiedDate = getDate();
-    if(!newName && !newDescription && !newAuthor && !newStartDate)
-        return handleError(response, "empty body", "Failed to update because of empty body!", 404);
-    else {
-        Project.findOneAndUpdate({'id': request.params.id}, {
-            $set: {
-                name: newName, description: newDescription,
-                author: newAuthor, startDate: newStartDate, modifiedDate: newModifiedDate
-            }
-        }, {new: true}, function (err, project) {
-            if (!project) {
-                return handleError(response, err, "Failed to find project!", 404);
-            }
-            if (!err) {
-                response.send(project);
+    var projectToUpdate = new Project({
+        id: request.body.id,
+        name: request.body.name,
+        description: request.body.description,
+        author: request.body.author,
+        startDate: request.body.startDate,
+        createDate: request.body.createDate,
+        modifiedDate: request.body.modifiedDate,
+        settings : request.body.settings,
+        milestones: request.body.milestones,
+        tasks:request.body.tasks
+    });
+    Project.findOne({'id': request.params.id}, function (err, project) {
+        Project.schema.eachPath(function(path) {
+            if (path != '_id' && path != '__v' && path != 'id') {
+                project[path] = projectToUpdate[path];
             }
         });
-    }
+        project.save(function (err, savedProject) {
+            if (err) {
+                handleError(response, "Failed to create project!", 404);
+            }
+            else {
+                response.send(savedProject);
+            }
+        });
+    });
 });
-
 
 //delete project
 router.delete('/:id',function (request, response) {
     Project.findOneAndRemove({'id': request.params.id}, function (err, project) {
-        if (project){
-            response.send({ status: 'OK'});
+        if (!project){
+            handleError(response, "Failed to find project!", 404);
         }
-        else
-            handleError(response, err, "Failed to delete project!",404);
+        else if (err) {
+            handleError(response, "Failed to delete project!", 404);
+        }
+        else {
+            response.send('Deleted!');
+        }
     });
 });
 
