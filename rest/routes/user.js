@@ -1,27 +1,37 @@
 
 var express = require('express');
 var router = express.Router();
-var usersStub = require('../stubs/usersStub');
+var User  = require('../../mongoose').UsersModel;
 
-router.get('/:id', function(req, res, next) {
-  // if(!req.session.user) return res.redirect('/login');
-  // if(req.session.user.id == req.params.id ) return res.render('profile', req.session.user);
-  var user = findUserById(req.params.id);
-  if(!user)
-    return next();
-  res.send(user);
-});
+//Error handler function
+function handleError(response, reason, message, code) {
+    console.log("ERROR: " + reason);
+    response.status(code || 500).json({"error": message});
+}
 
-var findUserById = function (userId) {
-    var user;
-    for (var i = 0, len = usersStub.length; i < len; i++) {
-        if(usersStub[i].id == userId) {
-            user = usersStub[i];
-            return user;
+//get one user
+router.get('/:id', function (request, response) {
+    User.findOne({'userId': request.params.id}, function (err, user) {
+        if (!user) {
+            return handleError(response, err, "Failed to find user!", 404);
         }
-    }
-    return null;
-};
+        if (!err) {
+            response.send(user);
+        } else {
+            return handleError(response, err, "Failed to send user!");
+        }
+    });
+});
+// var findUserById = function (userId) {
+//     var user;
+//     for (var i = 0, len = usersStub.length; i < len; i++) {
+//         if(usersStub[i].id == userId) {
+//             user = usersStub[i];
+//             return user;
+//         }
+//     }
+//     return null;
+// };
 
 
 

@@ -61,8 +61,8 @@ router.post('/', function (request, response) {
 
 //get one project
 router.get('/:id', function (request, response) {
-    Project.findOne({'id': request.params.id}, projectProjection, function (err, project) {
-        if(project.length == 0) {
+    Project.findOne({'_id': request.params.id}, projectProjection, function (err, project) {
+        if (!project) {
             return handleError(response, err, "Failed to find project!", 404);
         }
         if (!err) {

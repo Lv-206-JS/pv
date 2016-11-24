@@ -2,14 +2,14 @@ define([
     'backbone',
     'JST',
     'collections/ProjectsCollection',
-    'views/projects/ProjectsListView',
-    'views/projects/ProjectsAboutView'
+    'views/projects/projectsList',
+    'views/projects/projectsAbout'
 ], function (Backbone, JST, ProjectCollection, ProjectsListView, ProjectsAboutView) {
     'use strict';
 
     var ProjectsAreaView = Backbone.View.extend({
         className: 'projects-area-view',
-        template: JST['projects/ProjectsAreaView'],
+        template: JST['projects:projectsArea'],
 
         initialize: function () {
             this.collection = new ProjectCollection();
@@ -26,17 +26,19 @@ define([
         },
 
         renderViews: function (id) {
+            var model = this.collection.findWhere({'_id': id});
+
             this.projectsListView = new ProjectsListView({collection: this.collection}).render();
             this.$el.find('.projects-list-block').html(this.projectsListView.$el);
 
-            this.projectsAboutView = new ProjectsAboutView({model: this.collection.get(id)}).render();
+            this.projectsAboutView = new ProjectsAboutView({model: model}).render();
             this.$el.find('.project-about-block').html(this.projectsAboutView.$el);
 
             return this;
         },
 
         onSync: function () {
-            this.renderViews(this.collection.first().get('id'));
+            this.renderViews(this.collection.first().get('_id'));
 
         },
 

@@ -1,16 +1,15 @@
 define([
     'backbone',
     'JST',
-    'views/common/MainMenuView',
-    'views/projects/ProjectsHeaderView',
-    'views/projects/ProjectsAreaView'
+    '../common/mainMenu',
+    './projectsHead',
+    'views/projects/projectsArea'
 ], function (Backbone, JST, MainMenuView, ProjectsHeaderView, ProjectsAreaView ) {
     'use strict';
 
     var MainProjectsView = Backbone.View.extend({
         className: 'main-projects-view',
         events: {
-            'click .back-to-landing-view': 'onBackToLandingPage',
             'click .go-to-projects': 'onGoToProjects'
         },
 
@@ -21,10 +20,11 @@ define([
             this.renderViews();
             return this;
         },
-
+        // TODO name All function for better bugTracking
         renderViews: function () {
-            this.mainMenuView = new MainMenuView({page: 'projects'}).render();
-            this.$el.append(this.mainMenuView.$el);
+            // this.mainMenuView = new MainMenuView({page: 'projects'}).render();
+            // // TODO Change Append to concrete div or element
+            // this.$el.append(this.mainMenuView.$el);
 
             this.projectsHeaderView = new ProjectsHeaderView().render();
             this.$el.append(this.projectsHeaderView.$el);
@@ -36,12 +36,9 @@ define([
         },
 
         onChange: function () {
+            // TODO delete this cleaning and add new rendering of elements to renderViews
             this.$el.html('');
             this.renderViews();
-        },
-
-        onBackToLandingPage: function onBackToLandingPage() {
-            PV.router.navigate('/', {trigger: true});
         },
 
         onGoToProjects: function onGoToProjects() {

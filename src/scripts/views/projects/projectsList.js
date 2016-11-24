@@ -7,7 +7,7 @@ define([
     'use strict';
 
     var ProjectsListView = Backbone.View.extend({
-        template: JST['projects/ProjectsListView'],
+        template: JST['projects:projectsList'],
         className: 'projects-list',
         events: {
             'click .projects-list-item': 'onClick',

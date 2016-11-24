@@ -4,7 +4,7 @@ define([
     'use strict';
 
     var UserModel = Backbone.Model.extend({
-        url: '/rest/user/1',
+        url: '/rest/user/691b9444-68a6-e4b6-b80c-731e6f18db52',
         setUrl: function (id) {
             this.url = '/rest/user/' + id;
         },

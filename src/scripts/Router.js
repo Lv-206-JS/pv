@@ -1,22 +1,21 @@
 define([
     'jquery',
     'backbone',
-        'views/LandingView',
-        'views/projects/MainProjectsView',
-        'views/singleProject/ProjectView'
+    'views/landing',
+    'views/common/mainView'
 ],
 function (
     $,
     Backbone,
     LandingView,
-    MainProjectsView,
-    ProjectView
+    MainView
 ) {
     'use strict';
 
     var Router = Backbone.Router.extend({
         view: null,
         routes: {
+            //Create empty MainView to render Project and Projects views inside it
             'projects': 'openProjects',
             'project/:projectId': 'openSingleProject',
             'project/:projectId/task/:taskId': 'openProjectAndTask',
@@ -24,40 +23,47 @@ function (
         },
 
         openLandingPage: function openLandingPage() {
-            if (this.view) {
-                this.view.remove();
-                this.view = null;
+            if (this.mainView) {
+                this.mainView.remove();
+                this.mainView = null;
             }
 
-            this.view = new LandingView();
-            $('body').append(this.view.render().$el);
+            this.landingView = new LandingView();
+            $('body').html(this.landingView.render().$el);
         },
 
         openProjects: function () {
             // If view exists kill it!!!
-            if (this.view) {
-                this.view.remove();
-                this.view = null;
+            if (this.landingView) {
+                this.landingView.remove();
+                this.landingView = null;
             }
 
-            // Create new view.
-            this.view = new MainProjectsView();
-            // Clean body element and append new view element.
-            $('body').html(this.view.render().$el);
+            if (!this.mainView) {
+                // Create new view.
+                this.mainView = new MainView();
+                // Clean body element and append new view element.
+                $('body').html(this.mainView.render().$el);
+            }
+
+            this.mainView.renderProjects();
         },
 
         openSingleProject: function openSingleProject(projectId) {
-            if (this.view) {
-                this.view.remove();
-                this.view = null;
+            // If view exists kill it!!!
+            if (this.landingView) {
+                this.landingView.remove();
+                this.landingView = null;
             }
 
-            //TODO remove unneccessary check
-
-            if (!this.view) {
-                this.view = new ProjectView({projectId: projectId});
-                $('body').append(this.view.render().$el);
+            if (!this.mainView) {
+                // Create new view.
+                this.mainView = new MainView();
+                // Clean body element and append new view element.
+                $('body').html(this.mainView.render().$el);
             }
+
+            this.mainView.renderProject(projectId);
         },
 
         openProjectAndTask: function openProjectAndTask(projectId, taskId) {

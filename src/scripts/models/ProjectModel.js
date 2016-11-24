@@ -10,7 +10,7 @@ define([
         },
 
         defaults: {
-            "id": 0,
+            "_id": 0,
             "idCounter": 0,
             "name": "default",
             "description": "",

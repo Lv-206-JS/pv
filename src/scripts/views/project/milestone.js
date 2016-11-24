@@ -1,9 +1,12 @@
 define(['backbone', 'JST'], function (Backbone, JST) {
     'use strict';
 
-    var InfoBarView = Backbone.View.extend({
-        template: JST['singleProject/InfoBarView'],
-        className: 'info-bar-view',
+    var MilestoneView = Backbone.View.extend({
+        template: JST['project:milestone'],
+        className: 'milestone-view',
+
+        initialize: function () {
+        },
 
         render: function render() {
             this.$el.html(this.template({}));
@@ -11,5 +14,5 @@ define(['backbone', 'JST'], function (Backbone, JST) {
         }
     });
 
-    return InfoBarView;
+    return MilestoneView;
 });

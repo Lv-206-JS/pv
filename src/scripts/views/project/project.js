@@ -2,15 +2,15 @@ define([
     'backbone',
     'JST',
     'models/ProjectModel',
-    'views/common/MainMenuView',
-    'views/singleProject/MilestoneView',
-    'views/singleProject/GanttChartView',
-    'views/singleProject/InfoBarView'
+    '../common/mainMenu',
+    'views/project/milestone',
+    'views/project/ganttChart',
+    'views/project/infoBar'
 ], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttChartView, InfoBarView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
-        className: 'main-view', //change later to project-view(single)
+        className: 'main-project-view',
         events: {
             'click .back-to-landing-view': 'onBackToLandingPage'
         },
@@ -20,7 +20,7 @@ define([
             this.model = new Model();
             this.model.setUrl(this.projectId);
             this.model.fetch();
-            this.model.on('change', _.bind(this.onChange, this));
+            this.model.on('sync', _.bind(this.onChange, this));
             this.renderViews();
         },
 
@@ -33,10 +33,6 @@ define([
         },
 
         renderViews: function () {
-            this.mainMenuView = new MainMenuView({name: this.model.get('name'), page: 'singleProject'}).render();
-            this.$el.append(this.mainMenuView.$el);
-            // Add loggedUser object to menu
-
             this.milestoneView = new MilestoneView().render();
             this.$el.append(this.milestoneView.$el);
 
@@ -50,6 +46,7 @@ define([
         },
 
         onChange: function () {
+            Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
             this.$el.html('');
             this.renderViews();
         }
