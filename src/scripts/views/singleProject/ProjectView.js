@@ -6,7 +6,7 @@ define([
     'views/singleProject/MilestoneView',
     'views/singleProject/GanttChartView',
     'views/singleProject/InfoBarView'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttChartView, InfoBarView) {
+], function (Backbone, JST, ProjectModel, MainMenuView, MilestoneView, GanttChartView, InfoBarView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
@@ -17,10 +17,13 @@ define([
 
         initialize: function (options) {
             this.projectId = options.projectId;
-            this.model = new Model();
+            this.model = new ProjectModel({
+                id: this.projectId
+            });
             this.model.setUrl(this.projectId);
             this.model.fetch();
             this.model.on('change', _.bind(this.onChange, this));
+            this.model.on('sync', _.bind(this.onProjectLoaded, this));
             this.renderViews();
         },
 
@@ -32,8 +35,13 @@ define([
             return this;
         },
 
+        onProjectLoaded: function onProjectLoaded (data){
+            this.$el.html('');
+            this.renderViews();
+        },
+
         renderViews: function () {
-            this.mainMenuView = new MainMenuView({name: this.model.get('name'), page: 'singleProject'}).render();
+            this.mainMenuView = new MainMenuView({name: this.model.get('name')}).render();
             this.$el.append(this.mainMenuView.$el);
             // Add loggedUser object to menu
 
@@ -43,7 +51,7 @@ define([
             this.ganttChartView = new GanttChartView().render();
             this.$el.append(this.ganttChartView.$el);
 
-            this.infoBarView = new InfoBarView({author: this.model.get('author'), page: 'singleProject'}).render();
+            this.infoBarView = new InfoBarView({model: this.model}).render();
             this.$el.append(this.infoBarView.$el);
 
             return this;

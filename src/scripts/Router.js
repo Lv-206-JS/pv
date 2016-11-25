@@ -19,7 +19,6 @@ function (
         routes: {
             'projects': 'openProjects',
             'project/:projectId': 'openSingleProject',
-            'project/:projectId/task/:taskId': 'openProjectAndTask',
             '*path': 'openLandingPage'
         },
 
@@ -59,10 +58,6 @@ function (
                 this.view = new ProjectView({projectId: projectId});
                 $('body').append(this.view.render().$el);
             }
-        },
-
-        openProjectAndTask: function openProjectAndTask(projectId, taskId) {
-            this.openSingleProject(projectId);
         }
     });
     return Router;

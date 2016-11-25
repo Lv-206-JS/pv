@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', 'JST', 'collections/ProjectsCollection'], function (Backbone, _, JST, ProjectsCollection) {
+define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
     'use strict';
 
     var InfoBarView = Backbone.View.extend({
@@ -10,8 +10,17 @@ define(['backbone', 'underscore', 'JST', 'collections/ProjectsCollection'], func
         },
 
         render: function render() {
-            this.$el.html(this.template({author: this.author, page: this.page}));
-            //this.$el.html(this.template({}));
+            this.$el.html(this.template({
+                author: this.model.get('author'),
+                name: this.model.get('name'),
+                description: this.model.get('description'),
+                startDate: this.model.get('startDate'),
+                createDate: this.model.get('createDate'),
+                modifiedDate: this.model.get('modifiedDate'),
+                settings : this.model.get('settings'),
+                milestones: this.model.get('milestones'),
+                tasks: this.model.get('tasks')
+            }));
             return this;
         }
     });
