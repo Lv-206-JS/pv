@@ -1,22 +1,31 @@
-define(['backbone', 'JST'], function (Backbone, JST) {
+define([
+    'backbone',
+    'JST',
+    'views/LandingMenuView'
+    ], function (Backbone, JST, LandingMenuView) {
     'use strict';
 
     var LandingView = Backbone.View.extend({
         template: JST.LandingView,
         className: 'landing-view',
-        events: {
-            'click .go-to-project': 'onGoToProject'
+
+        initialize: function (options) {
         },
 
         render: function render() {
-            var me = this;
-            me.$el.html(me.template({}));
-            return me;
+            this.renderViews();
+            this.$el.append(this.template({}));
+
+            return this;
         },
 
-        onGoToProject: function onGoToProject() {
-            PV.router.navigate('project/PROJECT-ID-HERE', {trigger: true});
+        renderViews: function () {
+            this.landingMenuView = new LandingMenuView({}).render();
+            this.$el.append(this.landingMenuView.$el);
+
+            return this;
         }
+
     });
 
     return LandingView;
