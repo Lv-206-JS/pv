@@ -9,7 +9,6 @@ var Schema = mongoose.Schema;
 
 var ProjectsSchema = new Schema({
     id: {type: String, required: false},
-    idCounter: {type: Number, required: false},
     name: {type: String, required: false},
     description: {type: String, required: false},
     author: {type: String, required: false},
@@ -26,18 +25,18 @@ var ProjectsSchema = new Schema({
         icon: {type: String, required: false}
     },
     tasks: [{
-        taskId: {type: Number, required: false},
-        projectId: {type: Number, required: false},
+        taskId: {type: String, required: false},
+        projectId: {type: String, required: false},
         name: {type: String, required: false},
         description: {type: String, required: false},
         estimateTime: {type: Number, required: false},
         resource: {type: String, required: false},
         dependsOn: [{
-            taskId: {type: Number, required: false},
+            taskId: {type: String, required: false},
             type: {type: String, required: false}
         }],
         attachments: [{
-            attachmentId: {type: Number, required: false},
+            attachmentId: {type: String, required: false},
             fileName: {type: String, required: false},
             mimeType: {type: String, required: false}
         }]
@@ -45,30 +44,30 @@ var ProjectsSchema = new Schema({
 });
 
 var FileAttachmentsSchema = new Schema ({
-    attachmentId: {type: Number, required: false},
+    attachmentId: {type: String, required: false},
     fileName: {type: String, required: false},
     relativePath: {type: String, required: false},
     mimeType: {type: String, required: false}
-});
+}, { collection: 'fileAttachments' });
 
 var UsersSchema = new Schema ({
     userId: {type: String, required: false},
-    firstname: {type: Number, required: false},
-    lastname: {type: Number, required: false},
-    email: {type: Number, required: false},
+    firstname: {type: String, required: false},
+    lastname: {type: String, required: false},
+    email: {type: String, required: false},
     password: {type: String, required: false}
 
 });
 
 var OwnershipsSchema = new Schema ({
-    projectId: {type: Number, required: false},
-    userId: {type: Number, required: false},
+    projectId: {type: String, required: false},
+    userId: {type: String, required: false},
     role: {type: String, required: false}
 });
 
 var SessionsSchema = new Schema ({
-    sessionId: {type: Number, required: false},
-    userId: {type: Number, required: false}
+    sessionId: {type: String, required: false},
+    userId: {type: String, required: false}
 });
 
 // Create a model based on the schema
@@ -79,7 +78,7 @@ var Ownerships = mongoose.model('Ownerships', OwnershipsSchema);
 var Sessions = mongoose.model('Sessions', SessionsSchema);
 
 module.exports.ProjectModel = Projects;
-module.exports.FileAttachmentsModel    = FileAttachments;
-module.exports.UsersModel    = Users;
-module.exports.OwnershipsModel    = Ownerships;
-module.exports.SessionsModel    = Sessions;
+module.exports.FileAttachmentsModel = FileAttachments;
+module.exports.UsersModel = Users;
+module.exports.OwnershipsModel = Ownerships;
+module.exports.SessionsModel = Sessions;

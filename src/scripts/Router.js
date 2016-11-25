@@ -53,6 +53,7 @@ function (
             }
 
             //TODO remove unneccessary check
+            //TODO remove unneccessary check
 
             if (!this.view) {
                 this.view = new ProjectView({projectId: projectId});

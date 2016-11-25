@@ -45,6 +45,7 @@
     "karma-junit-reporter": "~1.0.0",
     "karma-opera-launcher": "~1.0.0",
     "karma-safari-launcher": "~1.0.0",
+    "mime-types": "^2.1.13",
     "mocha": "^3.1.2"
   },
   "scripts": {

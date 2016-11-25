@@ -43,7 +43,7 @@ define([
             this.ganttChartView = new GanttChartView().render();
             this.$el.append(this.ganttChartView.$el);
 
-            this.infoBarView = new InfoBarView().render();
+            this.infoBarView = new InfoBarView({author: this.model.get('author'), page: 'singleProject'}).render();
             this.$el.append(this.infoBarView.$el);
 
             return this;

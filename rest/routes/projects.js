@@ -79,6 +79,7 @@ router.put('/:id', function (request, response) {
             }
         });
         project.save(function (err, savedProject) {
+            console.log(err);
             if (err) {
                 handleError(response, "Failed to create project!", 404);
             }

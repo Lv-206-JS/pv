@@ -11,7 +11,6 @@ define([
 
         defaults: {
             "id": 0,
-            "idCounter": 0,
             "name": "default",
             "description": "",
             "author": "",
@@ -50,8 +49,8 @@ define([
                     "resource": "",
                     "dependsOn": [
                         {
-                            "taskId": false,
-                            "type": false
+                            "taskId": 0,
+                            "type": ""
                         }
                     ],
                     "attachments": [
