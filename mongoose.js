@@ -5,11 +5,12 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://ganttcharts:softserve@ds055905.mlab.com:55905/ganttcharts');
 */
 
+// Most of the types are Strings, because its document oriented DB
+
 var Schema = mongoose.Schema;
 
 var ProjectsSchema = new Schema({
     id: {type: String, required: false},
-    idCounter: {type: Number, required: false},
     name: {type: String, required: false},
     description: {type: String, required: false},
     author: {type: String, required: false},
@@ -26,7 +27,7 @@ var ProjectsSchema = new Schema({
         icon: {type: String, required: false}
     },
     tasks: [{
-        taskId: {type: Number, required: false},
+        taskId: {type: String, required: false},
         projectId: {type: String, required: false},
         name: {type: String, required: false},
         description: {type: String, required: false},
@@ -79,7 +80,7 @@ var Ownerships = mongoose.model('Ownerships', OwnershipsSchema);
 var Sessions = mongoose.model('Sessions', SessionsSchema);
 
 module.exports.ProjectModel = Projects;
-module.exports.FileAttachmentsModel    = FileAttachments;
-module.exports.UsersModel    = Users;
-module.exports.OwnershipsModel    = Ownerships;
-module.exports.SessionsModel    = Sessions;
+module.exports.FileAttachmentsModel = FileAttachments;
+module.exports.UsersModel = Users;
+module.exports.OwnershipsModel = Ownerships;
+module.exports.SessionsModel = Sessions;

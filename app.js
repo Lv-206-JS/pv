@@ -28,7 +28,7 @@ var userAPI = require('./rest/routes/user');
 var login = require('./rest/routes/authorization/login');
 var signup = require('./rest/routes/authorization/signup');
 
-// view engine setup
+// view engine setup - TO DEL
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 

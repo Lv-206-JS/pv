@@ -8,14 +8,6 @@ function getDate() {
     return new Date();
 }
 
-function increaseIdCounter () {
-    var biggestId = 0;
-    /*Project.findOne().sort('-id').exec(function(err, project) {
-        biggestId = project.id;
-    });*/
-    return ++biggestId;
-}
-
 var projectProjection = {
     milestones: false,
     settings: false,
@@ -61,7 +53,7 @@ router.post('/', function (request, response) {
 
 //get one project
 router.get('/:id', function (request, response) {
-    Project.findOne({'_id': request.params.id}, projectProjection, function (err, project) {
+    Project.findOne({'id': request.params.id}, projectProjection, function (err, project) {
         if (!project) {
             return handleError(response, err, "Failed to find project!", 404);
         }

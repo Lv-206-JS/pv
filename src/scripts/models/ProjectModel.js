@@ -11,7 +11,6 @@ define([
 
         defaults: {
             "_id": 0,
-            "idCounter": 0,
             "name": "default",
             "description": "",
             "author": "",

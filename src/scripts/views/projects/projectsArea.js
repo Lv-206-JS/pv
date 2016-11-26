@@ -26,7 +26,7 @@ define([
         },
 
         renderViews: function (id) {
-            var model = this.collection.findWhere({'_id': id});
+            var model = this.collection.findWhere({'id': id});
 
             this.projectsListView = new ProjectsListView({collection: this.collection}).render();
             this.$el.find('.projects-list-block').html(this.projectsListView.$el);
@@ -38,7 +38,7 @@ define([
         },
 
         onSync: function () {
-            this.renderViews(this.collection.first().get('_id'));
+            this.renderViews(this.collection.first().get('id'));
 
         },
 

@@ -21,7 +21,7 @@ define([
             return this;
         },
         // TODO name All function for better bugTracking
-        renderViews: function () {
+        renderViews: function renderViews() {
             // this.mainMenuView = new MainMenuView({page: 'projects'}).render();
             // // TODO Change Append to concrete div or element
             // this.$el.append(this.mainMenuView.$el);
@@ -35,7 +35,7 @@ define([
             return this;
         },
 
-        onChange: function () {
+        onChange: function onChange() {
             // TODO delete this cleaning and add new rendering of elements to renderViews
             this.$el.html('');
             this.renderViews();

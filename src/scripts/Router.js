@@ -15,7 +15,6 @@ function (
     var Router = Backbone.Router.extend({
         view: null,
         routes: {
-            //Create empty MainView to render Project and Projects views inside it
             'projects': 'openProjects',
             'project/:projectId': 'openSingleProject',
             'project/:projectId/task/:taskId': 'openProjectAndTask',

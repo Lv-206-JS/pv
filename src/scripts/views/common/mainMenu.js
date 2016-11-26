@@ -2,8 +2,9 @@ define([
     'backbone',
     'underscore',
     'JST',
-    'models/UserModel'
-], function (Backbone, _, JST, userModel) {
+    'models/UserModel',
+    'models/ProjectModel'
+], function (Backbone, _, JST, userModel, projectModel) {
     'use strict';
 
     var MainMenu = Backbone.View.extend({
@@ -24,7 +25,9 @@ define([
 
         render: function render() {
             var user = userModel.toJSON();
+            console.log(user);
             this.$el.html(this.template({name: this.name, page: this.page, user: user})); //displays project name
+            $('.show-user-name').text(user);
 
             return this;
         },
@@ -39,6 +42,8 @@ define([
 
         onHello: function (name) {
             console.log(name);
+            $('.show-project-name').text(name);
+            // this.$el.find('.main-menu').html(name);
         }
     });
 

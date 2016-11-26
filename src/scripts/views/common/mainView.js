@@ -16,10 +16,7 @@ define([
 
         render: function render() {
             this.$el.html(this.template({}));
-            // render template
-            // this.mainMenuView = new MainView({page: 'projects'}).render();
-            // render main menu
-            // this.$el.find('.main-menu-container').html(mainMenu element)
+
             return this;
         },
 

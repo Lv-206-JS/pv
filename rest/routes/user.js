@@ -22,17 +22,5 @@ router.get('/:id', function (request, response) {
         }
     });
 });
-// var findUserById = function (userId) {
-//     var user;
-//     for (var i = 0, len = usersStub.length; i < len; i++) {
-//         if(usersStub[i].id == userId) {
-//             user = usersStub[i];
-//             return user;
-//         }
-//     }
-//     return null;
-// };
-
-
 
 module.exports = router;
