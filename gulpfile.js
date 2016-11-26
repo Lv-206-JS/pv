@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
+var spawn = require('child_process').spawn;
 
 gulp.task('styles', function () {
     var sourcemaps = require('gulp-sourcemaps'),
@@ -10,7 +11,7 @@ gulp.task('styles', function () {
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(autoprefixer('last 2 version'))
-        .pipe(sourcemaps.write('./styles', {
+        .pipe(sourcemaps.write('./source-map', {
             addComment: true
         }))
         .pipe(gulp.dest('./styles'));
@@ -25,7 +26,8 @@ gulp.task('jst', [], function () {
             name: function name(file) {
                 var name = file.relative;
                 name = name.replace('.ejs', '');
-                name = name.replace(/\//g, ':');
+                name = name.replace(/[\\\/]/g, ':'); // Replace Unix & Windows path separator to :
+                console.log(name);
                 return name;
             }
         }))
@@ -34,7 +36,33 @@ gulp.task('jst', [], function () {
         .pipe(gulp.dest('./scripts/'));
 });
 
-gulp.task('default', ['styles', 'jst'], function () {
+gulp.task('build', ['styles', 'jst'], function () {
+    var livereload = require('gulp-livereload'),
+        open = require('gulp-open'),
+        options = {
+            uri: 'http://localhost:9090'
+        };
+
+    livereload.listen({
+        start: true,
+        port: 35729
+    });
+
+    gulp.watch('./src/sass/**/*.scss', ['styles']);
+    gulp.watch('./src/templates/**/*.ejs', ['jst']);
+    gulp.watch(['./styles/main.css', './scripts/*.js']).on('change', livereload.changed);
+
+});
+
+
+
+
+gulp.task('server', function() {
+  spawn('node', ['./bin/www'], { stdio: 'inherit' });
+});
+
+
+gulp.task('default', ['server', 'styles', 'jst'], function () {
     var livereload = require('gulp-livereload'),
         open = require('gulp-open'),
         options = {
@@ -52,3 +80,4 @@ gulp.task('default', ['styles', 'jst'], function () {
 
     gulp.src('./index.html').pipe(open(options));
 });
+

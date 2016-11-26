@@ -1,2 +1,8 @@
-Main Menu Placeholder
-<button class="back-to-landing-view">Back To Landing View</button>
+<button class="back-to-landing-view">HOME</button>
+<%if (page !== 'projects') { %>
+    <button class="go-to-projects">Projects</button>
+<% } %>
+<button class="sign-out-button">Sign Out</button>
+<%if (page !== 'projects') { %>
+    Project Name: <%= name %>
+<% } %>
