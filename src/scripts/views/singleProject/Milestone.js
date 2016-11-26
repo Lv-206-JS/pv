@@ -2,7 +2,7 @@ define(['backbone', 'JST'], function (Backbone, JST) {
     'use strict';
 
     var MilestoneView = Backbone.View.extend({
-        template: JST['singleProject:MilestoneView'],
+        template: JST['singleProject:Milestone'],
         className: 'milestone-view',
 
         initialize: function () {
