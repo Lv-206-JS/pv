@@ -1,9 +1,9 @@
 define([
     'backbone',
     'JST',
-    'views/common/MainMenuView',
-    'views/projects/ProjectsHeaderView',
-    'views/projects/ProjectsAreaView'
+    'views/common/MainMenu',
+    'views/projects/ProjectsHeader',
+    'views/projects/ProjectsArea'
 ], function (Backbone, JST, MainMenuView, ProjectsHeaderView, ProjectsAreaView ) {
     'use strict';
 
