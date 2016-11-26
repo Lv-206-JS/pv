@@ -1,6 +1,6 @@
 define([
     'backbone',
-    '../models/ProjectModel'
+    '../models/Project'
 ], function (Backbone, ProjectModel) {
     'use strict';
 

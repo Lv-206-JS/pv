@@ -1,7 +1,7 @@
 define([
     'backbone',
     'JST',
-    'views/LandingMenuView'
+    'views/LandingMenu'
     ], function (Backbone, JST, LandingMenuView) {
     'use strict';
 

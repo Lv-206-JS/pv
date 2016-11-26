@@ -1,11 +1,11 @@
 define([
     'backbone',
     'JST',
-    'models/ProjectModel',
-    'views/common/MainMenuView',
-    'views/singleProject/MilestoneView',
-    'views/singleProject/GanttChartView',
-    'views/singleProject/InfoBarView'
+    '../../models/Project',
+    'views/common/MainMenu',
+    'views/singleProject/Milestone',
+    'views/singleProject/GanttChart',
+    'views/singleProject/InfoBar'
 ], function (Backbone, JST, ProjectModel, MainMenuView, MilestoneView, GanttChartView, InfoBarView) {
     'use strict';
 

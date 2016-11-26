@@ -1,9 +1,9 @@
 define([
     'jquery',
     'backbone',
-        'views/LandingView',
-        'views/projects/MainProjectsView',
-        'views/singleProject/ProjectView'
+        'views/Landing',
+        'views/projects/MainProjects',
+        'views/singleProject/Project'
 ],
 function (
     $,
