@@ -2,7 +2,7 @@ define(['backbone', 'JST'], function (Backbone, JST) {
     'use strict';
 
     var GanttChartView = Backbone.View.extend({
-        template: JST['singleProject/GanttChartView'],
+        template: JST['project:ganttChart'],
         className: 'gantt-chart-view',
         events: {
             'click .go-to-project': 'onGoToProject'

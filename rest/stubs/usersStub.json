@@ -1,1 +1,16 @@
-[{"projectId":123,"userId":"u1","role":"author"},{"projectId":1234,"userId":"u2","role":"author"}]
+[
+  {
+    "id": 1,
+    "name": "Pedro",
+    "projectId": 123,
+    "userId": "u1",
+    "role": "author"
+  },
+  {
+    "id": 2,
+    "name": "Maria",
+    "projectId": 1234,
+    "userId": "u2",
+    "role": "author"
+  }
+]

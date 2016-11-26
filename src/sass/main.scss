@@ -1,7 +1,7 @@
-@import 'button';
-@import 'main-view';
+
 @import 'landing-view';
 @import "landing-main-menu";
+@import 'main-view';
 @import "main-menu";
 @import "gantt-chart-view";
 @import "info-bar-view";
@@ -10,7 +10,8 @@
 html, body {
   padding: 0;
   margin: 0;
-  height: 100% !important;
-  width: 100% !important;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
+  font-family: Verdana, Times, sans-serif;
 }

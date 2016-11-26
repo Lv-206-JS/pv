@@ -26,7 +26,7 @@ gulp.task('jst', [], function () {
             name: function name(file) {
                 var name = file.relative;
                 name = name.replace('.ejs', '');
-                name = name.replace(/\//g, ':');
+                name = name.replace(/[\\\/]/g, ':'); // Replace Unix & Windows path separator to ":"
                 return name;
             }
         }))
@@ -52,9 +52,6 @@ gulp.task('build', ['styles', 'jst'], function () {
     gulp.watch(['./styles/main.css', './scripts/*.js']).on('change', livereload.changed);
 
 });
-
-
-
 
 gulp.task('server', function() {
   spawn('node', ['./bin/www'], { stdio: 'inherit' });

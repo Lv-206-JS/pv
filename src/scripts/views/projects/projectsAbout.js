@@ -6,7 +6,7 @@ define([
     'use strict';
 
     var ProjectsAboutView = Backbone.View.extend({
-        template: JST['projects/ProjectsAboutView'],
+        template: JST['projects:projectsAbout'],
         className: 'projects-about',
 
         initialize: function (options) {

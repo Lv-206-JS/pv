@@ -1,12 +1,12 @@
 define([
     'backbone',
     'JST',
-    'views/LandingMenuView'
+    'views/landingMenu'
     ], function (Backbone, JST, LandingMenuView) {
     'use strict';
 
     var LandingView = Backbone.View.extend({
-        template: JST.LandingView,
+        template: JST.landing,
         className: 'landing-view',
 
         initialize: function (options) {

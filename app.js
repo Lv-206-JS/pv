@@ -38,9 +38,11 @@ app.use(function (request, response, next) {
     next();
 });
 
-app.use('/rest/projects', projectAPI);
-app.use('/rest/settings', settingsAPI);
-app.use('/rest/tasks',  taskAPI);
+// loading routes for authentication
+// var index = require('./rest/index');
+var userAPI = require('./rest/routes/user');
+var login = require('./rest/routes/users');
+var signup = require('./rest/routes/users');
 
 
 
@@ -69,6 +71,10 @@ app.use(session({
   resave: true
 }));
 
+app.use('/rest/user', userAPI);
+app.use('/rest/projects', projectAPI);
+app.use('/rest/settings', settingsAPI);
+app.use('/rest/tasks',  taskAPI);
 // Passport Initialization
 app.use(passport.initialize());
 app.use(passport.session());

@@ -7,9 +7,6 @@ var jsonParser = bodyParser.json();
 var stub = require('../stubs/projectsStub.json');
 var stubProj, stubTask;
 
-// var MongoClient = require('mongodb').MongoClient;
-// var url = 'mongodb://ganttcharts:softserve@ds055905.mlab.com:55905/ganttcharts';
-
 var findProjectById = function (projId) {
     var project;
     for (var i = 0, len = stub.length; i < len; i++) {
