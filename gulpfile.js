@@ -1,7 +1,6 @@
 'use strict';
 
 var gulp = require('gulp');
-var spawn = require('child_process').spawn;
 
 gulp.task('styles', function () {
     var sourcemaps = require('gulp-sourcemaps'),
@@ -54,15 +53,7 @@ gulp.task('build', ['styles', 'jst'], function () {
 
 });
 
-
-
-
-gulp.task('server', function() {
-  spawn('node', ['./bin/www'], { stdio: 'inherit' });
-});
-
-
-gulp.task('default', ['server', 'styles', 'jst'], function () {
+gulp.task('default', ['styles', 'jst'], function () {
     var livereload = require('gulp-livereload'),
         open = require('gulp-open'),
         options = {
@@ -80,4 +71,3 @@ gulp.task('default', ['server', 'styles', 'jst'], function () {
 
     gulp.src('./index.html').pipe(open(options));
 });
-
