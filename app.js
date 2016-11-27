@@ -19,8 +19,6 @@ mongoose.connect("localhost:27017/ganttcharts");
 var app = express();
 var projectAPI = require('./rest/routes/projects');
 var attachmentsAPI = require('./rest/routes/attachments');
-var milestonesAPI = require('./rest/routes/milestones');
-var taskAPI = require('./rest/routes/tasks');
 
 // Enable CORS for unit tests
 app.use(function (request, response, next) {
@@ -51,8 +49,6 @@ app.use(session({
 
 app.use('/rest/projects', projectAPI);
 app.use('/rest/projects', attachmentsAPI);
-app.use('/rest/milestones',  milestonesAPI);
-app.use('/rest/tasks',  taskAPI);
 
 // attaching authentication routes to the application
 // app.use(index);
