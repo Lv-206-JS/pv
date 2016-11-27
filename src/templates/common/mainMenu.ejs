@@ -3,11 +3,12 @@
         <li><p><img src="/images/logo.svg" alt="logo">Plan&View</p></li>
         <li><a class="back-to-landing-view">HOME</a></li>
         <% if (page !== 'projects') { %>
-        <li><a class="go-to-projects">Projects</a></li>
+            <li><a class="go-to-projects">Projects</a></li>
         <% } %>
+
         <li><a class="sign-out-button">Sign Out</a></li>
-        <span class="show-user-name">Hello (user),  <%= user.name %></span>
+        <span class="show-user-name">Hello (user),  <%= user.firstname %> <%= user.lastname %></span>
         <% if (page !== 'projects') { %>
-        <p class="show-project-name">Project Name: <%= name %></p>
+            <p class="show-project-name">Project Name: <span></span></p>
         <% } %>
     </ul>

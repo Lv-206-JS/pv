@@ -30,8 +30,7 @@ define([
         onSignIn: function onSignIn() {
             //TODO Later: Add popup window for Signing In
             // We will get needed data instead of url, later from login form respond
-            userModel.setUrl('691b9444-68a6-e4b6-b80c-731e6f18db52');
-            userModel.fetch();
+            PV.router.navigate('user/signin', {trigger: true});
         }
     });
 

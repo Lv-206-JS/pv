@@ -2,13 +2,15 @@ define([
     'jquery',
     'backbone',
     'views/landing',
-    'views/common/mainView'
+    'views/common/mainView',
+    'views/common/signIn'
 ],
 function (
     $,
     Backbone,
     LandingView,
-    MainView
+    MainView,
+    SignInView
 ) {
     'use strict';
 
@@ -18,6 +20,7 @@ function (
             'projects': 'openProjects',
             'project/:projectId': 'openSingleProject',
             'project/:projectId/task/:taskId': 'openProjectAndTask',
+            'user/signin' : 'openSingIn',
             '*path': 'openLandingPage'
         },
 
@@ -67,6 +70,20 @@ function (
 
         openProjectAndTask: function openProjectAndTask(projectId, taskId) {
             this.openSingleProject(projectId);
+        },
+
+        openSingIn: function openSignIn() {
+            if (this.landingView) {
+                this.landingView.remove();
+                this.landingView = null;
+            }
+
+            if (!this.signInView) {
+                // Create new view.
+                this.signInView = new SignInView();
+            }
+
+            $('body').html(this.signInView.render().$el);
         }
     });
     return Router;

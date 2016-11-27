@@ -26,7 +26,7 @@ define([
         },
 
         renderViews: function (id) {
-            var model = this.collection.findWhere({'id': id});
+            var model = this.collection.get(id);
 
             this.projectsListView = new ProjectsListView({collection: this.collection}).render();
             this.$el.find('.projects-list-block').html(this.projectsListView.$el);

@@ -2,9 +2,8 @@ define([
     'backbone',
     'underscore',
     'JST',
-    'models/UserModel',
-    'models/ProjectModel'
-], function (Backbone, _, JST, userModel, projectModel) {
+    'models/UserModel'
+], function (Backbone, _, JST, userModel) {
     'use strict';
 
     var MainMenu = Backbone.View.extend({
@@ -12,7 +11,8 @@ define([
         className: 'main-menu',
         events: {
             'click .back-to-landing-view': 'onBackToLandingPage',
-            'click .go-to-projects': 'onGoToProjects'
+            'click .go-to-projects': 'onGoToProjects',
+            'click .sign-out-button' : 'onSignOut'
         },
 
         initialize: function (options) {
@@ -20,14 +20,17 @@ define([
             this.page = options.page;
 
             Backbone.Events.off('onProjectNameReceived');
-            Backbone.Events.on('onProjectNameReceived', _.bind(this.onHello, this));
+            Backbone.Events.on('onProjectNameReceived', _.bind(this.updateProjectName, this));
         },
 
         render: function render() {
-            var user = userModel.toJSON();
-            console.log(user);
-            this.$el.html(this.template({name: this.name, page: this.page, user: user})); //displays project name
-            $('.show-user-name').text(user);
+            var user = userModel.toJSON(),
+                templateData = {
+                    page: this.page,
+                    user: user
+                };
+
+            this.$el.html(this.template(templateData)); //displays project name
 
             return this;
         },
@@ -40,10 +43,14 @@ define([
             PV.router.navigate('/', {trigger: true});
         },
 
-        onHello: function (name) {
-            console.log(name);
-            $('.show-project-name').text(name);
-            // this.$el.find('.main-menu').html(name);
+        updateProjectName: function (name) {
+            this.$el.find('.show-project-name').html(name);
+        },
+
+        onSignOut: function onSingOut(){
+            userModel.clear().set(userModel.defaults());
+            PV.router.navigate('/', {trigger: true});
+            console.log(userModel);
         }
     });
 

@@ -23,4 +23,18 @@ router.get('/:id', function (request, response) {
     });
 });
 
+router.post('/', function (request, response) {
+    // Dance HERE
+    User.findOne({'email': request.body.email}, function (err, user) {
+        if (!user) {
+            return handleError(response, err, "Not Authorized!", 401);
+        }
+        if (!err) {
+            response.send(user);
+        } else {
+            return handleError(response, err, "Failed to send user!");
+        }
+    });
+});
+
 module.exports = router;
