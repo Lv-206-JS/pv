@@ -50,7 +50,7 @@ var FileAttachmentsSchema = new Schema ({
     fileName: {type: String, required: false},
     relativePath: {type: String, required: false},
     mimeType: {type: String, required: false}
-});
+}, { collection: 'fileAttachments' });
 
 var UsersSchema = new Schema ({
     userId: {type: String, required: false},

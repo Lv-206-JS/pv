@@ -10,7 +10,7 @@ define([
         },
 
         defaults: {
-            "_id": 0,
+            "id": 0,
             "name": "default",
             "description": "",
             "author": "",
@@ -49,8 +49,8 @@ define([
                     "resource": "",
                     "dependsOn": [
                         {
-                            "taskId": false,
-                            "type": false
+                            "taskId": 0,
+                            "type": ""
                         }
                     ],
                     "attachments": [

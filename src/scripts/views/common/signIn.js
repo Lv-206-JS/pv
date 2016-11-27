@@ -1,7 +1,7 @@
 define([
     'backbone',
     'JST',
-    'models/UserModel'
+    'models/User'
 ], function (Backbone, JST, userModel) {
     'use strict';
 

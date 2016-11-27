@@ -1,7 +1,7 @@
 define([
     'backbone',
     'JST',
-    'models/ProjectModel',
+    'models/Project',
     '../common/mainMenu',
     'views/project/milestone',
     'views/project/ganttChart',
@@ -39,7 +39,7 @@ define([
             this.ganttChartView = new GanttChartView().render();
             this.$el.append(this.ganttChartView.$el);
 
-            this.infoBarView = new InfoBarView().render();
+            this.infoBarView = new InfoBarView({model: this.model}).render();
             this.$el.append(this.infoBarView.$el);
 
             return this;

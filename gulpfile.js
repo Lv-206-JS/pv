@@ -1,17 +1,16 @@
 'use strict';
 
 var gulp = require('gulp');
-var spawn = require('child_process').spawn;
 
 gulp.task('styles', function () {
     var sourcemaps = require('gulp-sourcemaps'),
         autoprefixer = require('gulp-autoprefixer'),
         sass = require('gulp-sass');
-    return gulp.src(['./src/sass/**/*.scss'])
+    return gulp.src(['./src/sass/main.scss'])
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(autoprefixer('last 2 version'))
-        .pipe(sourcemaps.write('./styles', {
+        .pipe(sourcemaps.write('./source-map', {
             addComment: true
         }))
         .pipe(gulp.dest('./styles'));
@@ -53,12 +52,7 @@ gulp.task('build', ['styles', 'jst'], function () {
 
 });
 
-gulp.task('server', function() {
-  spawn('node', ['./bin/www'], { stdio: 'inherit' });
-});
-
-
-gulp.task('default', ['server', 'styles', 'jst'], function () {
+gulp.task('default', ['styles', 'jst'], function () {
     var livereload = require('gulp-livereload'),
         open = require('gulp-open'),
         options = {
@@ -76,4 +70,3 @@ gulp.task('default', ['server', 'styles', 'jst'], function () {
 
     gulp.src('./index.html').pipe(open(options));
 });
-

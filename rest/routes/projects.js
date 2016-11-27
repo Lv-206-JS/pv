@@ -1,99 +1,108 @@
-'use strict';
 var express = require('express');
+var Guid = require('guid');
 var router = express.Router();
 var Project  = require('../../mongoose').ProjectModel;
 
-//functions for working with
-function getDate() {
-    return new Date();
-}
-
-var projectProjection = {
-    milestones: false,
-    settings: false,
-    tasks: false
-};
-
 //Error handler function
-function handleError(response, reason, message, code) {
-    console.log("ERROR: " + reason);
+function handleError(response, message, code) {
     response.status(code || 500).json({"error": message});
 }
 
 //get all projects
 router.get('/', function (request, response) {
-    Project.find({}, projectProjection, function (err, projects) {
-        if(err){
-            handleError(response, err, "Failed to find projects!");
+    Project.find({}, function (err, projects) {
+        if(!projects || err) {
+            handleError(response, "Failed to find projects!", 404);
         }
-        response.send(projects);
+        else {
+            response.send(projects);
+        }
     });
 });
 
 //create project
 router.post('/', function (request, response) {
     var projectToCreate = new Project({
-        "id": increaseIdCounter(),
-        "name": request.body.name,
-        "description": request.body.description,
-        "author": request.body.author,
-        "startDate": request.body.startDate,
-        "createDate": getDate(),
-        "modifiedDate": getDate()
+        id: Guid.create().value,
+        name: request.body.name,
+        description: request.body.description,
+        author: request.body.author,
+        startDate: request.body.startDate,
+        createDate: new Date(),
+        modifiedDate: new Date(),
+        settings : {
+            dayDuration : request.body.settings.dayDuration,
+            weekend : request.body.settings.weekend,
+            icon : request.body.settings.icon
+        }
     });
     projectToCreate.save(function (err, project) {
         if (err) {
-            handleError(response, err, "Failed to create project!");
+            handleError(response, "Failed to create project!");
         }
         else {
-            response.send({ status: 'OK', project:project});
+            response.send(project);
         }
     });
 });
 
 //get one project
 router.get('/:id', function (request, response) {
-    Project.findOne({'id': request.params.id}, projectProjection, function (err, project) {
-        if (!project) {
-            return handleError(response, err, "Failed to find project!", 404);
+    Project.findOne({'id': request.params.id}, function (err, project) {
+        if(!project || err) {
+            handleError(response, "Failed to find project!", 404);
         }
-        if (!err) {
+        else {
             response.send(project);
-        } else {
-            return handleError(response, err, "Failed to send project!");
         }
     });
 });
 
-
 //update project
-router.route('/:id').put(function (request, response) {
-        var projStubCopy = findProjectById(request.params.id);
-        if (!projStubCopy) {
-            response.sendStatus(404);
-        }
-        projStubCopy.name = request.body.name;
-        projStubCopy.description = request.body.description;
-        projStubCopy.author = request.body.author;
-        projStubCopy.startDate = request.body.startDate;
-        //on save will be changing <===== must be implement
-        projStubCopy.modifiedDate = getDate();
-        response.send(projStubCopy);
-    })
+router.put('/:id', function (request, response) {
+    var projectToUpdate = new Project({
+        id: request.body.id,
+        name: request.body.name,
+        description: request.body.description,
+        author: request.body.author,
+        startDate: request.body.startDate,
+        createDate: request.body.createDate,
+        modifiedDate: request.body.modifiedDate,
+        settings : request.body.settings,
+        milestones: request.body.milestones,
+        tasks:request.body.tasks
+    });
+    Project.findOne({'id': request.params.id}, function (err, project) {
+        Project.schema.eachPath(function(path) {
+            if (path != '_id' && path != '__v' && path != 'id') {
+                project[path] = projectToUpdate[path];
+            }
+        });
+        project.save(function (err, savedProject) {
+            console.log(err);
+            if (err) {
+                handleError(response, "Failed to create project!", 404);
+            }
+            else {
+                response.send(savedProject);
+            }
+        });
+    });
+});
 
 //delete project
-    .delete(function (request, response) {
-        var projStubCopy = projStub;
-        for (var i = 0, len = projStubCopy.length; i < len; i++) {
-            if(projStubCopy[i].id == request.params.id) {
-                break;
-            }
+router.delete('/:id',function (request, response) {
+    Project.findOneAndRemove({'id': request.params.id}, function (err, project) {
+        if (!project){
+            handleError(response, "Failed to find project!", 404);
         }
-        if (!projStubCopy[i]) {
-            response.sendStatus(404);
+        else if (err) {
+            handleError(response, "Failed to delete project!", 404);
         }
-        projStubCopy.splice(i,1);
-        response.send(projStubCopy);
+        else {
+            response.send('Deleted!');
+        }
     });
+});
 
 module.exports = router;

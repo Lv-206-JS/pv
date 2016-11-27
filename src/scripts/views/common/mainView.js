@@ -1,7 +1,7 @@
 define([
     'backbone',
     'JST',
-    '../common/mainMenu',
+    './mainMenu',
     '../projects/projects',
     '../project/project'
 ], function (Backbone, JST, MainMenuView, ProjectsView, ProjectView ) {

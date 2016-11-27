@@ -7,7 +7,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var mongo = require('mongodb');
+var expressValidator = require('express-validator');
+var flash = require('connect-flash');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+//mongoose connection
 var mongoose = require('mongoose');
 mongoose.connect("localhost:27017/ganttcharts");
 
@@ -22,7 +27,8 @@ var db = mongoose.connection;
 
 var app = express();
 var projectAPI = require('./rest/routes/projects');
-var settingsAPI = require('./rest/routes/settings');
+var attachmentsAPI = require('./rest/routes/attachments');
+var milestonesAPI = require('./rest/routes/milestones');
 var taskAPI = require('./rest/routes/tasks');
 
 
@@ -73,7 +79,8 @@ app.use(session({
 
 app.use('/rest/user', userAPI);
 app.use('/rest/projects', projectAPI);
-app.use('/rest/settings', settingsAPI);
+app.use('/rest/projects', attachmentsAPI);
+app.use('/rest/milestones',  milestonesAPI);
 app.use('/rest/tasks',  taskAPI);
 // Passport Initialization
 app.use(passport.initialize());
@@ -130,8 +137,29 @@ app.use(function(req, res, next) {
     next(err);
 });
 
+// error handlers
 
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
+}
 
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
+});
 
 //exporting  app to fire www
 module.exports = app;
