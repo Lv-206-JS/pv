@@ -2,7 +2,7 @@ define([
     'backbone',
     'underscore',
     'JST',
-    'models/UserModel'
+    'models/User'
 ], function (Backbone, _, JST, userModel) {
     'use strict';
 

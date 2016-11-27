@@ -1,7 +1,7 @@
 define([
     'backbone',
     'JST',
-    'collections/ProjectsCollection',
+    'collections/Projects',
     'views/projects/projectsList',
     'views/projects/projectsAbout'
 ], function (Backbone, JST, ProjectCollection, ProjectsListView, ProjectsAboutView) {

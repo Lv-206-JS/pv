@@ -1,9 +1,8 @@
 define([
     'backbone',
     'underscore',
-    'JST',
-    'models/UserModel'
-], function (Backbone, _, JST, userModel) {
+    'JST'
+], function (Backbone, _, JST) {
     'use strict';
 
     var LandingMenuView = Backbone.View.extend({

@@ -28,10 +28,6 @@ var db = mongoose.connection;
 var app = express();
 var projectAPI = require('./rest/routes/projects');
 var attachmentsAPI = require('./rest/routes/attachments');
-var milestonesAPI = require('./rest/routes/milestones');
-var taskAPI = require('./rest/routes/tasks');
-
-
 
 //routes
 var routes = require('./rest/routes/index');
@@ -49,12 +45,6 @@ app.use(function (request, response, next) {
 var userAPI = require('./rest/routes/user');
 var login = require('./rest/routes/users');
 var signup = require('./rest/routes/users');
-
-
-
-
-
-
 
 //View Engine
 app.set('views', path.join(__dirname, 'views'));//folder views handles our views
@@ -80,8 +70,7 @@ app.use(session({
 app.use('/rest/user', userAPI);
 app.use('/rest/projects', projectAPI);
 app.use('/rest/projects', attachmentsAPI);
-app.use('/rest/milestones',  milestonesAPI);
-app.use('/rest/tasks',  taskAPI);
+
 // Passport Initialization
 app.use(passport.initialize());
 app.use(passport.session());
@@ -116,11 +105,6 @@ app.use(function(req, res, next){
   res.locals.current_user = req.user || null
   next();
 });
-
-
-
-
-
 
 app.use('/', routes);
 app.use('/users', users);
