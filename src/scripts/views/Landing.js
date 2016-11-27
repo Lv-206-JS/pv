@@ -6,7 +6,7 @@ define([
     'use strict';
 
     var LandingView = Backbone.View.extend({
-        template: JST.LandingView,
+        template: JST.Landing,
         className: 'landing-view',
 
         initialize: function (options) {

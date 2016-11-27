@@ -9,7 +9,7 @@ define([
 
     var ProjectsAreaView = Backbone.View.extend({
         className: 'projects-area-view',
-        template: JST['projects:ProjectsAreaView'],
+        template: JST['projects:ProjectsArea'],
 
         initialize: function () {
             this.collection = new ProjectCollection();

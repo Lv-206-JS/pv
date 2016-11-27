@@ -2,7 +2,7 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
     'use strict';
 
     var InfoBarView = Backbone.View.extend({
-        template: JST['singleProject:InfoBarView'],
+        template: JST['singleProject:InfoBar'],
         className: 'info-bar-view',
 
         initialize: function (options) {

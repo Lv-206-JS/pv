@@ -6,7 +6,7 @@ define([
     'use strict';
 
     var LandingMenuView = Backbone.View.extend({
-        template: JST.LandingMenuView,
+        template: JST.LandingMenu,
         className: 'landing-main-menu',
         events: {
             'click .go-to-projects': 'onGoToProjects'
