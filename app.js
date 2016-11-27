@@ -29,8 +29,6 @@ var app = express();
 var projectAPI = require('./rest/routes/projects');
 var attachmentsAPI = require('./rest/routes/attachments');
 
-
-
 //routes
 var routes = require('./rest/routes/index');
 var users = require('./rest/routes/users');
@@ -47,12 +45,6 @@ app.use(function (request, response, next) {
 var userAPI = require('./rest/routes/user');
 var login = require('./rest/routes/users');
 var signup = require('./rest/routes/users');
-
-
-
-
-
-
 
 //View Engine
 app.set('views', path.join(__dirname, 'views'));//folder views handles our views
@@ -78,6 +70,7 @@ app.use(session({
 app.use('/rest/user', userAPI);
 app.use('/rest/projects', projectAPI);
 app.use('/rest/projects', attachmentsAPI);
+
 // Passport Initialization
 app.use(passport.initialize());
 app.use(passport.session());
