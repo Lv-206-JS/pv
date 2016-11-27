@@ -5,6 +5,8 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://ganttcharts:softserve@ds055905.mlab.com:55905/ganttcharts');
 */
 
+// Most of the types are Strings, because its document oriented DB
+
 var Schema = mongoose.Schema;
 
 var ProjectsSchema = new Schema({
@@ -20,7 +22,7 @@ var ProjectsSchema = new Schema({
         date: {type: Date, required: false}
     }],
     settings: {
-        dayDuration: {type: Number, required: false},
+        dayDuration: {type: String, required: false},
         weekend: {type: Array, required: false},
         icon: {type: String, required: false}
     },
@@ -29,7 +31,7 @@ var ProjectsSchema = new Schema({
         projectId: {type: String, required: false},
         name: {type: String, required: false},
         description: {type: String, required: false},
-        estimateTime: {type: Number, required: false},
+        estimateTime: {type: String, required: false},
         resource: {type: String, required: false},
         dependsOn: [{
             taskId: {type: String, required: false},

@@ -1,17 +1,40 @@
 
 var express = require('express');
 var router = express.Router();
-var DB = require('../../dummyDB');
+var User  = require('../../mongoose').UsersModel;
 
-router.get('/user/:id', function(req, res, next) {
-  if(!req.session.user) return res.redirect('/login');
-  if(req.session.user.id == req.params.id ) return res.render('profile', req.session.user);
-  var user = DB.getUser(req.params.id)
-  if(!user)
-    return next();
-  res.render('user', user);
+//Error handler function
+function handleError(response, reason, message, code) {
+    console.log("ERROR: " + reason);
+    response.status(code || 500).json({"error": message});
+}
+
+//get one user
+router.get('/:id', function (request, response) {
+    User.findOne({'userId': request.params.id}, function (err, user) {
+        if (!user) {
+            return handleError(response, err, "Failed to find user!", 404);
+        }
+        if (!err) {
+            response.send(user);
+        } else {
+            return handleError(response, err, "Failed to send user!");
+        }
+    });
 });
 
-
+router.post('/', function (request, response) {
+    // Dance HERE
+    User.findOne({'email': request.body.email}, function (err, user) {
+        if (!user) {
+            return handleError(response, err, "Not Authorized!", 401);
+        }
+        if (!err) {
+            response.send(user);
+        } else {
+            return handleError(response, err, "Failed to send user!");
+        }
+    });
+});
 
 module.exports = router;

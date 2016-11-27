@@ -25,8 +25,7 @@ gulp.task('jst', [], function () {
             name: function name(file) {
                 var name = file.relative;
                 name = name.replace('.ejs', '');
-                name = name.replace(/[\\\/]/g, ':'); // Replace Unix & Windows path separator to :
-                console.log(name);
+                name = name.replace(/[\\\/]/g, ':'); // Replace Unix & Windows path separator to ":"
                 return name;
             }
         }))

@@ -1,4 +1,50 @@
 .main-menu {
-  background-color: #4c4e51;
-  height: 48px;
+  display: flex;
+  ul {
+    display: flex;
+    list-style-type: none;
+    width: 100%;
+    height: 60px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #4c4e51;
+    font-weight: bold;
+    color: white;
+    p {
+      font-family: "Comic Sans MS";
+      font-size: 20px;
+      text-align: center;
+      margin: auto;
+      align-items: center;
+      //padding: 10px 0px;
+      img {
+        height: 30px;
+        width: 30px;
+        text-align: center;
+        padding: 8px 16px;
+      }
+    }
+    li {
+      align-items: center;
+      border-left: 2px solid #2D77A2;
+      &:first-child {
+        border: none;
+      }
+      & a {
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+      & a:hover {
+        background-color: #111;
+      }
+      & p {
+        font-family: "Comic Sans MS";
+        font-size: 20px;
+        margin: auto;
+        padding: 10px 20px 0px 0px;
+      }
+    }
+  }
 }

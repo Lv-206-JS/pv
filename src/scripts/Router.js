@@ -1,16 +1,16 @@
 define([
     'jquery',
     'backbone',
-        'views/Landing',
-        'views/projects/MainProjects',
-        'views/singleProject/Project'
+    'views/landing',
+    'views/common/mainView',
+    'views/common/signIn'
 ],
 function (
     $,
     Backbone,
     LandingView,
-    MainProjectsView,
-    ProjectView
+    MainView,
+    SignInView
 ) {
     'use strict';
 
@@ -19,45 +19,71 @@ function (
         routes: {
             'projects': 'openProjects',
             'project/:projectId': 'openSingleProject',
+            'project/:projectId/task/:taskId': 'openProjectAndTask',
+            'user/signin' : 'openSingIn',
             '*path': 'openLandingPage'
         },
 
         openLandingPage: function openLandingPage() {
-            if (this.view) {
-                this.view.remove();
-                this.view = null;
+            if (this.mainView) {
+                this.mainView.remove();
+                this.mainView = null;
             }
 
-            this.view = new LandingView();
-            $('body').append(this.view.render().$el);
+            this.landingView = new LandingView();
+            $('body').html(this.landingView.render().$el);
         },
 
         openProjects: function () {
             // If view exists kill it!!!
-            if (this.view) {
-                this.view.remove();
-                this.view = null;
+            if (this.landingView) {
+                this.landingView.remove();
+                this.landingView = null;
             }
 
-            // Create new view.
-            this.view = new MainProjectsView();
-            // Clean body element and append new view element.
-            $('body').html(this.view.render().$el);
+            if (!this.mainView) {
+                // Create new view.
+                this.mainView = new MainView();
+                // Clean body element and append new view element.
+                $('body').html(this.mainView.render().$el);
+            }
+
+            this.mainView.renderProjects();
         },
 
         openSingleProject: function openSingleProject(projectId) {
-            if (this.view) {
-                this.view.remove();
-                this.view = null;
+            // If view exists kill it!!!
+            if (this.landingView) {
+                this.landingView.remove();
+                this.landingView = null;
             }
 
-            //TODO remove unneccessary check
-            //TODO remove unneccessary check
-
-            if (!this.view) {
-                this.view = new ProjectView({projectId: projectId});
-                $('body').append(this.view.render().$el);
+            if (!this.mainView) {
+                // Create new view.
+                this.mainView = new MainView();
+                // Clean body element and append new view element.
+                $('body').html(this.mainView.render().$el);
             }
+
+            this.mainView.renderProject(projectId);
+        },
+
+        openProjectAndTask: function openProjectAndTask(projectId, taskId) {
+            this.openSingleProject(projectId);
+        },
+
+        openSingIn: function openSignIn() {
+            if (this.landingView) {
+                this.landingView.remove();
+                this.landingView = null;
+            }
+
+            if (!this.signInView) {
+                // Create new view.
+                this.signInView = new SignInView();
+            }
+
+            $('body').html(this.signInView.render().$el);
         }
     });
     return Router;
