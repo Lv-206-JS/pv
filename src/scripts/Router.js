@@ -3,14 +3,16 @@ define([
     'backbone',
     'views/landing',
     'views/common/mainView',
-    'views/common/signIn'
+    'views/common/signIn',
+    'models/User'
 ],
 function (
     $,
     Backbone,
     LandingView,
     MainView,
-    SignInView
+    SignInView,
+    userModel
 ) {
     'use strict';
 
@@ -40,6 +42,10 @@ function (
                 this.landingView.remove();
                 this.landingView = null;
             }
+            if (!userModel.get('userId')) {
+                PV.router.navigate('/', {trigger: true});
+                return;
+            }
 
             if (!this.mainView) {
                 // Create new view.
@@ -56,6 +62,11 @@ function (
             if (this.landingView) {
                 this.landingView.remove();
                 this.landingView = null;
+            }
+
+            if (!userModel.get('userId')) {
+                PV.router.navigate('/', {trigger: true});
+                return;
             }
 
             if (!this.mainView) {
