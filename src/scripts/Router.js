@@ -1,19 +1,23 @@
 define([
-    'jquery',
-    'backbone',
-    'views/landing',
-    'views/common/mainView',
-    'views/common/signIn',
-    'models/User'
-],
-function (
-    $,
-    Backbone,
-    LandingView,
-    MainView,
-    SignInView,
-    userModel
-) {
+        'jquery',
+        'backbone',
+        'views/landing',
+        'views/common/mainView',
+        'views/common/signIn',
+        'models/User',
+        'views/common/logIn',
+        'views/common/register'
+    ],
+    function ($,
+              Backbone,
+              LandingView,
+              MainView,
+              SignInView,
+              userModel,
+              LogInView,
+              RegistrationView
+)
+{
     'use strict';
 
     var Router = Backbone.Router.extend({
@@ -22,7 +26,9 @@ function (
             'projects': 'openProjects',
             'project/:projectId': 'openSingleProject',
             'project/:projectId/task/:taskId': 'openProjectAndTask',
-            'user/signin' : 'openSingIn',
+            'user/signin': 'openSingIn',
+            'users/login': 'loginForm',
+            'users/registration': 'registrationForm',
             '*path': 'openLandingPage'
         },
 
@@ -42,10 +48,10 @@ function (
                 this.landingView.remove();
                 this.landingView = null;
             }
-            if (!userModel.get('userId')) {
-                PV.router.navigate('/', {trigger: true});
-                return;
-            }
+            //if (!userModel.get('userId')) {
+            //    PV.router.navigate('/', {trigger: true});
+            //    return;
+            //}
 
             if (!this.mainView) {
                 // Create new view.
@@ -95,7 +101,26 @@ function (
             }
 
             $('body').html(this.signInView.render().$el);
+        },
+
+        loginForm: function loginForm() {
+
+            if (!this.logInView) {
+                this.logInView = new LogInView();
+            }
+
+            $('.auth').html(this.logInView.render().$el);
+        },
+        registrationForm: function registrationForm() {
+
+            if (!this.registrationView) {
+                this.registrationView = new RegistrationView();
+            }
+
+            $('.auth').html(this.registrationView.render().$el);
         }
     });
     return Router;
-});
+}
+)
+;
