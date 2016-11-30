@@ -1,0 +1,9 @@
+.projects-area-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  .projects-list-block {
+    width: 50%;
+  }
+}

@@ -1,0 +1,24 @@
+
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+
+    ul {
+      margin: 0; padding: 0;
+      border: 2px solid #7d7d7d;
+      display: flex;
+      flex-direction: column;
+
+      li {
+        list-style: none;
+        height: 60px;
+
+        &:nth-child(odd){
+          background-color: #7f7f7f;
+        }
+      }
+      span {
+        height: 60px;
+      }
+    }
+  }

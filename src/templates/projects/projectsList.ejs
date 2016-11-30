@@ -1,6 +1,8 @@
+<h2> Projects Name List</h2>
 <ul>
     <% for(var i = 0; i < projects.length; i++) {%>
     <li class="projects-list-item" data-id="<%= projects[i].id %>"><%= projects[i].name %></li>
+    <!--TODO: Make spans flex-items inside li element!-->
     <span class="projects-list-link" data-id="<%= projects[i].id %>">Go to project!</span>
     <% } %>
 </ul>
