@@ -3,13 +3,25 @@ var Guid = require('guid');
 var router = express.Router();
 var Project  = require('../../mongoose').ProjectModel;
 
+
+function authenticateUser(req, res, next){
+    if(req.isAuthenticated()){
+        console.log('Authenticated!');
+        return next();
+    } else {
+        //req.flash('error_msg','You are not logged in');
+        console.log('Not Authenticated');
+        return res.redirect('users/login');
+    }
+}
+
 //Error handler function
 function handleError(response, message, code) {
     response.status(code || 500).json({"error": message});
 }
 
 //get all projects
-router.get('/', function (request, response) {
+router.get('/', authenticateUser, function (request, response) {
     Project.find({}, function (err, projects) {
         if(!projects || err) {
             handleError(response, "Failed to find projects!", 404);
@@ -47,7 +59,7 @@ router.post('/', function (request, response) {
 });
 
 //get one project
-router.get('/:id', function (request, response) {
+router.get('/:id', authenticateUser, function (request, response) {
     Project.findOne({'id': request.params.id}, function (err, project) {
         if(!project || err) {
             handleError(response, "Failed to find project!", 404);

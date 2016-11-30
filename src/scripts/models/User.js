@@ -6,7 +6,7 @@ define([
     var UserModel = Backbone.Model.extend({
         idAttribute : 'userId',
 
-        url: '/rest/user',
+        url: '/rest/users',
         setUrl: function (id) {
             this.url = '/rest/user/' + id;
         },
@@ -14,7 +14,6 @@ define([
         defaults: function(){
             return {
                 '_id': null,
-                'userId': null,
                 'firstname': '',
                 'lastname': '',
                 'email': '',

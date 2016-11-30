@@ -9,6 +9,11 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
+var expressValidator = require('express-validator');
+var session = require('express-session');
+
+
+
 
 
 //mongoose connection
@@ -17,19 +22,14 @@ var mongoose = require('mongoose');
 var db = mongoose.connection;
 mongoose.connect("localhost:27017/ganttcharts");
 
-var exphbs = require('express-handlebars');
-var expressValidator = require('express-validator');
-var session = require('express-session');
+
 
 
 var app = express();
+//routes
 var projectAPI = require('./rest/routes/projects');
 var attachmentsAPI = require('./rest/routes/attachments');
-
-//routes
 var routes = require('./rest/routes/index');
-
-
 var passport = require('passport');
 var users = require('./rest/routes/users');
 
@@ -40,85 +40,32 @@ app.use(function (request, response, next) {
     next();
 });
 
-// loading routes for authentication
-// var index = require('./rest/index');
-var userAPI = require('./rest/routes/user');
-
-
-//View Engine
-app.set('views', path.join(__dirname, 'views'));//folder views handles our views
-//app.engine('handlebars', exphbs({defaultLayout: 'layout'}));//setting engine and default layout
 app.set('view engine', 'ejs');
 
 //Logger
 app.use(morgan('dev'));
 
-//BodyParser MiddleWare
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-//Set Static folder(src folder);
-//stuff that is publicly accessible to the browser
-app.use(express.static(path.join(__dirname, 'public')));
-
-
-
-app.use('/rest/user', userAPI);
-app.use('/rest/projects', projectAPI);
-app.use('/rest/projects', attachmentsAPI);
-
-// Passport Initialization
-//Express session
 app.use(session({
     secret: 'secret',
     saveUninitialized: true,
     resave: true
 }));
 
+// Passport init
 app.use(passport.initialize());
 app.use(passport.session());
 
-var authenticateUser = function(req, res, next){
-    console.log("req");
-    console.log(req.isAuthenticated());
-    console.log("req");
-    // if(req.isAuthenticated()){
-    //     console.log("thats good");
-    //     return next();
-    // } else {
-    //     //req.flash('error_msg', 'You are not logged in');
-    //     console.log('Not authorized');
-    //     res.redirect('users/login');
-    //     //return next();
-    // }
-    if (req.user) {
-        console.log("AUTHORIZED!")
-    }else{
-        console.log("NOT AUTHORIZED");
-    }
-    console.log(req);
-    return req.isAuthenticated() ? next() : redirect("users/login");
-}
-app.all('rest/projects', authenticateUser);
-app.all('rest/projects/*', authenticateUser);
+//BodyParser MiddleWare
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+//app.use('/rest/user', userAPI);
+app.use('/rest/projects', projectAPI);
+app.use('/rest/projects', attachmentsAPI);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.use('/users', users);
 
 //Express Validator code taken from express-validator github
 app.use(expressValidator({
@@ -151,8 +98,7 @@ app.use(function(req, res, next){
     next();
 });
 
-//app.use('/', routes);
-app.use('/users', users);
+
 
 app.use(/\/project.*/, express.static('./index.html'));
 app.use(/\/user.*/, express.static('./index.html'));
