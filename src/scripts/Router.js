@@ -17,10 +17,10 @@ function (
     'use strict';
 
     var Router = Backbone.Router.extend({
-        view: null,
         routes: {
             'projects': 'openProjects',
             'project/:projectId': 'openSingleProject',
+            // 'project/:new' : 'createProject',
             'project/:projectId/task/:taskId': 'openProjectAndTask',
             'user/signin' : 'openSingIn',
             '*path': 'openLandingPage'
@@ -78,6 +78,10 @@ function (
 
             this.mainView.renderProject(projectId);
         },
+
+        // createProject: function createProject() {
+        //          console.log('Show form for Creating new project!');
+        // },
 
         openProjectAndTask: function openProjectAndTask(projectId, taskId) {
             this.openSingleProject(projectId);
