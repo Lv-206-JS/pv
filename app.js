@@ -40,6 +40,24 @@ app.use(function (request, response, next) {
     next();
 });
 
+//Express Validator code taken from express-validator github
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value){
+        var namespace = param.split('.')
+            , root = namespace.shift()
+            , formParam = root;
+
+        while(namespace.length){
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param : formParam,
+            msg : msg,
+            value : value
+        };
+    }
+}));
+
 app.set('view engine', 'ejs');
 
 //Logger
@@ -64,26 +82,8 @@ app.use(cookieParser());
 app.use('/rest/projects', projectAPI);
 app.use('/rest/projects', attachmentsAPI);
 
-
 app.use('/users', users);
 
-//Express Validator code taken from express-validator github
-app.use(expressValidator({
-    errorFormatter: function(param, msg, value){
-        var namespace = param.split('.')
-            , root = namespace.shift()
-            , formParam = root;
-
-        while(namespace.length){
-            formParam += '[' + namespace.shift() + ']';
-        }
-        return {
-            param : formParam,
-            msg : msg,
-            value : value
-        };
-    }
-}));
 
 //Connect Flash MiddleWare
 app.use(flash());
