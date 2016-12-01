@@ -6,6 +6,7 @@
 @import "single-project/gantt-chart-view";
 @import "single-project/info-bar-view";
 @import "single-project/milestone-view";
+@import "single-project/tasks-list";
 @import "projects/main-projects-view";
 @import "projects/projects-about-view";
 @import "projects/projects-area-view";
@@ -17,6 +18,7 @@ html, body {
   margin: 0;
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: hidden;
   font-family: Verdana, Times, sans-serif;
 }

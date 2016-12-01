@@ -1,0 +1,125 @@
+$gantt-background-color: #fff;
+$light-grey-color: #ededed;
+$font-family-helvetica: 'Helvetica', sans-serif;
+$font-color: #000;
+$primary-font-size: 14px;
+$text-center: center;
+$text-left: left;
+$border: 1px solid $light-grey-color;
+$border-collapse: collapse;
+$border-box: border-box;
+$cell-width-wide: 200px;
+$cell-width: 100px;
+$cell-height-wide: 30px;
+$cell-height: 15px;
+$cell-padding: 10px 5px;
+$overflow-auto: auto;
+$overflow-hidden: hidden;
+$left-panel-width: 545px;
+$splitter-width: 10px;
+$display-flex: flex;
+$cursor-pointer: pointer;
+$main-menu-height: 50px;
+$milestone-height: 100px;
+
+.tasks-list-container {
+  display: $display-flex;
+  //overflow-y: $overflow-auto;
+  background-color: $gantt-background-color;
+}
+
+.left-panel {
+  position: relative;
+  right: auto;
+  width: $left-panel-width;
+  background-color: $gantt-background-color;
+  overflow-x: $overflow-auto;
+}
+
+.tasks-list {
+  box-sizing: $border-box;
+  font-family: $font-family-helvetica;
+  font-size: $primary-font-size;
+  color: $font-color;
+  border-collapse: $border-collapse;
+
+  .thead .td {
+    min-width: $cell-width;
+    height: $cell-height-wide;
+    padding: $cell-padding;
+    text-align: $text-center;
+    border: $border;
+
+    .add-task {
+      font-size: 14px;
+      margin: 5px 18%;
+      padding: 10px 15px;
+      font-weight: 400;
+      color: #000;
+      background-color: #ededed;
+
+      &:hover {
+        cursor: pointer;
+        background-color: darken($light-grey-color, 25%);
+      }
+    }
+  }
+
+  .tbody {
+    overflow: auto;
+    .td {
+      min-width: $cell-width;
+      height: $cell-height;
+      padding: $cell-padding;
+      text-align: $text-center;
+      border: $border;
+    }
+
+    .task-name {
+      min-width: $cell-width-wide;
+      max-width: $cell-width-wide;
+
+      &:hover {
+        cursor: $cursor-pointer;
+      }
+    }
+  }
+}
+.splitter {
+  overflow-y: $overflow-hidden;
+  position: absolute;
+  left: 0px;
+  right: auto;
+  box-sizing: $border-box;
+  width: $splitter-width;
+  height: 100%;
+  background-color: $light-grey-color;
+  border: $border;
+  border-color: darken($light-grey-color, 10%);
+
+  &:hover {
+    cursor: col-resize;
+    background-color: darken($light-grey-color, 25%);
+  }
+}
+
+.right-panel {
+  overflow-x: $overflow-auto;
+  position: absolute;
+  left: $left-panel-width;
+  width: 100%;
+  background-color: $gantt-background-color;
+}
+.gantt-chart {
+  @extend .thead;
+  @extend .tbody;
+  box-sizing: $border-box;
+
+  .thead {
+    .td {
+      height: 23px;
+      min-width: $cell-width-wide;
+      max-width: $cell-width-wide;
+    }
+  }
+}

@@ -4,9 +4,9 @@ define([
     'models/Project',
     '../common/mainMenu',
     'views/project/milestone',
-    'views/project/ganttChart',
-    'views/project/infoBar'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttChartView, InfoBarView) {
+    'views/project/infoBar',
+    'views/project/tasksList'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
@@ -36,8 +36,11 @@ define([
             this.milestoneView = new MilestoneView().render();
             this.$el.append(this.milestoneView.$el);
 
-            this.ganttChartView = new GanttChartView().render();
-            this.$el.append(this.ganttChartView.$el);
+            this.tasksListView = new TasksListView({tasks: this.model.get('tasks')}).render();
+            this.$el.append(this.tasksListView.$el);
+
+            // this.ganttChartView = new GanttChartView().render();
+            // this.$el.append(this.ganttChartView.$el);
 
             this.infoBarView = new InfoBarView({model: this.model}).render();
             this.$el.append(this.infoBarView.$el);
