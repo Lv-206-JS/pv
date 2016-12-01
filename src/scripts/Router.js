@@ -42,10 +42,10 @@ function (
                 this.landingView.remove();
                 this.landingView = null;
             }
-            if (!userModel.get('userId')) {
+          /*  if (!userModel.get('userId')) {
                 PV.router.navigate('/', {trigger: true});
                 return;
-            }
+            }*/
 
             if (!this.mainView) {
                 // Create new view.
@@ -64,10 +64,10 @@ function (
                 this.landingView = null;
             }
 
-            if (!userModel.get('userId')) {
+           /* if (!userModel.get('userId')) {
                 PV.router.navigate('/', {trigger: true});
                 return;
-            }
+            }*/
 
             if (!this.mainView) {
                 // Create new view.
