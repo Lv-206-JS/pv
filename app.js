@@ -69,7 +69,7 @@ app.use(session({
 
 app.use('/rest/user', userAPI);
 app.use('/rest/projects', projectAPI);
-app.use('/rest/projects', attachmentsAPI);
+app.use('/rest/attachments', attachmentsAPI);
 
 // Passport Initialization
 app.use(passport.initialize());
