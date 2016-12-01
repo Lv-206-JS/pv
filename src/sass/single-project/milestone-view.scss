@@ -1,11 +1,13 @@
+$milestone-view-height: 30px;
 .milestone-view {
+  margin: 30px 0px ;
   background-color: inherit;
-  height: 44px;
+  height: $milestone-view-height;
 }
 .project-length-wrap {
   margin: auto;
   width: 80%;
-  height: 3em;
+  height: 2em;
 }
 .project-start-date {
   float: left;
@@ -14,7 +16,7 @@
   float: right;
 }
 .project-length {
-  margin: 4em;
+  margin: 0px 70px;
   height: inherit;
   background-color: darkgray;
   position: relative;
@@ -25,14 +27,14 @@
 .project-milestone-date {
   position: absolute;
   top: -1.5em;
-  width: 7em;
+  width: 8em;
   text-align: center;
-  left: -3.5em;
+  left: 1.5em;
 }
 .project-milestone-label-wrap {
   position: relative;
-  left: -16px;
-  top: 2em;
+  left: 4.5em;
+  top: 1em;
 }
 .project-milestone-label {
   width: 0;
