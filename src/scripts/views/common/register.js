@@ -9,9 +9,7 @@ define([
         template: JST['common:register'],
         className: 'registration-view',
         events: {
-            /*'submit form': 'onSubmit',*/
             'click #post_user' : 'onSubmit'
-
         },
 
         render: function render() {
@@ -21,7 +19,7 @@ define([
 
         onSubmit: function onSubmit(event){
             event.preventDefault();
-
+            var elem = this.$el;
             console.log("It works!!!");
             var response = $.ajax({
                 url:  '/users/register',
@@ -31,31 +29,27 @@ define([
                 success: function(res){
                     console.log(res);
                     Backbone.history.navigate('users/login', { trigger: true });
-                    console.log("Dzaga-dzaga");
+                },
+                error: function(res){
+                    console.log(res);
+                    var assm = elem.find("#lastname");
+                    assm.attr("placeholder", "Type your answer here");
+                    var response = JSON.parse(res.responseText);
+                    console.log(response.error);
+                    /*response.error.forEach(mess){
+                        var err_mess = elem.find("#" + mess.param.trim());
+                        err_mess.attr("placeholder", mess.msg);
+                    }*/
+                    response.error.forEach(function(mess){
+                        console.log(mess.msg);
+                        var err_mess = elem.find("#" + mess.param.trim());
+                        err_mess.attr("placeholder", mess.msg);
+                    });
                 }
             });
         }
     })
 
-
-
-
-/*    addAttachment : function (event) {
-        event.preventDefault();
-        var uploadfile = new FormData();
-
-        uploadfile.append('file', $("#attachment-file").prop('files')[0]);
-        var response = $.ajax({
-            url:  '/rest/attachments',
-            type: 'POST',
-            data: uploadfile,
-            contentType: false,
-            processData: false,
-            async:false
-        });
-        console.log(response.responseText);
-        return this.updateModel(response.responseText);
-    },*/
 
     return RegistrationView;
 });

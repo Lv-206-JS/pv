@@ -39,9 +39,7 @@ router.post('/register', function (req, res) {
     var errors = req.validationErrors();
 
     if (errors) {
-        res.render('users/register', {
-            errors: errors
-        });
+        res.status(404).json({"error": errors});
     } else {
         var newUser = new User({
             firstname: firstname,
@@ -54,9 +52,6 @@ router.post('/register', function (req, res) {
             if (err) throw err;
             console.log(user);
         });
-        console.log("Baba Vanga!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-       // req.flash('success_msg', 'You are registered and can now login');
-       //  res.redirect('/users/login');
         res.status(200).json({"error": errors});
     }
 });
