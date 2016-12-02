@@ -18,7 +18,7 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
 
         events: {
             'click .ok-button' : 'hideAttachmentsView',
-            'click .add-attachment-button' : 'addAttachment',
+            'change #add-attachment-file' : 'addAttachment',
             'click #delete-attachment' : 'deleteAttachment'
         },
 
@@ -36,7 +36,7 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
         addAttachment : function (event) {
             event.preventDefault();
             var uploadfile = new FormData();
-            uploadfile.append('file', $("#attachment-file").prop('files')[0]);
+            uploadfile.append('file', $("#add-attachment-file").prop('files')[0]);
             var response = $.ajax({
                 url:  '/rest/attachments',
                 type: 'POST',
