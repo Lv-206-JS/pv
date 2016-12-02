@@ -5,14 +5,16 @@ define([
     '../common/mainMenu',
     'views/project/milestone',
     'views/project/infoBar',
-    'views/project/tasksList'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView) {
+    'views/project/tasksList',
+    'views/project/attachments'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, AttachmentsView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
         className: 'main-project-view',
         events: {
-            'click .back-to-landing-view': 'onBackToLandingPage'
+            'click .back-to-landing-view': 'onBackToLandingPage',
+            'click .show-attachments': 'showAttachmentsPopup'
         },
 
         initialize: function (options) {
@@ -48,10 +50,25 @@ define([
             return this;
         },
 
+        showAttachmentsPopup: function(){
+            var attachments = this.model.get('attachments');
+
+            this.attachmentsView = new AttachmentsView({
+                model: this.model,
+                attachments: attachments
+            });
+
+            this.attachmentsView.render();
+            this.$el.append(this.attachmentsView.$el);
+        },
+
         onChange: function () {
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
             this.$el.html('');
             this.renderViews();
+            if(this.model.whoChange == 'AttachmentsView') {
+                return this.showAttachmentsPopup();
+            }
         }
     });
 

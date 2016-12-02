@@ -70,7 +70,8 @@ router.put('/:id', function (request, response) {
         modifiedDate: request.body.modifiedDate,
         settings : request.body.settings,
         milestones: request.body.milestones,
-        tasks:request.body.tasks
+        tasks: request.body.tasks,
+        attachments: request.body.attachments
     });
     Project.findOne({'id': request.params.id}, function (err, project) {
         Project.schema.eachPath(function(path) {
@@ -79,7 +80,6 @@ router.put('/:id', function (request, response) {
             }
         });
         project.save(function (err, savedProject) {
-            console.log(err);
             if (err) {
                 handleError(response, "Failed to create project!", 404);
             }

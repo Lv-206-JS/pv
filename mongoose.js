@@ -42,14 +42,18 @@ var ProjectsSchema = new Schema({
             fileName: {type: String, required: false},
             mimeType: {type: String, required: false}
         }]
+    }],
+    attachments: [{
+        attachmentId: {type: String, required: false},
+        fileName: {type: String, required: false},
+        relativePath: {type: String, required: false},
+        mimeType: {type: String, required: false}
     }]
 });
 
 var FileAttachmentsSchema = new Schema ({
     attachmentId: {type: String, required: false},
-    fileName: {type: String, required: false},
-    relativePath: {type: String, required: false},
-    mimeType: {type: String, required: false}
+    relativePath: {type: String, required: false}
 }, { collection: 'fileAttachments' });
 
 var UsersSchema = new Schema ({

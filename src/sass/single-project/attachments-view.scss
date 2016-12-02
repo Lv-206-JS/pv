@@ -1,0 +1,97 @@
+$basic-popup-background-color: rgba(0,0,0,0.3);
+$form-background-color: #DED8D8;
+$attachment-form-width: 500px;
+$attachment-form-height: 420px;
+$attachment-form-border-color: #333;
+$attachment-form-border-radius: 10px;
+$attachment-form-color: #000;
+$attachment-form-font-stack: Helvetica, sans-serif;
+$attachment-form-font-size: 14px;
+$attachment-form-inner-margin: 20px;
+
+
+.attachments-view {
+  background-color: $basic-popup-background-color;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  font: $attachment-form-font-stack;
+  font-size: $attachment-form-font-size;
+
+  .main-form {
+    z-index: 1005;
+    background-color: $form-background-color;
+    margin: 0 auto;
+    margin-top: 100px;
+    width: $attachment-form-width;
+    height: $attachment-form-height;
+    border: 1px solid $attachment-form-border-color;
+    position: relative;
+
+    .attachment-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y:auto;
+      height:337px;
+    }
+
+    .attachment-item {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+
+    #delete-attachment-image {
+      width: 20px;
+      height: 20px
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    a:hover {
+      color: blue;
+    }
+
+    .upload {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .common-form-buttons {
+      position: absolute;
+      bottom: 0;
+      width: inherit;
+      height: 40px;
+      background-color: #4c4e51;
+
+      .ok-button {
+        height: 30px;
+        margin: 5px;
+        float: right;
+        line-height: 20px;
+        padding: 5px 20px;
+        font-size: $attachment-form-font-size;
+        font-family: $attachment-form-font-stack;
+        color: $attachment-form-color;
+        background-color: $form-background-color;
+      }
+
+    }
+  }
+}
+
+.show-content{
+  display: block;
+}
+
+.hide-content{
+  display: none;
+}
