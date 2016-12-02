@@ -22,11 +22,13 @@ $display-flex: flex;
 $cursor-pointer: pointer;
 $main-menu-height: 50px;
 $milestone-height: 100px;
+$task-list-container-max-height: 400px;
 
 .tasks-list-container {
   display: $display-flex;
-  //overflow-y: $overflow-auto;
+  overflow-y: $overflow-auto;
   background-color: $gantt-background-color;
+  max-height: $task-list-container-max-height;
 }
 
 .left-panel {
@@ -67,7 +69,6 @@ $milestone-height: 100px;
   }
 
   .tbody {
-    overflow: auto;
     .td {
       min-width: $cell-width;
       height: $cell-height;
@@ -86,35 +87,18 @@ $milestone-height: 100px;
     }
   }
 }
-.splitter {
-  overflow-y: $overflow-hidden;
-  position: absolute;
-  left: 0px;
-  right: auto;
-  box-sizing: $border-box;
-  width: $splitter-width;
-  height: 100%;
-  background-color: $light-grey-color;
-  border: $border;
-  border-color: darken($light-grey-color, 10%);
-
-  &:hover {
-    cursor: col-resize;
-    background-color: darken($light-grey-color, 25%);
-  }
-}
 
 .right-panel {
   overflow-x: $overflow-auto;
   position: absolute;
-  left: $left-panel-width;
+  left: $left-panel-width + $splitter-width;
   width: 100%;
+  max-height: inherit;
   background-color: $gantt-background-color;
 }
-.gantt-chart {
-  @extend .thead;
-  @extend .tbody;
-  box-sizing: $border-box;
+
+.gantt-list {
+  @extend .tasks-list;
 
   .thead {
     .td {
@@ -122,5 +106,24 @@ $milestone-height: 100px;
       min-width: $cell-width-wide;
       max-width: $cell-width-wide;
     }
+  }
+}
+
+.splitter {
+  overflow-y: $overflow-hidden;
+  position: absolute;
+  left: $left-panel-width;
+  right: auto;
+  box-sizing: $border-box;
+  width: $splitter-width;
+  max-height: inherit;
+  min-height: $task-list-container-max-height;
+  background-color: $light-grey-color;
+  border: $border;
+  border-color: darken($light-grey-color, 10%);
+
+  &:hover {
+    cursor: col-resize;
+    background-color: darken($light-grey-color, 25%);
   }
 }

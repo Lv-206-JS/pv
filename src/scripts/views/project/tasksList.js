@@ -25,6 +25,13 @@ define([
                     tasks: this.tasks
                 }));
 
+                 // var milestoneView = parseInt($('.milestone-view').css('height'), 10);
+                 // var mainMenu = parseInt($('.main-menu').css('height'), 10);
+                 // var maxHeight = (milestoneView && mainMenu) ? ($(document).height() - milestoneView - mainMenu) : null ;
+                 // console.log(maxHeight);
+                // $('.tasks-list-container').css('max-height', maxHeight);
+                // console.log($('.tasks-list-container').css('max-height'));
+
                 return this;
             },
 
@@ -59,18 +66,19 @@ define([
             splitterMove: function () {
                 var min = 200;
                 var max = 3600;
-                var minwidth = 400;
+                var minwidth = 200;
 
                 $('.splitter').mousedown(function (e) {
                     e.preventDefault();
                     $(document).mousemove(function (e) {
                         e.preventDefault();
                         var x = e.pageX;
-                        //var w = parseInt($('.splitter').css("width"));
+                        var w = parseInt($('.splitter').css("width"));
                         if (x > min && x < max && e.pageX < ($(window).width() - minwidth)) {
                             $('.left-panel').css("width", x);
-                            $('.right-panel').css("left", x);
-                            $('.right-panel').css("width", $(window).width() - x);
+                            $('.splitter').css("left", x);
+                            $('.right-panel').css("left", x + w);
+                            $('.right-panel').css("width", $(window).width() - x - w);
                         }
                     })
                 });

@@ -19,7 +19,7 @@
             <td class="td task-resource"><%= tasks[i].resource%></td>
         </tr>
         <% } %>
-        <% for (var i = 0; i <3; i++) { %>
+        <% for (var i = 0; i <11; i++) { %>
         <tr>
             <td class="td task-name"></td>
             <td class="td task-estimateTime>"></td>
@@ -30,36 +30,34 @@
         </tbody>
     </table>
 </div>
+<div class="splitter"></div>
 <div class="right-panel">
-    <div class="splitter"></div>
-    <div class="gantt-chart">
-        <table class="tasks-list">
-            <thead class="thead">
-            <tr>
-                <td class="td" colspan="1">2016</td>
-                <td class="td" colspan="9">2017</td>
-            </tr>
-            <tr>
-                <td class="td">December</td>
-                <td class="td">January</td>
-                <td class="td">February</td>
-                <td class="td">March</td>
-                <td class="td">April</td>
-                <td class="td">May</td>
-            </tr>
-            </thead>
-            <tbody class="tbody">
-            <% for (var i = 0; i <7; i++) { %>
-            <tr>
-                <td class="td"></td>
-                <td class="td"></td>
-                <td class="td"></td>
-                <td class="td"></td>
-                <td class="td"></td>
-                <td class="td"></td>
-            </tr>
-            <% } %>
-            </tbody>
-        </table>
-    </div>
+    <table class="gantt-list">
+        <thead class="thead">
+        <tr>
+            <td class="td" colspan="1">2016</td>
+            <td class="td" colspan="9">2017</td>
+        </tr>
+        <tr>
+            <td class="td">December</td>
+            <td class="td">January</td>
+            <td class="td">February</td>
+            <td class="td">March</td>
+            <td class="td">April</td>
+            <td class="td">May</td>
+        </tr>
+        </thead>
+        <tbody class="tbody">
+        <% for (var i = 0; i <15; i++) { %>
+        <tr>
+            <td class="td"></td>
+            <td class="td"></td>
+            <td class="td"></td>
+            <td class="td"></td>
+            <td class="td"></td>
+            <td class="td"></td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
 </div>
