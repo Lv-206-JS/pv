@@ -1,0 +1,11 @@
+@import "../popup-view";
+
+.milestone-edit-view {
+  @extend .popup-view;
+
+  .milestone-edit-header {
+    text-align: center;
+  }
+
+}
+
