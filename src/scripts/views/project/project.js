@@ -52,7 +52,6 @@ define([
 
         showAttachmentsPopup: function(){
             var attachments = this.model.get('attachments');
-
             this.attachmentsView = new AttachmentsView({
                 model: this.model,
                 attachments: attachments
