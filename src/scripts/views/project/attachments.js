@@ -23,12 +23,14 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
         },
 
         updateModel: function (response, action, position) {
-            if(action == 'addElement') {
-                this.model.get('attachments').push(JSON.parse(response));
+            var updatedAttachments = this.model.get('attachments');
+            if(action == 'Add'){
+                updatedAttachments.push(JSON.parse(response));
             }
-            else if (action == 'deleteElement') {
-                this.model.get('attachments').splice(position, 1);
+            else {
+                updatedAttachments.splice(position, 1);
             }
+            this.model.set({attachments: updatedAttachments});
             this.model.save();
             this.model.whoChange = 'AttachmentsView';
         },
@@ -45,7 +47,7 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
                 processData: false,
                 async:false
             });
-            this.updateModel(response.responseText, 'addElement');
+            this.updateModel(response.responseText, 'Add');
         },
 
         deleteAttachment: function (event) {
@@ -60,7 +62,7 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
                 processData: false,
                 async:false
             });
-            this.updateModel(response.responseText, 'deleteElement', position);
+            this.updateModel(response.responseText, 'Delete', position);
         },
 
         hideAttachmentsView : function(event){
