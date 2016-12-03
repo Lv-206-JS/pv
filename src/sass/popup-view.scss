@@ -1,0 +1,53 @@
+$basic-popup-background-color: rgba(0,0,0,0.3);
+$form-background-color: #DED8D8;
+$popup-form-width: 500px;
+$popup-form-height: 420px;
+$popup-form-border-color: #333;
+$popup-form-border-radius: 10px;
+$popup-form-color: #000;
+$popup-form-font-stack: Helvetica, sans-serif;
+$popup-form-font-size: 14px;
+$popup-form-inner-margin: 20px;
+
+.popup-view {
+  background-color: $basic-popup-background-color;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  font: $popup-form-font-stack;
+  font-size: $popup-form-font-size;
+
+  .main-form {
+    z-index: 1005;
+    background-color: $form-background-color;
+    margin: 0 auto;
+    margin-top: 100px;
+    width: $popup-form-width;
+    height: $popup-form-height;
+    border: 1px solid $popup-form-border-color;
+    position: relative;
+  }
+
+  .common-form-buttons {
+    position: absolute;
+    bottom: 0;
+    width: inherit;
+    height: 40px;
+    background-color: #4c4e51;
+
+    .ok-button {
+      height: 30px;
+      margin: 5px;
+      float: right;
+      line-height: 20px;
+      padding: 5px 20px;
+      font-size: $popup-form-font-size;
+      font-family: $popup-form-font-stack;
+      color: $popup-form-color;
+      background-color: $form-background-color;
+    }
+  }
+}
