@@ -25,16 +25,23 @@ define([
                 url:  '/users/register',
                 type: 'POST',
                 data: $("#regisrationForm").serialize(),
-                async:true,
+                dataType: 'json',
+                async: false,
                 success: function(res){
-                    Backbone.history.navigate('users/login', { trigger: true });
+
+                    var response = JSON.parse(res);
+                    if(response.error == false){
+                        Backbone.history.navigate('users/login', { trigger: true });
+                    } else {
+                        response.error.forEach(function(mess){
+                            var err_mess = elem.find("#" + mess.param.trim());
+                            err_mess.attr("placeholder", mess.msg);
+                        });
+                    }
+
                 },
-                error: function(res){
-                    var response = JSON.parse(res.responseText);
-                    response.error.forEach(function(mess){
-                        var err_mess = elem.find("#" + mess.param.trim());
-                        err_mess.attr("placeholder", mess.msg);
-                    });
+                error: function(err, res){
+                    res.render(err);
                 }
             });
         }
