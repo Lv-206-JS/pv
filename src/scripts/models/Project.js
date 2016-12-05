@@ -58,6 +58,7 @@ define([
                         {
                             "attachmentId": "",
                             "fileName": "",
+                            "relativePath": "",
                             "mimetype": ""
                         }
                     ]
@@ -79,6 +80,7 @@ define([
                         {
                             "attachmentId": "",
                             "fileName": "",
+                            "relativePath": "",
                             "mimetype": ""
                         }
                     ]

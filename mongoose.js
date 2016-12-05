@@ -40,6 +40,7 @@ var ProjectsSchema = new Schema({
         attachments: [{
             attachmentId: {type: String, required: false},
             fileName: {type: String, required: false},
+            relativePath: {type: String, required: false},
             mimeType: {type: String, required: false}
         }]
     }],

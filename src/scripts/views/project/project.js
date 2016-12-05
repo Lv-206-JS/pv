@@ -44,6 +44,9 @@ define([
             this.tasksListView = new TasksListView({tasks: this.model.get('tasks')}).render();
             this.$el.append(this.tasksListView.$el);
 
+            this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
+            this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
+
             // this.ganttChartView = new GanttChartView().render();
             // this.$el.append(this.ganttChartView.$el);
 
@@ -51,6 +54,43 @@ define([
             this.$el.append(this.infoBarView.$el);
 
             return this;
+        },
+
+        showTaskEditPopup: function(allTasks,task){
+            this.taskView = new TaskView({tasks: allTasks, task: task}).render();
+            this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
+            this.$el.append(this.taskView.$el);
+        },
+
+        showTaskAddPopup: function(allTasks){
+            this.taskView = new TaskView({tasks: allTasks}).render();
+            this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
+            this.$el.append(this.taskView.$el);
+        },
+
+        upsertTaskHandler: function (allTasks,changedTask){
+            if (changedTask.taskId)
+                for (var i = 0; i < allTasks.length; i++){
+                    if (allTasks[i].taskId === changedTask.taskId){
+                        allTasks[i] = changedTask;
+                    }
+                }
+            else
+            {
+                allTasks[allTasks.length] = changedTask;
+                allTasks[allTasks.length-1].taskId = this.createId(allTasks);
+            }
+            this.model.set('tasks',allTasks);
+            this.model.save();
+        },
+
+        createId: function(allTasks){
+            var max = 0;
+            for (var i = 0; i < allTasks.length-1; i++){
+                if (max < allTasks[i].taskId )
+                    max = allTasks[i].taskId;
+            }
+            return ++max;
         },
 
         showAttachmentsPopup: function(){
