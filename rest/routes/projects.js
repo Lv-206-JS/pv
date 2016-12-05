@@ -21,7 +21,7 @@ function handleError(response, message, code) {
 }
 
 //get all projects
-router.get('/', function (request, response) {
+router.get('/', authenticateUser, function (request, response) {
     Project.find({}, function (err, projects) {
         if(!projects || err) {
             handleError(response, "Failed to find projects!", 404);
@@ -33,7 +33,7 @@ router.get('/', function (request, response) {
 });
 
 //create project
-router.post('/', function (request, response) {
+router.post('/', authenticateUser, function (request, response) {
     var projectToCreate = new Project({
         id: Guid.create().value,
         name: request.body.name,
@@ -54,12 +54,13 @@ router.post('/', function (request, response) {
         }
         else {
             response.send(project);
+
         }
     });
 });
 
 //get one project
-router.get('/:id', function (request, response) {
+router.get('/:id', authenticateUser, function (request, response) {
     Project.findOne({'id': request.params.id}, function (err, project) {
         if(!project || err) {
             handleError(response, "Failed to find project!", 404);

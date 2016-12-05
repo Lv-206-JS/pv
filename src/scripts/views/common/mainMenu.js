@@ -50,7 +50,6 @@ define([
         onSignOut: function onSingOut(){
             userModel.clear().set(userModel.defaults());
             PV.router.navigate('/', {trigger: true});
-            console.log(userModel);
         }
     });
 

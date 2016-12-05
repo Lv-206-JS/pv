@@ -6,9 +6,8 @@ define([
     'views/project/milestone',
     'views/project/infoBar',
     'views/project/tasksList',
-    'views/project/task',
     'views/project/attachments'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, TaskView, AttachmentsView) {
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, AttachmentsView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({

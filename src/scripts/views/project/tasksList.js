@@ -1,8 +1,7 @@
 define([
         'backbone',
         'underscore',
-        'JST',
-        'views/project/task'
+        'JST'
     ],
     function (Backbone, _, JST, TaskView) {
         'use strict';

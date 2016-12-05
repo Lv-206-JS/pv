@@ -52,9 +52,7 @@ router.post('/register', function (req, res) {
             if (err) throw err;
             console.log(user);
         });
-        var res_err = {"error": errors};
-        console.log("TRATRATRA");
-        res.status(200).json(JSON.stringify(res_err));
+        res.status(200).json({"error": errors});
     }
 });
 

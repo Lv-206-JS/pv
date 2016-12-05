@@ -11,7 +11,9 @@ define([
         className: 'projects-list',
         events: {
             'click .projects-list-item': 'onClick',
-            'click .projects-list-link': 'onSelectProject'
+            'click .projects-list-link': 'onSelectProject',
+            'click .edit-project': 'onEditProject',
+            'click .delete-project' : 'onDeleteProject'
         },
 
         initialize: function (options) {
@@ -35,6 +37,27 @@ define([
             var target = $(e.currentTarget);
             var id = target.data('id');
             PV.router.navigate('project/' + id, {trigger: true});
+        },
+
+        onEditProject: function onEditProject() {
+            PV.router.navigate('projects/update', {trigger: true});
+        },
+
+        onDeleteProject: function (e) {
+            var target = $(e.currentTarget);
+            var id = target.data('id');
+            var model = this.collection.get(id);
+
+            model.setUrl(model.get('id'));
+            model.destroy().then(
+                function (resp) {
+                    console.log(this.collection);
+                    // Re render view.
+                    render();
+
+                }
+
+            );
         }
     });
 

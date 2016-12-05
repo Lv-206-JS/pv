@@ -6,7 +6,8 @@ define([
         'views/common/signIn',
         'models/User',
         'views/common/logIn',
-        'views/common/register'
+        'views/common/register',
+        'views/projects/projectsEdit'
     ],
     function ($,
               Backbone,
@@ -15,7 +16,8 @@ define([
               SignInView,
               userModel,
               LogInView,
-              RegistrationView
+              RegistrationView,
+              ProjectsEditView
 )
 {
     'use strict';
@@ -24,7 +26,8 @@ define([
         routes: {
             'projects': 'openProjects',
             'project/:projectId': 'openSingleProject',
-            // 'project/:new' : 'createProject',
+            'projects/' : 'createProject',
+            'projects/:id' : 'editProject',
             'project/:projectId/task/:taskId': 'openProjectAndTask',
             'user/signin': 'openSingIn',
             'users/login': 'loginForm',
@@ -82,9 +85,18 @@ define([
             this.mainView.renderProject(projectId);
         },
 
-        // createProject: function createProject() {
-        //          console.log('Show form for Creating new project!');
-        // },
+        createProject: function createProject() {
+            this.projectsEditView = new ProjectsEditView();
+            $('body').html(this.projectsEditView.$el);
+
+        },
+
+        editProject: function editProject(id) {
+            console.log(id);
+            this.projectsEditView = new ProjectsEditView({modelId: id});
+            $('body').html(this.projectsEditView.$el);
+
+        },
 
         openProjectAndTask: function openProjectAndTask(projectId, taskId) {
             this.openSingleProject(projectId);
