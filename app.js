@@ -4,33 +4,33 @@ var express = require('express');
 
 //modules required for authentication
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var cookieParser = require('cookie-parser');
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+var expressValidator = require('express-validator');
+var session = require('express-session');
+
+
+
+
 
 //mongoose connection
+var morgan = require('morgan');
 var mongoose = require('mongoose');
+var db = mongoose.connection;
 mongoose.connect("localhost:27017/ganttcharts");
 
-var exphbs = require('express-handlebars');
-var expressValidator = require('express-validator');
-var flash = require('connect-flash');
-var session = require('express-session');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var db = mongoose.connection;
+
 
 
 var app = express();
+//routes
 var projectAPI = require('./rest/routes/projects');
 var attachmentsAPI = require('./rest/routes/attachments');
-
-//routes
 var routes = require('./rest/routes/index');
+var passport = require('passport');
 var users = require('./rest/routes/users');
 
 // Enable CORS for unit tests
@@ -40,74 +40,65 @@ app.use(function (request, response, next) {
     next();
 });
 
-// loading routes for authentication
-// var index = require('./rest/index');
-var userAPI = require('./rest/routes/user');
-var login = require('./rest/routes/users');
-var signup = require('./rest/routes/users');
+//Express Validator code taken from express-validator github
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value){
+        var namespace = param.split('.')
+            , root = namespace.shift()
+            , formParam = root;
 
-//View Engine
-app.set('views', path.join(__dirname, 'views'));//folder views handles our views
-app.engine('handlebars', exphbs({defaultLayout: 'layout'}));//setting engine and default layout
-app.set('view engine', 'handlebars');
+        while(namespace.length){
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param : formParam,
+            msg : msg,
+            value : value
+        };
+    }
+}));
+
+app.set('view engine', 'ejs');
+
+//Logger
+app.use(morgan('dev'));
+
+app.use(session({
+    secret: 'secret',
+    saveUninitialized: true,
+    resave: true
+}));
+
+// Passport init
+app.use(passport.initialize());
+app.use(passport.session());
 
 //BodyParser MiddleWare
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-//Set Static folder(src folder);
-//stuff that is publicly accessible to the browser
-app.use(express.static(path.join(__dirname, 'public')));
-
-//Express session
-app.use(session({
-  secret: 'secret',
-  saveUninitialized: true,
-  resave: true
-}));
-
-app.use('/rest/user', userAPI);
+//app.use('/rest/user', userAPI);
 app.use('/rest/projects', projectAPI);
 app.use('/rest/attachments', attachmentsAPI);
 
-// Passport Initialization
-app.use(passport.initialize());
-app.use(passport.session());
+app.use('/users', users);
 
-//Express Validator code taken from express-validator github
-app.use(expressValidator({
-  errorFormatter: function(param, msg, value){
-    var namespace = param.split('.')
-    , root = namespace.shift()
-    , formParam = root;
-
-    while(namespace.length){
-      formParam += '[' + namespace.shift() + ']';
-    }
-    return {
-      param : formParam,
-      msg : msg,
-      value : value
-    };
-  }
-}));
 
 //Connect Flash MiddleWare
 app.use(flash());
 
 //Global Variables For Flash Messages
 app.use(function(req, res, next){
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  //passpport own flash error messages
-  res.locals.error = req.flash('error');
-  res.locals.current_user = req.user || null
-  next();
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    //passpport own flash error messages
+    res.locals.error = req.flash('error');
+    res.locals.current_user = req.user || null
+    next();
 });
 
-//app.use('/', routes);
-//app.use('/users', users);
+
 
 app.use(/\/project.*/, express.static('./index.html'));
 app.use(/\/user.*/, express.static('./index.html'));

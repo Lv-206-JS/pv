@@ -3,6 +3,18 @@ var Guid = require('guid');
 var router = express.Router();
 var Project  = require('../../mongoose').ProjectModel;
 
+
+function authenticateUser(req, res, next){
+    if(req.isAuthenticated()){
+        console.log('Authenticated!');
+        return next();
+    } else {
+        //req.flash('error_msg','You are not logged in');
+        console.log('Not Authenticated');
+        return res.redirect('users/login');
+    }
+}
+
 //Error handler function
 function handleError(response, message, code) {
     response.status(code || 500).json({"error": message});

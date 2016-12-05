@@ -4,18 +4,17 @@
   "description": "plan&view",
   "main": "app.js",
   "dependencies": {
+    "bcryptjs": "*",
     "body-parser": "~1.8.1",
+    "connect-flash": "*",
     "cookie-parser": "*",
     "debug": "~2.0.0",
     "express": "^4.14.0",
-    "express-session": "^1.9.3",
-    "jade": "^1.11.0",
-    "mongoose": "^4.6.8",
-    "bcryptjs": "*",
-    "connect-flash": "*",
     "express-messages": "*",
+    "express-session": "^1.9.3",
     "express-validator": "*",
     "mongodb": "*",
+    "mongoose": "^4.6.8",
     "passport": "*",
     "passport-http": "*",
     "passport-local": "*"
@@ -25,7 +24,7 @@
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "connect-multiparty": "^2.0.0",
-    "express-handlebars": "^3.0.0",
+    "ejs": "^2.5.3",
     "guid": "0.0.12",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
@@ -37,7 +36,6 @@
     "gulp-sourcemaps": "^2.2.0",
     "gulp-template-compile": "^1.2.2",
     "gulp-wrap-amd": "^0.5.0",
-    "handlebars": "^4.0.6",
     "jasmine-core": "^2.4.1",
     "karma": "~0.13.22",
     "karma-chrome-launcher": "^1.0.1",
@@ -49,7 +47,8 @@
     "karma-opera-launcher": "~1.0.0",
     "karma-safari-launcher": "~1.0.0",
     "mime-types": "^2.1.13",
-    "mocha": "^3.1.2"
+    "mocha": "^3.1.2",
+    "morgan": "^1.7.0"
   },
   "scripts": {
     "start": "node ./bin/www"

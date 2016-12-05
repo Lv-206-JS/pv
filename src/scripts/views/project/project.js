@@ -6,8 +6,9 @@ define([
     'views/project/milestone',
     'views/project/infoBar',
     'views/project/tasksList',
+    'views/project/task',
     'views/project/attachments'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, AttachmentsView) {
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, TaskView, AttachmentsView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
@@ -52,7 +53,6 @@ define([
 
         showAttachmentsPopup: function(){
             var attachments = this.model.get('attachments');
-
             this.attachmentsView = new AttachmentsView({
                 model: this.model,
                 attachments: attachments
