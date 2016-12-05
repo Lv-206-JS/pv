@@ -70,7 +70,6 @@ define([
                 model: this.model,
                 milestones: milestones
             });
-            console.log(this.model);
             this.milestoneEditView.render();
             this.$el.append(this.milestoneEditView.$el);
         },
