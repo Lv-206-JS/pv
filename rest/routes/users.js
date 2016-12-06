@@ -38,24 +38,22 @@ router.post('/register', function (req, res) {
     req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
     var errors = req.validationErrors();
 
-    if (errors) {
+/*    if (errors) {
         res.status(404).json({"error": errors});
-    } else {
+    } else {*/
         var newUser = new User({
             firstname: firstname,
             email: email,
             lastname: lastname,
             password: password
         });
-
         User.createUser(newUser, function (err, user) {
             if (err) throw err;
             console.log(user);
         });
         var res_err = {"error": errors};
-        console.log("TRATRATRA");
         res.status(200).json(JSON.stringify(res_err));
-    }
+/*    }*/
 });
 
 //passport-local configuration
