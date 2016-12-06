@@ -7,7 +7,7 @@ define([
 
     var RegistrationView = Backbone.View.extend({
         template: JST['common:register'],
-        className: 'registration-view',
+        className: 'register-view',
         events: {
             'click #post_user' : 'onSubmit'
         },
@@ -20,7 +20,6 @@ define([
         onSubmit: function onSubmit(event){
             event.preventDefault();
             var elem = this.$el;
-            console.log("It works!!!");
             var response = $.ajax({
                 url:  '/users/register',
                 type: 'POST',
