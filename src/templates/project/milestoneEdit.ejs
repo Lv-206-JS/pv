@@ -1,0 +1,54 @@
+<div class = "main-form">
+    <h2 class="milestone-edit-header">Edit milestones</h2>
+    <ul class="tab">
+        <li class="tab-item-milestone tab-milestone-list active"><a  class="tablinks">Milesones list</a></li>
+        <li class="tab-item-milestone tab-edit hide-content-milestone"><a  class="tablinks">Editing</a></li>
+        <button class="save-milestones-button hide-content-milestone" data-name="<%=milestoneEdit.name%>">Save</button>
+    </ul>
+    <div class="milestone-list-content show-content-milestone">
+        <button id="create-milestone">Create milestone</button>
+        <ul class="milestone-list">
+            <%for(var i = 0; i <  milestones.length; i++) {%>
+            <div class="one-milestone-block">
+                <li class="milestone-item" data-name="<%= milestones[i].name %>"> <%= milestones[i].name %></li>
+                <div id="delete-milestone" data-name="<%= milestones[i].name %>">
+                    <img src="/images/delete-button.png" id="delete-milestone-image" alt="delete milestone"/>
+                </div>
+            </div>
+            <%}%>
+        </ul>
+    </div>
+
+    <div class="edit-content hide-content-milestone">
+        <div style="position: relative">
+        <div>
+            <form>
+                <%
+                var dateobj = new Date(milestoneEdit.date);
+                function pad(n) {
+                    return n < 10 ? "0"+n : n;
+                }
+                var dateobj = dateobj.getFullYear()+"-"+pad(dateobj.getMonth()+1)+"-"+ pad(dateobj.getDate());
+                %>
+                Name: <input id="milestone-settings-name" type="text" value="<%=milestoneEdit.name%>">
+                Start date: <input id="milestone-settings-date" type="date" value="<%=dateobj%>">
+            </form>
+        </div>
+        <table class="list-of-all-tasks left-side">
+            <th class="table-header">Tasks</th>
+            <% for(var i = 0; i < tasks.length; i++) { %>
+            <tr class="task-item"> <td><%= tasks[i].name %></td> </tr>
+            <% } %>
+
+        </table>
+        <table class="task-dependencies right-side">
+            <th class="table-header">Depends on</th>
+
+        </table>
+        </div>
+    </div>
+
+    <div class="common-form-buttons">
+        <button class="ok-button">Ok</button>
+    </div>
+</div>

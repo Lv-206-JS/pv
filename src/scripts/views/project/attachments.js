@@ -12,7 +12,7 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
         },
 
         render: function render() {
-            this.$el.html(this.template({attachments: this.attachments}));
+            this.$el.html(this.template({attachments: this.model.get('attachments')}));
             return this;
         },
 
@@ -22,15 +22,34 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
             'click #delete-attachment' : 'deleteAttachment'
         },
 
-        updateModel: function (response, action, position) {
-            if(action == 'addElement') {
-                this.model.get('attachments').push(JSON.parse(response));
+        saveModel: function (response, action, attachmentId) {
+            var updatedAttachments = this.model.get('attachments');
+            if(action == 'Add'){
+                updatedAttachments.push(JSON.parse(response));
             }
-            else if (action == 'deleteElement') {
-                this.model.get('attachments').splice(position, 1);
+            else {
+                for (var i = 0, len = this.attachments.length; i < len; i++) {
+                    if(this.attachments[i].attachmentId == attachmentId) {
+                        updatedAttachments.splice(i, 1);
+                        break;
+                    }
+                }
             }
-            this.model.save();
+            this.model.set({attachments: updatedAttachments});
+            this.model.save({
+                success:function () {
+                    this.updateAttachmentsPopup();
+                }.call(this),
+
+                error:function () {
+                    console.log('error');
+                }
+            });
             this.model.whoChange = 'AttachmentsView';
+        },
+
+        updateAttachmentsPopup:function () {
+            this.render();
         },
 
         addAttachment : function (event) {
@@ -45,14 +64,13 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
                 processData: false,
                 async:false
             });
-            this.updateModel(response.responseText, 'addElement');
+            this.saveModel(response.responseText, 'Add');
         },
 
         deleteAttachment: function (event) {
             event.preventDefault();
             var target = $(event.currentTarget);
             var attachmentId = target.data('id');
-            var position = target.data('position');
             var response = $.ajax({
                 url:  '/rest/attachments/' + attachmentId,
                 type: 'DELETE',
@@ -60,7 +78,7 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
                 processData: false,
                 async:false
             });
-            this.updateModel(response.responseText, 'deleteElement', position);
+            this.saveModel(response.responseText, 'Delete', attachmentId);
         },
 
         hideAttachmentsView : function(event){

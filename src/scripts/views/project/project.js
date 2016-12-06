@@ -6,16 +6,18 @@ define([
     'views/project/milestone',
     'views/project/infoBar',
     'views/project/tasksList',
+    'views/project/attachments',
     'views/project/task',
-    'views/project/attachments'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, TaskView, AttachmentsView) {
+    'views/project/milestoneEdit'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, AttachmentsView, TaskView, MilestoneEditView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
         className: 'main-project-view',
         events: {
             'click .back-to-landing-view': 'onBackToLandingPage',
-            'click .show-attachments': 'showAttachmentsPopup'
+            'click .show-attachments': 'showAttachmentsPopup',
+            'click .edit-milestone': 'showMilestoneEditPopup'
         },
 
         initialize: function (options) {
@@ -102,12 +104,25 @@ define([
             this.$el.append(this.attachmentsView.$el);
         },
 
+        showMilestoneEditPopup: function () {
+            var milestones = this.model.get('milestones');
+            this.milestoneEditView = new MilestoneEditView({
+                model: this.model,
+                milestones: milestones
+            });
+            this.milestoneEditView.render();
+            this.$el.append(this.milestoneEditView.$el);
+        },
+
         onChange: function () {
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
             this.$el.html('');
             this.renderViews();
             if(this.model.whoChange == 'AttachmentsView') {
                 return this.showAttachmentsPopup();
+            }
+            else if(this.model.whoChange == 'MilestoneEditView') {
+                return this.showMilestoneEditPopup();
             }
         }
     });

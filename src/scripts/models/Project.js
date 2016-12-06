@@ -5,6 +5,7 @@ define([
 
     var ProjectViewModel = Backbone.Model.extend({
         url: '/rest/projects/',
+
         setUrl: function (id) {
             this.url = '/rest/projects/' + id;
         },
