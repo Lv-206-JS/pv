@@ -11,11 +11,16 @@
         <tr>
             <td class="td task-name" id="<%= tasks[i].taskId%>"><%= tasks[i].name%></td>
             <td class="td task-estimateTime"><%= tasks[i].estimateTime%></td>
-            <% if (tasks[i].dependsOn[0].taskId != "false") { %>
-            <td class="td task-dependsOn"><%=tasks[i].dependsOn[0].taskId%></td>
-            <% } else { %>
-            <td class="td task-dependsOn"></td>
+            <% var dependencies = [];%>
+            <% for (var j=0;j<tasks[i].dependsOn.length;j++) { %>
+            <!--TO DO false id string in db-->
+            <% if (tasks[i].dependsOn[j].taskId != "false") { %>
+            <% dependencies.push(tasks[i].dependsOn[j].taskId); %>
+
+
             <% } %>
+            <% } %>
+            <td class="td task-dependsOn"><%= dependencies.toString() %></td>
             <td class="td task-resource"><%= tasks[i].resource%></td>
         </tr>
         <% } %>

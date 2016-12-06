@@ -11,20 +11,17 @@ define(['backbone',
 
         initialize: function (options) {
             this.tasks = options.tasks;
-            console.log(this.tasks);
             if(options.task)
                 this.task = options.task;
             else
-            {console.log('task is not here');
-                this.task = {
+               this.task = {
                     name: "",
                     estimateTime: "",
                     resource: "",
                     description: "",
                     attachments:[],
                     dependsOn: []
-                }};
-            console.log(this.task);
+                };
             this.tasksList = this.getTasksList(true);
             this.dependenciesList = this.getTasksList(false);
         },
@@ -53,18 +50,16 @@ define(['backbone',
             var isDependency = [];
             var len = this.task.dependsOn.length;
             for( var i = 0; i < this.tasks.length; i++) {
+                var dependency = false;
                 for( var j = 0; j < len; j++) {
-                    var dependency = false;
                     if( this.tasks[i].taskId === this.task.dependsOn[j].taskId) {
                         dependency = true;
                         isDependency[isDependency.length] = { name : this.tasks[i].name, taskId : this.tasks[i].taskId};
-                     }
-                     if ((this.tasks[i].taskId !== this.task.taskId) && (!dependency)) {
-                         isNotDependency[isNotDependency.length] = { name : this.tasks[i].name, taskId : this.tasks[i].taskId};
-                     }
+                    }
                 }
-                if(len === 0)
+                if ((this.tasks[i].taskId !== this.task.taskId)&&( !dependency)) {
                     isNotDependency[isNotDependency.length] = { name : this.tasks[i].name, taskId : this.tasks[i].taskId};
+                }
             }
             if(el) return isNotDependency;
             else return isDependency;
@@ -94,26 +89,31 @@ define(['backbone',
             var draggies = [];
             for (var i = 0; i < draggableElements.length; i++){
                 var draggableElem = draggableElements[i];
-                draggies[i] = new Draggabilly(draggableElem);
+                draggies[i] = new Draggabilly(draggableElem,{
+                    containment: '.dependencies-content'
+                });
                 draggies[i].on('dragEnd',onDragEnd);
             }
 
             function onDragEnd() {
-                if(this.position.x>260){
+                if(this.position.x>225){
                     var parent = document.getElementById("list2");
                     parent.appendChild(this.element);
+                    $(this.element).css({'left': '260','top':'0'});
                 }
-                if(this.position.x<180){
+                if(this.position.x<224){
                     var parent = document.getElementById("list");
                     parent.appendChild(this.element);
+                    $(this.element).css({'left': '0','top':'0'});
                 }
-                $(this.element).css({'left': '0','top':'0'});
+                $(this.element).css({'left': '260','top':'0'});
                 var trigger = false;
                 for(var i = 0; i < tasksList.length; i++)
                     if(tasksList[i].taskId === $(this.element).attr('id')) {
                         dependenciesList[dependenciesList.length] = tasksList[i];
                         tasksList.splice(i,1);
                         trigger=true;
+                        break;
                     }
                 if(!trigger)
                     for(var i = 0; i < dependenciesList.length; i++)
@@ -143,10 +143,7 @@ define(['backbone',
         deleteAttachment: function (event) {
             event.preventDefault();
             var target = $(event.currentTarget);
-            var attachmentId2 = $(event.currentTarget).attr('data-id');
             var attachmentId = target.data('id');
-            console.log('attachment id to delete');
-            console.log(attachmentId2);
             var attachmentNumber;
             for(var i = 0; i < this.task.attachments.length; i++){
                 if( this.task.attachments[i].attachmentId === attachmentId)
@@ -159,11 +156,8 @@ define(['backbone',
                 processData: false,
                 async:false
             });
-            console.log(this.task.attachments);
             this.task.attachments.splice(attachmentNumber,1);
-            console.log(this.task.attachments);
-            this.deleteAttachmentItem(attachmentId2);
-            // this.render();
+            this.deleteAttachmentItem(attachmentId);
         },
 
         addAttachmentItem: function(i){
@@ -222,6 +216,7 @@ define(['backbone',
             this.task.estimateTime = this.$el.find('.task-estimate').val();
             this.task.resource = this.$el.find('.task-resource').val();
             this.task.description = this.$el.find('.task-description').val();
+            this.task.dependsOn = [];
             if(this.dependenciesList[0] !== undefined) {
                 for (var i = 0; i < this.dependenciesList.length; i++)
                     this.task.dependsOn[i] = {taskId: this.dependenciesList[i].taskId};

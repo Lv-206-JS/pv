@@ -46,116 +46,100 @@ $task-form-inner-margin: 20px;
         padding-left: 10px;
       }
 
-      .tab-item:hover{
+      .tab-item:hover {
         background-color: #ddd;
       }
 
       .tab-item:focus,
-      .active{
+      .active {
         background-color: #ccc;
       }
 
     }
-    .general-content{
+    .general-content {
       height: 340px;
     }
-    .general-information{
+    .general-information {
       height: 225px;
     }
 
-    .line{
+    .line {
       border-bottom: 1px solid #4c4e51;
     }
-    .attachments{
+    .attachments {
       height: 95px;
       width: 225px;
       margin: $task-form-inner-margin;
       overflow-x: scroll;
 
-      .attachment-item{
+      .attachment-item {
         width: 90px;
         height: 85px;
         position: relative;
         display: block;
         float: left;
 
-        .attachment-image{
+        .attachment-image {
           width: 40px;
           height: 40px;
           position: relative;
-          top:5px;
+          top: 5px;
           left: 25px;
         }
-        .attachment-name{
+        .attachment-name {
           width: 90px;
           margin: 0 auto;
           text-align: center;
         }
-        .delete{
+        .delete {
           width: 15px;
           height: 15px;
           position: absolute;
           z-index: 2;
-          top:0px;
-          right:17px;
+          top: 0px;
+          right: 17px;
         }
       }
     }
-    .add-attachment{
+    .add-attachment {
       width: 200px;
     }
-    .dependencies-content{
+    .dependencies-content {
       height: 340px;
+
+      .list-of-tasks,
+      .list-of-dependencies {
+        width: 40%;
+        height: 80%;
+        background-color: #fff;
+        .table-header {
+          background-color: #ddd;
+          top: 0;
+          width: 250px;
+        }
+        .task-item {
+        }
+      }
     }
-    .common-form-buttons{
+    .common-form-buttons {
       position: relative;
       bottom: 0;
       height: 40px;
       background-color: #4c4e51;
 
       .ok-button,
-      .cancel-button{
+      .cancel-button {
         height: 30px;
         margin: 5px;
-        float:right;
+        float: right;
         line-height: 20px;
-        padding:5px 20px;
+        padding: 5px 20px;
         font-size: $task-form-font-size;
         font-family: $task-form-font-stack;
         color: $task-form-color;
         background-color: $form-background-color;
       }
 
-    }
-    .list-of-all-tasks,
-    .task-dependencies{
-      width: 40%;
-      height: 80%;
-      background-color: #fff;
-      //overflow-y: scroll;
-    }
-    .table-header{
-      background-color: #ddd;
-      top: 0;
-      width: 250px;
-    }
-    .control-buttons{
-      width: 10%;
-      display: inline-block;
-      margin-top: 50px;
-
-      .add-dependency,
-      .delete-dependency{
-        width: 30px;
-        height: 30px;
-        float: left;
-        margin: 10px 14px;
-        line-height: 20px;
-        padding:5px 0px;
-        font-size: $task-form-font-size;
-        font-family: $task-form-font-stack;
-
-      }
     }
   }
 }
