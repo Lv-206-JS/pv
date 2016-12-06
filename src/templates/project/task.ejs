@@ -11,7 +11,7 @@
                 Name: <br>
                 <input class="task-name" type="text" value="<%= task.name %>"><br>
                 Estimate:<br>
-                <input class="task-estimate" type="text" value="<%= task.estimateTime %>"><br>
+                <input class="task-estimate" type="number" value="<%= task.estimateTime %>"><br>
                 Resource:<br>
                 <input class="task-resource" type="text" value="<%= task.resource %>"><br>
             </div>
@@ -31,7 +31,10 @@
                 </div>
                 <a class="referense-to-file" href="<%=task.attachments[i].relativePath%>" target="_blank">
                         <img src="/images/word.png" class="attachment-image" alt="attachment image"/>
-                    <div class="attachment-name"><%= task.attachments[i].fileName %></div>
+                        <% var str = task.attachments[i].fileName; %>
+                        <% if(task.attachments[i].fileName.length>9)  { str = task.attachments[i].fileName.substring(0,9)+'..';} %>
+
+                    <div class="attachment-name"><%= str %></div>
                 </a>
             </div>
 

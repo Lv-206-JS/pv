@@ -137,13 +137,16 @@ define(['backbone',
                 async:false
             });
             this.task.attachments[this.task.attachments.length] = JSON.parse(response.responseText);
-            this.render();
+            this.addAttachmentItem(this.task.attachments.length-1);
         },
 
         deleteAttachment: function (event) {
             event.preventDefault();
             var target = $(event.currentTarget);
+            var attachmentId2 = $(event.currentTarget).attr('data-id');
             var attachmentId = target.data('id');
+            console.log('attachment id to delete');
+            console.log(attachmentId2);
             var attachmentNumber;
             for(var i = 0; i < this.task.attachments.length; i++){
                 if( this.task.attachments[i].attachmentId === attachmentId)
@@ -156,8 +159,57 @@ define(['backbone',
                 processData: false,
                 async:false
             });
+            console.log(this.task.attachments);
             this.task.attachments.splice(attachmentNumber,1);
-            this.render();
+            console.log(this.task.attachments);
+            this.deleteAttachmentItem(attachmentId2);
+            // this.render();
+        },
+
+        addAttachmentItem: function(i){
+            var parent = document.getElementsByClassName("attachments");
+            var child = document.createElement('div');
+            child.setAttribute('class', 'attachment-item');
+
+            var deleteImageWrapper = document.createElement('div');
+            deleteImageWrapper.setAttribute('id','delete-attachment');
+            deleteImageWrapper.setAttribute('data-id', this.task.attachments[i].attachmentId);
+            var deleteImage = document.createElement('img');
+            deleteImage.setAttribute('src','/images/delete-button.png');
+            deleteImage.setAttribute('class','delete');
+            deleteImage.setAttribute('alt','delete attachment');
+            deleteImageWrapper.appendChild(deleteImage);
+
+            var reference = document.createElement('a');
+            reference.setAttribute('class','referense-to-file');
+            reference.setAttribute('href',this.task.attachments[i].relativePath);
+            reference.setAttribute('target','_blank');
+            var attachmentImage = document.createElement('img');
+            attachmentImage.setAttribute('src','/images/word.png');
+            attachmentImage.setAttribute('class','attachment-image');
+            attachmentImage.setAttribute('alt','attachment image');
+            reference.appendChild(attachmentImage);
+            var attachmentNameWrapper = document.createElement('div');
+            attachmentNameWrapper.setAttribute('class','attachment-name');
+            var name = this.task.attachments[i].fileName;
+            if( name.length > 9)
+                name = name.substring(0,9)+'..';
+            var attachmentName = document.createTextNode(name);
+            attachmentNameWrapper.appendChild(attachmentName);
+            reference.appendChild(attachmentNameWrapper);
+
+            child.appendChild(deleteImageWrapper);
+            child.appendChild(reference);
+            parent[0].appendChild(child);
+        },
+
+        deleteAttachmentItem: function(id){
+            var attachmentItems = $('.attachment-item');
+            for ( var i = 0; i < attachmentItems.length; i++){
+                var attachmentId = $(attachmentItems[i]).find('#delete-attachment').attr('data-id');
+                if (attachmentId === id)
+                    $(attachmentItems[i]).remove();
+            }
         },
 
         hideTaskView: function(event){
