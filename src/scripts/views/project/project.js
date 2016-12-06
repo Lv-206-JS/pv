@@ -6,16 +6,18 @@ define([
     'views/project/milestone',
     'views/project/infoBar',
     'views/project/tasksList',
+    'views/project/attachments',
     'views/project/task',
-    'views/project/attachments'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, TaskView, AttachmentsView) {
+    'views/project/milestoneEdit'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, AttachmentsView, TaskView, MilestoneEditView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
         className: 'main-project-view',
         events: {
             'click .back-to-landing-view': 'onBackToLandingPage',
-            'click .show-attachments': 'showAttachmentsPopup'
+            'click .show-attachments': 'showAttachmentsPopup',
+            'click .edit-milestone': 'showMilestoneEditPopup'
         },
 
         initialize: function (options) {
@@ -42,6 +44,9 @@ define([
             this.tasksListView = new TasksListView({tasks: this.model.get('tasks')}).render();
             this.$el.append(this.tasksListView.$el);
 
+            this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
+            this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
+
             // this.ganttChartView = new GanttChartView().render();
             // this.$el.append(this.ganttChartView.$el);
 
@@ -49,6 +54,43 @@ define([
             this.$el.append(this.infoBarView.$el);
 
             return this;
+        },
+
+        showTaskEditPopup: function(allTasks,task){
+            this.taskView = new TaskView({tasks: allTasks, task: task}).render();
+            this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
+            this.$el.append(this.taskView.$el);
+        },
+
+        showTaskAddPopup: function(allTasks){
+            this.taskView = new TaskView({tasks: allTasks}).render();
+            this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
+            this.$el.append(this.taskView.$el);
+        },
+
+        upsertTaskHandler: function (allTasks,changedTask){
+            if (changedTask.taskId)
+                for (var i = 0; i < allTasks.length; i++){
+                    if (allTasks[i].taskId === changedTask.taskId){
+                        allTasks[i] = changedTask;
+                    }
+                }
+            else
+            {
+                allTasks[allTasks.length] = changedTask;
+                allTasks[allTasks.length-1].taskId = this.createId(allTasks);
+            }
+            this.model.set('tasks',allTasks);
+            this.model.save();
+        },
+
+        createId: function(allTasks){
+            var max = 0;
+            for (var i = 0; i < allTasks.length-1; i++){
+                if (max < allTasks[i].taskId )
+                    max = allTasks[i].taskId;
+            }
+            return ++max;
         },
 
         showAttachmentsPopup: function(){
@@ -62,12 +104,25 @@ define([
             this.$el.append(this.attachmentsView.$el);
         },
 
+        showMilestoneEditPopup: function () {
+            var milestones = this.model.get('milestones');
+            this.milestoneEditView = new MilestoneEditView({
+                model: this.model,
+                milestones: milestones
+            });
+            this.milestoneEditView.render();
+            this.$el.append(this.milestoneEditView.$el);
+        },
+
         onChange: function () {
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
             this.$el.html('');
             this.renderViews();
             if(this.model.whoChange == 'AttachmentsView') {
                 return this.showAttachmentsPopup();
+            }
+            else if(this.model.whoChange == 'MilestoneEditView') {
+                return this.showMilestoneEditPopup();
             }
         }
     });
