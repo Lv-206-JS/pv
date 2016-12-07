@@ -1,8 +1,8 @@
 <div class = "main-form">
     <h2 class="milestone-edit-header">Edit milestones</h2>
-    <ul class="tab">
+    <ul class="tab-milestone">
         <li class="tab-item-milestone tab-milestone-list active"><a  class="tablinks">Milesones list</a></li>
-        <li class="tab-item-milestone tab-edit hide-content-milestone"><a  class="tablinks">Editing</a></li>
+        <li class="tab-item-milestone tab-milestone-edit hide-content-milestone"><a  class="tablinks">Editing</a></li>
         <button class="save-milestones-button hide-content-milestone" data-name="<%=milestoneEdit.name%>">Save</button>
     </ul>
     <div class="milestone-list-content show-content-milestone">
@@ -19,8 +19,7 @@
         </ul>
     </div>
 
-    <div class="edit-content hide-content-milestone">
-        <div style="position: relative">
+    <div class="milestone-edit-content hide-content-milestone">
         <div>
             <form>
                 <%
@@ -34,17 +33,25 @@
                 Start date: <input id="milestone-settings-date" type="date" value="<%=dateobj%>">
             </form>
         </div>
-        <table class="list-of-all-tasks left-side">
-            <th class="table-header">Tasks</th>
-            <% for(var i = 0; i < tasks.length; i++) { %>
-            <tr class="task-item"> <td><%= tasks[i].name %></td> </tr>
-            <% } %>
-
-        </table>
-        <table class="task-dependencies right-side">
-            <th class="table-header">Depends on</th>
-
-        </table>
+        <div class="milestone-dependencies-content">
+            <div class="milestone-list-of-all-tasks milestone-left-side">
+                <table id="list">
+                    <th class="table-header tasks-list">Tasks</th>
+                    <% for(var i = 0;i < tasksList.length; i++) { %>
+                    <tr class="milestone-task-item" id="<%= tasksList[i].taskId%>"><td> <%= tasksList[i].taskName %></td></tr>
+                    <% } %>
+                </table>
+            </div>
+            <div class="milestone-task-dependencies milestone-right-side">
+                <table id="list2">
+                    <th class="table-header dependencies-list">Depends on</th>
+                    <% for(var i = 0; i < dependenciesList.length; i++) { %>
+                    <tr class="milestone-task-item" id="<%= dependenciesList[i].taskId%>">
+                        <td><%= dependenciesList[i].taskName %></td>
+                    </tr>
+                    <% } %>
+                </table>
+            </div>
         </div>
     </div>
 
