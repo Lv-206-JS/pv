@@ -11,7 +11,9 @@ define([
         className: 'projects-list',
         events: {
             'click .projects-list-item': 'onClick',
-            'click .projects-list-link': 'onSelectProject'
+            'click .projects-list-link': 'onSelectProject',
+            'click .edit-project': 'onEditProject',
+            'click .delete-project' : 'onDeleteProject'
         },
 
         initialize: function (options) {
@@ -26,15 +28,44 @@ define([
         },
 
         onClick: function (e) {
-            var target = $(e.currentTarget);
-            var id = target.data('id');
+            var id = this.getTargetId(e);
             Backbone.Events.trigger('selectProject', id);
         },
 
         onSelectProject: function (e) {
-            var target = $(e.currentTarget);
-            var id = target.data('id');
+            var id = this.getTargetId(e);
             PV.router.navigate('project/' + id, {trigger: true});
+        },
+
+        //TODO OpenPopup for Projects Edit
+
+        onEditProject: function onEditProject(e) {
+            var id = this.getTargetId(e);
+            PV.router.navigate('projects/' + id, {trigger: true});
+        },
+
+        onDeleteProject: function onDeleteProject(e) {
+            e.stopPropagation();
+            var id = this.getTargetId(e);
+            var model = this.collection.get(id);
+
+            model.setUrl(model.get('id'));
+            model.destroy().then(
+
+                function (resp) {
+                    console.log(this.collection);
+                    // TODO Re-render view.
+                    this.render();
+
+                }
+
+            );
+        },
+
+        getTargetId: function getTargetId(e) {
+            var target = $(e.currentTarget);
+
+            return target.data('id');
         }
     });
 
