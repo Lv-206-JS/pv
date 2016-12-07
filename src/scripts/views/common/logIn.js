@@ -7,7 +7,7 @@ define([
 
     var LogInView = Backbone.View.extend({
         template: JST['common:logIn'],
-        className: 'login-view',
+        className: 'log-in-view',
         events: {
             'submit form': 'onSubmit',
             'click #exit-button': 'hideLogInView'

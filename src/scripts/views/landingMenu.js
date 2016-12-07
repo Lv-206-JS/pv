@@ -4,7 +4,7 @@ define([
     'JST',
     'views/common/logIn',
     'views/common/register'
-], function (Backbone, _, JST, logInView, RegistrationView) {
+], function (Backbone, _, JST, LogInView, RegistrationView) {
     'use strict';
 
     var LandingMenuView = Backbone.View.extend({
