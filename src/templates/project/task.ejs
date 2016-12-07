@@ -11,7 +11,7 @@
                 Name: <br>
                 <input class="task-name" type="text" value="<%= task.name %>"><br>
                 Estimate:<br>
-                <input class="task-estimate" type="text" value="<%= task.estimateTime %>"><br>
+                <input class="task-estimate" type="number" value="<%= task.estimateTime %>"><br>
                 Resource:<br>
                 <input class="task-resource" type="text" value="<%= task.resource %>"><br>
             </div>
@@ -23,27 +23,46 @@
             </div>
         </div>
         <div class="line"></div>
-        <div class="attachments">
+        <div class="attachments left-side">
             <% for( var i=0; i<task.attachments.length; i++) { %>
-                <div> <%= task.attachments[i].fileName %></div>
+            <div class="attachment-item">
+                <div id="delete-attachment" data-id="<%= task.attachments[i].attachmentId %>" >
+                    <img src="/images/delete-button.png" class="delete"  alt="delete attachment"/>
+                </div>
+                <a class="referense-to-file" href="<%=task.attachments[i].relativePath%>" target="_blank">
+                        <img src="/images/word.png" class="attachment-image" alt="attachment image"/>
+                        <% var str = task.attachments[i].fileName; %>
+                        <% if(task.attachments[i].fileName.length>9)  { str = task.attachments[i].fileName.substring(0,9)+'..';} %>
+
+                    <div class="attachment-name"><%= str %></div>
+                </a>
+            </div>
+
             <% } %>
+        </div>
+        <div class="add-attachment right-side">
+            <input id="add-attachment-file" type="file"></input>
         </div>
     </div>
     <!--Content of Depends on tab-->
 
     <div class="dependencies-content hide-content">
-        <table class="list-of-all-tasks left-side" id="list">
-            <th class="table-header">Tasks</th>
+        <div class="list-of-all-tasks left-side">
+        <table id="list">
+            <th class="table-header tasks-list">Tasks</th>
             <% for(var i=0;i<tasksList.length;i++) { %>
-            <tr class="task-item"><td> <%= tasksList[i].name %></td></tr>
+            <tr class="task-item" id="<%= tasksList[i].taskId%>"><td> <%= tasksList[i].name %></td></tr>
             <% } %>
         </table>
-        <table class="task-dependencies right-side" id="list">
-            <th class="table-header">Depends on</th>
+        </div>
+        <div class="task-dependencies right-side">
+        <table id="list2">
+            <th class="table-header dpendencies-list">Depends on</th>
             <% for(var i=0;i<dependenciesList.length;i++) { %>
-            <tr class="dependency-item"><td><%= dependenciesList[i].name %></td> </tr>
+            <tr class="task-item" id="<%= dependenciesList[i].taskId%>"><td><%= dependenciesList[i].name %></td> </tr>
             <% } %>
         </table>
+        </div>
     </div>
     <!--Buttons for both tabs-->
     <div class="common-form-buttons">

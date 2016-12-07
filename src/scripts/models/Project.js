@@ -5,6 +5,7 @@ define([
 
     var ProjectViewModel = Backbone.Model.extend({
         url: '/rest/projects/',
+
         setUrl: function (id) {
             this.url = '/rest/projects/' + id;
         },
@@ -57,6 +58,7 @@ define([
                         {
                             "attachmentId": "",
                             "fileName": "",
+                            "relativePath": "",
                             "mimetype": ""
                         }
                     ]
@@ -78,6 +80,7 @@ define([
                         {
                             "attachmentId": "",
                             "fileName": "",
+                            "relativePath": "",
                             "mimetype": ""
                         }
                     ]

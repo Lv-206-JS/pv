@@ -1,4 +1,8 @@
-define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
+define(['backbone',
+    'underscore',
+    'JST',
+    '../../../bower_components/draggabilly/dist/draggabilly.pkgd.js'],
+    function (Backbone, _, JST, Draggabilly) {
     'use strict';
 
     var TaskView = Backbone.View.extend({
@@ -7,9 +11,11 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
 
         initialize: function (options) {
             this.tasks = options.tasks;
+            console.log(this.tasks);
             if(options.task)
                 this.task = options.task;
             else
+            {console.log('task is not here');
                 this.task = {
                     name: "",
                     estimateTime: "",
@@ -17,7 +23,8 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
                     description: "",
                     attachments:[],
                     dependsOn: []
-                };
+                }};
+            console.log(this.task);
             this.tasksList = this.getTasksList(true);
             this.dependenciesList = this.getTasksList(false);
         },
@@ -37,33 +44,33 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
             'click .tab-dependencies' : 'taskDependenciesInformation',
             'click .cancel-button' : 'hideTaskView',
             'click .ok-button' : 'onSubmitChanges',
-            'click .task-item' : 'dragTaskItem',
-            // 'click .not-dependency-item' : 'selectElement'
+            'change #add-attachment-file' : 'addAttachment',
+            'click #delete-attachment' : 'deleteAttachment'
         },
 
-        getTasksList : function(el){
-            var isNotDependency=[];
-            var isDependency=[];
+        getTasksList: function(el){
+            var isNotDependency = [];
+            var isDependency = [];
             var len = this.task.dependsOn.length;
-            for( var i=0; i<this.tasks.length; i++) {
-                for( var j=0; j<len; j++) {
+            for( var i = 0; i < this.tasks.length; i++) {
+                for( var j = 0; j < len; j++) {
                     var dependency = false;
                     if( this.tasks[i].taskId === this.task.dependsOn[j].taskId) {
                         dependency = true;
                         isDependency[isDependency.length] = { name : this.tasks[i].name, taskId : this.tasks[i].taskId};
                      }
-                     if ((this.tasks[i].taskId!==this.task.taskId)&&(!dependency)) {
+                     if ((this.tasks[i].taskId !== this.task.taskId) && (!dependency)) {
                          isNotDependency[isNotDependency.length] = { name : this.tasks[i].name, taskId : this.tasks[i].taskId};
                      }
                 }
-                if(len===0)
-                    isNotDependency[isNotDependency.length]={ name : this.tasks[i].name, taskId : this.tasks[i].taskId};
+                if(len === 0)
+                    isNotDependency[isNotDependency.length] = { name : this.tasks[i].name, taskId : this.tasks[i].taskId};
             }
             if(el) return isNotDependency;
             else return isDependency;
         },
 
-        taskGeneralInformation : function(){
+        taskGeneralInformation: function(){
             this.$el.find('.tab-general').addClass('active');
             this.$el.find('.tab-dependencies').removeClass('active');
             this.$el.find('.dependencies-content').removeClass('show-content');
@@ -72,7 +79,8 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
             this.$el.find('.general-content').addClass('show-content');
         },
 
-        taskDependenciesInformation : function(){
+        taskDependenciesInformation: function(){
+            this.makeTasksDraggable(this.tasksList, this.dependenciesList);
             this.$el.find('.tab-dependencies').addClass('active');
             this.$el.find('.tab-general').removeClass('active');
             this.$el.find('.general-content').removeClass('show-content');
@@ -81,71 +89,153 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
             this.$el.find('.dependencies-content').addClass('show-content');
         },
 
-        dragTaskItem : function(){
-            console.log("draggabilly");
-            var $draggable = $(".task-item").draggabilly({
-                containment: '.dependencies-content'
-            });
+        makeTasksDraggable: function(tasksList, dependenciesList){
+            var draggableElements = document.getElementsByClassName('task-item');
+            var draggies = [];
+            for (var i = 0; i < draggableElements.length; i++){
+                var draggableElem = draggableElements[i];
+                draggies[i] = new Draggabilly(draggableElem);
+                draggies[i].on('dragEnd',onDragEnd);
+            }
 
-
-
+            function onDragEnd() {
+                if(this.position.x>260){
+                    var parent = document.getElementById("list2");
+                    parent.appendChild(this.element);
+                }
+                if(this.position.x<180){
+                    var parent = document.getElementById("list");
+                    parent.appendChild(this.element);
+                }
+                $(this.element).css({'left': '0','top':'0'});
+                var trigger = false;
+                for(var i = 0; i < tasksList.length; i++)
+                    if(tasksList[i].taskId === $(this.element).attr('id')) {
+                        dependenciesList[dependenciesList.length] = tasksList[i];
+                        tasksList.splice(i,1);
+                        trigger=true;
+                    }
+                if(!trigger)
+                    for(var i = 0; i < dependenciesList.length; i++)
+                        if(dependenciesList[i].taskId === $(this.element).attr('id')) {
+                            tasksList[tasksList.length] = dependenciesList[i];
+                            dependenciesList.splice(i,1);
+                        }
+            };
         },
 
-        // selectElement : function(){
-        //    if( $(event.target).hasClass('selected'))
-        //        $(event.target).removeClass('selected');
-        //    else
-        //        $(event.target).addClass('selected');
-        // },
+        addAttachment: function (event) {
+            event.preventDefault();
+            var uploadfile = new FormData();
+            uploadfile.append('file', $("#add-attachment-file").prop('files')[0]);
+            var response = $.ajax({
+                url:  '/rest/attachments',
+                type: 'POST',
+                data: uploadfile,
+                contentType: false,
+                processData: false,
+                async:false
+            });
+            this.task.attachments[this.task.attachments.length] = JSON.parse(response.responseText);
+            this.addAttachmentItem(this.task.attachments.length-1);
+        },
 
-        hideTaskView : function(event){
+        deleteAttachment: function (event) {
+            event.preventDefault();
+            var target = $(event.currentTarget);
+            var attachmentId2 = $(event.currentTarget).attr('data-id');
+            var attachmentId = target.data('id');
+            console.log('attachment id to delete');
+            console.log(attachmentId2);
+            var attachmentNumber;
+            for(var i = 0; i < this.task.attachments.length; i++){
+                if( this.task.attachments[i].attachmentId === attachmentId)
+                    attachmentNumber = i;
+            }
+            var response = $.ajax({
+                url:  '/rest/attachments/' + attachmentId,
+                type: 'DELETE',
+                contentType: false,
+                processData: false,
+                async:false
+            });
+            console.log(this.task.attachments);
+            this.task.attachments.splice(attachmentNumber,1);
+            console.log(this.task.attachments);
+            this.deleteAttachmentItem(attachmentId2);
+            // this.render();
+        },
+
+        addAttachmentItem: function(i){
+            var parent = document.getElementsByClassName("attachments");
+            var child = document.createElement('div');
+            child.setAttribute('class', 'attachment-item');
+
+            var deleteImageWrapper = document.createElement('div');
+            deleteImageWrapper.setAttribute('id','delete-attachment');
+            deleteImageWrapper.setAttribute('data-id', this.task.attachments[i].attachmentId);
+            var deleteImage = document.createElement('img');
+            deleteImage.setAttribute('src','/images/delete-button.png');
+            deleteImage.setAttribute('class','delete');
+            deleteImage.setAttribute('alt','delete attachment');
+            deleteImageWrapper.appendChild(deleteImage);
+
+            var reference = document.createElement('a');
+            reference.setAttribute('class','referense-to-file');
+            reference.setAttribute('href',this.task.attachments[i].relativePath);
+            reference.setAttribute('target','_blank');
+            var attachmentImage = document.createElement('img');
+            attachmentImage.setAttribute('src','/images/word.png');
+            attachmentImage.setAttribute('class','attachment-image');
+            attachmentImage.setAttribute('alt','attachment image');
+            reference.appendChild(attachmentImage);
+            var attachmentNameWrapper = document.createElement('div');
+            attachmentNameWrapper.setAttribute('class','attachment-name');
+            var name = this.task.attachments[i].fileName;
+            if( name.length > 9)
+                name = name.substring(0,9)+'..';
+            var attachmentName = document.createTextNode(name);
+            attachmentNameWrapper.appendChild(attachmentName);
+            reference.appendChild(attachmentNameWrapper);
+
+            child.appendChild(deleteImageWrapper);
+            child.appendChild(reference);
+            parent[0].appendChild(child);
+        },
+
+        deleteAttachmentItem: function(id){
+            var attachmentItems = $('.attachment-item');
+            for ( var i = 0; i < attachmentItems.length; i++){
+                var attachmentId = $(attachmentItems[i]).find('#delete-attachment').attr('data-id');
+                if (attachmentId === id)
+                    $(attachmentItems[i]).remove();
+            }
+        },
+
+        hideTaskView: function(event){
             event.preventDefault();
             this.$el.remove();
         },
 
-        // makeTasksDraggable : function(){
-        //     $(".task-item").draggable();
-        // },
-        //
-        //     $(function() {
-        //             $( ".task-item" ).draggable({
-        //                 revert: false,
-        //                 stack: "pageItem",
-        //                 helper: 'clone',
-        //                 start:  function() { $(this).toggle(); },
-        //                 stop:   function() { $(this).toggle(); }
-        //
-        //             });
-        //
-        //             $( "#list" ).droppable({
-        //                 drop: function( event, ui ) {
-        //                     $( this )
-        //                     $(ui.draggable).appendTo($(this));
-        //                     // $( ui.draggable ).resizable();
-        //
-        //                 }
-        //             });
-        //
-        // })},
-
-        onSubmitChanges : function onSubmitChanges (){
-
-            var newName = this.$el.find('.task-name').val();
-            this.task.name = newName;
-            var newEstimate = this.$el.find('.task-estimate').val();
-            this.task.estimateTime = newEstimate;
-            var newResource = this.$el.find('.task-resource').val();
-            this.task.resource = newResource;
-            var newDescription = this.$el.find('.task-description').val();
-            this.task.description = newDescription;
-
-            this.trigger('upsertTask', this.task, this.model);
-
+        onSubmitChanges: function onSubmitChanges (){
+            this.task.name = this.$el.find('.task-name').val();
+            this.task.estimateTime = this.$el.find('.task-estimate').val();
+            this.task.resource = this.$el.find('.task-resource').val();
+            this.task.description = this.$el.find('.task-description').val();
+            if(this.dependenciesList[0] !== undefined) {
+                for (var i = 0; i < this.dependenciesList.length; i++)
+                    this.task.dependsOn[i] = {taskId: this.dependenciesList[i].taskId};
+            }
+            else{
+                this.task.dependsOn = false;
+            }
+            this.trigger('upsertTask', this.tasks, this.task);
             event.preventDefault();
             this.$el.remove();
         }
-    });
 
+    });
 
     return TaskView;
 });
+

@@ -1,6 +1,6 @@
-$main-menu-height: 80px;
+
 .main-menu {
-  height: $main-menu-height;
+  height: 100px;
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -10,7 +10,7 @@ $main-menu-height: 80px;
   font-weight: bold;
   color: white;
   font-family: "Comic Sans";
-  font-size: 14px;
+  font-size: 20px;
 
   .top-menu, .bottom-menu {
     max-height: 50%;
@@ -27,12 +27,12 @@ $main-menu-height: 80px;
     }
 
     .top-menu-left {
-      flex: 0 0 200px;
+      flex: 0 0 100px;
       font-family: "Comic Sans MS";
-      //font-size: 14px;
+      font-size: 18px;
 
       p {
-        margin: 0px auto;
+        margin: 10px auto;
       }
     }
 

@@ -67,8 +67,42 @@ $task-form-inner-margin: 20px;
       border-bottom: 1px solid #4c4e51;
     }
     .attachments{
-      height: 75px;
+      height: 95px;
+      width: 225px;
       margin: $task-form-inner-margin;
+      overflow-x: scroll;
+
+      .attachment-item{
+        width: 90px;
+        height: 85px;
+        position: relative;
+        display: block;
+        float: left;
+
+        .attachment-image{
+          width: 40px;
+          height: 40px;
+          position: relative;
+          top:5px;
+          left: 25px;
+        }
+        .attachment-name{
+          width: 90px;
+          margin: 0 auto;
+          text-align: center;
+        }
+        .delete{
+          width: 15px;
+          height: 15px;
+          position: absolute;
+          z-index: 2;
+          top:0px;
+          right:17px;
+        }
+      }
+    }
+    .add-attachment{
+      width: 200px;
     }
     .dependencies-content{
       height: 340px;
@@ -96,17 +130,14 @@ $task-form-inner-margin: 20px;
     .list-of-all-tasks,
     .task-dependencies{
       width: 40%;
-      max-height: 80%;
+      height: 80%;
       background-color: #fff;
-      overflow-y: scroll;
-
-      .selected{
-        background-color: #ddd;
-      }
+      //overflow-y: scroll;
     }
     .table-header{
       background-color: #ddd;
       top: 0;
+      width: 250px;
     }
     .control-buttons{
       width: 10%;
