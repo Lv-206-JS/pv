@@ -21,7 +21,7 @@ function handleError(response, message, code) {
 }
 
 //get all projects
-router.get('/', function (request, response) {
+router.get('/', authenticateUser, function (request, response) {
     Project.find({}, function (err, projects) {
         if(!projects || err) {
             handleError(response, "Failed to find projects!", 404);
@@ -33,7 +33,7 @@ router.get('/', function (request, response) {
 });
 
 //create project
-router.post('/', function (request, response) {
+router.post('/', authenticateUser, function (request, response) {
     var projectToCreate = new Project({
         id: Guid.create().value,
         name: request.body.name,
@@ -59,7 +59,7 @@ router.post('/', function (request, response) {
 });
 
 //get one project
-router.get('/:id', function (request, response) {
+router.get('/:id', authenticateUser, function (request, response) {
     Project.findOne({'id': request.params.id}, function (err, project) {
         if(!project || err) {
             handleError(response, "Failed to find project!", 404);
@@ -71,7 +71,7 @@ router.get('/:id', function (request, response) {
 });
 
 //update project
-router.put('/:id', function (request, response) {
+router.put('/:id', authenticateUser, function (request, response) {
     var projectToUpdate = new Project({
         id: request.body.id,
         name: request.body.name,
@@ -103,7 +103,7 @@ router.put('/:id', function (request, response) {
 });
 
 //delete project
-router.delete('/:id',function (request, response) {
+router.delete('/:id', authenticateUser, function (request, response) {
     Project.findOneAndRemove({'id': request.params.id}, function (err, project) {
         if (!project){
             handleError(response, "Failed to find project!", 404);
