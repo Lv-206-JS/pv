@@ -26,7 +26,7 @@ define([
         routes: {
             'projects': 'openProjects',
             'project/:projectId': 'openSingleProject',
-            'projects/' : 'createProject',
+            // 'projects/' : 'createProject',
             'projects/:id' : 'editProject',
             'project/:projectId/task/:taskId': 'openProjectAndTask',
             'user/signin': 'openSingIn',
@@ -57,8 +57,10 @@ define([
                 // Create new view.
                 this.mainView = new MainView();
                 // Clean body element and append new view element.
-                $('body').html(this.mainView.render().$el);
+
             }
+
+            $('body').html(this.mainView.render().$el);
 
             this.mainView.renderProjects();
         },
@@ -85,14 +87,13 @@ define([
             this.mainView.renderProject(projectId);
         },
 
-        createProject: function createProject() {
-            this.projectsEditView = new ProjectsEditView();
-            $('body').html(this.projectsEditView.$el);
-
-        },
+        // createProject: function createProject() {
+        //     this.projectsEditView = new ProjectsEditView();
+        //     $('body').html(this.projectsEditView.$el);
+        //
+        // },
 
         editProject: function editProject(id) {
-            console.log(id);
             this.projectsEditView = new ProjectsEditView({modelId: id});
             $('body').html(this.projectsEditView.$el);
 

@@ -1,18 +1,18 @@
-<h2><%= project ? 'Update' : 'Create' %> Project</h2>
+<h2><%= project.name ? 'Update' : 'Create' %> Project</h2>
 
 <form>
     <div>
-        <label><%= project ? 'Update' : 'Create' %> Project</label>
-        <input type="text" name="name" placeholder="Project Name" value="<%= project ? project.name : '' %>">
+        <label><%= project.name ? 'Update' : 'Create' %> Project</label>
+        <input type="text" name="name" placeholder="Project Name" value="<%= project.name %>">
     </div>
     <div>
         <label>Description</label>
-        <input type="text" name="description" placeholder="Description" value="<%= project ? project.description : '' %>">
+        <input type="text" name="description" placeholder="Description"
+               value="<%= project.description %>">
     </div>
     <% if(project) { %>
-        <input type="hidden" name="id" value="<%= project.id %>" />
+    <input type="hidden" name="id" value="<%= project.id %>"/>
     <% }; %>
 
- %>
-    <button><%= project ? 'Update' : 'Create' %> </button>
+    <button><%= project.name ? 'Update' : 'Create' %> </button>
 </form>

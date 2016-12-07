@@ -7,7 +7,7 @@
             <%= projects[i].name %>
             <!--TODO: Make spans and buttons flex-items inside li element!-->
             <span class="projects-list-link" data-id="<%= projects[i].id %>">Go to project!</span>
-            <button class="edit-project">Edit</button>
+            <button class="edit-project" data-id="<%= projects[i].id %>">Edit</button>
             <button class="delete-project" data-id="<%= projects[i].id %>">Delete</button>
         </li>
     <% } %>

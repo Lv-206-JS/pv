@@ -11,7 +11,7 @@ define([
 
         defaults: {
             "id": null,
-            "name": "default",
+            "name": "",
             "description": "",
             "author": "",
             "startDate": "",

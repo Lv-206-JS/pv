@@ -17,8 +17,9 @@ define([
         initialize: function initialize(options) {
             this.modelId = options.modelId;
             if (options.modelId === 'new') {
-                this.model = new ProjectModel;
+                this.model = new ProjectModel();
                 // projectsCollection.add(this.model);
+                this.render();
             } else {
                 projectsCollection.fetch();
                 projectsCollection.on('sync', _.bind(this.onSync, this));
@@ -54,7 +55,7 @@ define([
                     projectsCollection.add(this.model);
                     PV.router.navigate('projects', {trigger: true});
                     // TODO - Create rerender for Projects List
-                    this.render();
+                    // this.render();
                 },
                 function(err) {
                     // Error handling

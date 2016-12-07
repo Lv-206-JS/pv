@@ -23,9 +23,8 @@ define([
             this.renderViews();
             return this;
         },
-        // TODO name All function for better bugTracking
-        renderViews: function renderViews() {
 
+        renderViews: function renderViews() {
             // // TODO Change Append to concrete div or element
             this.projectsHeaderView = new ProjectsTitleView().render();
             this.$el.append(this.projectsHeaderView.$el);
@@ -38,12 +37,6 @@ define([
 
         onNewProject: function onNewProject() {
             PV.router.navigate('projects/new', {trigger: true});
-        },
-
-        onChange: function onChange() {
-            // TODO delete this cleaning and add new rendering of elements to renderViews
-            this.$el.html('');
-            this.renderViews();
         },
 
         onGoToProjects: function onGoToProjects() {
