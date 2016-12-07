@@ -7,15 +7,17 @@ define([
     'views/project/infoBar',
     'views/project/tasksList',
     'views/project/task',
-    'views/project/attachments'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, TaskView, AttachmentsView) {
+    'views/project/attachments',
+    'views/project/settings'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, TaskView, AttachmentsView, SettingsView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
         className: 'main-project-view',
         events: {
             'click .back-to-landing-view': 'onBackToLandingPage',
-            'click .show-attachments': 'showAttachmentsPopup'
+            'click .show-attachments': 'showAttachmentsPopup',
+            'click .show-settings': 'showSettingsPopup'
         },
 
         initialize: function (options) {
@@ -60,6 +62,16 @@ define([
 
             this.attachmentsView.render();
             this.$el.append(this.attachmentsView.$el);
+        },
+
+        showSettingsPopup: function(){
+            this.settingsView = new SettingsView({
+                model: this.model,
+                settings: this.model.get('settings')
+            });
+
+            this.settingsView.render();
+            this.$el.append(this.settingsView.$el);
         },
 
         onChange: function () {
