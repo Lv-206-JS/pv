@@ -7,20 +7,19 @@ define([
         idAttribute : 'userId',
 
         url: '/rest/users',
-        setUrl: function (id) {
-            this.url = '/rest/user/' + id;
+        setUrl: function () {
+            this.url = '/rest/user/';
         },
 
-        defaults: function(){
-            return {
-                '_id': null,
+        defaults: {
+                '_id': '',
+                'userId': '',
                 'firstname': '',
                 'lastname': '',
                 'email': '',
                 'password': ''
-            };
         }
     });
 
-    return new UserModel();
+    return UserModel;
 });

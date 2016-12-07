@@ -16,22 +16,20 @@ define([
         },
 
         initialize: function (options) {
-            this.name = options.name;
             this.page = options.page;
-
-            Backbone.Events.off('onProjectNameReceived');
-            Backbone.Events.on('onProjectNameReceived', _.bind(this.updateProjectName, this));
+            this.model = new userModel();
+            this.model.setUrl();
+            this.model.fetch();
+            this.model.on('sync', _.bind(this.onNameReceived, this));
+            //Backbone.Events.off('onProjectNameReceived');
+            //Backbone.Events.on('onProjectNameReceived', _.bind(this.updateProjectName, this));
         },
 
         render: function render() {
-            var user = userModel.toJSON(),
-                templateData = {
-                    page: this.page,
-                    user: user
-                };
-
-            this.$el.html(this.template(templateData)); //displays project name
-
+            this.$el.html(this.template({
+                page: this.page,
+                userName: this.model.get('firstname')
+            }));
             return this;
         },
 
@@ -43,8 +41,8 @@ define([
             PV.router.navigate('/', {trigger: true});
         },
 
-        updateProjectName: function (name) {
-            this.$el.find('.show-project-name').html(name);
+        onNameReceived: function () {
+            this.render();
         },
 
         onSignOut: function onSingOut(){

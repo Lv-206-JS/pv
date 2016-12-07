@@ -30,6 +30,7 @@ var app = express();
 var projectAPI = require('./rest/routes/projects');
 var attachmentsAPI = require('./rest/routes/attachments');
 var routes = require('./rest/routes/index');
+var userAPI = require('./rest/routes/user');
 var passport = require('passport');
 var users = require('./rest/routes/users');
 
@@ -81,6 +82,7 @@ app.use(cookieParser());
 //app.use('/rest/user', userAPI);
 app.use('/rest/projects', projectAPI);
 app.use('/rest/attachments', attachmentsAPI);
+app.use('/rest/user', userAPI);
 
 app.use('/users', users);
 

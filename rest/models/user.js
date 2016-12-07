@@ -3,19 +3,22 @@ var bcrypt = require('bcryptjs');
 
 //User Schema
 var UserSchema = mongoose.Schema({
-  firstname: {
-    type: String,
-  },
-  password: {
-    type: String
-  },
-  email: {
-    type: String,
-    index:true
-  },
-  lastname: {
-    type: String
-  }
+    userId: {
+        type: String
+    },
+    firstname: {
+        type: String
+    },
+    password: {
+        type: String
+    },
+    email: {
+        type: String,
+        index:true
+    },
+    lastname: {
+        type: String
+    }
 });
 
 var User = module.exports = mongoose.model('User', UserSchema);
@@ -28,18 +31,18 @@ module.exports.createUser = function(newUser, callback){
       newUser.save(callback);
     });
   });
-}
+};
 
 //find user by username
 module.exports.getUserByEmail = function(email, callback){
   var query = {email: email};
   User.findOne(query, callback);
-}
+};
 
 //find user by id
-module.exports.getUserById = function(id, callback){  
+module.exports.getUserById = function(id, callback){
   User.findById(id, callback);
-}
+};
 
 //checking users password
 module.exports.comparePassword = function(candidatePassword, hash, callback){

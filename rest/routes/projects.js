@@ -15,6 +15,10 @@ function authenticateUser(req, res, next){
     }
 }
 
+function checkOwnership() {
+
+}
+
 //Error handler function
 function handleError(response, message, code) {
     response.status(code || 500).json({"error": message});
@@ -60,6 +64,7 @@ router.post('/', authenticateUser, function (request, response) {
 
 //get one project
 router.get('/:id', authenticateUser, function (request, response) {
+    console.log(request.user._id);
     Project.findOne({'id': request.params.id}, function (err, project) {
         if(!project || err) {
             handleError(response, "Failed to find project!", 404);
