@@ -1,14 +1,18 @@
 <div class = "main-form">
-<h2 class="page-header">Account Login</h2>
-<form method="post" action="/users/login">
-    <div class="form-group">
-        <label>Email</label>
-        <input type="email" class="form-control" name="email" placeholder="email">
+    <h2 class="page-header">Account Login</h2>
+    <img src="/images/delete-button.png" id="exit-button" class="nought-button" alt="delete attachment"/>
+    <form method="post" action="/users/login">
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" name="email" placeholder="email">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" name="password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <div class="common-form-buttons">
+        <button class="ok-button">Ok</button>
     </div>
-    <div class="form-group">
-        <label>Password</label>
-        <input type="password" class="form-control" name="password" placeholder="Password">
-    </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-</form>
 </div>

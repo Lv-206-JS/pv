@@ -7,7 +7,7 @@ define([
 
     var RegistrationView = Backbone.View.extend({
         template: JST['common:register'],
-        className: 'register-view',
+        className: 'registration-view',
         events: {
             'click #post_user' : 'onSubmit'
         },
@@ -39,8 +39,8 @@ define([
                     }
 
                 },
-                error: function(err, res){
-                    console.log("Some error");
+                error: function(err){
+                    console.log(err);
                 }
             });
         }

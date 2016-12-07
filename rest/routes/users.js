@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var Guid = require('guid');
 
 //setting passport module
 var passport = require('passport');
@@ -23,6 +24,7 @@ router.get('/login', function (req, res) {
 router.post('/register', function (req, res) {
     console.log("REGISTER");
 
+    var userId = Guid.create().value;
     var firstname = req.body.firstname;
     var email = req.body.email;
     var lastname = req.body.lastname;
@@ -39,14 +41,15 @@ router.post('/register', function (req, res) {
     var errors = req.validationErrors();
 
     var newUser = new User({
+        userId: userId,
         firstname: firstname,
         email: email,
         lastname: lastname,
         password: password
     });
+
     User.createUser(newUser, function (err, user) {
         if (err) throw err;
-            console.log(user);
     });
     var res_err = {"error": errors};
     res.status(200).json(JSON.stringify(res_err));
@@ -64,15 +67,11 @@ passport.use(new LocalStrategy({
             if (!user) {
                 return done(null, false, {message: 'Unknown user'});
             }
-            ;
-            console.log(user);
             User.comparePassword(password, user.password, function (err, isMatch) {
                 if (err) throw err;
                 if (isMatch) {
-                    console.log('is Match');
                     return done(null, user);
                 } else {
-                    console.log('is not Match');
                     return done(null, false, {message: 'Invalid password'});
                 }
             });
@@ -88,8 +87,6 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (id, done) {
 
     User.getUserById(id, function (err, user) {
-        console.log("user");
-        console.log(user);
         done(err, user);
     });
 });

@@ -10,8 +10,8 @@ function handleError(response, reason, message, code) {
 }
 
 //get one user
-router.get('/:id', function (request, response) {
-    User.findOne({'userId': request.params.id}, function (err, user) {
+router.get('/', function (request, response) {
+    User.findOne({'userId': request.user.userId}, function (err, user) {
         if (!user) {
             return handleError(response, err, "Failed to find user!", 404);
         }

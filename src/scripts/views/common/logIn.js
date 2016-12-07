@@ -9,12 +9,18 @@ define([
         template: JST['common:logIn'],
         className: 'login-view',
         events: {
-            'submit form': 'onSubmit'
+            'submit form': 'onSubmit',
+            'click #exit-button': 'hideLogInView'
         },
 
         render: function render() {
             this.$el.html(this.template({}));
             return this;
+        },
+
+        hideLogInView : function(event){
+            event.preventDefault();
+            this.$el.remove();
         }
     });
 

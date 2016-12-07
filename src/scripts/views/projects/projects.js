@@ -35,6 +35,12 @@ define([
             return this;
         },
 
+        onChange: function onChange() {
+            // TODO delete this cleaning and add new rendering of elements to renderViews
+            this.$el.html('');
+            this.renderViews();
+        },
+
         onNewProject: function onNewProject() {
             PV.router.navigate('projects/new', {trigger: true});
         },
@@ -42,7 +48,6 @@ define([
         onGoToProjects: function onGoToProjects() {
             PV.router.navigate('projects', {trigger: true});
         }
-
     });
 
     return MainProjectsView;

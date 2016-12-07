@@ -76,7 +76,7 @@ var OwnershipsSchema = new Schema ({
     projectId: {type: String, required: false},
     userId: {type: String, required: false},
     role: {type: String, required: false}
-});
+}, { collection: 'ownerships' });
 
 var SessionsSchema = new Schema ({
     sessionId: {type: String, required: false},

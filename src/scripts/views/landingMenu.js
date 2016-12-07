@@ -11,7 +11,7 @@ define([
         template: JST.landingMenu,
         events: {
             'click .go-to-projects': 'onGoToProjects',
-            /*'click .sign-in-button': 'onSignIn',*/
+            'click .sign-in-button': 'onSignIn',
             'click .login-btn': 'onLogIn',
             'click .registration-btn': 'onRegistration'
         },
@@ -30,16 +30,8 @@ define([
             PV.router.navigate('projects', {trigger: true});
         },
 
-        /*onSignIn: function onSignIn() {
-            //TODO Later: Add popup window for Signing In
-            // We will get needed data instead of url, later from login form respond
-            PV.router.navigate('user/signin', {trigger: true});
-        },*/
         onLogIn: function onLogIn() {
-            this.loginView = new logInView({
-
-            });
-
+            this.loginView = new LogInView({});
             this.loginView.render();
             this.$el.append(this.loginView.$el);
         },
