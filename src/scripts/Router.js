@@ -7,7 +7,7 @@ define([
         'models/User',
         'views/common/logIn',
         'views/common/register',
-        'views/projects/projectsEdit'
+        /*'views/projects/projectsEdit'*/
     ],
     function ($,
               Backbone,
@@ -16,8 +16,8 @@ define([
               SignInView,
               userModel,
               LogInView,
-              RegistrationView,
-              ProjectsEditView) {
+              RegistrationView/*,
+              ProjectsEditView*/) {
         'use strict';
 
         var Router = Backbone.Router.extend({

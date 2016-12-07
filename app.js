@@ -67,6 +67,7 @@ app.use(morgan('dev'));
 app.use(session({
     secret: 'secret',
     saveUninitialized: true,
+    cookie:{_expires : 1500000000000},
     resave: true
 }));
 

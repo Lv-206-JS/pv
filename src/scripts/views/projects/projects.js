@@ -3,8 +3,8 @@ define([
     'JST',
     '../common/mainMenu',
     './projectsTitle',
-    './projectsArea',
-    './projectsEdit'
+    './projectsArea'/*,
+    './projectsEdit'*/
 ], function (Backbone, JST, MainMenuView, ProjectsHeaderView, ProjectsAreaView ) {
     'use strict';
 
