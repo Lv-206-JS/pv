@@ -1,32 +1,25 @@
-<div class="top-menu">
-
-    <img src="/images/logo.svg" alt="logo">
-    <div class=top-menu-left><p>Plan&View</p></div>
-
-    <div class=top-menu-right>
-        <ul>
-
-            <li><a class="back-to-landing-view">HOME</a></li>
-            <% if (page !== 'projects') { %>
-            <li><a class="go-to-projects">Projects</a></li>
-            <% } %>
-            <li><a class="sign-out-button">Sign Out</a></li>
-
-        </ul>
+<div class="menu">
+    <a class="back-to-landing-view" >
+        <img class="logo" src="../../../images/plan-view-logo.svg" alt="logo"></img>
+    </a>
+    <% if (page !== 'projects') { %>
+    <a class="go-to-projects main-menu-button">my projects</a>
+    <% } %>
+    <div class="menu-right">
+        <p class="show-user-name user-name">hello, <%= user.firstname %> <%= user.lastname %> </p>
+        <a class="sign-out-button main-menu-button">Sign Out</a>
     </div>
 </div>
-
-<div class="bottom-menu">
-
-    <% if (page !== 'projects') { %>
-    <div class="show-project-name">Project Name:</div>
-    <% } %>
-    <div class="menu-toolbar">
-        <!-- Add toolbar buttons here -->
-        <button>fire</button>
-        <button>ice</button>
-        <button>air</button>
+<div class="menu-toolbar">
+    <p class="project-name">RIA Project</p>
+    <div class="tool-bar">
+        <a class="tool-img tool-zoom-in"></a>
+        <a class="tool-img tool-zoom-out"></a>
+        <a class="tool-img tool-undo"></a>
+        <a class="tool-img tool-redo"></a>
+        <a class="edit-milestone tool-img tool-milestone"></a>
+        <a class="tool-critical-way tool-img"></a>
+        <a class="show-attachments tool-attachment tool-img"></a>
+        <a class="show-settings tool-settings tool-img"></a>
     </div>
-    <div class="show-user-name"><p>Hello (user), <%= user.firstname %> <%= user.lastname %> </p></div>
-
 </div>

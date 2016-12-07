@@ -41,8 +41,8 @@ define([
             this.milestoneView = new MilestoneView().render();
             this.$el.append(this.milestoneView.$el);
 
-            this.tasksListView = new TasksListView({tasks: this.model.get('tasks')}).render();
-            this.$el.append(this.tasksListView.$el);
+            // this.tasksListView = new TasksListView({tasks: this.model.get('tasks')}).render();
+            // this.$el.append(this.tasksListView.$el);
 
             this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
             this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);

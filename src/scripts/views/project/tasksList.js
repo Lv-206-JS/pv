@@ -26,13 +26,6 @@ define([
                     tasks: this.tasks
                 }));
 
-                 // var milestoneView = parseInt($('.milestone-view').css('height'), 10);
-                 // var mainMenu = parseInt($('.main-menu').css('height'), 10);
-                 // var maxHeight = (milestoneView && mainMenu) ? ($(document).height() - milestoneView - mainMenu) : null ;
-                 // console.log(maxHeight);
-                // $('.tasks-list-container').css('max-height', maxHeight);
-                // console.log($('.tasks-list-container').css('max-height'));
-
                 return this;
             },
 

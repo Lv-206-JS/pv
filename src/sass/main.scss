@@ -19,9 +19,26 @@
 html, body {
   padding: 0;
   margin: 0;
-  //height: 100%;
   width: 100%;
+  height: 100%;
   overflow-y: hidden;
   overflow-x: hidden;
-  font-family: Verdana, Times, sans-serif;
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+* {
+  box-sizing: border-box;
+}
+p {
+  display: inline;
+  margin: 0px;
+}
+a {
+  display: inline;
+  margin: 0px;
+  cursor: pointer;
+}
+.clear-both {
+  clear: both;
 }
