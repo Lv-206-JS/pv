@@ -108,14 +108,16 @@ define([
         },
 
 
-        showSettingsPopup: function(){
+        showSettingsPopup: function() {
             this.settingsView = new SettingsView({
                 model: this.model,
                 settings: this.model.get('settings')
             });
 
+
             this.settingsView.render();
             this.$el.append(this.settingsView.$el);
+        },
 
         showMilestoneEditPopup: function () {
             var milestones = this.model.get('milestones');
@@ -125,7 +127,6 @@ define([
             });
             this.milestoneEditView.render();
             this.$el.append(this.milestoneEditView.$el);
-        }
 
         },
 
