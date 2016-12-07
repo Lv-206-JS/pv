@@ -40,7 +40,7 @@ define([
 
                 },
                 error: function(err, res){
-                    res.render(err);
+                    console.log("Some error");
                 }
             });
         }
