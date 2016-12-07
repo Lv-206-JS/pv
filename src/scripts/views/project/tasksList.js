@@ -3,7 +3,7 @@ define([
         'underscore',
         'JST'
     ],
-    function (Backbone, _, JST, TaskView) {
+    function (Backbone, _, JST) {
         'use strict';
 
         var TasksListView = Backbone.View.extend({
@@ -17,6 +17,7 @@ define([
             },
 
             initialize: function (options) {
+                // this.model = options.model;
                 this.tasks = options.tasks;
             },
 
@@ -42,15 +43,12 @@ define([
                         task = this.tasks[i];
                     }
                 }
-                this.taskView = new TaskView({tasks: this.tasks, task: task}).render();
-                this.$el.append(this.taskView.$el);
-
+                this.trigger('showTaskEditPopup', this.tasks, task);
                 return this;
             },
 
             renderTaskAddView: function () {
-                this.taskView = new TaskView({tasks: this.tasks}).render();
-                this.$el.append(this.taskView.$el);
+                this.trigger('showTaskAddPopup', this.tasks);
             },
 
             onTaskEdit: function onTaskEdit(e) {
