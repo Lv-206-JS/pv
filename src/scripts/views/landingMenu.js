@@ -1,8 +1,9 @@
 define([
     'backbone',
     'underscore',
-    'JST'
-], function (Backbone, _, JST) {
+    'JST',
+    'views/common/logIn'
+], function (Backbone, _, JST, LogInView) {
     'use strict';
 
     var LandingMenuView = Backbone.View.extend({
@@ -34,7 +35,9 @@ define([
             PV.router.navigate('user/signin', {trigger: true});
         },
         onLogIn: function onLogIn() {
-            PV.router.navigate('users/login', {trigger: true});
+            this.loginView = new LogInView({});
+            this.loginView.render();
+            this.$el.append(this.loginView.$el);
         },
         onRegistration: function onLogIn() {
             PV.router.navigate('users/registration', {trigger: true});

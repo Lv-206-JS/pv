@@ -20,7 +20,6 @@ define([
         onSubmit: function onSubmit(event){
             event.preventDefault();
             var elem = this.$el;
-            console.log("It works!!!");
             var response = $.ajax({
                 url:  '/users/register',
                 type: 'POST',
@@ -40,8 +39,8 @@ define([
                     }
 
                 },
-                error: function(err, res){
-                    res.render(err);
+                error: function(err){
+                    console.log(err);
                 }
             });
         }
