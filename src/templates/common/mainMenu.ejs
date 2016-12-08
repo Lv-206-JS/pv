@@ -1,33 +1,12 @@
-<div class="top-menu">
-
-    <img src="/images/logo.svg" alt="logo">
-    <div class=top-menu-left><p>Plan&View</p></div>
-
-    <div class=top-menu-right>
-        <ul>
-
-            <li><a class="back-to-landing-view">HOME</a></li>
-            <% if (page !== 'projects') { %>
-            <li><a class="go-to-projects">Projects</a></li>
-            <% } %>
-            <li><a class="sign-out-button">Sign Out</a></li>
-
-        </ul>
-    </div>
-</div>
-
-<div class="bottom-menu">
-
+<div class="menu">
+    <a class="back-to-landing-view" >
+        <img class="logo" src="../../../images/plan-view-logo.svg" alt="logo"></img>
+    </a>
     <% if (page !== 'projects') { %>
-    <div class="show-project-name">  </div>
+    <a class="go-to-projects main-menu-button">my projects</a>
     <% } %>
-    <div class="menu-toolbar">
-        <!-- Add toolbar buttons here -->
-        <button>fire</button>
-        <button>ice</button>
-        <button>air</button>
-        <!--<button>settings</button>-->
+    <div class="menu-right">
+        <p class="show-user-name user-name">hello, <%= userName %> </p>
+        <a class="sign-out-button main-menu-button">Sign Out</a>
     </div>
-    <div class="show-user-name"><p>Hello, <%= userName %> </p></div>
-
 </div>
