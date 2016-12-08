@@ -39,6 +39,7 @@ define(['backbone',
         events: {
             'click .tab-general' : 'taskGeneralInformation',
             'click .tab-dependencies' : 'taskDependenciesInformation',
+            'click .tab-attachments' : 'taskAttachmentslInformation',
             'click .cancel-button' : 'hideTaskView',
             'click .ok-button' : 'onSubmitChanges',
             'change #add-attachment-file' : 'addAttachment',
@@ -66,22 +67,46 @@ define(['backbone',
         },
 
         taskGeneralInformation: function(){
-            this.$el.find('.tab-general').addClass('active');
-            this.$el.find('.tab-dependencies').removeClass('active');
-            this.$el.find('.dependencies-content').removeClass('show-content');
-            this.$el.find('.dependencies-content').addClass('hide-content');
-            this.$el.find('.general-content').removeClass('hide-content');
-            this.$el.find('.general-content').addClass('show-content');
+            this.makeTabVisible('.tab-general','.general-content');
+            if(this.$el.find('.tab-dependencies').hasClass('w--current')) {
+                this.makeTabUnvisible('.tab-dependencies','.dependencies-content');
+            }
+            if(this.$el.find('.tab-attachments').hasClass('w--current')){
+                this.makeTabUnvisible('.tab-attachments','.attachments-content');
+            }
         },
 
         taskDependenciesInformation: function(){
             this.makeTasksDraggable(this.tasksList, this.dependenciesList);
-            this.$el.find('.tab-dependencies').addClass('active');
-            this.$el.find('.tab-general').removeClass('active');
-            this.$el.find('.general-content').removeClass('show-content');
-            this.$el.find('.general-content').addClass('hide-content');
-            this.$el.find('.dependencies-content').removeClass('hide-content');
-            this.$el.find('.dependencies-content').addClass('show-content');
+            this.makeTabVisible('.tab-dependencies','.dependencies-content');
+            if(this.$el.find('.tab-general').hasClass('w--current')) {
+                this.makeTabUnvisible('.tab-general','.general-content');
+            }
+            if(this.$el.find('.tab-attachments').hasClass('w--current')){
+                this.makeTabUnvisible('.tab-attachments','.attachments-content');
+            }
+        },
+
+        taskAttachmentslInformation: function(){
+            this.makeTabVisible('.tab-attachments','.attachments-content');
+            if(this.$el.find('.tab-dependencies').hasClass('w--current')) {
+                this.makeTabUnvisible('.tab-dependencies','.dependencies-content');
+            }
+            if(this.$el.find('.tab-general').hasClass('w--current')){
+                this.makeTabUnvisible('.tab-general','.general-content');
+            }
+        },
+
+        makeTabUnvisible: function(tabName,tabContent){
+            this.$el.find(tabName).removeClass('w--current');
+            this.$el.find(tabContent).removeClass('show-content');
+            this.$el.find(tabContent).addClass('hide-content');
+        },
+
+        makeTabVisible: function(tabName,tabContent){
+            this.$el.find(tabName).addClass('w--current');
+            this.$el.find(tabContent).removeClass('hide-content');
+            this.$el.find(tabContent).addClass('show-content');
         },
 
         makeTasksDraggable: function(tasksList, dependenciesList){
@@ -90,19 +115,19 @@ define(['backbone',
             for (var i = 0; i < draggableElements.length; i++){
                 var draggableElem = draggableElements[i];
                 draggies[i] = new Draggabilly(draggableElem,{
-                    containment: '.dependencies-content'
+                    containment: '.tab-container'
                 });
                 draggies[i].on('dragEnd',onDragEnd);
             }
 
             function onDragEnd() {
                 if(this.position.x>225){
-                    var parent = document.getElementById("list2");
+                    var parent = document.getElementById("dependencies-list");
                     parent.appendChild(this.element);
                     $(this.element).css({'left': '260','top':'0'});
                 }
                 if(this.position.x<224){
-                    var parent = document.getElementById("list");
+                    var parent = document.getElementById("tasks-list");
                     parent.appendChild(this.element);
                     $(this.element).css({'left': '0','top':'0'});
                 }
@@ -136,6 +161,7 @@ define(['backbone',
                 processData: false,
                 async:false
             });
+            // var attachment = JSON.parse(response.responseText);
             this.task.attachments[this.task.attachments.length] = JSON.parse(response.responseText);
             this.addAttachmentItem(this.task.attachments.length-1);
         },
@@ -162,39 +188,14 @@ define(['backbone',
 
         addAttachmentItem: function(i){
             var parent = document.getElementsByClassName("attachments");
-            var child = document.createElement('div');
-            child.setAttribute('class', 'attachment-item');
-
-            var deleteImageWrapper = document.createElement('div');
-            deleteImageWrapper.setAttribute('id','delete-attachment');
-            deleteImageWrapper.setAttribute('data-id', this.task.attachments[i].attachmentId);
-            var deleteImage = document.createElement('img');
-            deleteImage.setAttribute('src','/images/delete-button.png');
-            deleteImage.setAttribute('class','delete');
-            deleteImage.setAttribute('alt','delete attachment');
-            deleteImageWrapper.appendChild(deleteImage);
-
-            var reference = document.createElement('a');
-            reference.setAttribute('class','referense-to-file');
-            reference.setAttribute('href',this.task.attachments[i].relativePath);
-            reference.setAttribute('target','_blank');
-            var attachmentImage = document.createElement('img');
-            attachmentImage.setAttribute('src','/images/word.png');
-            attachmentImage.setAttribute('class','attachment-image');
-            attachmentImage.setAttribute('alt','attachment image');
-            reference.appendChild(attachmentImage);
-            var attachmentNameWrapper = document.createElement('div');
-            attachmentNameWrapper.setAttribute('class','attachment-name');
-            var name = this.task.attachments[i].fileName;
-            if( name.length > 9)
-                name = name.substring(0,9)+'..';
-            var attachmentName = document.createTextNode(name);
-            attachmentNameWrapper.appendChild(attachmentName);
-            reference.appendChild(attachmentNameWrapper);
-
-            child.appendChild(deleteImageWrapper);
-            child.appendChild(reference);
-            parent[0].appendChild(child);
+            var str = this.task.attachments[i].fileName;
+            if(this.task.attachments[i].fileName.length>9)  { str = this.task.attachments[i].fileName.substring(0,9)+'..';}
+            $( parent ).append("<div class='attachment-item'>" +
+                "<div id='delete-attachment' data-id="+this.task.attachments[i].attachmentId +
+                "><img src='/images/cancel.svg' class='delete'  alt='delete attachment'/></div>"+
+                "<a class='file-reference' href="+this.task.attachments[i].relativePath+
+                " target='_blank'><img src='/images/word.png' class='attachment-image' alt='attachment image'/>"+
+                "<div class='attachment-name' id='reference-name'>"+str+"</div></a></div>");
         },
 
         deleteAttachmentItem: function(id){
