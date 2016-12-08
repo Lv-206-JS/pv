@@ -144,7 +144,7 @@ define([
             if(this.model.whoChange == 'AttachmentsView') {
                 return this.showAttachmentsPopup();
             }
-            else if(this.model.whoChange == 'MilestoneEditView') {
+            if(this.model.whoChange == 'MilestoneEditView') {
                 return this.showMilestoneEditPopup();
             }
         }

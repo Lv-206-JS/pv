@@ -33,10 +33,10 @@ define(['backbone',
         },
 
         events: {
-            'click .ok-button' : 'hideMilestoneEditView',
+            'click .ok-button, .cancel-button' : 'hideMilestoneEditView',
             'click .milestone-item' : 'getEditView',
             'click #create-milestone': 'getEditView',
-            'click .tab-milestone-list': 'getMilestoneListView',
+            'click .tab-general': 'getMilestoneListView',
             'click .save-milestones-button' : 'saveMilestoneSettings',
             'click #delete-milestone' : 'deleteMilestone'
         },
@@ -78,33 +78,34 @@ define(['backbone',
             this.tasksList = this.getTasksList(true);
             this.dependenciesList = this.getTasksList(false);
             this.updateMilestonesPopup();
-            this.$el.find('.tab-milestone-edit').addClass('active');
-            this.$el.find('.tab-milestone-list').removeClass('active');
-            this.$el.find('.milestone-list-content').removeClass('show-content-milestone');
-            this.$el.find('.milestone-list-content').addClass('hide-content-milestone');
-            this.$el.find('.milestone-edit-content').removeClass('hide-content-milestone');
-            this.$el.find('.milestone-edit-content').addClass('show-content-milestone');
-            this.$el.find('.tab-milestone-edit').removeClass('hide-content-milestone');
-            this.$el.find('.tab-milestone-edit').addClass('show-content-milestone');
-            this.$el.find('.save-milestones-button').removeClass('hide-content-milestone');
-            this.$el.find('.save-milestones-button').addClass('show-content-milestone');
+            this.$el.find('.tab-dependencies').addClass('w--current');
+            this.$el.find('.tab-general').removeClass('w--current');
+            this.$el.find('.general-content').removeClass('show-content');
+            this.$el.find('.general-content').addClass('hide-content');
+            this.$el.find('.dependencies-content').removeClass('hide-content');
+            this.$el.find('.dependencies-content').addClass('show-content');
+            this.$el.find('.tab-dependencies').removeClass('hide-content');
+            this.$el.find('.tab-dependencies').addClass('show-content');
+            this.$el.find('.save-milestones-button').removeClass('hide-content');
+            this.$el.find('.save-milestones-button').addClass('show-content');
             this.makeTasksDraggable(this.tasksList, this.dependenciesList);
         },
 
         getMilestoneListView: function () {
-            this.$el.find('.tab-milestone-list').addClass('active');
-            this.$el.find('.tab-milestone-edit').removeClass('active');
-            this.$el.find('.tab-milestone-edit').removeClass('show-content-milestone');
-            this.$el.find('.tab-milestone-edit').addClass('hide-content-milestone');
-            this.$el.find('.save-milestones-button').removeClass('show-content-milestone');
-            this.$el.find('.save-milestones-button').addClass('hide-content-milestone');
-            this.$el.find('.milestone-edit-content').removeClass('show-content-milestone');
-            this.$el.find('.milestone-edit-content').addClass('hide-content-milestone');
-            this.$el.find('.milestone-list-content').removeClass('hide-content-milestone');
-            this.$el.find('.milestone-list-content').addClass('show-content-milestone');
+            this.$el.find('.tab-general').addClass('w--current');
+            this.$el.find('.tab-dependencies').removeClass('w--current');
+            this.$el.find('.tab-dependencies').removeClass('show-content');
+            this.$el.find('.tab-dependencies').addClass('hide-content');
+            this.$el.find('.save-milestones-button').removeClass('show-content');
+            this.$el.find('.save-milestones-button').addClass('hide-content');
+            this.$el.find('.dependencies-content').removeClass('show-content');
+            this.$el.find('.dependencies-content').addClass('hide-content');
+            this.$el.find('.general-content').removeClass('hide-content');
+            this.$el.find('.general-content').addClass('show-content');
         },
 
         saveMilestoneSettings: function (event) {
+            event.preventDefault();
             var updatedMilestones = this.model.get('milestones');
             var newName = this.$el.find('#milestone-settings-name').val();
             var newDate = this.$el.find('#milestone-settings-date').val();
@@ -165,11 +166,11 @@ define(['backbone',
                     //error handler
                 }
             });
-            this.model.whoChange = 'MilestoneEditView'
+            this.model.whoChange = 'MilestoneEditView';
         },
 
         makeTasksDraggable: function(tasksList, dependenciesList){
-            var draggableElements = document.getElementsByClassName('milestone-task-item');
+            var draggableElements = document.getElementsByClassName('task-item');
             var draggies = [];
             for (var i = 0; i < draggableElements.length; i++){
                 var draggableElem = draggableElements[i];
@@ -180,11 +181,11 @@ define(['backbone',
             function onDragEnd() {
                 var parent;
                 if(this.position.x>260){
-                    parent = document.getElementById("list2");
+                    parent = document.getElementById("dependencies-list");
                     parent.appendChild(this.element);
                 }
                 if(this.position.x<180){
-                    parent = document.getElementById("list");
+                    parent = document.getElementById("tasks-list");
                     parent.appendChild(this.element);
                 }
                 $(this.element).css({'left': '0','top':'0'});
