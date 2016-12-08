@@ -1,129 +1,111 @@
-//@import url(./info-bar-view.scss);
-$gantt-background-color: #fff;
-$light-grey-color: #ededed;
-$font-family-helvetica: 'Helvetica', sans-serif;
-$font-color: #000;
-$primary-font-size: 14px;
-$text-center: center;
-$text-left: left;
-$border: 1px solid $light-grey-color;
-$border-collapse: collapse;
-$border-box: border-box;
-$cell-width-wide: 200px;
-$cell-width: 100px;
-$cell-height-wide: 30px;
-$cell-height: 15px;
-$cell-padding: 10px 5px;
-$overflow-auto: auto;
-$overflow-hidden: hidden;
-$left-panel-width: 545px;
-$splitter-width: 10px;
-$display-flex: flex;
-$cursor-pointer: pointer;
-$main-menu-height: 50px;
-$milestone-height: 100px;
-$task-list-container-max-height: 400px;
-
-.tasks-list-container {
-  display: $display-flex;
-  overflow-y: $overflow-auto;
-  background-color: $gantt-background-color;
-  max-height: $task-list-container-max-height;
+.table-header {
+  display: flex;
+  flex-direction: column;
+  height: 45px;
 }
 
-.left-panel {
+.table-header-cell {
+  width: 20%;
+  min-width: 100px;
+  max-width: 100px;
+  padding-top: 3px;
+  padding-left: 6px;
+  border-top: 1px none rgba(0, 0, 0, .05);
+  border-bottom: 2px none rgba(0, 0, 0, .15);
+  font-weight: 600;
+  text-align: left;
+}
+
+.table-header-cell.table-header-task-cell {
+  //width: 40%;
+  height: 25px;
+  min-width: 250px;
+  max-width: 250px;
+}
+
+.table-row {
+  display: flex;
+  height: 25px;
+  padding: 4px 0px 0px 20px;
+  //flex-direction: row;
+  //flex-wrap: nowrap;
+  //flex: 1;
+  border-bottom: 1px solid rgba(0, 0, 0, .15);
+}
+
+.table-row:hover {
+  background-color: rgba(0, 0, 0, .05);
+}
+
+.table-cell-task {
   position: relative;
-  right: auto;
-  width: $left-panel-width;
-  background-color: $gantt-background-color;
-  overflow-x: $overflow-auto;
+  display: block;
+  overflow: hidden;
+  //width: 40%;
+  //height: 100%;
+  min-width: 250px;
+  max-width: 250px;
+  padding-left: 6px;
+  justify-content: flex-start;
 }
 
-.tasks-list {
-  box-sizing: $border-box;
-  font-family: $font-family-helvetica;
-  font-size: $primary-font-size;
-  color: $font-color;
-  border-collapse: $border-collapse;
-
-  .thead .td {
-    min-width: $cell-width;
-    height: $cell-height-wide;
-    padding: $cell-padding;
-    text-align: $text-center;
-    border: $border;
-
-    .add-task {
-      font-size: 14px;
-      margin: 5px 18%;
-      padding: 10px 15px;
-      font-weight: 400;
-      color: #000;
-      background-color: #ededed;
-
-      &:hover {
-        cursor: pointer;
-        background-color: darken($light-grey-color, 25%);
-      }
-    }
-  }
-
-  .tbody {
-    .td {
-      min-width: $cell-width;
-      height: $cell-height;
-      padding: $cell-padding;
-      text-align: $text-center;
-      border: $border;
-    }
-
-    .task-name {
-      min-width: $cell-width-wide;
-      max-width: $cell-width-wide;
-
-      &:hover {
-        cursor: $cursor-pointer;
-      }
-    }
-  }
+.table-cell {
+  //width: 20%;
+  //height: 100%;
+  min-width: 100px;
+  max-width: 100px;
+  padding-left: 6px;
 }
 
-.right-panel {
-  overflow-x: $overflow-auto;
-  position: absolute;
-  left: $left-panel-width + $splitter-width;
-  width: 100%;
-  max-height: inherit;
-  background-color: $gantt-background-color;
+.add-task-img {
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+  margin-left: 6px;
 }
 
-.gantt-list {
-  @extend .tasks-list;
-
-  .thead {
-    .td {
-      height: 23px;
-      min-width: $cell-width-wide;
-      max-width: $cell-width-wide;
-    }
-  }
+.add-task-link {
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-top: 2px;
+  color: #007ad4;
+  cursor: pointer;
 }
 
-.splitter {
-  overflow-y: $overflow-hidden;
-  position: absolute;
-  left: $left-panel-width;
-  right: auto;
-  box-sizing: $border-box;
-  width: $splitter-width;
-  max-height: inherit;
-  min-height: $task-list-container-max-height;
-  background-color: $light-grey-color;
-  border: $border;
-  border-color: darken($light-grey-color, 10%);
+.task-link {
+  position: relative;
+  top: -19px;
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  margin-right: 5px;
+  margin-left: 5px;
+  float: right;
+  clear: none;
+  justify-content: flex-end;
+  opacity: 0.3;
+  cursor: pointer;
+}
 
-  &:hover {
-    cursor: col-resize;
-    background-color: darken($light-grey-color, 25%);
-  }
+.task-link:hover {
+  opacity: 1;
+}
+
+.task-link.edit-task {
+  width: 19px;
+  height: 19px;
+  margin-right: 0px;
+  background-image: url('../../../images/edit.svg');
+  background-position: 0px 0px;
+  background-size: contain;
+}
+
+.task-link.remove-task {
+  width: 19px;
+  height: 19px;
+  margin-top: 2px;
+  background-image: url('../../../images/cancel.svg');
+  background-position: 0px 0px;
+  background-size: contain;
 }
