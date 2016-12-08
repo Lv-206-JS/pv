@@ -53,12 +53,8 @@ define([
             model.destroy().then(
 
                 function (resp) {
-                    console.log(this.collection);
-                    // TODO Re-render view.
-                    this.render();
-
+                    model.render(this);
                 }
-
             );
         },
 
