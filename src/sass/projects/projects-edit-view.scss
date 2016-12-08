@@ -1,3 +1,5 @@
-@import "../popup-view";
+.projects-edit-view {
+  @extend .popup-view;
+}
 
 // TODO: styles for Projects Edit

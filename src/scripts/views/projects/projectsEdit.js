@@ -18,7 +18,7 @@ define([
             this.modelId = options.modelId;
             if (options.modelId === 'new') {
                 this.model = new ProjectModel();
-                // projectsCollection.add(this.model);
+
                 this.render();
             } else {
                 projectsCollection.fetch();
@@ -32,10 +32,9 @@ define([
             return this;
         },
 
-        onSync: function () {
+        onSync: function onSync() {
             this.model = projectsCollection.get(this.modelId);
-            // console.log(this.model);
-            this.render();//add render here
+            this.render();
 
         },
 
@@ -54,8 +53,6 @@ define([
                 function(res) {
                     projectsCollection.add(this.model);
                     PV.router.navigate('projects', {trigger: true});
-                    // TODO - Create rerender for Projects List
-                    // this.render();
                 },
                 function(err) {
                     // Error handling
