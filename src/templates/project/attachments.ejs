@@ -1,25 +1,37 @@
-<div class = "main-form">
-    <h2 class="attachments-header">Attachments</h2>
-    <div class="add-attachment">
-        <form class="upload" enctype="multipart/form-data">
-            <input id="add-attachment-file" type="file"></input>
-        </form>
+<div class="form-wrapper">
+    <div class="form-title">
+        <div>Attachments</div>
     </div>
-    <div class="attachment-list">
-        <ul>
-            <%for(var i = 0; i <  attachments.length; i++) {%>
-            <div class="attachment-item">
-                <a class="referense-to-file" href="<%=attachments[i].relativePath%>" target="_blank">
-                    <li><%= attachments[i].fileName %></li>
-                </a>
-                <div id="delete-attachment" data-id="<%= attachments[i].attachmentId %>">
-                    <img src="/images/delete-button.png" id="delete-attachment-image" alt="delete attachment"/>
+    <div class="attachments-container">
+        <div class="tab-container" >
+            <div class="add-attachment">
+                <div class="form-input-file">
+                    <label>
+                        <input id="add-attachment-file" type="file" name="file"/>
+                        <img class="add-img" src="/images/add.svg">
+                        <span>Upload File</span>
+                    </label>
                 </div>
             </div>
-            <% }%>
-        </ul>
+            <div class="attachments-attachments">
+                <% for( var i=0; i<attachments.length; i++) { %>
+                <div class="attachment-item">
+                    <div id="delete-attachment" data-id="<%= attachments[i].attachmentId %>" >
+                        <img src="/images/cancel.svg" class="delete"  alt="delete attachment"/>
+                    </div>
+                    <a class="file-reference" href="<%=attachments[i].relativePath%>" target="_blank">
+                        <img src="/images/word.png" class="attachment-image" alt="attachment image"/>
+                        <% var str = attachments[i].fileName; %>
+                        <% if(attachments[i].fileName.length>9)  { str = attachments[i].fileName.substring(0,9)+'..';} %>
+
+                        <div class="attachment-name" id="reference-name"><%= str %></div>
+                    </a>
+                </div>
+                <% } %>
+            </div>
+        </div>
     </div>
-    <div class="common-form-buttons">
-        <button class="ok-button">Ok</button>
+    <div class="attachment-form-bottom">
+        <input class="form-button ok-button" type="submit" value="ok">
     </div>
 </div>

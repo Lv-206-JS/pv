@@ -1,13 +1,17 @@
+@import "../basic-popup-view";
 .log-in-view {
-  @extend .popup-view;
+  @extend .basic-popup-view;
+
+  .login-form-bottom{
+    @extend .form-bottom;
+  }
+  //.form-wrapper{
+  //  @extend .form-bottom;
+  //  //height: inherit;
+  //}
+  //.tab-container{
+  //  @extend .tab-container;
+  //  //height: 100%;
+  //}
 }
 
-.nought-button {
-  margin-top: 1px;
-  margin-right: 2px;
-  position:absolute;
-  top:0;
-  right:0;
-  width: 30px;
-  height: 30px
-}

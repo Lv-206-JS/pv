@@ -9,66 +9,67 @@
                 <a class="tab-link tab-dependencies">Depends On</a>
                 <a class="tab-link tab-attachments">Attachments</a>
             </div>
-            <div class="tab-container">
-                <div class="tab-container general-content show-content">
-                    <label class="form-label">Task Name:</label>
-                    <input class="form-input-text task-name" maxlength="256" value="<%= task.name %>" placeholder="Task Name" required="required" type="text">
-                    <label class="form-label">Assignee:</label>
-                    <input class="form-input-text task-resource" maxlength="256" value="<%= task.resource %>" placeholder="Assignee Name" type="text">
-                    <label class="form-label">Estimate:</label>
-                    <input class="form-input-text task-estimate" maxlength="256" value="<%= task.estimateTime %>" placeholder="Estimate hours" type="text">
-                    <label class="form-label description-label">Description:</label>
-                    <textarea class="form-input-description task-description" maxlength="5000" placeholder="Task Description"><%= task.description %></textarea>
-                </div>
-                <div class="tab-container dependencies-content hide-content">
-                    <label class="dependancy-label form-label">Task List</label>
-                    <label class="dependancy-label form-label">Depends On</label>
-                    <div class="drop-list" id="list-of-tasks">
-                        <table id="tasks-list">
-                            <% for(var i=0;i<tasksList.length;i++) { %>
-                            <tr class="task-item" id="<%= tasksList[i].taskId%>"><td> <%= tasksList[i].name %></td></tr>
-                            <% } %>
-                        </table>
+            <div class="tasks-container">
+                <div class="tab-container">
+                    <div class="tab-container general-content show-content">
+                        <label class="form-label">Task Name:</label>
+                        <input class="form-input-text task-name" maxlength="256" value="<%= task.name %>" placeholder="Task Name" required="required" type="text">
+                        <label class="form-label">Assignee:</label>
+                        <input class="form-input-text task-resource" maxlength="256" value="<%= task.resource %>" placeholder="Assignee Name" type="text">
+                        <label class="form-label">Estimate:</label>
+                        <input class="form-input-text task-estimate" maxlength="256" value="<%= task.estimateTime %>" placeholder="Estimate hours" type="text">
+                        <label class="form-label description-label">Description:</label>
+                        <textarea class="form-input-description task-description" maxlength="5000" placeholder="Task Description"><%= task.description %></textarea>
                     </div>
-                    <div class="drop-list" id="list-of-dependencies">
-                        <table id="dependencies-list">
-                            <% for(var i=0;i<dependenciesList.length;i++) { %>
-                            <tr class="task-item" id="<%= dependenciesList[i].taskId%>"><td><%= dependenciesList[i].name %></td> </tr>
-                            <% } %>
-                        </table>
-                    </div>
-                </div>
-                <div class="tab-container attachments-content hide-content" >
-                    <div class="add-attachment">
-                        <div class="form-input-file">
-                            <label>
-                                <input id="add-attachment-file" type="file" name="file"/>
-                                <img class="add-img" src="/images/add.svg">
-                                <span>Upload File</span>
-                            </label>
+                    <div class="tab-container dependencies-content hide-content">
+                        <label class="dependancy-label form-label">Task List</label>
+                        <label class="dependancy-label form-label">Depends On</label>
+                        <div class="drop-list" id="list-of-tasks">
+                            <table id="tasks-list">
+                                <% for(var i=0;i<tasksList.length;i++) { %>
+                                <tr class="task-item" id="<%= tasksList[i].taskId%>"><td> <%= tasksList[i].name %></td></tr>
+                                <% } %>
+                            </table>
+                        </div>
+                        <div class="drop-list" id="list-of-dependencies">
+                            <table id="dependencies-list">
+                                <% for(var i=0;i<dependenciesList.length;i++) { %>
+                                <tr class="task-item" id="<%= dependenciesList[i].taskId%>"><td><%= dependenciesList[i].name %></td> </tr>
+                                <% } %>
+                            </table>
                         </div>
                     </div>
-                    <div class="attachments">
-                        <% for( var i=0; i<task.attachments.length; i++) { %>
-                        <div class="attachment-item">
-                            <div id="delete-attachment" data-id="<%= task.attachments[i].attachmentId %>" >
-                                <img src="/images/cancel.svg" class="delete"  alt="delete attachment"/>
+                    <div class="tab-container attachments-content hide-content" >
+                        <div class="add-attachment">
+                            <div class="form-input-file">
+                                <label>
+                                    <input id="add-attachment-file" type="file" name="file"/>
+                                    <img class="add-img" src="/images/add.svg">
+                                    <span>Upload File</span>
+                                </label>
                             </div>
-                            <a class="file-reference" href="<%=task.attachments[i].relativePath%>" target="_blank">
-                                <img src="/images/word.png" class="attachment-image" alt="attachment image"/>
-                                <% var str = task.attachments[i].fileName; %>
-                                <% if(task.attachments[i].fileName.length>9)  { str = task.attachments[i].fileName.substring(0,9)+'..';} %>
-
-                                <div class="attachment-name" id="reference-name"><%= str %></div>
-                            </a>
                         </div>
-                        <% } %>
+                        <div class="task-attachments">
+                            <% for( var i=0; i<task.attachments.length; i++) { %>
+                            <div class="attachment-item">
+                                <div id="delete-attachment" data-id="<%= task.attachments[i].attachmentId %>" >
+                                    <img src="/images/cancel.svg" class="delete"  alt="delete attachment"/>
+                                </div>
+                                <a class="file-reference" href="<%=task.attachments[i].relativePath%>" target="_blank">
+                                    <img src="/images/word.png" class="attachment-image" alt="attachment image"/>
+                                    <% var str = task.attachments[i].fileName; %>
+                                    <% if(task.attachments[i].fileName.length>9)  { str = task.attachments[i].fileName.substring(0,9)+'..';} %>
+
+                                    <div class="attachment-name" id="reference-name"><%= str %></div>
+                                </a>
+                            </div>
+                            <% } %>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
-        <div class="form-bottom">
+        <div class="task-form-bottom">
             <input class="form-button ok-button" type="submit" value="ok">
             <input class="form-button cancel-button" type="submit" value="cancel">
         </div>

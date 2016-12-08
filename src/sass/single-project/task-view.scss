@@ -2,4 +2,17 @@
 
 .task-view {
   @extend .basic-popup-view;
+
+  .task-attachments{
+    @extend .attachments;
+    heigth: 80%;
+    margin: 0 auto;
+  }
+
+  .task-form-bottom{
+    @extend .form-bottom;
+  }
+  .tasks-container{
+    height: 320px;
+  }
 }

@@ -1,43 +1,20 @@
-@import "../popup-view";
+@import "../basic-popup-view";
 
 .attachments-view {
-  @extend .popup-view;
+  @extend .basic-popup-view;
 
-  .attachments-header {
-    text-align: center;
-  }
-  .attachment-list {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow-y:auto;
-    height:300px;
+  .attachments-attachments {
+    @extend .attachments;
+    height: 95%;
+    margin: 0 auto;
   }
 
-  .attachment-item {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+  .attachments-container{
+    height: 320px;
   }
 
-  #delete-attachment-image {
-    width: 20px;
-    height: 20px
-  }
-
-  .referense-to-file {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .referense-to-file:hover {
-    color: blue;
-  }
-
-  .upload {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  .attachment-form-bottom {
+    @extend .form-bottom;
+    margin-top: 40px;
   }
 }
-
