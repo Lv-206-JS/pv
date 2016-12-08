@@ -1,5 +1,13 @@
-@import "../popup-view";
+@import "../basic-popup-view";
 
-.register-view {
-  @extend .popup-view;
+.registration-view {
+  @extend .basic-popup-view;
+
+  .register-form-bottom{
+    @extend .form-bottom;
+  }
+
+  .confirm-password-input{
+    margin-top: -5px;
+  }
 }

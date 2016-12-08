@@ -1,25 +1,25 @@
-<div class = "main-form">
-<form id="regisrationForm">
-    <div class="form-group">
-        <label>First Name</label>
-        <input type="text"  placeholder="First Name" name="firstname" id="firstname" value=''>
+<div class="form-wrapper">
+    <div class="form-title">
+        <div>Account Login</div>
     </div>
-    <div class="form-group">
-        <label>Last Name</label>
-        <input type="text"  placeholder="Last Name" name="lastname" id="lastname" value=''>
-    </div>
-    <div class="form-group">
-        <label>Email</label>
-        <input type="email" placeholder="Email" name="email" value='' id="email">
-    </div>
-    <div class="form-group">
-        <label>Password</label>
-        <input type="password" placeholder="Password" name="password" id="password">
-    </div>
-    <div class="form-group">
-        <label>Confirm Password</label>
-        <input type="password"  placeholder="Password" name="password2">
-    </div>
-    <button class="btn btn-default" id="post_user">Submit</button>
-</form>
+    <form id="regisrationForm">
+        <div class="tab-container">
+            <div class="tab-container">
+                <label class="form-label">First Name:</label>
+                <input class="form-input-text" maxlength="256" type="text"  placeholder="First Name" name="firstname" id="firstname" value=''>
+                <label class="form-label">Last Name:</label>
+                <input class="form-input-text" maxlength="256" type="text"  placeholder="Last Name" name="lastname" id="lastname" value=''>
+                <label class="form-label">Email:</label>
+                <input class="form-input-text" maxlength="256" type="email" placeholder="Email" name="email" value='' id="email">
+                <label class="form-label">Password:</label>
+                <input class="form-input-text" maxlength="256" type="password" placeholder="Password" name="password" id="password">
+                <label class="form-label confirm-password-label">Confirm Password:</label>
+                <input class="form-input-text confirm-password-input" maxlength="256" type="password" placeholder="Password" name="password2">
+            </div>
+        </div>
+        <div class="register-form-bottom">
+            <input id="post_user" class="form-button ok-button" type="submit" value="ok">
+            <input id="exit-button" class="form-button" type="submit" value="cancel">
+        </div>
+    </form>
 </div>

@@ -9,7 +9,8 @@ define([
         template: JST['common:register'],
         className: 'registration-view',
         events: {
-            'click #post_user' : 'onSubmit'
+            'click #post_user' : 'onSubmit',
+            'click #exit-button': 'hideLogInView'
         },
 
         render: function render() {
@@ -40,10 +41,17 @@ define([
 
                 },
                 error: function(err){
+
                     console.log(err);
                 }
             });
+        },
+
+        hideLogInView : function(event){
+            event.preventDefault();
+            this.$el.remove();
         }
+
     })
 
 
