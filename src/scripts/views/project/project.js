@@ -6,8 +6,8 @@ define([
     'views/project/milestone',
     'views/project/infoBar',
     'views/project/tasksList',
-    'views/project/attachments',
     'views/project/task',
+    'views/project/attachments',
     'views/project/settings',
     'views/project/milestoneEdit'
 ], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, TaskView, AttachmentsView, SettingsView, MilestoneEditView) {
