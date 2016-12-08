@@ -7,12 +7,13 @@
 
               <div class="tab-container">
                 <label class="form-label"><%= project.name ? 'Update' : 'Create' %> Project</label>
-                <input class="form-input-text" type="text" name="name" placeholder="Project Name" value="<%= project.name %>">
+                <input class="form-input-text" id="name" type="text" name="name" placeholder="Project Name" value="<%= project.name %>">
 
 
-                <label class="form-label">Description</label>
-                <input class="form-input-description" type="text" name="description" placeholder="Description"
-                       value="<%= project.description %>">
+                <label class="form-label description-label">Description</label>
+                  <textarea class="form-input-description" id="description" maxlength="5000" name="description" placeholder="Description"><%= project.description %></textarea>
+                <!--<input class="form-input-description" type="text" name="description" placeholder="Description"-->
+                       <!--value="<%= project.description %>">-->
 
             <% if(project) { %>
             <input type="hidden" name="id" value="<%= project.id %>"/>

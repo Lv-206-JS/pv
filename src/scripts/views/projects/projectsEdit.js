@@ -11,7 +11,9 @@ define([
         template: JST['projects:projectsEdit'],
         className: 'projects-edit-view',
         events: {
-            'submit form': 'saveProject'
+            // 'submit form': 'saveProject',
+            'click .ok-button': 'saveProject',
+            'click .cancel-button': 'exitEditProject'
         },
 
         initialize: function initialize(options) {
@@ -40,8 +42,8 @@ define([
 
         saveProject: function saveProject(e) {
             e.preventDefault();
-            var name = $(e.currentTarget).find('[name="name"]')[0].value;
-            var description = $(e.currentTarget).find('[name="description"]')[0].value;
+            var name = this.$el.find('#name').val();
+            var description = this.$el.find('#description').val();
 
             this.model.set({
                 name: name,
@@ -59,6 +61,11 @@ define([
                     console.log(err);
                 }
             );
+        },
+        exitEditProject: function(event){
+            event.preventDefault();
+            this.$el.remove();
+            PV.router.navigate('projects', {trigger: true});
         }
     });
 
