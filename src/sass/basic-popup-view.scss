@@ -22,7 +22,7 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
   .form-wrapper {
     display: block;
     width: 500px;
-    height: 450px;
+    height: inherit;
     margin-top: 5%;
     margin-right: auto;
     margin-left: auto;
@@ -83,7 +83,7 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
     }
 
     .tab-container {
-      height: 320px;
+      height: 100%;
       padding: 10px;
 
       .form-label {
@@ -131,6 +131,7 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
         font-family: Roboto, sans-serif;
         min-height: 140px;
         border-radius: 10px;
+        border: 1px solid #a9a9a9;
       }
 
       .all-tasks {
