@@ -1,31 +1,32 @@
 define([
         'backbone',
         'underscore',
-        'JST'
+        'JST'//,
+        //'views/project/taskRow'
     ],
-    function (Backbone, _, JST) {
+    function (Backbone, _, JST) { //, TaskRowView) {
         'use strict';
 
         var TasksListView = Backbone.View.extend({
             template: JST['project:tasksList'],
-            className: 'tasks-list-container',
+            id: 'tasks-list',
 
             events: {
                 'click .add-task': 'onTaskAdd',
-                'dblclick .task-name': 'onTaskEdit',
-                'mousedown .splitter': 'splitterMove'
+                'click .edit-task': 'onTaskEdit',
+                'click .remove-task': 'onTaskRemove'
             },
 
             initialize: function (options) {
-                // this.model = options.model;
-                this.tasks = options.tasks;
+                this.model = options.model;
+                this.tasks = this.model.get('tasks');
+                //this.milestones = this.model.get('milestones');
             },
 
             render: function render() {
                 this.$el.html(this.template({
                     tasks: this.tasks
                 }));
-
                 return this;
             },
 
@@ -54,28 +55,11 @@ define([
                 this.renderTaskAddView();
             },
 
-            splitterMove: function () {
-                var min = 200;
-                var max = 3600;
-                var minwidth = 200;
-
-                $('.splitter').mousedown(function (e) {
-                    e.preventDefault();
-                    $(document).mousemove(function (e) {
-                        e.preventDefault();
-                        var x = e.pageX;
-                        var w = parseInt($('.splitter').css("width"));
-                        if (x > min && x < max && e.pageX < ($(window).width() - minwidth)) {
-                            $('.left-panel').css("width", x);
-                            $('.splitter').css("left", x);
-                            $('.right-panel').css("left", x + w);
-                            $('.right-panel').css("width", $(window).width() - x - w);
-                        }
-                    })
-                });
-                $(document).mouseup(function (e) {
-                    $(document).unbind('mousemove');
-                });
+            onTaskRemove : function onTaskRemove() {
+                var target = $(e.currentTarget);
+                var taskId = target["0"].id;
+                console.log('Task removed');
+                // TODO DELETE
             }
 
         });

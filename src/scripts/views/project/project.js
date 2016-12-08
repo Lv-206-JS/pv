@@ -5,15 +5,19 @@ define([
     '../common/mainMenu',
     'views/project/milestone',
     'views/project/infoBar',
-    'views/project/tasksList',
     'views/project/attachments',
     'views/project/task',
-    'views/project/milestoneEdit'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, AttachmentsView, TaskView, MilestoneEditView) {
+    'views/project/milestoneEdit',
+    'views/project/gantt',
+    'views/project/tasksList',
+    'views/project/ganttChart'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, AttachmentsView, TaskView, MilestoneEditView, GanttContainerView, TasksListView, GanttChartView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
+        template: JST['project:project'],
         className: 'main-project-view',
+
         events: {
             'click .back-to-landing-view': 'onBackToLandingPage',
             'click .show-attachments': 'showAttachmentsPopup',
@@ -26,48 +30,52 @@ define([
             this.model.setUrl(this.projectId);
             this.model.fetch();
             this.model.on('sync', _.bind(this.onChange, this));
-            this.renderViews();
+
         },
 
         onBackToLandingPage: function onBackToLandingPage() {
             PV.router.navigate('/', {trigger: true});
         },
 
-        render: function render() {
+        render: function () {
+            this.$el.html(this.template({}));
             return this;
         },
 
         renderViews: function () {
             this.milestoneView = new MilestoneView().render();
-            this.$el.append(this.milestoneView.$el);
+            this.$el.find('#milestone-view-container').html(this.milestoneView.$el);
 
-            // this.tasksListView = new TasksListView({tasks: this.model.get('tasks')}).render();
-            // this.$el.append(this.tasksListView.$el);
+            this.ganttContainerView = new GanttContainerView({model: this.model}).render();
+            this.$el.find('#gantt-view-container').html(this.ganttContainerView.$el);
 
-            this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
-            this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
+            this.tasksListView = new TasksListView({model: this.model}).render();
+            this.$el.find('.left-panel').html(this.tasksListView.$el);
+            this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup); //???
+            this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup); //???
 
-            // this.ganttChartView = new GanttChartView().render();
-            // this.$el.append(this.ganttChartView.$el);
+            this.ganttChartView = new GanttChartView({model: this.model}).render();
+            this.$el.find('.right-panel').html(this.ganttChartView.$el);
 
             this.infoBarView = new InfoBarView({model: this.model}).render();
-            this.$el.append(this.infoBarView.$el);
+            this.$el.find('#info-bar-view-container').html(this.infoBarView.$el);
 
             return this;
         },
 
+        //move to ganttContainerView???
         showTaskEditPopup: function(allTasks,task){
             this.taskView = new TaskView({tasks: allTasks, task: task}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
             this.$el.append(this.taskView.$el);
         },
-
+        //move to ganttContainerView???
         showTaskAddPopup: function(allTasks){
             this.taskView = new TaskView({tasks: allTasks}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
             this.$el.append(this.taskView.$el);
         },
-
+        //move to ganttContainerView???
         upsertTaskHandler: function (allTasks,changedTask){
             if (changedTask.taskId)
                 for (var i = 0; i < allTasks.length; i++){
@@ -83,7 +91,7 @@ define([
             this.model.set('tasks',allTasks);
             this.model.save();
         },
-
+        //move to ganttContainerView???
         createId: function(allTasks){
             var max = 0;
             for (var i = 0; i < allTasks.length-1; i++){
@@ -116,7 +124,6 @@ define([
 
         onChange: function () {
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
-            this.$el.html('');
             this.renderViews();
             if(this.model.whoChange == 'AttachmentsView') {
                 return this.showAttachmentsPopup();

@@ -1,6 +1,15 @@
+@import "./project-menu";
+
 .main-project-view {
   height: 100%;
   width: 100%;
+}
+
+#milestone-view-container, #gantt-view-container, #info-bar-view-container {
+  width: 100%;
   display: flex;
-  flex-flow: column wrap;
+  flex: 1;
+}
+#gantt-view-container {
+  height:66%;
 }

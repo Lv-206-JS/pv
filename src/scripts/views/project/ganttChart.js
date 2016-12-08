@@ -3,19 +3,22 @@ define(['backbone', 'JST'], function (Backbone, JST) {
 
     var GanttChartView = Backbone.View.extend({
         template: JST['project:ganttChart'],
-        className: 'gantt-chart-view',
-        events: {
-            'click .go-to-project': 'onGoToProject'
+        id: 'gantt-chart',
+
+        initialize: function (options) {
+            this.model = options.model;
+            this.tasks = options.model.get('tasks');
+            this.milestones = options.model.get('milestones');
         },
 
         render: function render() {
-            this.$el.html(this.template({}));
-            return this;
-        },
+            this.$el.html(this.template({
+                model: this.model, tasks: this.tasks, milestones: this.milestones
+            }));
 
-        onGoToProject: function onGoToProject() {
-            PV.router.navigate('project/PROJECT-ID-HERE', {trigger: true});
+            return this;
         }
+
     });
 
     return GanttChartView;
