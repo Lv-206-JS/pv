@@ -1,18 +1,20 @@
+
 define([
     'backbone',
     'JST',
     '../common/mainMenu',
     './projectsTitle',
-    './projectsArea'/*,
-    './projectsEdit'*/
-], function (Backbone, JST, MainMenuView, ProjectsHeaderView, ProjectsAreaView ) {
+    './projectsArea',
+    './projectsEdit'
+], function (Backbone, JST, MainMenuView, ProjectsTitleView, ProjectsAreaView, ProjectsEditView ) {
     'use strict';
 
     var MainProjectsView = Backbone.View.extend({
         className: 'main-projects-view',
         events: {
             'click .go-to-projects': 'onGoToProjects',
-            'click .create-project': 'onNewProject'
+            'click .create-project': 'onNewProject',
+            'click .edit-project': 'showProjectsEditPopup'
         },
 
         initialize: function () {
@@ -24,10 +26,8 @@ define([
         },
 
         renderViews: function renderViews() {
-
             // // TODO Change Append to concrete div or element
-
-            this.projectsHeaderView = new ProjectsHeaderView().render();
+            this.projectsHeaderView = new ProjectsTitleView().render();
             this.$el.append(this.projectsHeaderView.$el);
 
             this.projectsAreaView = new ProjectsAreaView().render();
@@ -44,6 +44,17 @@ define([
 
         onNewProject: function onNewProject() {
             PV.router.navigate('projects/new', {trigger: true});
+        },
+
+        showProjectsEditPopup: function showProjectsEditPopup() {
+            var project = this.model.get('project');
+            this.projectsEditView = new ProjectsEditView({
+                model: this.model,
+                project: project
+            });
+            this.projectsEditView.render();
+            this.$el.append(this.projectsEditView.$el);
+
         },
 
         onGoToProjects: function onGoToProjects() {

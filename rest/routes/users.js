@@ -39,21 +39,25 @@ router.post('/register', function (req, res) {
     req.checkBody('password', 'Password is required').notEmpty();
     req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
     var errors = req.validationErrors();
+    User.findOne({email: email}, function (error, email) {
+        if(email != undefined) {
+            return res.status(401).json(JSON.stringify({"error":'Email already exist'}));
+        }
+    }).then(function () {
+        var newUser = new User({
+            userId: userId,
+            firstname: firstname,
+            email: email,
+            lastname: lastname,
+            password: password
+        });
 
-    var newUser = new User({
-        userId: userId,
-        firstname: firstname,
-        email: email,
-        lastname: lastname,
-        password: password
+        User.createUser(newUser, function (err, user) {
+            if (err) throw err;
+        });
+        var res_err = {"error": errors};
+        res.status(200).json(JSON.stringify(res_err));
     });
-
-    User.createUser(newUser, function (err, user) {
-        if (err) throw err;
-    });
-    var res_err = {"error": errors};
-    res.status(200).json(JSON.stringify(res_err));
-
 });
 
 //passport-local configuration

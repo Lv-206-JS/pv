@@ -1,0 +1,5 @@
+@import "../popup-view";
+
+.register-view {
+  @extend .popup-view;
+}

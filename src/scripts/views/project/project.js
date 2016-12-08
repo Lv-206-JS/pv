@@ -6,10 +6,11 @@ define([
     'views/project/milestone',
     'views/project/infoBar',
     'views/project/tasksList',
-    'views/project/attachments',
     'views/project/task',
+    'views/project/attachments',
+    'views/project/settings',
     'views/project/milestoneEdit'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, AttachmentsView, TaskView, MilestoneEditView) {
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, InfoBarView, TasksListView, TaskView, AttachmentsView, SettingsView, MilestoneEditView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
@@ -17,7 +18,9 @@ define([
         events: {
             'click .back-to-landing-view': 'onBackToLandingPage',
             'click .show-attachments': 'showAttachmentsPopup',
+            'click .show-settings': 'showSettingsPopup',
             'click .edit-milestone': 'showMilestoneEditPopup'
+
         },
 
         initialize: function (options) {
@@ -104,6 +107,18 @@ define([
             this.$el.append(this.attachmentsView.$el);
         },
 
+
+        showSettingsPopup: function() {
+            this.settingsView = new SettingsView({
+                model: this.model,
+                settings: this.model.get('settings')
+            });
+
+
+            this.settingsView.render();
+            this.$el.append(this.settingsView.$el);
+        },
+
         showMilestoneEditPopup: function () {
             var milestones = this.model.get('milestones');
             this.milestoneEditView = new MilestoneEditView({
@@ -112,6 +127,7 @@ define([
             });
             this.milestoneEditView.render();
             this.$el.append(this.milestoneEditView.$el);
+
         },
 
         onChange: function () {

@@ -11,7 +11,7 @@ define([
         },
 
         defaults: {
-            "id": 0,
+            "id": null,
             "name": "",
             "description": "",
             "author": "",
