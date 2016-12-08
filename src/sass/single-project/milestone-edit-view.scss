@@ -1,77 +1,43 @@
-@import "../popup-view";
+@import "../basic-popup-view";
 
 .milestone-edit-view {
-  @extend .popup-view;
-
-  .milestone-edit-header {
-    text-align: center;
-  }
-}
-
-.show-content-milestone{
-  display: block;
-}
-
-.hide-content-milestone{
-  display: none;
-}
-
-.tab-milestone {
-  list-style-type: none;
-  line-height: 40px;
-  overflow: hidden;
-  margin: 0px;
-  padding: 0px;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-
-  .tab-item-milestone {
-    float: left;
-    padding-right: 10px;
-    padding-left: 10px;
-  }
-
-  .tab-item-milestone:hover{
-    background-color: #ddd;
-  }
-
-  .tab-item-milestone:focus,
-  .active{
-    background-color: #ccc;
-  }
-
-}
-
-.milestone-dependencies-content {
-  height: 290px;
-}
-
-.milestone-list-of-all-tasks, .milestone-task-dependencies {
-  width: 40%;
-  height: 80%;
-  background-color: #fff;
-  //overflow-y: scroll;
+  @extend .basic-popup-view;
 }
 
 .save-milestones-button {
   position: relative;
-  height: 40px;
+  right: 40%;
+  width: 80px;
+  height: 35px;
   float: right;
-  font-size: $popup-form-font-size;
-  font-family: $popup-form-font-stack;
-  color: $popup-form-color;
-  background-color: $form-background-color;
+  margin-right: 5px;
+  margin-left: 5px;
+  padding: 5px 10px;
+  line-height: 27px;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  background-color: #5499c7;
+  -webkit-transition: background-color 500ms ease;
+  transition: background-color 500ms ease;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 #create-milestone {
-  height: 30px;
-  margin: 5px;
-  line-height: 20px;
-  padding: 5px 20px;
-  font-size: $popup-form-font-size;
-  font-family: $popup-form-font-stack;
-  color: $popup-form-color;
-  background-color: $form-background-color;
+  width: 100px;
+  margin-right: 5px;
+  margin-left: 5px;
+  padding: 5px 10px;
+  line-height: 15px;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  background-color: #5499c7;
+  -webkit-transition: background-color 500ms ease;
+  transition: background-color 500ms ease;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 #delete-milestone-image {
@@ -84,27 +50,19 @@
   flex-direction: row;
   justify-content: flex-start;
 }
-
-.table-header{
-  background-color: #ddd;
-  top: 0;
-  width: 250px;
+.milestone-drop-list {
+  @extend .drop-list;
+  max-height: 180px;
+  background-color: white;
 }
 
-.milestone-left-side {
-  float: left;
-  margin-top: $popup-form-inner-margin;
-  margin-left: $popup-form-inner-margin;
-}
-
-.milestone-right-side {
-  float: right;
-  margin-top: $popup-form-inner-margin;
-  margin-right: $popup-form-inner-margin;
-}
-
-.milestone-task-item {
-  position: relative;
-  left: 0;
-  top: 0;
+.milestone-form-input-text {
+  display: inline-block;
+  width: 145px;
+  border-radius: 10px;
+  border: 1px solid #a9a9a9;
+  padding: 8px 12px;
+  font-family: Roboto, sans-serif;
+  line-height: 20px;
+  margin-bottom: 10px;
 }
