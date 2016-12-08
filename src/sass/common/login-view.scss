@@ -1,0 +1,5 @@
+@import "../popup-view";
+
+.login-view {
+  @extend .popup-view;
+}

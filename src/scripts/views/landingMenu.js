@@ -2,8 +2,9 @@ define([
     'backbone',
     'underscore',
     'JST',
-    'views/common/logIn'
-], function (Backbone, _, JST, LogInView) {
+    'views/common/logIn',
+    'views/common/register'
+], function (Backbone, _, JST, LogInView, RegistrationView) {
     'use strict';
 
     var LandingMenuView = Backbone.View.extend({
@@ -29,18 +30,18 @@ define([
             PV.router.navigate('projects', {trigger: true});
         },
 
-        onSignIn: function onSignIn() {
-            //TODO Later: Add popup window for Signing In
-            // We will get needed data instead of url, later from login form respond
-            PV.router.navigate('user/signin', {trigger: true});
-        },
         onLogIn: function onLogIn() {
             this.loginView = new LogInView({});
             this.loginView.render();
             this.$el.append(this.loginView.$el);
         },
         onRegistration: function onLogIn() {
-            PV.router.navigate('users/registration', {trigger: true});
+            this.registerView = new RegistrationView({
+
+            });
+
+            this.registerView.render();
+            this.$el.append(this.registerView.$el);
         }
     });
 

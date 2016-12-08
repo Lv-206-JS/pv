@@ -7,7 +7,7 @@ define([
         'models/User',
         'views/common/logIn',
         'views/common/register',
-        /*'views/projects/projectsEdit'*/
+        'views/projects/projectsEdit'
     ],
     function ($,
               Backbone,
@@ -16,9 +16,11 @@ define([
               SignInView,
               userModel,
               LogInView,
-              RegistrationView/*,
-              ProjectsEditView*/) {
-        'use strict';
+              RegistrationView,
+              ProjectsEditView
+)
+{
+    'use strict';
 
         var Router = Backbone.Router.extend({
             routes: {
@@ -50,13 +52,14 @@ define([
                 }
 
 
-                if (!this.mainView) {
-                    // Create new view.
-                    this.mainView = new MainView();
-                    // Clean body element and append new view element.
-                }
+            if (!this.mainView) {
+                // Create new view.
+                this.mainView = new MainView();
+                // Clean body element and append new view element.
 
-                $('body').html(this.mainView.render().$el);
+            }
+
+            $('body').html(this.mainView.render().$el);
 
                 this.mainView.renderProjects();
             },
@@ -67,11 +70,6 @@ define([
                     this.landingView.remove();
                     this.landingView = null;
                 }
-
-                /* if (!userModel.get('userId')) {
-                 PV.router.navigate('/', {trigger: true});
-                 return;
-                 }*/
 
                 if (!this.mainView) {
                     // Create new view.
@@ -89,9 +87,9 @@ define([
 
             },
 
-            openProjectAndTask: function openProjectAndTask(projectId, taskId) {
-                this.openSingleProject(projectId);
-            },
+        openProjectAndTask: function openProjectAndTask(projectId, taskId) {
+            this.openSingleProject(projectId);
+        },
 
             openSingIn: function openSignIn() {
                 if (this.landingView) {

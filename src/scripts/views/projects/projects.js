@@ -1,11 +1,12 @@
+
 define([
     'backbone',
     'JST',
     '../common/mainMenu',
     './projectsTitle',
-    './projectsArea'/*,
-    './projectsEdit'*/
-], function (Backbone, JST, MainMenuView, ProjectsHeaderView, ProjectsAreaView ) {
+    './projectsArea',
+    './projectsEdit'
+], function (Backbone, JST, MainMenuView, ProjectsTitleView, ProjectsAreaView, ProjectsEditView ) {
     'use strict';
 
     var MainProjectsView = Backbone.View.extend({
@@ -24,10 +25,8 @@ define([
         },
 
         renderViews: function renderViews() {
-
             // // TODO Change Append to concrete div or element
-
-            this.projectsHeaderView = new ProjectsHeaderView().render();
+            this.projectsHeaderView = new ProjectsTitleView().render();
             this.$el.append(this.projectsHeaderView.$el);
 
             this.projectsAreaView = new ProjectsAreaView().render();

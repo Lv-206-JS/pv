@@ -1,0 +1,101 @@
+
+$basic-popup-background-color: rgba(0,0,0,0.3);
+$form-background-color: #DED8D8;
+$task-form-width: 500px;
+$task-form-height: 420px;
+$task-form-border-color: #333;
+$task-form-border-radius: 10px;
+$task-form-color: #000;
+$task-form-font-stack: Helvetica, sans-serif;
+$task-form-font-size: 14px;
+$task-form-inner-margin: 20px;
+
+@import "../popup-view";
+
+
+.settings-view {
+  @extend .popup-view;
+  background-color: $basic-popup-background-color;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  font: $task-form-font-stack;
+  font-size: $task-form-font-size;
+
+  .main-form {
+    z-index: 1005;
+    background-color: $form-background-color;
+    margin: 0 auto;
+    margin-top: 100px;
+    width: $task-form-width;
+    height: $task-form-height;
+    border: 1px solid $task-form-border-color;
+
+    }
+    .general-content{
+      height: 340px;
+    }
+    .general-information{
+      height: 225px;
+    }
+
+    .line{
+      border-bottom: 1px solid #4c4e51;
+    }
+    .settings{
+      margin: $task-form-inner-margin;
+    }
+    .common-form-buttons{
+      bottom: 0;
+      height: 40px;
+      background-color: #4c4e51;
+
+      .ok-button,
+      .cancel-button{
+        height: 30px;
+        margin: 5px;
+        float:right;
+        line-height: 20px;
+        padding:5px 20px;
+        font-size: $task-form-font-size;
+        font-family: $task-form-font-stack;
+        color: $task-form-color;
+        background-color: $form-background-color;
+      }
+
+    }
+
+    .control-buttons{
+      width: 10%;
+      display: inline-block;
+      margin-top: 50px;
+
+    }
+  }
+
+.left-side {
+  float: left;
+  margin-top: $task-form-inner-margin;
+  margin-left: $task-form-inner-margin;
+}
+
+.right-side {
+  float: right;
+  margin-top: $task-form-inner-margin;
+  margin-right: $task-form-inner-margin;
+}
+
+.show-content{
+  display: block;
+}
+
+.hide-content{
+  display: none;
+}
+
+//.weekend{
+//  float: left;
+//}
