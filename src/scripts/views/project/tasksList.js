@@ -55,11 +55,18 @@ define([
                 this.renderTaskAddView();
             },
 
-            onTaskRemove : function onTaskRemove() {
+            onTaskRemove : function onTaskRemove(e) {
                 var target = $(e.currentTarget);
                 var taskId = target["0"].id;
-                console.log('Task removed');
-                // TODO DELETE
+                for (var i = 0; i < this.tasks.length; i++) {
+                    if (this.tasks[i].taskId == taskId) {
+                        break;
+                    }
+                }
+
+                this.tasks.splice(i,1);
+                this.model.set("tasks", this.tasks);
+                this.model.save();
             }
 
         });
