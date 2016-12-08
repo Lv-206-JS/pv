@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var Guid = require('guid');
 
 //setting passport module
 var passport = require('passport');
@@ -23,6 +24,7 @@ router.get('/login', function (req, res) {
 router.post('/register', function (req, res) {
     console.log("REGISTER");
 
+    var userId = Guid.create().value;
     var firstname = req.body.firstname;
     var email = req.body.email;
     var lastname = req.body.lastname;
@@ -37,11 +39,13 @@ router.post('/register', function (req, res) {
     req.checkBody('password', 'Password is required').notEmpty();
     req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
     var errors = req.validationErrors();
-
-    if (errors) {
-        res.status(404).json({"error": errors});
-    } else {
+    User.findOne({email: email}, function (error, email) {
+        if(email != undefined) {
+            return res.status(401).json(JSON.stringify({"error":'Email already exist'}));
+        }
+    }).then(function () {
         var newUser = new User({
+            userId: userId,
             firstname: firstname,
             email: email,
             lastname: lastname,
@@ -50,12 +54,10 @@ router.post('/register', function (req, res) {
 
         User.createUser(newUser, function (err, user) {
             if (err) throw err;
-            console.log(user);
         });
         var res_err = {"error": errors};
-        console.log("TRATRATRA");
         res.status(200).json(JSON.stringify(res_err));
-    }
+    });
 });
 
 //passport-local configuration
@@ -69,15 +71,11 @@ passport.use(new LocalStrategy({
             if (!user) {
                 return done(null, false, {message: 'Unknown user'});
             }
-            ;
-            console.log(user);
             User.comparePassword(password, user.password, function (err, isMatch) {
                 if (err) throw err;
                 if (isMatch) {
-                    console.log('is Match');
                     return done(null, user);
                 } else {
-                    console.log('is not Match');
                     return done(null, false, {message: 'Invalid password'});
                 }
             });
@@ -93,8 +91,6 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (id, done) {
 
     User.getUserById(id, function (err, user) {
-        console.log("user");
-        console.log(user);
         done(err, user);
     });
 });

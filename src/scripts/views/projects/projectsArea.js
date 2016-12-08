@@ -4,7 +4,7 @@ define([
     'collections/Projects',
     'views/projects/projectsList',
     'views/projects/projectsAbout'
-], function (Backbone, JST, ProjectCollection, ProjectsListView, ProjectsAboutView) {
+], function (Backbone, JST, projectsCollection, ProjectsListView, ProjectsAboutView) {
     'use strict';
 
     var ProjectsAreaView = Backbone.View.extend({
@@ -12,7 +12,7 @@ define([
         template: JST['projects:projectsArea'],
 
         initialize: function () {
-            this.collection = new ProjectCollection();
+            this.collection = projectsCollection;
             this.collection.fetch();
             this.collection.on('sync', _.bind(this.onSync, this));
             Backbone.Events.off('selectProject');

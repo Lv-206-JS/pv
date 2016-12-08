@@ -2,6 +2,7 @@ var express = require('express');
 var Guid = require('guid');
 var router = express.Router();
 var Attachment  = require('../../mongoose').FileAttachmentsModel;
+var Ownerships  = require('../../mongoose').OwnershipsModel;
 var fs = require('fs');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
@@ -11,8 +12,33 @@ function handleError(response, message, code) {
     response.status(code || 500).json({"error": message});
 }
 
+function authenticateUser(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    } else {
+        return res.redirect('users/login');
+    }
+}
+
+function checkOwnership(request, response, next) {
+    var projectReference = request.headers.referer;
+    var lastSlash = projectReference.lastIndexOf("/");
+    var projectId = projectReference.slice(lastSlash+1);
+    Ownerships.findOne({'projectId': projectId, 'userId': request.user.userId}, function (err, ownerShip) {
+        if(err) {
+            //error
+        }
+        else if(ownerShip != undefined && ownerShip.role === 'creator') {
+            next();
+        }
+        else {
+            response.send({access: 'Denied!'});
+        }
+    });
+}
+
 //create attachment
-router.post('/', multipartMiddleware, function (request, response) {
+router.post('/', multipartMiddleware, authenticateUser, checkOwnership, function (request, response) {
     var pathToFile = request.files.file.path;
     var origName = request.files.file.originalFilename;
     var mimeType = request.files.file.headers['content-type'];
@@ -50,7 +76,7 @@ router.post('/', multipartMiddleware, function (request, response) {
 });
 
 //delete attachment
-router.delete('/:id',function (request, response) {
+router.delete('/:id', authenticateUser, checkOwnership, function (request, response) {
     Attachment.findOneAndRemove({'attachmentId': request.params.id}, function (err, attachment) {
         if (!attachment){
             handleError(response, "Failed to find attachment!", 404);

@@ -2,17 +2,44 @@ var express = require('express');
 var Guid = require('guid');
 var router = express.Router();
 var Project  = require('../../mongoose').ProjectModel;
+var Ownerships  = require('../../mongoose').OwnershipsModel;
 
 
 function authenticateUser(req, res, next){
     if(req.isAuthenticated()){
-        console.log('Authenticated!');
         return next();
     } else {
-        //req.flash('error_msg','You are not logged in');
-        console.log('Not Authenticated');
         return res.redirect('users/login');
     }
+}
+
+function checkOwnership(request, response, next) {
+    Ownerships.findOne({'projectId': request.params.id, 'userId': request.user.userId}, function (err, ownerShip) {
+        if(err) {
+            //error
+        }
+        else if(ownerShip != undefined) {
+            if(ownerShip.role === 'creator') {
+                next();
+            }
+            else {
+                return response.send({access: 'Denied!'});
+            }
+        }
+    });
+}
+
+function addOwnership(pid, uid) {
+    var ownerShipToCreate = new Ownerships({
+        projectId: pid,
+        userId: uid,
+        role: 'creator'
+    });
+    ownerShipToCreate.save(function (err, ownerShip) {
+        if (err) {
+            //error
+        }
+    });
 }
 
 //Error handler function
@@ -21,7 +48,7 @@ function handleError(response, message, code) {
 }
 
 //get all projects
-router.get('/', function (request, response) {
+router.get('/', authenticateUser, function (request, response) {
     Project.find({}, function (err, projects) {
         if(!projects || err) {
             handleError(response, "Failed to find projects!", 404);
@@ -33,12 +60,13 @@ router.get('/', function (request, response) {
 });
 
 //create project
-router.post('/', function (request, response) {
+router.post('/', authenticateUser, function (request, response) {
+    console.log(request.user.firstname + ' ' + request.user.lastname);
     var projectToCreate = new Project({
         id: Guid.create().value,
         name: request.body.name,
         description: request.body.description,
-        author: request.body.author,
+        author: request.user.firstname + ' ' + request.user.lastname,
         startDate: request.body.startDate,
         createDate: new Date(),
         modifiedDate: new Date(),
@@ -48,6 +76,7 @@ router.post('/', function (request, response) {
             icon : request.body.settings.icon
         }
     });
+    addOwnership(projectToCreate.id, request.user.userId);
     projectToCreate.save(function (err, project) {
         if (err) {
             handleError(response, "Failed to create project!");
@@ -59,7 +88,7 @@ router.post('/', function (request, response) {
 });
 
 //get one project
-router.get('/:id', function (request, response) {
+router.get('/:id', authenticateUser, function (request, response) {
     Project.findOne({'id': request.params.id}, function (err, project) {
         if(!project || err) {
             handleError(response, "Failed to find project!", 404);
@@ -71,7 +100,7 @@ router.get('/:id', function (request, response) {
 });
 
 //update project
-router.put('/:id', function (request, response) {
+router.put('/:id', authenticateUser, checkOwnership, function (request, response) {
     var projectToUpdate = new Project({
         id: request.body.id,
         name: request.body.name,
@@ -103,7 +132,7 @@ router.put('/:id', function (request, response) {
 });
 
 //delete project
-router.delete('/:id',function (request, response) {
+router.delete('/:id', authenticateUser, checkOwnership, function (request, response) {
     Project.findOneAndRemove({'id': request.params.id}, function (err, project) {
         if (!project){
             handleError(response, "Failed to find project!", 404);

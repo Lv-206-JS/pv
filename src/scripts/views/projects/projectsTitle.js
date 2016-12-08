@@ -4,11 +4,11 @@ define([
 ], function (Backbone, JST) {
     'use strict';
 
-    var ProjectsHeaderView = Backbone.View.extend({
-        className: 'projects-header-view',
+    var ProjectsTitleView = Backbone.View.extend({
+        className: 'projects-title-view',
         template: JST['projects:projectsTitle'],
 
-        initialize: function (options) {
+        initialize: function () {
 
         },
 
@@ -24,5 +24,5 @@ define([
         }
     });
 
-    return ProjectsHeaderView;
+    return ProjectsTitleView;
 });

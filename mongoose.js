@@ -19,7 +19,13 @@ var ProjectsSchema = new Schema({
     modifiedDate: {type: Date, required: false},
     milestones: [{
         name: {type: String, required: false},
-        date: {type: Date, required: false}
+        date: {type: Date, required: false},
+        dependsOn: [{
+            taskId: {type: String, required: false},
+            taskName : {type: String, required: false},
+            type: {type: String, required: false}
+        }]
+
     }],
     settings: {
         dayDuration: {type: String, required: false},
@@ -70,7 +76,7 @@ var OwnershipsSchema = new Schema ({
     projectId: {type: String, required: false},
     userId: {type: String, required: false},
     role: {type: String, required: false}
-});
+}, { collection: 'ownerships' });
 
 var SessionsSchema = new Schema ({
     sessionId: {type: String, required: false},

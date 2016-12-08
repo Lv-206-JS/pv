@@ -1,0 +1,13 @@
+.log-in-view {
+  @extend .popup-view;
+}
+
+.nought-button {
+  margin-top: 1px;
+  margin-right: 2px;
+  position:absolute;
+  top:0;
+  right:0;
+  width: 30px;
+  height: 30px
+}

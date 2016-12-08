@@ -9,5 +9,5 @@ define([
         model: ProjectModel
     });
 
-    return ProjectsCollection;
+    return new ProjectsCollection();
 });

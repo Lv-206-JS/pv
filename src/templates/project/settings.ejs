@@ -1,0 +1,47 @@
+<form class = "main-form">
+    <!--Content of General tab-->
+    <div class="general-content show-content">
+        <div class="general-information">
+            <div class = "left-side">
+                Name: <br>
+                <input class="name" type="text" value="<%= model.name %>" required><br>
+                Author:<br>
+                <input class="author" type="text" value="<%= model.author %>" required><br>
+                Create Date: <br>
+                <input class="create-date" type="date" value="<%= model.createDate %>" ><br>
+                Start Date: <br>
+                <input class="start-date" type="date" value="<%= model.startDate %>" ><br>
+                Modified Date: <br>
+                <input class="modified-date" type="date" value="<%= model.modifiedDate %>" > <br>
+
+            </div>
+            <div class = "right-side">
+                Description: <br>
+                <textarea class="description" rows="10" cols="30">
+                    <%= model.description %>
+                </textarea>
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="settings">
+            Day Start: <br>
+            <input class="day-start" type="number" value="<% %>"><br>
+            Day Duration: <br>
+            <input class="day-duration" type="number" value="<%= settings.dayDuration %>" required > <br>
+            Weekend: <br>
+            <input class="weekend" type="checkbox" value=1>Mon
+            <input class="weekend" type="checkbox" value=2>Tue
+            <input class="weekend" type="checkbox" value=3>Wed
+            <input class="weekend" type="checkbox" value=4>Thu
+            <input class="weekend" type="checkbox" value=5>Fri
+            <input class="weekend" type="checkbox" value=6>Sat
+            <input class="weekend" type="checkbox" value=7>Sun
+        </div>
+
+    </div>
+    <!--Buttons for both tabs-->
+    <div class="common-form-buttons">
+        <button class="cancel-button">Cancel</button>
+        <button class="ok-button">Ok</button>
+    </div>
+</form>

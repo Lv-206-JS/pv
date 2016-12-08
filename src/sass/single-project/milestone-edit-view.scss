@@ -6,7 +6,6 @@
   .milestone-edit-header {
     text-align: center;
   }
-
 }
 
 .show-content-milestone{
@@ -17,7 +16,7 @@
   display: none;
 }
 
-.tab {
+.tab-milestone {
   list-style-type: none;
   line-height: 40px;
   overflow: hidden;
@@ -43,27 +42,15 @@
 
 }
 
-.list-of-all-tasks, .task-dependencies{
+.milestone-dependencies-content {
+  height: 290px;
+}
+
+.milestone-list-of-all-tasks, .milestone-task-dependencies {
   width: 40%;
-  max-height: 80%;
+  height: 80%;
   background-color: #fff;
-  overflow-y: scroll;
-}
-.table-header{
-  background-color: #ddd;
-  top: 0;
-}
-
-.left-side {
-  float: left;
-  margin-top: 20px;
-  margin-left: 20px;
-}
-
-.right-side {
-  float: right;
-  margin-top: 20px;
-  margin-right: 20px;
+  //overflow-y: scroll;
 }
 
 .save-milestones-button {
@@ -96,4 +83,28 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+}
+
+.table-header{
+  background-color: #ddd;
+  top: 0;
+  width: 250px;
+}
+
+.milestone-left-side {
+  float: left;
+  margin-top: $popup-form-inner-margin;
+  margin-left: $popup-form-inner-margin;
+}
+
+.milestone-right-side {
+  float: right;
+  margin-top: $popup-form-inner-margin;
+  margin-right: $popup-form-inner-margin;
+}
+
+.milestone-task-item {
+  position: relative;
+  left: 0;
+  top: 0;
 }
