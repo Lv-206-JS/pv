@@ -5,20 +5,84 @@
 
     ul {
       margin: 0; padding: 0;
-      border: 2px solid #7d7d7d;
       display: flex;
       flex-direction: column;
 
       li {
         list-style: none;
         height: 60px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
 
-        &:nth-child(odd){
-          background-color: #7f7f7f;
+        &:nth-child(odd) {
+          background-color: rgba(0, 0, 0, .05);
+        }
+
+        .projects-link-name {
+          color: #5499c7;
+          width: 50%;
+          cursor: pointer;
+        }
+
+        .project-link {
+          //position: relative;
+          //top: -19px;
+          display: block;
+          width: 20px;
+          height: 20px;
+          //margin-top: 2px;
+          //margin-right: 5px;
+          //margin-left: 5px;
+          //float: right;
+          //clear: none;
+          //justify-content: flex-end;
+          align-items: center;
+          opacity: 0.3;
+          cursor: pointer;
+        }
+
+        &:hover {
+          opacity: 1;
+        }
+
+        .edit-project {
+          width: 30px;
+          height: 30px;
+          margin-right: 0px;
+          background-image: url(../../../images/edit.svg);
+          background-position: 0px 0px;
+          background-size: contain;
+        }
+
+        .delete-project {
+          width: 30px;
+          height: 30px;
+          margin-top: 2px;
+          background-image: url(../../../images/cancel.svg);
+          background-position: 0px 0px;
+          background-size: contain;
         }
       }
-      span {
-        height: 60px;
+
+      .projects-go-link {
+        width: 100px;
+        height: 25px;
+        border: 1px solid #5499c7;
+        border-radius: 10px;
+        color: #5499c7;
+        background-color: #fff;
+        transition: background-color 500ms ease;
+        text-align: center;
+        text-transform: capitalize;
+        cursor: pointer;
+
+        &:hover {
+          border: 1px solid #fff;
+          color: #fff;
+          background-color: #5499c7;
+        }
       }
     }
   }

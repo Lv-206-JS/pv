@@ -11,7 +11,7 @@ define([
         className: 'projects-list',
         events: {
             'click .projects-list-item': 'onClick',
-            'click .projects-list-link': 'onSelectProject',
+            'click .projects-go-link': 'onSelectProject',
             'click .edit-project': 'onEditProject',
             'click .delete-project' : 'onDeleteProject'
         },
