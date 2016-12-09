@@ -1,26 +1,34 @@
-.projects-title {
+$roboto: 'Roboto', serif;
 
-  //background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.04));
-  transition: background-color 500ms ease, opacity 200ms ease;
+.projects-title {
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
   box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.3);
 
+  .project-title-text {
+    font-family: $roboto;
+    width: 80%;
+  }
+
   .create-project {
-    display: inline-block;
+    align-self: flex-start;
+    height: 25px;
     width: 100px;
-    margin-left: 20px;
-    padding: 5px 10px;
-    border: 1px solid #fff;
+    border: 1px solid #5499c7;
     border-radius: 10px;
-    color: #fff;
-    background-color: #5499c7;
+    color: #5499c7;
+    background-color: #fff;
     transition: background-color 500ms ease;
-    text-align: center;
     text-transform: capitalize;
     cursor: pointer;
+    outline: none;
 
     &:hover {
-      border: 1px solid #fff;
-      background-color: #2980b9;
+      color: #fff;
+      background-color: #5499c7;
     }
   }
 }

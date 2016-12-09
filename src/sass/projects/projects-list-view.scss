@@ -3,15 +3,21 @@
     display: flex;
     flex-direction: column;
 
+    .projects-list-header {
+      height: 60px;
+      display: flex;
+      align-items: center;
+    }
+
     ul {
-      margin: 0; padding: 0;
       display: flex;
       flex-direction: column;
 
       li {
         list-style: none;
-        height: 60px;
+        height: 50px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+        border-left: 2px solid transparent;
         align-items: center;
         display: flex;
         flex-direction: row;
@@ -28,40 +34,30 @@
         }
 
         .project-link {
-          //position: relative;
-          //top: -19px;
-          display: block;
           width: 20px;
           height: 20px;
-          //margin-top: 2px;
-          //margin-right: 5px;
-          //margin-left: 5px;
-          //float: right;
-          //clear: none;
           opacity: 0.3;
           cursor: pointer;
-        }
 
-        &:hover {
-          opacity: 1;
+          &:hover {
+            opacity: 1;
+          }
         }
 
         .edit-project {
           width: 30px;
           height: 30px;
-          margin-right: 0px;
           background-image: url(../../../images/edit.svg);
-          background-position: 0px 0px;
-          background-size: contain;
         }
 
         .delete-project {
           width: 30px;
           height: 30px;
-          margin-top: 2px;
           background-image: url(../../../images/cancel.svg);
-          background-position: 0px 0px;
-          background-size: contain;
+        }
+
+        &:hover {
+          border-left: 2px solid #5499c7;
         }
       }
 
@@ -73,9 +69,9 @@
         color: #5499c7;
         background-color: #fff;
         transition: background-color 500ms ease;
-        text-align: center;
         text-transform: capitalize;
         cursor: pointer;
+        outline: none;
 
         &:hover {
           border: 1px solid #fff;
