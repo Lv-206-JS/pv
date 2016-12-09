@@ -43,7 +43,8 @@ define(['backbone',
             'click .cancel-button' : 'hideTaskView',
             'click .ok-button' : 'onSubmitChanges',
             'change #add-attachment-file' : 'addAttachment',
-            'click #delete-attachment' : 'deleteAttachment'
+            'click #delete-attachment' : 'deleteAttachment',
+            'dblclick .task-item' : 'addTaskToList'
         },
 
         getTasksList: function(el){
@@ -122,13 +123,11 @@ define(['backbone',
 
             function onDragEnd() {
                 if(this.position.x>225){
-                    var parent = document.getElementById("dependencies-list");
-                    parent.appendChild(this.element);
+                    $("#dependencies-list tbody").append(this.element);
                     $(this.element).css({'left': '260','top':'0'});
                 }
                 if(this.position.x<224){
-                    var parent = document.getElementById("tasks-list");
-                    parent.appendChild(this.element);
+                    $("#tasks-list tbody").append(this.element);
                     $(this.element).css({'left': '0','top':'0'});
                 }
                 $(this.element).css({'left': '260','top':'0'});
@@ -149,6 +148,30 @@ define(['backbone',
             };
         },
 
+        addTaskToList: function(event){
+            var element = $(event.currentTarget);
+            var taskId = element.attr('id');
+            var listName = element.parent().parent().attr('id');
+            if(listName === 'tasks-list'){
+                for( var i = 0; i < this.tasksList.length; i++)
+                    if(this.tasksList[i].taskId === taskId){
+                        this.dependenciesList.push(this.tasksList[i]);
+                        this.tasksList.splice(i,1);
+                        break;
+                    }
+                $("#dependencies-list tbody").append(element);
+            }
+            else{
+                for( var i = 0; i < this.dependenciesList.length; i++)
+                    if(this.dependenciesList[i].taskId === taskId){
+                        this.tasksList.push(this.dependenciesList[i]);
+                        this.dependenciesList.splice(i,1);
+                        break;
+                    }
+                $("#tasks-list tbody").append(element);
+            }
+        },
+
         addAttachment: function (event) {
             event.preventDefault();
             var uploadfile = new FormData();
@@ -161,7 +184,6 @@ define(['backbone',
                 processData: false,
                 async:false
             });
-            // var attachment = JSON.parse(response.responseText);
             this.task.attachments[this.task.attachments.length] = JSON.parse(response.responseText);
             this.addAttachmentItem(this.task.attachments.length-1);
         },
