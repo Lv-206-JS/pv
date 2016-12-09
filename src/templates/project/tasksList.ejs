@@ -1,4 +1,4 @@
-<div>
+<div class="table-task-header">
     <div class="table-task-header-row">
         <div class="table-header-cell table-header-task-cell">Name</div>
         <div class="table-header-cell">Estimate</div>
@@ -11,29 +11,3 @@
         <a class="add-task-link edit-milestone">Milestone</a>
     </div>
 </div>
-<% for (var i = 0; i < tasks.length; i++) { %>
-    <div class="table-row">
-        <div class="table-cell-task">
-            <div id="<%= tasks[i].taskId%>" class="cell-task"><%= tasks[i].name%></div>
-            <a class="task-link remove-task" id="<%= tasks[i].taskId%>"></a>
-            <a class="task-link edit-task" id="<%= tasks[i].taskId%>"></a>
-        </div>
-        <div class="table-cell task-estimateTime"><%= tasks[i].estimateTime%></div>
-        <% var dependencies = [];%>
-        <% for (var j = 0; j < tasks[i].dependsOn.length; j++) { %>
-        <!--TO DO false id string in db-->
-            <% if (tasks[i].dependsOn[j].taskId != "false") { %>
-                <% dependencies.push(tasks[i].dependsOn[j].taskId); %>
-            <% } %>
-        <% } %>
-        <% for (var j = 0; j < dependencies.length; j++) { %>
-            <% for (var k = 0; k < tasks.length; k++) { %>
-                <% if (tasks[k].taskId == dependencies[j]) { %>
-                    <% dependencies[j] = tasks[k].name; %>
-                <% } %>
-            <% } %>
-        <% } %>
-        <div class="table-cell-dependsOn task-dependsOn"><%= dependencies.toString() %></div>
-        <div class="table-cell task-resource"><%= tasks[i].resource%></div>
-    </div>
-<% } %>
