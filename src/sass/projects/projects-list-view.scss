@@ -12,6 +12,7 @@
         list-style: none;
         height: 60px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+        align-items: center;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -37,8 +38,6 @@
           //margin-left: 5px;
           //float: right;
           //clear: none;
-          //justify-content: flex-end;
-          align-items: center;
           opacity: 0.3;
           cursor: pointer;
         }
