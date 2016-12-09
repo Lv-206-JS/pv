@@ -9,54 +9,56 @@
             <a class="tab-link tab-dependencies hide-content">Depends On</a>
         </div>
     </div>
-        <div class="tab-container">
-            <div class="tab-container general-content show-content">
-                <button id="create-milestone">Create milestone</button>
-                <ul class="milestone-list">
-                    <%for(var i = 0; i <  milestones.length; i++) {%>
-                    <div class="one-milestone-block">
-                        <li class="milestone-item" data-name="<%= milestones[i].name %>"> <%= milestones[i].name %></li>
-                        <div id="delete-milestone" data-name="<%= milestones[i].name %>">
-                            <img src="/images/delete-button.png" id="delete-milestone-image" alt="delete milestone"/>
+        <div class="tasks-container">
+            <div class="tab-container">
+                <div class="tab-container general-content show-content">
+                    <button id="create-milestone">Create milestone</button>
+                    <ul class="milestone-list">
+                        <%for(var i = 0; i <  milestones.length; i++) {%>
+                        <div class="one-milestone-block">
+                            <li class="milestone-item" data-name="<%= milestones[i].name %>"> <%= milestones[i].name %></li>
+                            <div id="delete-milestone" data-name="<%= milestones[i].name %>">
+                                <img src="/images/delete-button.png" id="delete-milestone-image" alt="delete milestone"/>
+                            </div>
                         </div>
+                        <%}%>
+                    </ul>
+                </div>
+                <div class="tab-container dependencies-content hide-content">
+                    <form>
+                        <%
+                        var dateobj = new Date(milestoneEdit.date);
+                        function pad(n) {
+                            return n < 10 ? "0"+n : n;
+                        }
+                        var dateobj = dateobj.getFullYear()+"-"+pad(dateobj.getMonth()+1)+"-"+ pad(dateobj.getDate());
+                        %>
+                        <label>Name:</label>
+                        <input class="milestone-form-input-text" id="milestone-settings-name" type="text" value="<%=milestoneEdit.name%>">
+                        <label>Start date:</label>
+                        <input class="milestone-form-input-text" id="milestone-settings-date" type="date" value="<%=dateobj%>">
+                    </form>
+                    <label class="dependancy-label form-label">Task List</label>
+                    <label class="dependancy-label form-label">Depends On</label>
+                    <div  class="milestone-drop-list">
+                        <table id="tasks-list">
+                            <% for(var i = 0;i < tasksList.length; i++) { %>
+                            <tr class="task-item" id="<%= tasksList[i].taskId%>"><td> <%= tasksList[i].taskName %></td></tr>
+                            <% } %>
+                        </table>
                     </div>
-                    <%}%>
-                </ul>
-            </div>
-            <div class="tab-container dependencies-content hide-content">
-                <form>
-                    <%
-                    var dateobj = new Date(milestoneEdit.date);
-                    function pad(n) {
-                        return n < 10 ? "0"+n : n;
-                    }
-                    var dateobj = dateobj.getFullYear()+"-"+pad(dateobj.getMonth()+1)+"-"+ pad(dateobj.getDate());
-                    %>
-                    <label>Name:</label>
-                    <input class="milestone-form-input-text" id="milestone-settings-name" type="text" value="<%=milestoneEdit.name%>">
-                    <label>Start date:</label>
-                    <input class="milestone-form-input-text" id="milestone-settings-date" type="date" value="<%=dateobj%>">
-                </form>
-                <label class="dependancy-label form-label">Task List</label>
-                <label class="dependancy-label form-label">Depends On</label>
-                <div  class="milestone-drop-list">
-                    <table id="tasks-list">
-                        <% for(var i = 0;i < tasksList.length; i++) { %>
-                        <tr class="task-item" id="<%= tasksList[i].taskId%>"><td> <%= tasksList[i].taskName %></td></tr>
-                        <% } %>
-                    </table>
-                </div>
-                <div class="milestone-drop-list">
-                    <table id="dependencies-list">
-                        <% for(var i = 0; i < dependenciesList.length; i++) { %>
-                        <tr class="task-item" id="<%= dependenciesList[i].taskId%>">
-                            <td><%= dependenciesList[i].taskName %></td>
-                        </tr>
-                        <% } %>
-                    </table>
-                </div>
-                <div class="wrapper" style="text-align: center;">
-                    <button class="save-milestones-button hide-content" data-name="<%=milestoneEdit.name%>">Save</button>
+                    <div class="milestone-drop-list">
+                        <table id="dependencies-list">
+                            <% for(var i = 0; i < dependenciesList.length; i++) { %>
+                            <tr class="task-item" id="<%= dependenciesList[i].taskId%>">
+                                <td><%= dependenciesList[i].taskName %></td>
+                            </tr>
+                            <% } %>
+                        </table>
+                    </div>
+                    <div class="wrapper" style="text-align: center;">
+                        <button class="save-milestones-button hide-content" data-name="<%=milestoneEdit.name%>">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
