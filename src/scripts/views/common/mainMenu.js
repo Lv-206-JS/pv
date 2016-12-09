@@ -22,8 +22,6 @@ define([
             this.model.setUrl();
             this.model.fetch();
             this.model.on('sync', _.bind(this.onNameReceived, this));
-            Backbone.Events.off('onProjectNameReceived');
-            Backbone.Events.on('onProjectNameReceived', _.bind(this.updateProjectName, this));
         },
 
         render: function render() {
@@ -44,10 +42,6 @@ define([
 
         onNameReceived: function () {
             this.render();
-        },
-
-        updateProjectName: function (name) {
-            this.$el.find('.show-project-name').html(name);
         },
 
         onSignOut: function onSingOut(){

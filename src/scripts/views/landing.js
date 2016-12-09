@@ -26,6 +26,18 @@ define([
             return this;
         }
 
+        //TODO - Change to .landing-menu-container and create all renders
+        // renderViews: function () {
+        //     this.landingMenuView = new LandingMenuView({}).render();
+        //
+        //     this.$el.find('.landing-menu').html(this.landingMenuView.$el);
+        //
+        //      this.landingView = new LandingView({}).render();
+        //      this.$el.find('.landing-container').html(this.projectsView.$el);
+        //
+        //     return this;
+        // }
+
     });
 
     return LandingView;

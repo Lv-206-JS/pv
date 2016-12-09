@@ -29,10 +29,13 @@ define([
 
         initialize: function (options) {
             this.projectId = options.projectId;
+            this.page = options.page;
             this.model = new Model();
             this.model.setUrl(this.projectId);
             this.model.fetch();
             this.model.on('sync', _.bind(this.onChange, this));
+            Backbone.Events.off('onProjectNameReceived');
+            Backbone.Events.on('onProjectNameReceived', _.bind(this.updateProjectName, this));
 
         },
 
@@ -41,7 +44,9 @@ define([
         },
 
         render: function () {
-            this.$el.html(this.template({}));
+            this.$el.html(this.template({
+                page: this.page
+            }));
             return this;
         },
 
@@ -136,6 +141,10 @@ define([
             this.milestoneEditView.render();
             this.$el.append(this.milestoneEditView.$el);
 
+        },
+
+        updateProjectName: function (name) {
+            this.$el.find('.show-project-name').html(name);
         },
 
         onChange: function () {
