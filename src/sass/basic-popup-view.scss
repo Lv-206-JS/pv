@@ -115,6 +115,7 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
         font-family: Roboto, sans-serif;
         line-height: 20px;
         margin-bottom: 10px;
+
       }
 
       .form-input-text:focus,
@@ -122,6 +123,25 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
         border: 1px solid #2980b9;
         border-radius: 10px;
         outline: none;
+      }
+//error for registration
+      .error{
+        border-color: #FF0000;
+      }
+
+      .error::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+        color:    #FF0000;
+      }
+      .error:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color:    #FF0000;
+        opacity:  1;
+      }
+      .error::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color:    #FF0000;
+        opacity:  1;
+      }
+      .error:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color:    #FF0000;
       }
 
       .form-input-description {
