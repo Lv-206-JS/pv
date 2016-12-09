@@ -110,40 +110,40 @@ define(['backbone',
             this.$el.find(tabContent).addClass('show-content');
         },
 
-        makeTasksDraggable: function(tasksList, dependenciesList){
+        makeTasksDraggable: function(tasksList, dependenciesList) {
             var draggableElements = document.getElementsByClassName('task-item');
             var draggies = [];
-            for (var i = 0; i < draggableElements.length; i++){
+            for (var i = 0; i < draggableElements.length; i++) {
                 var draggableElem = draggableElements[i];
-                draggies[i] = new Draggabilly(draggableElem,{
+                draggies[i] = new Draggabilly(draggableElem, {
                     containment: '.tab-container'
                 });
-                draggies[i].on('dragEnd',onDragEnd);
+                draggies[i].on('dragEnd', onDragEnd);
             }
 
             function onDragEnd() {
-                if(this.position.x>225){
+                if (this.position.x > 225) {
                     $("#dependencies-list tbody").append(this.element);
-                    $(this.element).css({'left': '260','top':'0'});
+                    $(this.element).css({'left': '260', 'top': '0'});
                 }
-                if(this.position.x<224){
+                if (this.position.x < 224) {
                     $("#tasks-list tbody").append(this.element);
-                    $(this.element).css({'left': '0','top':'0'});
+                    $(this.element).css({'left': '0', 'top': '0'});
                 }
-                $(this.element).css({'left': '260','top':'0'});
+                $(this.element).css({'left': '260', 'top': '0'});
                 var trigger = false;
-                for(var i = 0; i < tasksList.length; i++)
-                    if(tasksList[i].taskId === $(this.element).attr('id')) {
+                for (var i = 0; i < tasksList.length; i++)
+                    if (tasksList[i].taskId === $(this.element).attr('id')) {
                         dependenciesList[dependenciesList.length] = tasksList[i];
-                        tasksList.splice(i,1);
-                        trigger=true;
+                        tasksList.splice(i, 1);
+                        trigger = true;
                         break;
                     }
-                if(!trigger)
-                    for(var i = 0; i < dependenciesList.length; i++)
-                        if(dependenciesList[i].taskId === $(this.element).attr('id')) {
+                if (!trigger)
+                    for (var i = 0; i < dependenciesList.length; i++)
+                        if (dependenciesList[i].taskId === $(this.element).attr('id')) {
                             tasksList[tasksList.length] = dependenciesList[i];
-                            dependenciesList.splice(i,1);
+                            dependenciesList.splice(i, 1);
                         }
             };
         },
