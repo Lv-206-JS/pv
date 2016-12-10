@@ -13,11 +13,14 @@ define([
         className: 'main-projects-view',
         events: {
             'click .go-to-projects': 'onGoToProjects',
-            'click .create-project': 'onNewProject',
-            'click .edit-project': 'showProjectsEditPopup'
+            // 'click .create-project': 'onNewProject',
+            // 'click .edit-project': 'showProjectsEditPopup',
+            // 'click .edit-project': 'onEditProject',
         },
 
         initialize: function () {
+            // Backbone.Events.off('editProject');
+            // Backbone.Events.on('editProject', _.bind(this.onEditProject, this));
         },
 
         render: function render() {
@@ -43,10 +46,12 @@ define([
         },
 
         onNewProject: function onNewProject() {
-            PV.router.navigate('projects/new', {trigger: true});
+            console.log('CREATE');
+            // PV.router.navigate('projects/new', {trigger: true});
         },
 
-        showProjectsEditPopup: function showProjectsEditPopup() {
+        onEditProject: function showProjectsEditPopup() {
+            console.log('OPEN POPUP');
             var project = this.model.get('project');
             this.projectsEditView = new ProjectsEditView({
                 model: this.model,
