@@ -45,7 +45,6 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
                     console.log('error');
                 }
             });
-            this.model.whoChange = 'AttachmentsView';
         },
 
         updateAttachmentsPopup:function () {

@@ -150,12 +150,6 @@ define([
         onChange: function () {
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
             this.renderViews();
-            if(this.model.whoChange == 'AttachmentsView') {
-                return this.showAttachmentsPopup();
-            }
-            if(this.model.whoChange == 'MilestoneEditView') {
-                return this.showMilestoneEditPopup();
-            }
         }
     });
 
