@@ -7,10 +7,9 @@
   background-color: $light-blue;
   color: $text-white;
 }
-.main-menu-button {
+.menu-button {
     @extend .button-dark;
     margin-left: 20px;
-
 }
 .user-name {
   text-transform: capitalize;

@@ -44,22 +44,7 @@
       align-items: center;
 
       .menu-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 27px;
-        width: 100px;
         margin-left: 20px;
-        border: 1px solid #fff;
-        border-radius: 10px;
-        transition: background-color 500ms ease;
-        text-transform: capitalize;
-        cursor: pointer;
-
-        &:hover {
-          border: 1px solid #fff;
-          background-color: #2980b9;
-        }
       }
     }
   }
