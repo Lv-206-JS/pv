@@ -47,7 +47,7 @@ define([
 
         onDeleteProject: function onDeleteProject(e) {
             e.stopPropagation();
-           // Open confirmation popup
+            // Open confirmation popup
             // When OK call this function
             //When cancel remove confirmation popup
             this.onDeleteConfirm(e);
