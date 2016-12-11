@@ -38,7 +38,8 @@ define(['backbone',
             'click #create-milestone': 'getEditView',
             'click .tab-general': 'getMilestoneListView',
             'click .save-milestones-button' : 'saveMilestoneSettings',
-            'click .remove-milestone' : 'deleteMilestone'
+            'click .remove-milestone' : 'deleteMilestone',
+            'dblclick .task-item' : 'addTaskToList'
         },
 
         getTasksList: function(el){
@@ -168,34 +169,60 @@ define(['backbone',
             var draggies = [];
             for (var i = 0; i < draggableElements.length; i++){
                 var draggableElem = draggableElements[i];
-                draggies[i] = new Draggabilly(draggableElem);
+                draggies[i] = new Draggabilly(draggableElem,{
+                    containment: '.tab-container'
+                });
                 draggies[i].on('dragEnd',onDragEnd);
             }
 
             function onDragEnd() {
-                var parent;
-                if(this.position.x>260){
-                    parent = document.getElementById("dependencies-list");
-                    parent.appendChild(this.element);
+                if (this.position.x > 225) {
+                    $("#dependencies-list tbody").append(this.element);
+                    $(this.element).css({'left': '260', 'top': '0'});
                 }
-                if(this.position.x<180){
-                    parent = document.getElementById("tasks-list");
-                    parent.appendChild(this.element);
+                if (this.position.x < 224) {
+                    $("#tasks-list tbody").append(this.element);
+                    $(this.element).css({'left': '0', 'top': '0'});
                 }
-                $(this.element).css({'left': '0','top':'0'});
+                $(this.element).css({'left': '260', 'top': '0'});
                 var trigger = false;
-                for(var i = 0; i < tasksList.length; i++)
-                    if(tasksList[i].taskId === $(this.element).attr('id')) {
+                for (var i = 0; i < tasksList.length; i++)
+                    if (tasksList[i].taskId === $(this.element).attr('id')) {
                         dependenciesList[dependenciesList.length] = tasksList[i];
-                        tasksList.splice(i,1);
-                        trigger=true;
+                        tasksList.splice(i, 1);
+                        trigger = true;
+                        break;
                     }
-                if(!trigger)
-                    for(var i = 0; i < dependenciesList.length; i++)
-                        if(dependenciesList[i].taskId === $(this.element).attr('id')) {
+                if (!trigger)
+                    for (var i = 0; i < dependenciesList.length; i++)
+                        if (dependenciesList[i].taskId === $(this.element).attr('id')) {
                             tasksList[tasksList.length] = dependenciesList[i];
-                            dependenciesList.splice(i,1);
+                            dependenciesList.splice(i, 1);
                         }
+            }
+        },
+
+        addTaskToList: function(event){
+            var element = $(event.currentTarget);
+            var taskId = element.attr('id');
+            var listName = element.parent().parent().attr('id');
+            if(listName === 'tasks-list'){
+                for( var i = 0; i < this.tasksList.length; i++)
+                    if(this.tasksList[i].taskId === taskId){
+                        this.dependenciesList.push(this.tasksList[i]);
+                        this.tasksList.splice(i,1);
+                        break;
+                    }
+                $("#dependencies-list tbody").append(element);
+            }
+            else{
+                for( var i = 0; i < this.dependenciesList.length; i++)
+                    if(this.dependenciesList[i].taskId === taskId){
+                        this.tasksList.push(this.dependenciesList[i]);
+                        this.dependenciesList.splice(i,1);
+                        break;
+                    }
+                $("#tasks-list tbody").append(element);
             }
         },
 

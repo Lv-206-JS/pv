@@ -55,19 +55,25 @@
                 </form>
                 <label class="dependancy-label form-label">Task List</label>
                 <label class="dependancy-label form-label">Depends On</label>
-                <div  class="milestone-drop-list">
+                <div  class="milestone-drop-list scrollable">
                     <table id="tasks-list">
-                        <% for(var i = 0;i < tasksList.length; i++) { %>
-                        <tr class="task-item" id="<%= tasksList[i].taskId%>"><td> <%= tasksList[i].taskName %></td></tr>
-                        <% } %>
+                        <tbody>
+                            <% for(var i = 0;i < tasksList.length; i++) { %>
+                            <tr class="task-item" id="<%= tasksList[i].taskId%>">
+                                <td> <%= tasksList[i].taskName %></td>
+                            </tr>
+                            <% } %>
+                        </tbody>
                     </table>
                 </div>
-                <div class="milestone-drop-list">
+                <div class="milestone-drop-list scrollable">
                     <table id="dependencies-list">
-                        <% for(var i = 0; i < dependenciesList.length; i++) { %>
-                        <tr class="task-item" id="<%= dependenciesList[i].taskId%>">
-                            <td><%= dependenciesList[i].taskName %></td>
-                        </tr>
+                        <tbody>
+                            <% for(var i = 0; i < dependenciesList.length; i++) { %>
+                            <tr class="task-item" id="<%= dependenciesList[i].taskId%>">
+                                <td><%= dependenciesList[i].taskName %></td>
+                            </tr>
+                        </tbody>
                         <% } %>
                     </table>
                 </div>
