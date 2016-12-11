@@ -1,22 +1,19 @@
 
-*{
-  margin: 0px;
-  padding: 0px;
-}
-
 $font-stack: Helvetica, sans-serif;
 $primary-font-size: 16px;
 $landing-block-margin: 5px;
 
-body{
-  //background: #f2f2f2;
-  height: 100%;
+.landing-view {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
+
 .landing-wrapper{
-  height: 100%;
-  width: 100%;
-  overflow-x: scroll;
+  //height: 100%;
+  //width: 100%;
+  flex: 1;
 }
 
 .landing-p{
@@ -72,18 +69,20 @@ body{
 .landing-list{
   border-radius: 10px;
   height: 200px;
- // line-height: 259px;
   width: 450px;
   background: #a9a9a9;
   padding: 5px;
  // margin: 15px;
 }
 
+
 .landing-footer{
   color: #fff;
   font-family: $font-stack;
   background-color:#5499c7;
-  height: 33px;
+  height: 40px;
+  left: 0;
+  bottom: 0;
   line-height: 33px;
   text-align: center;
   font-size: 12px;

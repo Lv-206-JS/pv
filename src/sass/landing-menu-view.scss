@@ -12,21 +12,16 @@
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-start;
-      align-content: center;
+      align-items: center;
       list-style-type: none;
-      //margin: 0;
-      //padding: 0;
-      //overflow: hidden;
-      //background-color: #4c4e51;
-      //font-weight: bold;
-      //color: white;
+
       li {
         float: right;
         &:first-child {
           float: left;
           border: none;
         }
-        /*This Projects btn will be deleted from this view - After Sign In implementation*/
+
         &:nth-child(2) {
           float: left;
         }
