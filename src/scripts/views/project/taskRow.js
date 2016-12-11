@@ -8,7 +8,7 @@ define([
 
         var TaskRowView = Backbone.View.extend({
             template: JST['project:taskRow'],
-            className: 'table-row',
+            className: 'table-task-row',
 
             initialize: function (options) {
                 this.tasks = options.tasks;

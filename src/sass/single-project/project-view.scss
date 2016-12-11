@@ -1,4 +1,5 @@
 @import "./project-menu";
+$gantt-view-container-height: 66%;
 
 .main-project-view {
   height: 100%;
@@ -11,5 +12,5 @@
   flex: 1;
 }
 #gantt-view-container {
-  height:66%;
+  height: $gantt-view-container-height;
 }

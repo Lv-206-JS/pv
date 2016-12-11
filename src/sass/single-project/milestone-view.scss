@@ -1,52 +1,51 @@
+$milestone-container-height: 80px;
+$milestone-container-background: rgba(0,0,0, 0.05);
+$project-timeline-width: 80%;
+$project-timeline-height: 25px;
+$project-timeline-background: linear-gradient(265deg, $green, $light-green);
+$milestone-size: 25px;
+
 .milestone-view {
-  position: relative;
-  display: flex;
+    @extend .row-container;
   order:2;
+    justify-content: center;
+    align-items: center;
+  position: relative;
   width: 100%;
-  height: 80px;
-  padding-right: 5%;
-  padding-left: 5%;
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .04), rgba(0, 0, 0, .04));
-  transition: background-color 500ms ease, opacity 200ms ease;
+  height: $milestone-container-height;
+  background-color: $milestone-container-background;
 }
 
 .milestone-center {
   position: relative;
   width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  align-self: center;
-  flex: 0 auto;
 }
 
 .project-timeline {
   position: relative;
   display: block;
-  width: 80%;
-  height: 25px;
+  width: $project-timeline-width;
+  height: $project-timeline-height;
   margin-right: auto;
   margin-left: auto;
-  border-radius: 10px;
-  background-image: linear-gradient(265deg, #28b463, #2ecc71);
-}
-
-.project-timeline:hover {
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .3);
+  border-radius: $border-radius;
+  background-image: $project-timeline-background;
+    
+    &:hover {
+      box-shadow: $box-shadow;
+    }
 }
 
 .start-date {
   position: absolute;
-  left: 0px;
   top: 0px;
-  bottom: 0px;
+  left: 0px;
 }
 
 .end-date {
   position: absolute;
   top: 0px;
   right: 0px;
-  bottom: 0px;
-  padding-top: 0%;
 }
 
 .milestone-date {
@@ -57,19 +56,15 @@
 .milestone-img {
   position: absolute;
   left: 30px;
-  bottom: -12px;
-  width: 25px;
-  height: 25px;
+  bottom: -($project-timeline-height/2);
+  width: $milestone-size;
+  height: $milestone-size;
   background-image: url('../../../images/milestone1.svg');
-  background-position: 0px 0px;
   background-size: contain;
-  opacity: 1;
   transition: all 500ms ease;
-}
-
-.milestone-img:hover {
-  background-image: url('../../../images/milestone1.svg');
-  background-position: 0px 0px;
-  background-size: contain;
-  transform: translate(0px, 13px);
+    
+    &:hover {
+      background-image: url('../../../images/milestone1.svg');
+      transform: translate(0px, $project-timeline-height/2);
+    }
 }

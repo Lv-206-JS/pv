@@ -13,8 +13,8 @@ define([
 
             events: {
                 'click .add-task': 'onTaskAdd',
-                'click .edit-task': 'onTaskEdit',
-                'click .remove-task': 'onTaskRemove'
+                'click .icon-edit': 'onTaskEdit',
+                'click .icon-remove': 'onTaskRemove'
             },
 
             initialize: function (options) {
@@ -37,7 +37,7 @@ define([
                     task = this.tasks[i];
                     this.taskRowView = new TaskRowView({tasks: this.tasks, task: task}).render();
                     $(this.taskRowView.$el).insertAfter(lastElem);
-                    lastElem = this.$el.find('.table-row:last');
+                    lastElem = this.$el.find('.table-task-row:last');
                 }
             },
 
