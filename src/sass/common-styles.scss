@@ -37,6 +37,7 @@ $transition-background: background-color 500ms ease;
 
 /* Button */
 $button-border-white: 1px solid #fff;
+$button-border-blue: 1px solid $blue;
 $border-radius: 4px;
 
 .button-dark {
@@ -62,7 +63,7 @@ $border-radius: 4px;
   width: 100px;
   height: 25px;
   background: $light-grey;
-  border: $button-border-white;
+  border: $button-border-blue;
   border-radius: $border-radius;
   text-transform: capitalize;
   color: $text-white;
