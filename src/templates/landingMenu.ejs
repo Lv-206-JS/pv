@@ -1,15 +1,18 @@
 <div class="landing-menu">
+    <img class="logo" src="/images/plan-view-logo.svg" alt="logo">
     <ul>
-        <li><img class="logo" src="/images/plan-view-logo.svg" alt="logo"></li>
+            <div class="landing-menu-left <% if (!userId) {%>not-logined<% } %>">
         <% if (userId) {%>
-            <li><a class="go-to-projects main-menu-button">my projects</a></li>
-            <div class="menu-right">
-                <p class="show-user-name user-name">hello, <%= userName %> </p>
-                <a class="sign-out-button main-menu-button">Sign Out</a>
+            <li><a class="go-to-projects menu-button">my projects</a></li>
             </div>
+            <div class="landing-menu-right <% if (!userId) {%>not-logined<% } %>">
+                <li><p class="show-user-name user-name">hello, <%= userName %> </p></li>
+                <li><a class="sign-out-button menu-button">Sign Out</a></li>
+
         <% } else { %>
-            <li><a class="registration-btn main-menu-button">Sign Up</a></li>
-            <li><a class="login-btn main-menu-button">Sign In</a></li>
+            <li><a class="registration-btn menu-button">Sign Up</a></li>
+            <li><a class="login-btn menu-button">Sign In</a></li>
+            </div>
         <% } %>
     </ul>
 </div>
