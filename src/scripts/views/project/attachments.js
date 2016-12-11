@@ -12,6 +12,7 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
         },
 
         render: function render() {
+            console.log(this.model.get('attachments'));
             this.$el.html(this.template({attachments: this.model.get('attachments')}));
             return this;
         },
@@ -28,8 +29,8 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
                 updatedAttachments.push(JSON.parse(response));
             }
             else {
-                for (var i = 0, len = this.attachments.length; i < len; i++) {
-                    if(this.attachments[i].attachmentId == attachmentId) {
+                for (var i = 0, len = updatedAttachments.length; i < len; i++) {
+                    if(updatedAttachments[i].attachmentId == attachmentId) {
                         updatedAttachments.splice(i, 1);
                         break;
                     }
@@ -42,7 +43,7 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
                 }.call(this),
 
                 error:function () {
-                    console.log('error');
+                    //error
                 }
             });
         },
