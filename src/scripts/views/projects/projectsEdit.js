@@ -17,15 +17,15 @@ define([
         },
 
         initialize: function initialize(options) {
-            this.modelId = options.modelId;
-            if (options.modelId === 'new') {
-                this.model = new ProjectModel();
-
-                this.render();
-            } else {
-                projectsCollection.fetch();
-                projectsCollection.on('sync', _.bind(this.onSync, this));
-            }
+            this.model = options.model;
+            // if (options.modelId === 'new') {
+            //     this.model = new ProjectModel();
+            //
+            //     this.render();
+            // } else {
+            //     projectsCollection.fetch();
+            //     projectsCollection.on('sync', _.bind(this.onSync, this));
+            // }
         },
 
         render: function render() {
@@ -44,6 +44,7 @@ define([
             e.preventDefault();
             var name = this.$el.find('#name').val();
             var description = this.$el.find('#description').val();
+            var that = this;
 
             this.model.set({
                 name: name,
@@ -53,8 +54,9 @@ define([
             this.model.setUrl(this.model.get('id') || '');
             this.model.save().then(
                 function(res) {
-                    projectsCollection.add(this.model);
-                    PV.router.navigate('projects', {trigger: true});
+                    that.trigger('editedProject', that.model);
+                    // projectsCollection.add(this.model);
+                    // PV.router.navigate('projects', {trigger: true});
                 },
                 function(err) {
                     // Error handling
@@ -65,7 +67,8 @@ define([
         exitEditProject: function(event){
             event.preventDefault();
             this.$el.remove();
-            PV.router.navigate('projects', {trigger: true});
+            // this = null;
+            // PV.router.navigate('projects', {trigger: true});
         }
     });
 

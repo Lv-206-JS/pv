@@ -3,7 +3,7 @@
 
 <ul>
     <% for(var i = 0; i < projects.length; i++) {%>
-        <li class="projects-list-item" data-id="<%= projects[i].id %>">
+        <li class="projects-list-item <% if (projects[i].id === activeId) { %>active<% } %>" data-id="<%= projects[i].id %>">
             <a class="projects-link-name"> <%= projects[i].name %> </a>
             <a class="project-link edit-project" data-id="<%= projects[i].id %>"></a>
             <a class="project-link delete-project" data-id="<%= projects[i].id %>"></a>
