@@ -24,32 +24,6 @@
   text-transform: uppercase;
 }
 
-#create-milestone {
-  width: 100px;
-  margin-right: 5px;
-  margin-left: 5px;
-  padding: 5px 10px;
-  line-height: 15px;
-  color: #fff;
-  border: 1px solid #fff;
-  border-radius: 10px;
-  background-color: #5499c7;
-  -webkit-transition: background-color 500ms ease;
-  transition: background-color 500ms ease;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-#delete-milestone-image {
-  width: 20px;
-  height: 20px
-}
-
-.one-milestone-block {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-}
 .milestone-drop-list {
   @extend .drop-list;
   max-height: 180px;
@@ -58,11 +32,104 @@
 
 .milestone-form-input-text {
   display: inline-block;
-  width: 145px;
+  width: 160px;
   border-radius: 10px;
   border: 1px solid #a9a9a9;
   padding: 8px 12px;
   font-family: Roboto, sans-serif;
   line-height: 20px;
   margin-bottom: 10px;
+}
+
+.milestones-container{
+  height: 320px;
+}
+
+.table-milestone-header-row {
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 22px;
+  padding-left: 20px;
+}
+
+.table-header-milestone-cell {
+  width: 20%;
+  min-width: 250px;
+  max-width: 250px;
+  padding-top: 3px;
+  padding-left: 6px;
+  border-top: 1px none rgba(0, 0, 0, .05);
+  border-bottom: 2px none rgba(0, 0, 0, .15);
+  font-weight: 600;
+  text-align: left;
+}
+
+.add-milestone-img {
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+  margin-left: 6px;
+}
+
+.add-milestone-link {
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-top: 2px;
+  color: #007ad4;
+  cursor: pointer;
+}
+
+.table-milestone-row {
+  display: flex;
+  height: 25px;
+  padding: 4px 0px 0px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, .15);
+}
+
+.table-cell-milestone {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  min-width: 250px;
+  max-width: 250px;
+  padding-left: 6px;
+  justify-content: flex-start;
+}
+
+.milestone-link {
+  position: relative;
+  top: -19px;
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin-top: 3px;
+  margin-right: 5px;
+  margin-left: 5px;
+  float: right;
+  clear: none;
+  justify-content: flex-end;
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.milestone-link:hover {
+  opacity: 1;
+}
+
+.milestone-link.edit-milestone {
+  width: 19px;
+  height: 19px;
+  margin-right: 0px;
+  background-image: url('../../../images/edit.svg');
+  background-position: 0px 0px;
+  background-size: contain;
+}
+
+.milestone-link.remove-milestone {
+  width: 19px;
+  height: 19px;
+  background-image: url('../../../images/cancel.svg');
+  background-position: 0px 0px;
+  background-size: contain;
 }

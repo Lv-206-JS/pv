@@ -9,20 +9,36 @@
             <a class="tab-link tab-dependencies hide-content">Depends On</a>
         </div>
     </div>
+    <div class="milestones-container">
         <div class="tab-container">
             <div class="tab-container general-content show-content">
-                <button id="create-milestone">Create milestone</button>
-                <ul class="milestone-list">
-                    <%for(var i = 0; i <  milestones.length; i++) {%>
-                    <div class="one-milestone-block">
-                        <li class="milestone-item" data-name="<%= milestones[i].name %>"> <%= milestones[i].name %></li>
-                        <div id="delete-milestone" data-name="<%= milestones[i].name %>">
-                            <img src="/images/delete-button.png" id="delete-milestone-image" alt="delete milestone"/>
-                        </div>
+                <div class="table-milestone-header-row">
+                    <div class="table-header-milestone-cell">Name</div>
+                    <div class="table-header-milestone-cell">Start date</div>
+                </div>
+                <div class="table-row">
+                    <img class="add-milestone-img" src="../../../images/add.svg">
+                    <a class="add-milestone-link" id="create-milestone">Milestone</a>
+                </div>
+                <%for(var i = 0; i <  milestones.length; i++) {%>
+                <div class="table-milestone-row">
+                    <div class="table-cell-milestone">
+                        <div data-name="<%= milestones[i].name %>"><%= milestones[i].name %></div>
+                        <span class="milestone-link remove-milestone" data-name="<%= milestones[i].name %>"></span>
+                        <span class="milestone-link edit-milestone" data-name="<%= milestones[i].name %>"></span>
                     </div>
-                    <%}%>
-                </ul>
+                    <%
+                        var mDate = new Date(milestones[i].date);
+                        function date(n) {
+                            return n < 10 ? "0"+n : n;
+                        }
+                        mDate = mDate.getFullYear()+"-"+date(mDate.getMonth()+1)+"-"+ date(mDate.getDate());
+                    %>
+                    <div class="table-cell-milestone"><%= mDate%></div>
+                </div>
+                <% } %>
             </div>
+
             <div class="tab-container dependencies-content hide-content">
                 <form>
                     <%
@@ -30,10 +46,10 @@
                     function pad(n) {
                         return n < 10 ? "0"+n : n;
                     }
-                    var dateobj = dateobj.getFullYear()+"-"+pad(dateobj.getMonth()+1)+"-"+ pad(dateobj.getDate());
+                    dateobj = dateobj.getFullYear()+"-"+pad(dateobj.getMonth()+1)+"-"+ pad(dateobj.getDate());
                     %>
                     <label>Name:</label>
-                    <input class="milestone-form-input-text" id="milestone-settings-name" type="text" value="<%=milestoneEdit.name%>">
+                    <input class="milestone-form-input-text" id="milestone-settings-name" type="text" value="<%=milestoneEdit.name%>" required>
                     <label>Start date:</label>
                     <input class="milestone-form-input-text" id="milestone-settings-date" type="date" value="<%=dateobj%>">
                 </form>
@@ -56,10 +72,11 @@
                     </table>
                 </div>
                 <div class="wrapper" style="text-align: center;">
-                    <button class="save-milestones-button hide-content" data-name="<%=milestoneEdit.name%>">Save</button>
+                    <button class="save-milestones-button" data-name="<%=milestoneEdit.name%>">Save</button>
                 </div>
             </div>
         </div>
+    </div>
     <div class="form-bottom">
         <input class="form-button ok-button" type="submit" value="ok">
         <input class="form-button cancel-button" type="submit" value="cancel">

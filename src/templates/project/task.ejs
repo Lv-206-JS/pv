@@ -24,18 +24,22 @@
                     <div class="tab-container dependencies-content hide-content">
                         <label class="dependancy-label form-label">Task List</label>
                         <label class="dependancy-label form-label">Depends On</label>
-                        <div class="drop-list" id="list-of-tasks">
+                        <div class="drop-list scrollable" id="list-of-tasks">
                             <table id="tasks-list">
-                                <% for(var i=0;i<tasksList.length;i++) { %>
-                                <tr class="task-item" id="<%= tasksList[i].taskId%>"><td> <%= tasksList[i].name %></td></tr>
-                                <% } %>
+                                <tbody>
+                                    <% for(var i=0;i<tasksList.length;i++) { %>
+                                    <tr class="task-item" id="<%= tasksList[i].taskId%>"><td> <%= tasksList[i].name %></td></tr>
+                                    <% } %>
+                                </tbody>
                             </table>
                         </div>
-                        <div class="drop-list" id="list-of-dependencies">
+                        <div class="drop-list scrollable" id="list-of-dependencies">
                             <table id="dependencies-list">
-                                <% for(var i=0;i<dependenciesList.length;i++) { %>
-                                <tr class="task-item" id="<%= dependenciesList[i].taskId%>"><td><%= dependenciesList[i].name %></td> </tr>
-                                <% } %>
+                                <tbody>
+                                    <% for(var i=0;i<dependenciesList.length;i++) { %>
+                                    <tr class="task-item" id="<%= dependenciesList[i].taskId%>"><td><%= dependenciesList[i].name %></td> </tr>
+                                    <% } %>
+                                </tbody>
                             </table>
                         </div>
                     </div>

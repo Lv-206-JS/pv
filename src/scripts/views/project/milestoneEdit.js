@@ -24,7 +24,7 @@ define(['backbone',
 
         render: function render() {
             this.$el.html(this.template({
-                milestones: this.milestones,
+                milestones: this.model.get('milestones'),
                 tasksList: this.tasksList,
                 dependenciesList: this.dependenciesList,
                 milestoneEdit: this.milestoneEdit
@@ -34,11 +34,11 @@ define(['backbone',
 
         events: {
             'click .ok-button, .cancel-button' : 'hideMilestoneEditView',
-            'click .milestone-item' : 'getEditView',
+            'click .edit-milestone' : 'getEditView',
             'click #create-milestone': 'getEditView',
             'click .tab-general': 'getMilestoneListView',
             'click .save-milestones-button' : 'saveMilestoneSettings',
-            'click #delete-milestone' : 'deleteMilestone'
+            'click .remove-milestone' : 'deleteMilestone'
         },
 
         getTasksList: function(el){
@@ -86,8 +86,6 @@ define(['backbone',
             this.$el.find('.dependencies-content').addClass('show-content');
             this.$el.find('.tab-dependencies').removeClass('hide-content');
             this.$el.find('.tab-dependencies').addClass('show-content');
-            this.$el.find('.save-milestones-button').removeClass('hide-content');
-            this.$el.find('.save-milestones-button').addClass('show-content');
             this.makeTasksDraggable(this.tasksList, this.dependenciesList);
         },
 
@@ -96,8 +94,6 @@ define(['backbone',
             this.$el.find('.tab-dependencies').removeClass('w--current');
             this.$el.find('.tab-dependencies').removeClass('show-content');
             this.$el.find('.tab-dependencies').addClass('hide-content');
-            this.$el.find('.save-milestones-button').removeClass('show-content');
-            this.$el.find('.save-milestones-button').addClass('hide-content');
             this.$el.find('.dependencies-content').removeClass('show-content');
             this.$el.find('.dependencies-content').addClass('hide-content');
             this.$el.find('.general-content').removeClass('hide-content');
@@ -142,12 +138,11 @@ define(['backbone',
                     //error handler
                 }
             });
-            this.model.whoChange = 'MilestoneEditView'
         },
 
         deleteMilestone: function (event) {
-            var updatedMilestones = this.model.get('milestones');
             event.preventDefault();
+            var updatedMilestones = this.model.get('milestones');
             var target = $(event.currentTarget);
             var milestoneName = target.data('name');
             for (var i = 0, len = updatedMilestones.length; i < len; i++) {
@@ -166,7 +161,6 @@ define(['backbone',
                     //error handler
                 }
             });
-            this.model.whoChange = 'MilestoneEditView';
         },
 
         makeTasksDraggable: function(tasksList, dependenciesList){
