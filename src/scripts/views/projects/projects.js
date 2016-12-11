@@ -13,11 +13,10 @@ define([
         className: 'main-projects-view',
         events: {
             'click .go-to-projects': 'onGoToProjects',
-            'click .create-project': 'onNewProject',
-            'click .edit-project': 'showProjectsEditPopup'
         },
 
         initialize: function () {
+
         },
 
         render: function render() {
@@ -42,11 +41,7 @@ define([
             this.renderViews();
         },
 
-        onNewProject: function onNewProject() {
-            PV.router.navigate('projects/new', {trigger: true});
-        },
-
-        showProjectsEditPopup: function showProjectsEditPopup() {
+        onEditProject: function showProjectsEditPopup() {
             var project = this.model.get('project');
             this.projectsEditView = new ProjectsEditView({
                 model: this.model,

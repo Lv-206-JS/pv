@@ -18,16 +18,16 @@ define([
         initialize: function (options) {
             this.name = options.name;
             this.page = options.page;
-            this.model = new userModel();
-            this.model.setUrl();
-            this.model.fetch();
-            this.model.on('sync', _.bind(this.onNameReceived, this));
+
+            userModel.fetch();
+            userModel.on('sync', _.bind(this.onNameReceived, this));
+            userModel.on('error', _.bind(this.onError, this));
         },
 
         render: function render() {
             this.$el.html(this.template({
                 page: this.page,
-                userName: this.model.get('firstname')
+                userName: userModel.get('firstname')
             }));
             return this;
         },
@@ -44,8 +44,15 @@ define([
             this.render();
         },
 
+        onError: function (model, resp) {
+            if (resp.status === 401) {
+                PV.router.navigate('/', {trigger: true});
+            }
+        },
+
         onSignOut: function onSingOut(){
-            userModel.clear().set(userModel.defaults());
+            $.ajax({ url:  '/users/logout' });
+            userModel.clear().set(userModel.defaults);
             PV.router.navigate('/', {trigger: true});
         }
     });

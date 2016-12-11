@@ -62,28 +62,6 @@ define([
                             "mimetype": ""
                         }
                     ]
-                },
-                {
-                    "taskId": 0,
-                    "projectId": 0,
-                    "name": "",
-                    "description": "",
-                    "estimateTime": 0,
-                    "resource": "",
-                    "dependsOn": [
-                        {
-                            "taskId": 0,
-                            "type": ""
-                        }
-                    ],
-                    "attachments": [
-                        {
-                            "attachmentId": "",
-                            "fileName": "",
-                            "relativePath": "",
-                            "mimetype": ""
-                        }
-                    ]
                 }
             ]
         }
