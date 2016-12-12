@@ -19,8 +19,24 @@
                     <div id="delete-attachment" data-id="<%= attachments[i].attachmentId %>" >
                         <img src="/images/cancel.svg" class="delete"  alt="delete attachment"/>
                     </div>
+                    <%var mimetype = attachments[i].mimetype;
+                    var copyMimetype = mimetype.slice(0, mimetype.indexOf('/'));
+                    switch(copyMimetype){
+                        case 'application':
+                            if(mimetype == 'application/pdf') {
+                                copyMimetype = mimetype.slice(mimetype.indexOf('/'));
+                            }
+                            else if(mimetype == 'application/msword'){
+                                copyMimetype = mimetype.slice(mimetype.indexOf('/'));
+                            }
+                            else {
+                                copyMimetype = 'text';
+                            }
+                    }
+                    var scrMimetype = '/images/mimetype_icons/' + copyMimetype + '.png';
+                    %>
                     <a class="file-reference" href="<%=attachments[i].relativePath%>" target="_blank">
-                        <img src="/images/word.png" class="attachment-image" alt="attachment image"/>
+                        <img src="<%=scrMimetype%>" class="attachment-image" alt="attachment image"/>
                         <% var str = attachments[i].fileName; %>
                         <% if(attachments[i].fileName.length>9)  { str = attachments[i].fileName.substring(0,9)+'..';} %>
 

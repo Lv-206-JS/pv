@@ -1,14 +1,13 @@
 
-<h2> Projects Name List</h2>
+<div class="projects-list-header"><h3>Projects List</h3></div>
 
 <ul>
     <% for(var i = 0; i < projects.length; i++) {%>
-        <li class="projects-list-item" data-id="<%= projects[i].id %>">
-            <%= projects[i].name %>
-            <!--TODO: Make spans and buttons flex-items inside li element!-->
-            <span class="projects-list-link" data-id="<%= projects[i].id %>">Go to project!</span>
-            <button class="edit-project" data-id="<%= projects[i].id %>">Edit</button>
-            <button class="delete-project" data-id="<%= projects[i].id %>">Delete</button>
+        <li class="projects-list-item <% if (projects[i].id === activeId) { %>active<% } %>" data-id="<%= projects[i].id %>">
+            <a class="projects-link-name"> <%= projects[i].name %> </a>
+            <a class="project-link edit-project" data-id="<%= projects[i].id %>"></a>
+            <a class="project-link delete-project" data-id="<%= projects[i].id %>"></a>
+            <button class="projects-go-link" data-id="<%= projects[i].id %>">Go to!</button>
         </li>
     <% } %>
 </ul>

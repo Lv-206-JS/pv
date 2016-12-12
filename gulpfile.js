@@ -41,6 +41,7 @@ gulp.task('build', ['styles', 'jst'], function () {
             uri: 'http://localhost:9090'
         };
 
+
     livereload.listen({
         start: true,
         port: 35729
@@ -56,7 +57,8 @@ gulp.task('default', ['styles', 'jst'], function () {
     var livereload = require('gulp-livereload'),
         open = require('gulp-open'),
         options = {
-            uri: 'http://localhost:9090'
+            uri: 'http://localhost:9090',
+            app: 'chrome'
         };
 
     livereload.listen({

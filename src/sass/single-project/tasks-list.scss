@@ -1,111 +1,69 @@
-.table-header {
-  display: flex;
-  flex-direction: column;
-  height: 45px;
-}
+$table-cell-width: 100px;
+$table-cell-padding-left: 5px;
 
-.table-header-cell {
-  width: 20%;
-  min-width: 100px;
-  max-width: 100px;
-  padding-top: 3px;
-  padding-left: 6px;
-  border-top: 1px none rgba(0, 0, 0, .05);
-  border-bottom: 2px none rgba(0, 0, 0, .15);
-  font-weight: 600;
-  text-align: left;
-}
+$table-cell-task-width: $table-cell-width*2.5;
 
-.table-header-cell.table-header-task-cell {
-  //width: 40%;
-  height: 25px;
-  min-width: 250px;
-  max-width: 250px;
-}
+$table-cell-depends-width: $table-cell-width*2;
 
-.table-row {
-  display: flex;
-  height: 25px;
-  padding: 4px 0px 0px 20px;
-  //flex-direction: row;
-  //flex-wrap: nowrap;
-  //flex: 1;
-  border-bottom: 1px solid rgba(0, 0, 0, .15);
-}
+$icon-width: 20px;
+$icon-margin-left-right: 5px;
 
-.table-row:hover {
-  background-color: rgba(0, 0, 0, .05);
-}
-
-.table-cell-task {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  //width: 40%;
-  //height: 100%;
-  min-width: 250px;
-  max-width: 250px;
-  padding-left: 6px;
-  justify-content: flex-start;
-}
+$inner-cell-task-width: $table-cell-width*2.5 - $icon-width*2 - $icon-margin-left-right*4;
 
 .table-cell {
-  //width: 20%;
-  //height: 100%;
-  min-width: 100px;
-  max-width: 100px;
-  padding-left: 6px;
+  display: flex;
+  align-items: center;
+  min-width: $table-cell-width;
+  max-width: $table-cell-width;
+  padding-left: $table-cell-padding-left;
 }
 
-.add-task-img {
-  width: 20px;
-  height: 20px;
-  margin-right: 6px;
-  margin-left: 6px;
+.table-task-header {
+    flex-direction: column;
+    height: $table-row-height*2;
+    border-bottom: $divider-dark-border;
+}
+.table-task-row {
+  @extend .table-row;
+  padding: 0px;
+}
+.table-cell-task {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: $table-cell-task-width;
+    max-width: $table-cell-task-width;
+}
+.cell-task {
+  display: inline-block;
+  min-width: $inner-cell-task-width;
+  max-width: $inner-cell-task-width;
+  overflow: hidden;
+
+  &:hover {
+    overflow: visible;
+  }
+}
+.table-cell-dependsOn {
+    min-width: $table-cell-depends-width;
+    max-width: $table-cell-depends-width;
 }
 
-.add-task-link {
+.add-link {
   padding-right: 10px;
   padding-left: 10px;
-  margin-top: 2px;
-  color: #007ad4;
-  cursor: pointer;
+  color: $blue;
+}
+.add-task-img {
+  width: $icon-width;
+  height: $icon-width;
+  margin-right: 12px;
 }
 
 .task-link {
-  position: relative;
-  top: -19px;
-  display: block;
-  width: 20px;
-  height: 20px;
-  margin-top: 2px;
-  margin-right: 5px;
-  margin-left: 5px;
-  float: right;
-  clear: none;
-  justify-content: flex-end;
-  opacity: 0.3;
-  cursor: pointer;
-}
-
-.task-link:hover {
-  opacity: 1;
-}
-
-.task-link.edit-task {
-  width: 19px;
-  height: 19px;
-  margin-right: 0px;
-  background-image: url('../../../images/edit.svg');
-  background-position: 0px 0px;
-  background-size: contain;
-}
-
-.task-link.remove-task {
-  width: 19px;
-  height: 19px;
-  margin-top: 2px;
-  background-image: url('../../../images/cancel.svg');
-  background-position: 0px 0px;
-  background-size: contain;
+  @extend .icon;
+  width: $icon-width;
+  height: $icon-width;
+  margin: 0 $icon-margin-left-right;
 }

@@ -69,7 +69,7 @@ router.post('/', multipartMiddleware, authenticateUser, checkOwnership, function
                 attachmentId:attachment.attachmentId,
                 fileName: origName,
                 relativePath: attachment.relativePath,
-                mimeType: mimeType
+                mimetype: mimeType
             });
         }
     });

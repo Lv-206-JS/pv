@@ -1,9 +1,14 @@
+$roboto: 'Roboto', serif;
 
-.projects-header-view {
+.projects-title {
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 
-  .create-project, .edit-project {
-
-    height: 50px;
-    width: 100px;
+  .project-title-text {
+    font-family: $roboto;
+    width: 80%;
   }
 }

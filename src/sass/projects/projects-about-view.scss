@@ -1,4 +1,15 @@
-.project-description {
 
-  border-top: 2px solid #7d7d7d;
+.projects-about {
+  display: flex;
+  flex-direction: column;
+
+  .project-description-header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+  }
+  .project-description {
+    color: #5499c7;
+    font-size: 18px;
+  }
 }

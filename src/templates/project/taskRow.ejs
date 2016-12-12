@@ -1,0 +1,22 @@
+<div class="table-cell-task">
+    <div id="<%= task.taskId%>" class="cell-task"><%= task.name%></div>
+    <a class="task-link icon-edit" id="<%= task.taskId%>"></a>
+    <a class="task-link icon-remove" id="<%= task.taskId%>"></a>
+</div>
+<div class="table-cell task-estimateTime"><%= task.estimateTime%></div>
+<% var dependencies = [];%>
+<% for (var j = 0; j < task.dependsOn.length; j++) { %>
+    <!--TO DO false id string in db-->
+    <% if (task.dependsOn[j].taskId != "false") { %>
+        <% dependencies.push(task.dependsOn[j].taskId); %>
+    <% } %>
+<% } %>
+<% for (j = 0; j < dependencies.length; j++) { %>
+    <% for (var i = 0; i < tasks.length; i++) { %>
+        <% if (tasks[i].taskId == dependencies[j]) { %>
+            <% dependencies[j] = tasks[i].name; %>
+        <% } %>
+    <% } %>
+<% } %>
+<div class="table-cell-dependsOn task-dependsOn"><%= dependencies.toString() %></div>
+<div class="table-cell task-resource"><%= task.resource%></div>

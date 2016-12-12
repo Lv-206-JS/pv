@@ -1,19 +1,25 @@
-#gantt-container {
-  order: 3;
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  overflow-y: scroll;
-  width: 100%;
-  //height: 65%;
-}
-.left-panel {
-  order: 1;
+.panel {
   width: 100%;
   height: 100%;
   overflow-x: scroll;
 }
 
+#gantt-container {
+  order: 3;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  overflow-y: scroll;
+  width: 100%;
+}
+.left-panel {
+    @extend .panel;
+  order: 1;
+}
+.right-panel {
+    @extend .panel;
+  order: 3;
+}
 #splitter {
   left: 50%;
   order: 2;
@@ -22,16 +28,10 @@
   width: 10px;
   height: 100%;
   padding: 5px;
-  background-color: rgba(0, 0, 0, .12);
+  background-color: $grey;
 
   &:hover {
     cursor: col-resize;
+    background-color: $dark-grey;
   }
-}
-
-.right-panel {
-  order: 3;
-  width: 100%;
-  height: 100%;
-  overflow-x: scroll;
 }

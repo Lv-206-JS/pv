@@ -1,5 +1,7 @@
 <div class="menu-toolbar">
-    <p class="project-name">RIA Project</p>
+    <% if (page !== 'projects') { %>
+    <p class="show-project-name"> </p>
+    <% } %>
     <div class="tool-bar">
         <a class="tool-img tool-zoom-in"></a>
         <a class="tool-img tool-zoom-out"></a>

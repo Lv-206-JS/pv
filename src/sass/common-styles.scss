@@ -1,0 +1,157 @@
+/* Colors*/
+$light-green: #2ecc71; // main
+$green: #28b463; // hover
+$light-red: #e74c3c; // main
+$red: #d80027; // hover
+$light-blue: #5499c7; // main
+$blue: #2980b9; // hover
+$grey: #f5f5f5; // splitter background, hover
+$light-grey: #fafafa; // background, main
+$dark-grey: #e0e0e0; // splitter hover, main borders
+
+/* Font */
+$font-weight-normal: 400;
+$font-weight-bold: 600;
+
+/* Text colors */
+$text-blue: $blue;
+$text-green: $green;
+$text-red: $red;
+$text-white: #fff;
+$text-black: #000;
+$text-secondary: rgba(0,0,0, 0.54);
+$text-hint: rgba(0,0,0, 0.38);
+
+/* Main menu, Project menu */
+$menu-container-height: 40px;
+
+/* Dividers */
+$divider-dark-border: 1px solid rgba(0,0,0, 0.38);
+$divider-border: 1px solid rgba(0,0,0, 0.12);
+
+/* Box shadow */
+$box-shadow: 0 4px 4px 0px rgba(0, 0, 0, 0.2);
+
+/* Transition background */
+$transition-background: background-color 500ms ease;
+
+/* Button */
+$button-border-white: 1px solid #fff;
+$button-border-blue: 1px solid $blue;
+$border-radius: 4px;
+
+.button-dark {
+  display: inline-block;
+  width: 100px;
+  background: $light-blue;
+  border: $button-border-white;
+  border-radius: $border-radius;
+  text-align: center;
+  text-transform: capitalize;
+  color: $text-white;
+  padding: 5px 10px;
+
+  &:hover{
+    background-color: $blue;
+    cursor: pointer;
+    transition: $transition-background;
+  }
+}
+
+.button-light {
+  display: inline-block;
+  width: 100px;
+  height: 25px;
+  background: $light-grey;
+  border: $button-border-blue;
+  border-radius: $border-radius;
+  text-transform: capitalize;
+  color: $text-white;
+
+  &:hover{
+    background-color: $grey;
+    cursor: pointer;
+    transition: $transition-background;
+  }
+}
+
+/* Icons */
+$icon-opacity: 0.5; // normal
+$icon-hover-opacity: 1; // hover
+
+.icon {
+   display: inline-block;
+   opacity: $icon-opacity;
+    
+   &:hover {
+     opacity: $icon-hover-opacity;
+   }
+}
+.icon-outer-link {
+  @extend .icon;
+  // add width, height, margin here
+}
+.icon-as-background {
+  background-position: 0px 0px;
+  background-size: contain;
+}
+/* Pencil icon */
+.icon-edit {
+  @extend .icon-as-background;
+  background-image: url('../../../images/edit.svg');
+}
+/* Cross icon */
+.icon-remove {
+  @extend .icon-as-background;
+  background-image: url('../../../images/cancel.svg');
+}
+
+/* Container or rows */
+.row-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 5%;
+  padding-left: 5%;
+}
+
+/* Table */
+$table-row-height: 25px;
+
+/* Table row */
+.table-row {
+  @extend .row-container;
+  justify-content: flex-start;
+  align-items: center;
+  height: $table-row-height;
+  background-color: $light-grey;
+  border-bottom: $divider-border;
+
+  &:hover {
+    background-color: $grey;
+  }
+}
+.table-cell {
+  display: flex;
+  align-items: center;
+}
+
+/* Table header wrapper */
+.table-header {   
+  @extend .row-container;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #fff;
+  border-bottom: $divider-dark-border;
+}
+.table-header-row {   
+  @extend .row-container;
+  justify-content: flex-start;
+  align-items: center;
+  height: $table-row-height;
+  font-weight: $font-weight-bold;
+}
+
+
+
+

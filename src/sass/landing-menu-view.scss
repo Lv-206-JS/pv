@@ -1,52 +1,52 @@
-.landing-view {
 
- ul {
+.landing-menu {
+  height: 40px;
+  padding: 0 70px 0 70px;
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+  align-items: center;
+  background-color: #5499c7;
+  color: #fff;
+
+  .logo {
+    flex: 0 0 120px;
+    align-items: flex-start;
+  }
+
+  ul {
+    flex: 1;
+    height: 100%;
+    margin: 0; padding: 0;
     display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    align-content: center;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #4c4e51;
-    font-weight: bold;
-    color: white;
+
+    .landing-menu-left {
+      flex: 0 0 50%;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .landing-menu-right {
+      flex: 0 0 50%;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .not-logined {
+      flex: 0 0 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
+
     li {
-      float: right;
-      border-left: 2px solid #2D77A2;
-      &:first-child {
-        float: left;
-        border: none;
-      }
-      /*This Projects btn will be deleted from this view - After Sign In implementation*/
-      &:nth-child(2) {
-        float: left;
-      }
-      & a {
-        display: block;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-      }
-      & a:hover {
-        background-color: #111;
-      }
-      & img {
-        float: left;
-        height: 30px;
-        width: 30px;
-        float: left;
-        text-align: center;
-        padding: 8px 16px;
-      }
-      & p {
-        font-family: "Comic Sans MS";
-        float: left;
-        font-size: 20px;
-        margin: auto;
-        padding: 10px 20px 0px 0px;
+      list-style: none;
+      display: flex;
+      align-items: center;
+
+      .menu-button {
+        margin-left: 20px;
       }
     }
   }
 }
+

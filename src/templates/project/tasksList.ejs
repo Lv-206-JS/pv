@@ -1,32 +1,13 @@
-<div>
-    <div class="table-task-header-row">
-        <div class="table-header-cell table-header-task-cell">Name</div>
-        <div class="table-header-cell">Estimate</div>
-        <div class="table-header-cell">Depends on</div>
-        <div class="table-header-cell">Assignee</div>
+<div class="table-task-header">
+    <div class="table-header-row">
+        <div class="table-cell-task">Name</div>
+        <div class="table-cell">Estimate</div>
+        <div class=" table-cell-dependsOn">Depends on</div>
+        <div class="table-cell">Assignee</div>
     </div>
-    <div class="table-row">
+    <div class="table-header-row">
         <img class="add-task-img" src="../../../images/add.svg">
-        <a class="add-task-link add-task">Task</a>
-        <a class="add-task-link edit-milestone">Milestone</a>
+        <a class="add-link add-task">Task</a>
+        <a class="add-link edit-milestone">Milestone</a>
     </div>
 </div>
-<% for (var i = 0; i < tasks.length; i++) { %>
-    <div class="table-row">
-        <div class="table-cell-task">
-            <div id="<%= tasks[i].taskId%>"><%= tasks[i].name%></div>
-            <a class="task-link remove-task" id="<%= tasks[i].taskId%>"></a>
-            <a class="task-link edit-task" id="<%= tasks[i].taskId%>"></a>
-        </div>
-        <div class="table-cell task-estimateTime"><%= tasks[i].estimateTime%></div>
-        <% var dependencies = [];%>
-        <% for (var j=0;j<tasks[i].dependsOn.length;j++) { %>
-        <!--TO DO false id string in db-->
-            <% if (tasks[i].dependsOn[j].taskId != "false") { %>
-                <% dependencies.push(tasks[i].dependsOn[j].taskId); %>
-            <% } %>
-        <% } %>
-        <div class="table-cell task-dependsOn"><%= dependencies.toString() %></div>
-        <div class="table-cell task-resource"><%= tasks[i].resource%></div>
-    </div>
-<% } %>
