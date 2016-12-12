@@ -43,8 +43,15 @@ define([
 
             });
 
+            this.listenTo(this.registerView, 'ChangeToLogin', this.onChangeToLogined);
+            this.$el.find('.popup-container').html(this.registerView.render().$el);
+
             this.registerView.render();
             this.$el.append(this.registerView.$el);
+        },
+        onChangeToLogined: function(){
+            this.registerView.remove();
+            this.onLogIn();
         },
 
         onUserReceived: function () {
