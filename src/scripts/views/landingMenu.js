@@ -43,7 +43,7 @@ define([
 
             });
 
-            this.listenTo(this.registerView, 'ChangeToLogin', this.onChangeToLogined);
+            this.listenTo(this.registerView, 'changeToLogin', this.onChangeToLogined);
             this.$el.find('.popup-container').html(this.registerView.render().$el);
 
             this.registerView.render();
@@ -62,7 +62,6 @@ define([
             $.ajax({ url:  '/users/logout' });
             userModel.clear().set(userModel.defaults);
             this.render();
-            // PV.router.navigate('/', {trigger: true});
         }
     });
 

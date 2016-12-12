@@ -33,7 +33,7 @@ define([
                 success: function(res){
                     var response = JSON.parse(res);
                     if(response.error == false){
-                        that.trigger('ChangeToLogin');
+                        that.trigger('changeToLogin');
                         //Backbone.history.navigate('users/login', { trigger: true });
 
                     } else {
