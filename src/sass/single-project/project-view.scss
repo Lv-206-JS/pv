@@ -6,6 +6,12 @@ $gantt-view-container-height: 66%;
   width: 100%;
 }
 
+#milestone-gantt-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 #milestone-view-container, #gantt-view-container, #info-bar-view-container {
   width: 100%;
   display: flex;
