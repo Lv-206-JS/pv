@@ -6,10 +6,10 @@ $project-timeline-background: linear-gradient(265deg, $green, $light-green);
 $milestone-size: 25px;
 
 .milestone-view {
-    @extend .row-container;
+  @extend .row-container;
   order:2;
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
   position: relative;
   width: 100%;
   height: $milestone-container-height;
@@ -37,7 +37,7 @@ $milestone-size: 25px;
 }
 
 .start-date {
-  position: absolute;
+  //position: absolute;
   top: 0px;
   left: 0px;
 }
