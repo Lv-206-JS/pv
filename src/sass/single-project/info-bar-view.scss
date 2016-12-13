@@ -4,7 +4,8 @@ $info-bar-container-height: 60px;
   order: 4;
   justify-content: space-between;
   width: 100%;
-  min-height: $info-bar-container-height;
+  //min-height: $info-bar-container-height;
+  height: $info-bar-container-height;
   background-color: $blue;
   color: #fff;
 }

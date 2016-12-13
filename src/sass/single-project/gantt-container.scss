@@ -3,7 +3,11 @@
   height: 100%;
   overflow-x: scroll;
 }
-
+.milestone-gantt-container {
+  flex: 1;
+  display: flex;
+  width: 100%;
+}
 #gantt-container {
   order: 3;
   display: flex;

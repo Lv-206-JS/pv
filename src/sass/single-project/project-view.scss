@@ -6,17 +6,26 @@ $gantt-view-container-height: 66%;
   width: 100%;
 }
 
-#milestone-gantt-container {
-  width: 100%;
+.milestone-gantt-container {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border: 3px solid red;
 }
 
 #milestone-view-container, #gantt-view-container, #info-bar-view-container {
   width: 100%;
-  display: flex;
-  flex: 1;
+  //display: flex;
+  //flex: 1;
 }
 #gantt-view-container {
-  height: $gantt-view-container-height;
+  height: 100%;
+}
+#info-bar-view-container {
+  //position: absolute;
+  //left: 0;
+  //bottom: 0;
+  border: 3px solid blue;
 }
