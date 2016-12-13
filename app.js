@@ -11,6 +11,8 @@ var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var expressValidator = require('express-validator');
 var session = require('express-session');
+//var MongoStore = require('connect-mongo')(express);
+
 
 
 
@@ -19,10 +21,10 @@ var session = require('express-session');
 //mongoose connection
 var morgan = require('morgan');
 var mongoose = require('mongoose');
-var db = mongoose.connection;
 mongoose.connect("localhost:27017/ganttcharts");
+var db = mongoose.connection;
 
-
+var MongoStore = require('connect-mongo')(session);
 
 
 var app = express();
@@ -48,7 +50,19 @@ app.use(expressValidator({
             , root = namespace.shift()
             , formParam = root;
 
-        while(namespace.length){
+        while(namespace.length){app.use(session({
+    secret:'awesome unicorns',
+    cookie:{_expires : 1500000000000},
+    //maxAge: new Date(Date.now() + 3600000),
+    saveUninitialized: true,
+    resave: true,
+    store: new MongoStore(
+       // {db:mongoose.connection.db},
+        { mongooseConnection: db.connection },
+        function(err){
+            console.log(err || 'connect-mongodb setup ok');
+        })
+}))
             formParam += '[' + namespace.shift() + ']';
         }
         return {
@@ -64,11 +78,33 @@ app.set('view engine', 'ejs');
 //Logger
 app.use(morgan('dev'));
 
-app.use(session({
+/*app.use(session({
     secret: 'secret',
     saveUninitialized: true,
     cookie:{_expires : 1500000000000},
     resave: true
+}));*/
+/*
+app.use(session({
+    saveUninitialized: true,
+    resave: true,
+    secret: 'secret',
+    store: new MongoStore({
+        mongooseConnection: db.connection,
+        collection: 'ganttcharts'
+    })
+}));
+*/
+
+app.use(session({
+    saveUninitialized: true,
+    resave: true,
+    maxAge: new Date(Date.now() + 3600000),
+    secret: 'secret',
+    store: new MongoStore({
+        mongooseConnection: mongoose.connection,
+        collection: 'session'
+    })
 }));
 
 // Passport init

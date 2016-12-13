@@ -10,6 +10,8 @@ $light-grey: #fafafa; // background, main
 $dark-grey: #e0e0e0; // splitter hover, main borders
 
 /* Font */
+$font-size: 14px;
+$line-height: 17px;
 $font-weight-normal: 400;
 $font-weight-bold: 600;
 
@@ -116,7 +118,7 @@ $icon-hover-opacity: 1; // hover
 }
 
 /* Table */
-$table-row-height: 25px;
+$table-row-height: 40px;
 
 /* Table row */
 .table-row {
@@ -150,6 +152,11 @@ $table-row-height: 25px;
   align-items: center;
   height: $table-row-height;
   font-weight: $font-weight-bold;
+  color: rgba(0,0,0, 0.87);
+
+  &:hover {
+    color: rgba(0,0,0,1);
+  }
 }
 
 
