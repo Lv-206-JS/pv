@@ -1,11 +1,9 @@
-$info-bar-container-height: 60px;
 .info-bar-view {
   @extend .row-container;
   order: 4;
   justify-content: space-between;
-  width: 100%;
-  //min-height: $info-bar-container-height;
-  height: $info-bar-container-height;
+  width:100%;
+  min-height: 60px;
   background-color: $blue;
   color: #fff;
 }
