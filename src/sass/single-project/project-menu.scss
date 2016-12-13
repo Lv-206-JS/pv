@@ -2,7 +2,7 @@
 
 .menu-toolbar {
   @extend .row-container;
-  order:1;
+  order: 1;
   justify-content: space-between;
   height: $menu-container-height;
   color: $text-blue;
