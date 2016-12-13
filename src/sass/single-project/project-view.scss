@@ -4,19 +4,36 @@ $gantt-view-container-height: 66%;
 .main-project-view {
   height: 100%;
   width: 100%;
-}
-
-#milestone-gantt-container {
-  width: 100%;
   display: flex;
   flex-direction: column;
 }
 
+//.milestone-gantt-container {
+//  flex: 1;
+//  display: flex;
+//  flex-direction: column;
+//  width: 100%;
+//  height: 100%;
+//  border: 3px solid red;
+//}
+
 #milestone-view-container, #gantt-view-container, #info-bar-view-container {
   width: 100%;
   display: flex;
-  flex: 1;
+}
+#milestone-view-container {
+  order: 2;
 }
 #gantt-view-container {
-  height: $gantt-view-container-height;
+  flex:1;
+  height: 100%;
+  order: 3;
 }
+#info-bar-view-container {
+  order: 3;
+}
+//   //position: absolute;
+//   //left: 0;
+//   //bottom: 0;
+//   border: 3px solid blue;
+// }

@@ -18,6 +18,14 @@ define([
 
         initialize: function initialize(options) {
             this.model = options.model;
+            // if (options.modelId === 'new') {
+            //     this.model = new ProjectModel();
+            //
+            //     this.render();
+            // } else {
+            //     projectsCollection.fetch();
+            //     projectsCollection.on('sync', _.bind(this.onSync, this));
+            // }
         },
 
         render: function render() {
@@ -47,7 +55,8 @@ define([
             this.model.save().then(
                 function(res) {
                     that.trigger('editedProject', that.model);
-
+                    // projectsCollection.add(this.model);
+                    // PV.router.navigate('projects', {trigger: true});
                 },
                 function(err) {
                     // Error handling
@@ -58,6 +67,8 @@ define([
         exitEditProject: function(event){
             event.preventDefault();
             this.$el.remove();
+            // this = null;
+            // PV.router.navigate('projects', {trigger: true});
         }
     });
 
