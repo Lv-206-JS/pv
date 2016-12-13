@@ -10,7 +10,8 @@ define([
         className: 'registration-view',
         events: {
             'click #post_user' : 'onSubmit',
-            'click #exit-button': 'hideLogInView'
+            'click #exit-button': 'hideLogInView',
+            'click .form-input-text': 'hideError'
         },
 
         render: function render() {
@@ -40,6 +41,7 @@ define([
                         response.error.forEach(function(mess){
                             var err_mess = elem.find("#" + mess.param.trim());
                             err_mess.attr("placeholder", mess.msg);
+                            err_mess.addClass("error");
                         });
                     }
 
@@ -49,6 +51,12 @@ define([
                     console.log(err);
                 }
             });
+        },
+
+        hideError : function(event){
+            event.preventDefault();
+           if ($(event.currentTarget).hasClass("error"))
+               $(event.currentTarget).removeClass("error");
         },
 
         hideLogInView : function(event){

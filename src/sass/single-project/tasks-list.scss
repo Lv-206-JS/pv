@@ -39,6 +39,7 @@ $inner-cell-task-width: $table-cell-width*2.5 - $icon-width*2 - $icon-margin-lef
   display: inline-block;
   min-width: $inner-cell-task-width;
   max-width: $inner-cell-task-width;
+  height: $line-height;
   overflow: hidden;
 
   &:hover {
@@ -48,6 +49,12 @@ $inner-cell-task-width: $table-cell-width*2.5 - $icon-width*2 - $icon-margin-lef
 .table-cell-dependsOn {
     min-width: $table-cell-depends-width;
     max-width: $table-cell-depends-width;
+    height: $line-height;
+    overflow: hidden;
+
+  &:hover {
+    overflow: visible;
+  }
 }
 
 .add-link {
