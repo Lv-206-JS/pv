@@ -27,31 +27,17 @@
                         <span class="milestone-link remove-milestone" data-name="<%= milestones[i].name %>"></span>
                         <span class="milestone-link edit-milestone" data-name="<%= milestones[i].name %>"></span>
                     </div>
-                    <%
-                        var mDate = new Date(milestones[i].date);
-                        function date(n) {
-                            return n < 10 ? "0"+n : n;
-                        }
-                        mDate = mDate.getFullYear()+"-"+date(mDate.getMonth()+1)+"-"+ date(mDate.getDate());
-                    %>
-                    <div class="table-cell-milestone"><%= mDate%></div>
+                    <div class="table-cell-milestone"><%= moment(milestones[i].date).format('MM/DD/YYYY hh')%></div>
                 </div>
                 <% } %>
             </div>
 
             <div class="tab-container dependencies-content hide-content">
                 <form>
-                    <%
-                    var dateobj = new Date(milestoneEdit.date);
-                    function pad(n) {
-                        return n < 10 ? "0"+n : n;
-                    }
-                    dateobj = dateobj.getFullYear()+"-"+pad(dateobj.getMonth()+1)+"-"+ pad(dateobj.getDate());
-                    %>
                     <label>Name:</label>
                     <input class="milestone-form-input-text" id="milestone-settings-name" type="text" value="<%=milestoneEdit.name%>" required>
                     <label>Start date:</label>
-                    <input class="milestone-form-input-text" id="milestone-settings-date" type="date" value="<%=dateobj%>">
+                    <input class="milestone-form-input-text" id="milestone-settings-date" type="date" value="<%=moment(milestoneEdit.date).format('YYYY-MM-DD hh')%>">
                 </form>
                 <label class="dependancy-label form-label">Task List</label>
                 <label class="dependancy-label form-label">Depends On</label>

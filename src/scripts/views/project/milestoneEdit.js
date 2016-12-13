@@ -1,8 +1,9 @@
 define(['backbone',
     'underscore',
     'JST',
-    '../../../bower_components/draggabilly/dist/draggabilly.pkgd.js'
-], function (Backbone, _, JST, Draggabilly) {
+    '../../../bower_components/draggabilly/dist/draggabilly.pkgd.js',
+    'moment'
+], function (Backbone, _, JST, Draggabilly, Moment) {
     'use strict';
 
     var MilestoneEditView = Backbone.View.extend({
@@ -20,6 +21,7 @@ define(['backbone',
             };
             this.tasksList = [];
             this.dependenciesList = [];
+            this.moment = Moment;
         },
 
         render: function render() {
@@ -27,7 +29,8 @@ define(['backbone',
                 milestones: this.model.get('milestones'),
                 tasksList: this.tasksList,
                 dependenciesList: this.dependenciesList,
-                milestoneEdit: this.milestoneEdit
+                milestoneEdit: this.milestoneEdit,
+                moment: this.moment
             }));
             return this;
         },

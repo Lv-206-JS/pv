@@ -29,6 +29,7 @@ var app = express();
 //routes
 var projectAPI = require('./rest/routes/projects');
 var attachmentsAPI = require('./rest/routes/attachments');
+var ownershipAPI = require('./rest/routes/ownerships');
 var routes = require('./rest/routes/index');
 var userAPI = require('./rest/routes/user');
 var passport = require('passport');
@@ -83,6 +84,7 @@ app.use(cookieParser());
 //app.use('/rest/user', userAPI);
 app.use('/rest/projects', projectAPI);
 app.use('/rest/attachments', attachmentsAPI);
+app.use('/rest/ownerships', ownershipAPI);
 app.use('/rest/user', userAPI);
 
 app.use('/users', users);

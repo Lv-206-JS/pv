@@ -42,6 +42,17 @@ function addOwnership(pid, uid) {
     });
 }
 
+function deleteOwnerShip(pid) {
+    Ownerships.findOneAndRemove({'projectId': pid}, function (err, ownerShip) {
+        if (!ownerShip){
+            handleError(response, "Failed to find ownerShip!", 404);
+        }
+        else if (err) {
+            handleError(response, "Failed to delete ownerShip!", 404);
+        }
+    });
+}
+
 //Error handler function
 function handleError(response, message, code) {
     response.status(code || 500).json({"error": message});
@@ -68,8 +79,8 @@ router.post('/', authenticateUser, function (request, response) {
         description: request.body.description,
         author: request.user.firstname + ' ' + request.user.lastname,
         startDate: request.body.startDate,
-        createDate: new Date(),
-        modifiedDate: new Date(),
+        createDate: (new Date()).getTime(),
+        modifiedDate: (new Date()).getTime(),
         settings : {
             dayDuration : request.body.settings.dayDuration,
             weekend : request.body.settings.weekend,
@@ -108,7 +119,7 @@ router.put('/:id', authenticateUser, checkOwnership, function (request, response
         author: request.body.author,
         startDate: request.body.startDate,
         createDate: request.body.createDate,
-        modifiedDate: request.body.modifiedDate,
+        modifiedDate: (new Date()).getTime(),
         settings : request.body.settings,
         milestones: request.body.milestones,
         tasks: request.body.tasks,
@@ -141,6 +152,7 @@ router.delete('/:id', authenticateUser, checkOwnership, function (request, respo
             handleError(response, "Failed to delete project!", 404);
         }
         else {
+            deleteOwnerShip(request.params.id);
             response.send('Deleted!');
         }
     });
