@@ -10,7 +10,6 @@ define([
                 var TasksListView = Backbone.View.extend({
                     template: JST['project:tasksList'],
                     id: 'tasks-list',
-                    className: 'resizable',
 
             events: {
                 'click .add-task': 'onTaskAdd',
