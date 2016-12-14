@@ -146,8 +146,7 @@ define([
 
         showOwnershipPopup: function () {
             this.ownershipView = new OwnershipView({
-                model: this.model,
-                milestones: milestones
+                projectId: this.projectId
             });
             this.ownershipView.render();
             this.$el.append(this.ownershipView.$el);

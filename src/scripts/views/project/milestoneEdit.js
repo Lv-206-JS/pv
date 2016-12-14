@@ -1,7 +1,7 @@
 define(['backbone',
     'underscore',
     'JST',
-    '../../../bower_components/draggabilly/dist/draggabilly.pkgd.js',
+    'Draggabilly',
     'moment'
 ], function (Backbone, _, JST, Draggabilly, Moment) {
     'use strict';
@@ -234,7 +234,7 @@ define(['backbone',
         },
 
         hideMilestoneEditView : function(event){
-            event.preventDefault();
+            //event.preventDefault();
             this.$el.remove();
         }
     });

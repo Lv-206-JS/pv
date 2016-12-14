@@ -14,12 +14,12 @@ function authenticateUser(req, res, next){
 }
 
 function checkOwnership(request, response, next) {
-    Ownerships.findOne({'projectId': request.params.id, 'userId': request.user.userId}, function (err, ownerShip) {
+    Ownerships.findOne({'projectId': request.params.id, 'email': request.user.email}, function (err, ownerShip) {
         if(err) {
             //error
         }
         else if(ownerShip != undefined) {
-            if(ownerShip.role === 'creator') {
+            if(ownerShip.role === 'creator' || ownerShip.role === 'editor') {
                 next();
             }
             else {
@@ -29,10 +29,10 @@ function checkOwnership(request, response, next) {
     });
 }
 
-function addOwnership(pid, uid) {
+function addOwnership(pid, email) {
     var ownerShipToCreate = new Ownerships({
         projectId: pid,
-        userId: uid,
+        email: email,
         role: 'creator'
     });
     ownerShipToCreate.save(function (err, ownerShip) {
@@ -72,7 +72,6 @@ router.get('/', authenticateUser, function (request, response) {
 
 //create project
 router.post('/', authenticateUser, function (request, response) {
-    console.log(request.user.firstname + ' ' + request.user.lastname);
     var projectToCreate = new Project({
         id: Guid.create().value,
         name: request.body.name,
@@ -87,7 +86,7 @@ router.post('/', authenticateUser, function (request, response) {
             icon : request.body.settings.icon
         }
     });
-    addOwnership(projectToCreate.id, request.user.userId);
+    addOwnership(projectToCreate.id, request.user.email);
     projectToCreate.save(function (err, project) {
         if (err) {
             handleError(response, "Failed to create project!");

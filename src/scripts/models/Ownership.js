@@ -6,13 +6,15 @@ define([
     var OwnershipModel = Backbone.Model.extend({
         url: '/rest/ownerships/',
 
-        setUrl: function (uid, role) {
-            this.url = '/rest/ownerships/' + uid + '/' + role;
+        setUrl: function (email) {
+                this.url = '/rest/ownerships/' + email;
         },
+
+        idAttribute: "_id",
 
         defaults: {
             'projectId': '0',
-            'userId': '0',
+            'email': '',
             'role': 'reader'
         }
     });
