@@ -1,43 +1,50 @@
-<form class = "main-form">
-    <!--Content of General tab-->
-    <div class="general-content show-content">
-        <div class="general-information">
-            <div class = "left-side">
-                Name: <br>
-                <input class="name" type="text" value="<%= model.name %>" required><br>
-                Author:<br>
-                <input class="author" type="text" value="<%= model.author %>" required><br>
-                Start Date: <br>
-                <input class="start-date" type="date" value="<%= model.startDate %>" ><br>
-
+<div class="form-wrapper">
+    <form class="main-form">
+        <div class="form-title">
+            <div>Settings</div>
+        </div>
+        <div class="tabs">
+            <div class="tabs-menu ">
+                <a class="tab-link tab-general w--current">General</a>
+                <a class="tab-link tab-time-settings">Time Settings</a>
             </div>
-            <div class = "right-side">
-                Description: <br>
-                <textarea class="description" rows="10" cols="30">
-                    <%= model.description %>
-                </textarea>
+            <div class="settings-container">
+                <div class="tab-container">
+                    <div class="tab-container general-content show-content">
+                        <label class="form-label">Name:</label>
+                        <input class="form-input-text name" maxlength="256" value="<%= model.name %>" placeholder="Project Name" type="text">
+                        <label class="form-label">Author:</label>
+                        <input class="form-input-text author" maxlength="256" value="<%= model.author %>" placeholder="Author" type="text">
+                        <label class="form-label description-label">Description:</label>
+                        <textarea class="form-input-description task-description" maxlength="5000" placeholder="Project Description"><%= model.description %></textarea>
+                    </div>
+                    <div class="tab-container settings-content hide-content">
+                        <label class="form-label">Start Date:</label>
+                        <input class="form-input-text start-date" maxlength="256" value="<%= model.startDate %>" placeholder="Project Start Date" type="date">
+                        <label class="form-label day-start-label">Working Day Start:</label>
+                        <input class="form-input-text day-start" maxlength="256" value="" placeholder="Working Day Start" type="number">
+                        <label class="form-label">Hours Per Day:</label>
+                        <input class="form-input-text day-duration" maxlength="256" value="" placeholder="Working Hours Per Day" type="number">
+                        <div class="days-off">
+                            <label class="form-label">Weekend:</label>
+                            <input class="weekend" type="checkbox" value=1>Mon
+                            <input class="weekend" type="checkbox" value=2>Tue
+                            <input class="weekend" type="checkbox" value=3>Wed
+                            <input class="weekend" type="checkbox" value=4>Thu
+                            <input class="weekend" type="checkbox" value=5>Fri
+                            <input class="weekend" type="checkbox" value=6>Sat
+                            <input class="weekend" type="checkbox" value=7>Sun
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="line"></div>
-        <div class="settings">
-            Day Start: <br>
-            <input class="day-start" type="number" value="<% %>"><br>
-            Day Duration: <br>
-            <input class="day-duration" type="number" value="<%= settings.dayDuration %>" required > <br>
-            Weekend: <br>
-            <input class="weekend" type="checkbox" value=1>Mon
-            <input class="weekend" type="checkbox" value=2>Tue
-            <input class="weekend" type="checkbox" value=3>Wed
-            <input class="weekend" type="checkbox" value=4>Thu
-            <input class="weekend" type="checkbox" value=5>Fri
-            <input class="weekend" type="checkbox" value=6>Sat
-            <input class="weekend" type="checkbox" value=7>Sun
+        <div class="settings-form-bottom">
+            <input class="form-button ok-button" type="submit" value="ok">
+            <input class="form-button cancel-button" type="submit" value="cancel">
         </div>
+    </form>
+</div>
 
-    </div>
-    <!--Buttons for both tabs-->
-    <div class="common-form-buttons">
-        <button class="cancel-button">Cancel</button>
-        <button class="ok-button">Ok</button>
-    </div>
-</form>
+
+

@@ -2,12 +2,44 @@
 
 .registration-view {
   @extend .basic-popup-view;
+  .form-wrapper{
+    .tab-container{
+      .form-input-text.error{
+          border-color: #FF0000;
+        }
 
-  .register-form-bottom{
-    @extend .form-bottom;
-  }
+      .form-input-text.error::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+          color:    #FF0000;
+        }
 
-  .confirm-password-input{
-    margin-top: -5px;
+      .form-input-text.error:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+          color:    #FF0000;
+          opacity:  1;
+        }
+
+      .form-input-text.error::-moz-placeholder { /* Mozilla Firefox 19+ */
+          color:    #FF0000;
+          opacity:  1;
+        }
+
+      .form-input-text.error:-ms-input-placeholder { /* Internet Explorer 10-11 */
+          color:    #FF0000;
+        }
+
+      .form-label.confirm-password-label{
+        margin-top: -7px;
+      }
+
+      .form-input-text.confirm-password-input{
+        vertical-align: middle;
+      }
+    }
+
+    .register-form-bottom{
+      @extend .form-bottom;
+    }
   }
 }
+
+
+

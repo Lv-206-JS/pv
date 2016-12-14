@@ -14,12 +14,12 @@ var ProjectsSchema = new Schema({
     name: {type: String, required: false},
     description: {type: String, required: false},
     author: {type: String, required: false},
-    startDate: {type: Date, required: false},
-    createDate: {type: Date, required: false},
-    modifiedDate: {type: Date, required: false},
+    startDate: {type: String, required: false},
+    createDate: {type: String, required: false},
+    modifiedDate: {type: String, required: false},
     milestones: [{
         name: {type: String, required: false},
-        date: {type: Date, required: false},
+        date: {type: String, required: false},
         dependsOn: [{
             taskId: {type: String, required: false},
             taskName : {type: String, required: false},
@@ -74,7 +74,7 @@ var UsersSchema = new Schema ({
 
 var OwnershipsSchema = new Schema ({
     projectId: {type: String, required: false},
-    userId: {type: String, required: false},
+    email: {type: String, required: false},
     role: {type: String, required: false}
 }, { collection: 'ownerships' });
 

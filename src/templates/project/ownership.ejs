@@ -1,0 +1,55 @@
+<div class="form-wrapper">
+    <form class="main-form">
+        <div class="form-title">
+            <p>Ownership</p>
+        </div>
+        <div class="ownership-container">
+            <div class="ownership-input-container">
+                <label>Input user email:</label>
+                <form class="add-ownership">
+                    <input class="ownership-form-input-text user-email" type="email" required="">
+                    <button type="submit" class="add-ownership-button">Add</button>
+                </form>
+                <div class="ownerhip-radio">
+                    <input type="radio" id="reader" name="ownership" value="reader" checked="checked">reader
+                    <input type="radio" id="editor" name="ownership" value="editor">editor
+                </div>
+            </div>
+            <label class="ownership-form-label">Readers</label>
+            <label class="ownership-form-label">Editors</label>
+            <div class="ownership-drop-list">
+                <table id="ownership-readers-list">
+                    <tbody>
+                    <% for(var i = 0;i < readersList.length; i++) { %>
+                    <tr class="task-item" id="<%= readersList[i].email%>">
+                        <td> <%= readersList[i].email %>
+                            <span class="ownership-link delete-ownership" data-email="<%= readersList[i].email %>"></span>
+                        </td>
+
+                    </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="ownership-drop-list">
+                <table id="ownership-editors-list">
+                    <tbody>
+                    <% for(var i = 0;i < editorsList.length; i++) { %>
+                    <tr class="task-item" id="<%= editorsList[i].email%>">
+                        <td> <%= editorsList[i].email %>
+                            <span class="ownership-link delete-ownership" data-email="<%= editorsList[i].email %>"></span>
+                        </td>
+
+                    </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-bottom">
+            <input class="form-button ok-button" type="submit" value="ok">
+            <input class="form-button cancel-button" type="submit" value="cancel">
+        </div>
+    </form>
+</div>
