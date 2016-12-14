@@ -42,27 +42,13 @@ app.use(function (request, response, next) {
     response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
-
-//Express Validator code taken from express-validator github
 app.use(expressValidator({
     errorFormatter: function(param, msg, value){
         var namespace = param.split('.')
             , root = namespace.shift()
             , formParam = root;
 
-        while(namespace.length){app.use(session({
-    secret:'awesome unicorns',
-    cookie:{_expires : 1500000000000},
-    //maxAge: new Date(Date.now() + 3600000),
-    saveUninitialized: true,
-    resave: true,
-    store: new MongoStore(
-       // {db:mongoose.connection.db},
-        { mongooseConnection: db.connection },
-        function(err){
-            console.log(err || 'connect-mongodb setup ok');
-        })
-}))
+        while(namespace.length){
             formParam += '[' + namespace.shift() + ']';
         }
         return {
@@ -72,29 +58,30 @@ app.use(expressValidator({
         };
     }
 }));
+//Express Validator code taken from express-validator github
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value){
+        var namespace = param.split('.')
+            , root = namespace.shift()
+            , formParam = root;
 
+        while(namespace.length){
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param : formParam,
+            msg : msg,
+            value : value
+        };
+    }
+}));
+//set ejs as default engiene
 app.set('view engine', 'ejs');
 
 //Logger
 app.use(morgan('dev'));
 
-/*app.use(session({
-    secret: 'secret',
-    saveUninitialized: true,
-    cookie:{_expires : 1500000000000},
-    resave: true
-}));*/
-/*
-app.use(session({
-    saveUninitialized: true,
-    resave: true,
-    secret: 'secret',
-    store: new MongoStore({
-        mongooseConnection: db.connection,
-        collection: 'ganttcharts'
-    })
-}));
-*/
+
 
 app.use(session({
     saveUninitialized: true,
