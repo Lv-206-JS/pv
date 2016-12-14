@@ -43,7 +43,7 @@ router.post('/register', function (req, res) {
 
     User.findOne({email: email}, function (error, email) {
         if(email != undefined) {
-
+            erors = errors || [];
             errors.push({ param: 'email', msg: 'Email already exists', value: '' });
         }
         return res.status(200).json(JSON.stringify({"error": errors}));
