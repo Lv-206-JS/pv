@@ -19,6 +19,12 @@ define(['backbone',
             this.collection.on('sync', _.bind(this.onCollectionLoad, this));
         },
 
+        events: {
+            'click .ok-button, .cancel-button' : 'hideOwnershipView',
+            'submit' : 'addOwnership',
+            'click .delete-ownership' : 'deleteOwnership'
+        },
+
         onCollectionLoad: function () {
             this.owneships = this.collection.toJSON();
             this.getOwnershipLists();
@@ -46,12 +52,6 @@ define(['backbone',
             this.render();
         },
 
-        events: {
-            'click .ok-button, .cancel-button' : 'hideOwnershipView',
-            'click .add-ownership-button' : 'addOwnership',
-            'click .delete-ownership' : 'deleteOwnership'
-        },
-
         addOwnership : function (event) {
             event.preventDefault();
             var email = this.$el.find('.user-email').val();
@@ -63,7 +63,7 @@ define(['backbone',
             });
             ownershipToCreate.save({
                 success:function (model, response) {
-                    console.log(response);
+                    console.log(arguments);
                     this.collection.add(ownershipToCreate);
                     this.onCollectionLoad();
                 }.call(this)

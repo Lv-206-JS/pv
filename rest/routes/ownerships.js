@@ -24,7 +24,7 @@ function getProjectId(request) {
 }
 
 function checkOwnership(request, response, next) {
-    Ownerships.findOne({'projectId': request.params.id, 'email': request.user.email}, function (err, ownerShip) {
+    Ownerships.findOne({'projectId': getProjectId(request), 'email': request.user.email}, function (err, ownerShip) {
         if(err) {
             //error
         }
@@ -57,16 +57,14 @@ router.post('/', authenticateUser, checkOwnership, function (request, response) 
     if(request.body.email == '') {
         errors.push({'error': 'Email is not defined!'})
     }
-
     //check is email registered
     Users.findOne({'email': request.body.email}, function (err, user) {
         if(err || !user) {
             errors.push({'error': 'Can`t find user!'})
         }
     }).then(function () {
-
     //check is email uniq for this ownership
-        Ownerships.findOne({'projectId': getProjectId(request),
+        return Ownerships.findOne({'projectId': getProjectId(request),
             'email': request.body.email
         }, function (err, ownership) {
                 if(ownership) {
@@ -74,8 +72,9 @@ router.post('/', authenticateUser, checkOwnership, function (request, response) 
                 }
         });
     }).then(function () {
-        if(errors) {
-            return response.status(200).json(JSON.stringify({"error": errors}))
+        //response errors if any
+        if(errors.length) {
+            return response.status(200).json(JSON.stringify({"error": errors}));
         }
         var ownerShipToCreate = new Ownerships({
             projectId: request.body.projectId,
@@ -87,7 +86,7 @@ router.post('/', authenticateUser, checkOwnership, function (request, response) 
                 handleError(response, "Failed to save ownerShip!", 404);
             }
             else {
-                response.send({ownerShip: ownerShip});
+                response.status(200).json(JSON.stringify({"ownerShip": ownerShip}));
             }
         });
     });
@@ -105,11 +104,13 @@ router.delete('/:email', authenticateUser, checkOwnership, function (request, re
     Ownerships.findOne({'projectId': getProjectId(request),
         'email': request.params.email
     }, function (err, ownership) {
-        if(err || !user) {
+        if(err || !ownership) {
             errors.push({'error': 'User don`t have this ownership!'})
         }
     }).then(function () {
-        if(errors) {
+
+        //response errors if any
+        if(errors.length) {
             return response.status(200).json(JSON.stringify({"error": errors}))
         }
         Ownerships.findOneAndRemove({

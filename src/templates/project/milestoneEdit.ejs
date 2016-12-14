@@ -27,18 +27,16 @@
                         <span class="milestone-link remove-milestone" data-name="<%= milestones[i].name %>"></span>
                         <span class="milestone-link edit-milestone" data-name="<%= milestones[i].name %>"></span>
                     </div>
-                    <div class="table-cell-milestone"><%= moment(milestones[i].date).format('MM/DD/YYYY hh')%></div>
+                    <div class="table-cell-milestone"><%= moment(milestones[i].date/1000).format('YYYY-MM-DD')%></div>
                 </div>
                 <% } %>
             </div>
 
             <div class="tab-container dependencies-content hide-content">
-                <form>
+                <div class="set-milestone-name">
                     <label>Name:</label>
                     <input class="milestone-form-input-text" id="milestone-settings-name" type="text" value="<%=milestoneEdit.name%>" required>
-                    <label>Start date:</label>
-                    <input class="milestone-form-input-text" id="milestone-settings-date" type="date" value="<%=moment(milestoneEdit.date).format('YYYY-MM-DD hh')%>">
-                </form>
+                </div>
                 <label class="dependancy-label form-label">Task List</label>
                 <label class="dependancy-label form-label">Depends On</label>
                 <div  class="milestone-drop-list scrollable">
