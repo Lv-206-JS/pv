@@ -24,6 +24,7 @@ define(['backbone',
                 };
             this.tasksList = this.getTasksList(true);
             this.dependenciesList = this.getTasksList(false);
+            this.mimetypesList = this.getMimetypesList(this.task.attachments);
         },
 
         render: function render() {
@@ -31,7 +32,8 @@ define(['backbone',
                 task: this.task,
                 tasks: this.tasks,
                 tasksList: this.tasksList,
-                dependenciesList: this.dependenciesList
+                dependenciesList: this.dependenciesList,
+                mimetypes: this.mimetypesList
             }));
             return this;
         },
@@ -65,6 +67,31 @@ define(['backbone',
             }
             if(el) return isNotDependency;
             else return isDependency;
+        },
+
+        getMimetypesList: function(attachments){
+            var srcMimetype = [];
+            for(var i = 0; i < attachments.length; i++){
+                var mimetype = attachments[i].mimetype;
+                var copyMimetype = mimetype.slice(0, mimetype.indexOf('/'));
+                switch(copyMimetype){
+                    case 'application':
+                        if(mimetype == 'application/pdf') {
+                            copyMimetype = mimetype.slice(mimetype.indexOf('/'));
+                        }
+                        else if(mimetype == 'application/msword'){
+                            copyMimetype = mimetype.slice(mimetype.indexOf('/'));
+                        }
+                        else if((mimetype == 'application/json') || (mimetype == 'application/javascript')){
+                            copyMimetype = 'programming';
+                        }
+                        else {
+                            copyMimetype = 'text';
+                        }
+                }
+                srcMimetype[i] = '/images/mimetype_icons/' + copyMimetype + '.png';
+            }
+            return srcMimetype;
         },
 
         taskGeneralInformation: function(){
@@ -223,12 +250,15 @@ define(['backbone',
         addAttachmentItem: function(i){
             var parent = document.getElementsByClassName("task-attachments");
             var str = this.task.attachments[i].fileName;
+            var item = [];
+            item[0] = this.task.attachments[i];
+            var mimetype = this.getMimetypesList(item);
             if(this.task.attachments[i].fileName.length>9)  { str = this.task.attachments[i].fileName.substring(0,9)+'..';}
             $( parent ).append("<div class='attachment-item'>" +
                 "<div id='delete-attachment' data-id="+this.task.attachments[i].attachmentId +
                 "><img src='/images/cancel.svg' class='delete'  alt='delete attachment'/></div>"+
-                "<a class='file-reference' href="+this.task.attachments[i].relativePath+
-                " target='_blank'><img src='/images/word.png' class='attachment-image' alt='attachment image'/>"+
+                "<a class='file-reference' download href="+this.task.attachments[i].relativePath+
+                " target='_blank'><img src='"+mimetype[0]+"' class='attachment-image' alt='attachment image'/>"+
                 "<div class='attachment-name' id='reference-name'>"+str+"</div></a></div>");
         },
 
