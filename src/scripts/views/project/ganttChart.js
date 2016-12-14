@@ -15,9 +15,20 @@ define(['backbone', 'JST'], function (Backbone, JST) {
             this.$el.html(this.template({
                 model: this.model, tasks: this.tasks, milestones: this.milestones
             }));
-
+            //this.renderTaskRows();
             return this;
-        }
+        }//,
+
+        // renderTaskRows: function () {
+        //     var task = null;
+        //     var lastElem = this.$el.find('.table-task-header');
+        //     for (var i = 0; i < this.tasks.length; i++) {
+        //         task = this.tasks[i];
+        //         this.taskRowView = new TaskRowView({tasks: this.tasks, task: task}).render();
+        //         $(this.taskRowView.$el).insertAfter(lastElem);
+        //         lastElem = this.$el.find('.table-task-row:last');
+        //     }
+        // }
 
     });
 

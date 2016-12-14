@@ -1,18 +1,7 @@
 .table-date-header {
-  display: flex;
-  height: 45px;
   flex-direction: column;
-  border-bottom: 2px solid rgba(0, 0, 0, .3);
-}
-
-.table-date-header-top {
-  display: flex;
-  height: 50%;
-}
-
-.table-date-header-bottom {
-  display: flex;
-  height: 50%;
+  height: $table-row-height*2;
+  border-bottom: $divider-dark-border;
 }
 
 .table-date-top {
@@ -44,12 +33,7 @@
 }
 
 .table-date-row {
-  height: 25px;
-  border-bottom: 1px solid rgba(0, 0, 0, .3);
-}
-
-.table-date-row:hover {
-  background-color: rgba(0, 0, 0, .04);
+  @extend .table-row;
 }
 
 .table-date-row-block {
