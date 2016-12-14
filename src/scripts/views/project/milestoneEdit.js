@@ -170,24 +170,36 @@ define(['backbone',
         makeTasksDraggable: function(tasksList, dependenciesList){
             var draggableElements = document.getElementsByClassName('task-item');
             var draggies = [];
-            for (var i = 0; i < draggableElements.length; i++){
+            for (var i = 0; i < draggableElements.length; i++) {
                 var draggableElem = draggableElements[i];
-                draggies[i] = new Draggabilly(draggableElem,{
+                draggies[i] = new Draggabilly(draggableElem, {
                     containment: '.tab-container'
                 });
-                draggies[i].on('dragEnd',onDragEnd);
+                draggies[i].on('dragEnd', onDragEnd);
+                draggies[i].on('dragStart', onDragStart);
             }
 
+            function onDragStart() {
+                var newParent = $('.clone');
+                $(this.element).css({'position':'absolute'});
+                newParent.append(this.element);
+                $(this.element).css({'top': this.relativeStartPosition.y-45+'px'});
+                $(this.element).css({'left': this.relativeStartPosition.x+'px'});
+                $(this.element).addClass('is-dragging');
+            };
+
             function onDragEnd() {
-                if (this.position.x > 225) {
+                if (this.position.x >= 200) {
                     $("#dependencies-list tbody").append(this.element);
-                    $(this.element).css({'left': '260', 'top': '0'});
+                    $(this.element).css({'position': 'relative'});
+                    $(this.element).css({'left': '260'});
+
                 }
-                if (this.position.x < 224) {
+                if (this.position.x < 200) {
                     $("#tasks-list tbody").append(this.element);
-                    $(this.element).css({'left': '0', 'top': '0'});
+                    $(this.element).css({'position': 'relative'});
+                    $(this.element).css({'left': '0'});
                 }
-                $(this.element).css({'left': '260', 'top': '0'});
                 var trigger = false;
                 for (var i = 0; i < tasksList.length; i++)
                     if (tasksList[i].taskId === $(this.element).attr('id')) {
@@ -202,7 +214,7 @@ define(['backbone',
                             tasksList[tasksList.length] = dependenciesList[i];
                             dependenciesList.splice(i, 1);
                         }
-            }
+            };
         },
 
         addTaskToList: function(event){
