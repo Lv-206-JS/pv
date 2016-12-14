@@ -11,8 +11,9 @@ define([
     'views/project/infoBar',
     'views/project/attachments',
     'views/project/settings',
-    'views/project/milestoneEdit'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView) {
+    'views/project/milestoneEdit',
+    'views/project/ownership'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
@@ -23,8 +24,8 @@ define([
             'click .back-to-landing-view': 'onBackToLandingPage',
             'click .show-attachments': 'showAttachmentsPopup',
             'click .show-settings': 'showSettingsPopup',
-            'click .edit-milestone': 'showMilestoneEditPopup'
-
+            'click .edit-milestone': 'showMilestoneEditPopup',
+            'click .show-ownership': 'showOwnershipPopup'
         },
 
         initialize: function (options) {
@@ -141,6 +142,14 @@ define([
             this.milestoneEditView.render();
             this.$el.append(this.milestoneEditView.$el);
 
+        },
+
+        showOwnershipPopup: function () {
+            this.ownershipView = new OwnershipView({
+                projectId: this.projectId
+            });
+            this.ownershipView.render();
+            this.$el.append(this.ownershipView.$el);
         },
 
         updateProjectName: function (name) {

@@ -35,7 +35,7 @@
                     }
                     var scrMimetype = '/images/mimetype_icons/' + copyMimetype + '.png';
                     %>
-                    <a class="file-reference" href="<%=attachments[i].relativePath%>" target="_blank">
+                    <a class="file-reference" download href="<%=attachments[i].relativePath%>" target="_blank">
                         <img src="<%=scrMimetype%>" class="attachment-image" alt="attachment image"/>
                         <% var str = attachments[i].fileName; %>
                         <% if(attachments[i].fileName.length>9)  { str = attachments[i].fileName.substring(0,9)+'..';} %>

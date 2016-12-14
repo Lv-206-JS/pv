@@ -1,0 +1,104 @@
+@import "../basic-popup-view";
+
+.ownership-view {
+  @extend .basic-popup-view;
+}
+
+.ownership-container{
+  height: 350px;
+}
+
+.ownership-drop-list {
+  display: inline-block;
+  display: absolute;
+  overflow-y: auto;
+  width: 44%;
+  height: 70%;
+  margin-right: 2%;
+  margin-left: 2%;
+  border-style: solid;
+  padding-left: 5px;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, .3);
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, .04);
+
+  .ownership-item {
+    height: 25px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-left: 6px;
+    padding-left: 6px;
+  }
+}
+.ownership-form-input-text {
+  display: inline-block;
+  width: 160px;
+  border-radius: 10px;
+  border: 1px solid #a9a9a9;
+  padding: 8px 12px;
+  font-family: Roboto, sans-serif;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+.ownership-input-container {
+  margin-left: 20%;
+  margin-top: 1%;
+}
+
+.ownership-form-label {
+  position: relative;
+  top: -4px;
+  display: inline-block;
+  margin-bottom: 10px;
+  font-weight: 700;
+  line-height: 20px;
+  width: 45%;
+  margin-right: 2%;
+  margin-left: 2%;
+  text-align: center;
+}
+
+.ownerhip-radio {
+  margin-left: 20%;
+}
+
+.add-ownership-button {
+  right: 40%;
+  width: 80px;
+  height: 35px;
+  margin-right: 5px;
+  margin-left: 5px;
+  padding: 5px 10px;
+  line-height: 27px;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  background-color: #5499c7;
+  -webkit-transition: background-color 500ms ease;
+  transition: background-color 500ms ease;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.ownership-link {
+  position: relative;
+  display: inline-block;
+  clear: none;
+  justify-content: flex-end;
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.ownership-link:hover {
+  opacity: 1;
+}
+
+.ownership-link.delete-ownership {
+  width: 19px;
+  height: 19px;
+  background-image: url('../../../images/cancel.svg');
+  background-position: 0px 0px;
+  background-size: contain;
+}

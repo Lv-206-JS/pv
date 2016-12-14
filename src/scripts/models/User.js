@@ -13,8 +13,7 @@ define([
                 'userId': '',
                 'firstname': '',
                 'lastname': '',
-                'email': '',
-                'password': ''
+                'email': ''
         }
     });
 

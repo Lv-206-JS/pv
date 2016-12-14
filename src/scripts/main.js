@@ -5,6 +5,7 @@ requirejs.config({
         underscore: '/bower_components/underscore/underscore',
         Snap: '/bower_components/Snap.svg/dist/snap.svg',
         JST: '/scripts/templates',
+        moment: '/node_modules/moment/moment',
         Draggabilly: '/bower_components/draggabilly/dist/draggabilly.pkgd'
     },
     baseUrl: '/src/scripts'
