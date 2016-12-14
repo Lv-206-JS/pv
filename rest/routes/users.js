@@ -108,7 +108,7 @@ var fn = passport.authenticate('local', {
 
 router.post('/login', passport.authenticate('local', {
         successRedirect: '/projects',
-        failureRedirect: '/users/login'
+        failureRedirect: 'users/login'
     })
 );
 
