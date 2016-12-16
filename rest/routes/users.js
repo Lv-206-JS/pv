@@ -39,11 +39,13 @@ router.post('/register', function (req, res) {
     req.checkBody('password', 'Password is required').notEmpty();
     req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
     var errors = req.validationErrors();
-    console.log(errors);
 
     User.findOne({email: email}, function (error, email) {
         if(email != undefined) {
-
+            /*if(errors == false){
+                errors = [];
+            }*/
+            errors = errors || [];
             errors.push({ param: 'email', msg: 'Email already exists', value: '' });
         }
         return res.status(200).json(JSON.stringify({"error": errors}));
