@@ -166,6 +166,7 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
       .drop-list {
         display: inline-block;
         display: absolute;
+        overflow-y: auto;
         width: 44%;
         height: 80%;
         margin-right: 2%;
@@ -185,6 +186,15 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
           padding-left: 6px;
         }
       }
+
+      .clone{
+        position: relative;
+        //display: none;
+        width: inherit;
+        height: inherit;
+        //width: 0px;
+      }
+
 
       .add-attachment {
         display: -webkit-box;
@@ -247,8 +257,13 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
       }
 
       .attachments {
-        overflow-y: scroll;
+        overflow-y: auto;
         width: 450px;
+        height: 220px;
+        ////height for edit task attachments
+        //.task-attachments{
+        //
+        //}
 
         .attachment-item {
           position: relative;

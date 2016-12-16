@@ -4,7 +4,8 @@ requirejs.config({
         backbone: '/bower_components/backbone/backbone',
         underscore: '/bower_components/underscore/underscore',
         Snap: '/bower_components/Snap.svg/dist/snap.svg',
-        JST: '/scripts/templates'
+        JST: '/scripts/templates',
+        Draggabilly: '/bower_components/draggabilly/dist/draggabilly.pkgd'
     },
     baseUrl: '/src/scripts'
 });
