@@ -16,7 +16,7 @@ define(['backbone',
             else
                this.task = {
                     name: "",
-                    estimateTime: "",
+                    estimateTime: 2,
                     resource: "",
                     description: "",
                     attachments:[],
@@ -44,6 +44,7 @@ define(['backbone',
             'click .tab-attachments' : 'taskAttachmentslInformation',
             'click .cancel-button' : 'hideTaskView',
             'click .ok-button' : 'onSubmitChanges',
+            'click .delete-task' : 'deleteTask',
             'change #add-attachment-file' : 'addAttachment',
             'click #delete-attachment' : 'deleteAttachment',
             'dblclick .task-item' : 'addTaskToList'
@@ -154,18 +155,18 @@ define(['backbone',
                 $(this.element).css({'position':'absolute'});
                 newParent.append(this.element);
                 $(this.element).css({'top': this.relativeStartPosition.y-45+'px'});
-                $(this.element).css({'left': this.relativeStartPosition.x+'px'});
+                $(this.element).css({'left': this.relativeStartPosition.x-55+'px'});
                 $(this.element).addClass('is-dragging');
             };
 
             function onDragEnd() {
-                if (this.position.x >= 200) {
+                if (this.position.x >= 170) {
                     $("#dependencies-list tbody").append(this.element);
                     $(this.element).css({'position': 'relative'});
                     $(this.element).css({'left': '260'});
 
                 }
-                if (this.position.x < 200) {
+                if (this.position.x < 170) {
                     $("#tasks-list tbody").append(this.element);
                     $(this.element).css({'position': 'relative'});
                     $(this.element).css({'left': '0'});
@@ -269,6 +270,18 @@ define(['backbone',
                 if (attachmentId === id)
                     $(attachmentItems[i]).remove();
             }
+        },
+
+        deleteTask: function(event){
+            for(var i = 0; i < this.tasks.length; i++){
+                if(this.tasks[i].taskId === this.task.taskId) {
+                    this.tasks.splice(i, 1);
+                    break;
+                }
+            }
+            this.trigger('deleteTask', this.tasks);
+            event.preventDefault();
+            this.$el.remove();
         },
 
         hideTaskView: function(event){

@@ -17,7 +17,7 @@
                         <label class="form-label">Assignee:</label>
                         <input class="form-input-text task-resource" maxlength="256" value="<%= task.resource %>" placeholder="Assignee Name" type="text">
                         <label class="form-label">Estimate:</label>
-                        <input class="form-input-text task-estimate" maxlength="256" value="<%= task.estimateTime %>" placeholder="Estimate hours" type="text">
+                        <input class="form-input-text task-estimate" maxlength="256" value="<%= task.estimateTime %>" placeholder="Estimate hours" type="number">
                         <label class="form-label description-label">Description:</label>
                         <textarea class="form-input-description task-description" maxlength="5000" placeholder="Task Description"><%= task.description %></textarea>
                     </div>
@@ -73,7 +73,9 @@
                             <% } %>
                         </div>
                     </div>
+                    <input class="form-button delete-task" value="delete">
                 </div>
+
             </div>
         </div>
         <div class="task-form-bottom">
