@@ -51,7 +51,7 @@ define([
         },
 
         renderViews: function () {
-            this.milestoneView = new MilestoneView().render();
+            this.milestoneView = new MilestoneView({model: this.model}).render();
             this.$el.find('#milestone-view-container').html(this.milestoneView.$el);
 
             this.ganttContainerView = new GanttContainerView({model: this.model}).render();

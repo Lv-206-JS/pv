@@ -1,21 +1,24 @@
 define(['moment'], function (Moment) {
     'use strict';
-var moment = new Moment;
 
-var TimeLine = function() {
-    var self = this;
-    this.workDayStart = 10;
-    this.workDayDuration = 6;
-    //this.projectEstimateTime = 62;
+    var TimeLineLib = function (startDate, dayStart, dayDuration) {
+        this.startDate = startDate;
+        this.dayStart = dayStart;
+        this.dayDuration = dayDuration;
+    };
 
-    //must have access to project start date
-    this.startDate = moment('2016-07-10T04:57:54.481Z').format('X');
-    this.toDate = function(ptlSeconds) {
-        var ptlDay = moment.duration(self.workDayDuration, 'hours').asSeconds();
+    TimeLineLib.prototype.getStartTime = function() {
+        var date = Moment(this.startDate).startOf('day');
+        date = Moment(date).hours(this.dayStart);
+        return date;
+    };
+
+    TimeLineLib.prototype.toDate = function(ptlSeconds) {
+        var ptlDay = Moment.duration(this.dayDuration, 'hours').asSeconds();
         var ptlDays = Math.floor(ptlSeconds / ptlDay);
 
-        var realDate = moment.unix(self.getStartTime());
-        var weekDay;
+        var realDate = Moment(this.getStartTime());
+        var weekDay = "";
         while (ptlDays > 0) {
             weekDay = realDate.day();
             if (weekDay != 0 && weekDay != 6) {
@@ -23,17 +26,14 @@ var TimeLine = function() {
             }
             realDate = realDate.add(1, 'days');
         }
+        if (realDate.day() == 0) {
+            realDate = realDate.add(1, 'days');
+        } else if (realDate.day() == 6) {
+            realDate = realDate.add(2, 'days');
+        }
 
         realDate = realDate.add(ptlSeconds % ptlDay, 'seconds');
-        return moment(realDate).format('X');
-
+        return Moment(realDate).format('X');
     };
-    this.getStartTime = function() {
-        var date = moment.unix(self.startDate).startOf('day');
-        date = moment(date).hours(self.workDayStart);
-        //deprecate
-        return moment(date).format('X');
-    };
-};
+    return TimeLineLib;
 });
-module.exports = timeLine;
