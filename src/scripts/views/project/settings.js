@@ -6,10 +6,10 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
         className: 'settings-view show-content',
 
         events: {
+            'click .tab-general' : 'settingsGeneralInformation',
+            'click .tab-time-settings' : 'settingsTimeInformation',
             'click .ok-button' : 'saveSettings',
             'click .cancel-button' : 'cancelSettings'
-            //'change #add-attachment-file' : 'addAttachment',
-            //'click #delete-attachment' : 'deleteAttachment'
         },
 
         initialize: function (options) {
@@ -21,6 +21,24 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
         render: function render() {
             this.$el.html(this.template({model: this.model.attributes,  settings: this.settings}));
             return this;
+        },
+
+        settingsGeneralInformation: function(){
+            this.$el.find('.tab-time-settings').removeClass('w--current');
+            this.$el.find('.settings-content').removeClass('show-content');
+            this.$el.find('.settings-content').addClass('hide-content');
+            this.$el.find('.tab-general').addClass('w--current');
+            this.$el.find('.general-content').removeClass('hide-content');
+            this.$el.find('.general-content').addClass('show-content');
+        },
+
+        settingsTimeInformation: function(){
+            this.$el.find('.tab-general').removeClass('w--current');
+            this.$el.find('.general-content').removeClass('show-content');
+            this.$el.find('.general-content').addClass('hide-content');
+            this.$el.find('.tab-time-settings').addClass('w--current');
+            this.$el.find('.settings-content').removeClass('hide-content');
+            this.$el.find('.settings-content').addClass('show-content');
         },
 
         saveSettings: function saveSettings () {

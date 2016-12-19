@@ -11,8 +11,9 @@ define([
     'views/project/infoBar',
     'views/project/attachments',
     'views/project/settings',
-    'views/project/milestoneEdit'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView) {
+    'views/project/milestoneEdit',
+    'views/project/ownership'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
@@ -23,8 +24,8 @@ define([
             'click .back-to-landing-view': 'onBackToLandingPage',
             'click .show-attachments': 'showAttachmentsPopup',
             'click .show-settings': 'showSettingsPopup',
-            'click .edit-milestone': 'showMilestoneEditPopup'
-
+            'click .edit-milestone': 'showMilestoneEditPopup',
+            'click .show-ownership': 'showOwnershipPopup'
         },
 
         initialize: function (options) {
@@ -58,12 +59,16 @@ define([
             this.$el.find('#gantt-view-container').html(this.ganttContainerView.$el);
 
             this.tasksListView = new TasksListView({model: this.model}).render();
-            this.$el.find('.left-panel').html(this.tasksListView.$el);
+            this.$el.find('#task-container').html(this.tasksListView.$el);
+            // this.$el.find('#task-container').append('<div id="splitter"></div>');
+            // this.$el.find('.left-panel').html(this.tasksListView.$el);
+
             this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup); //???
             this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup); //???
 
             this.ganttChartView = new GanttChartView({model: this.model}).render();
-            this.$el.find('.right-panel').html(this.ganttChartView.$el);
+            this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
+            // this.$el.find('.right-panel').html(this.ganttChartView.$el);
 
             this.infoBarView = new InfoBarView({model: this.model}).render();
             this.$el.find('#info-bar-view-container').html(this.infoBarView.$el);
@@ -141,6 +146,14 @@ define([
             this.milestoneEditView.render();
             this.$el.append(this.milestoneEditView.$el);
 
+        },
+
+        showOwnershipPopup: function () {
+            this.ownershipView = new OwnershipView({
+                projectId: this.projectId
+            });
+            this.ownershipView.render();
+            this.$el.append(this.ownershipView.$el);
         },
 
         updateProjectName: function (name) {

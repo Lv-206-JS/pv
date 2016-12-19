@@ -24,7 +24,12 @@ router.get('/', authenticateUser, function (request, response) {
             return handleError(response, err, "Failed to find user!", 404);
         }
         if (!err) {
-            response.send(user);
+            response.send({
+                "firstname": user.firstname,
+                "userId": user.userId,
+                "lastname": user.lastname,
+                "email": user.email
+            });
         } else {
             return handleError(response, err, "Failed to send user!");
         }

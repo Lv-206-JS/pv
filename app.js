@@ -11,6 +11,8 @@ var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var expressValidator = require('express-validator');
 var session = require('express-session');
+//var MongoStore = require('connect-mongo')(express);
+
 
 
 
@@ -19,16 +21,17 @@ var session = require('express-session');
 //mongoose connection
 var morgan = require('morgan');
 var mongoose = require('mongoose');
-var db = mongoose.connection;
 mongoose.connect("localhost:27017/ganttcharts");
+var db = mongoose.connection;
 
-
+var MongoStore = require('connect-mongo')(session);
 
 
 var app = express();
 //routes
 var projectAPI = require('./rest/routes/projects');
 var attachmentsAPI = require('./rest/routes/attachments');
+var ownershipAPI = require('./rest/routes/ownerships');
 var routes = require('./rest/routes/index');
 var userAPI = require('./rest/routes/user');
 var passport = require('passport');
@@ -40,7 +43,22 @@ app.use(function (request, response, next) {
     response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value){
+        var namespace = param.split('.')
+            , root = namespace.shift()
+            , formParam = root;
 
+        while(namespace.length){
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param : formParam,
+            msg : msg,
+            value : value
+        };
+    }
+}));
 //Express Validator code taken from express-validator github
 app.use(expressValidator({
     errorFormatter: function(param, msg, value){
@@ -58,17 +76,23 @@ app.use(expressValidator({
         };
     }
 }));
-
+//set ejs as default engiene
 app.set('view engine', 'ejs');
 
 //Logger
 app.use(morgan('dev'));
 
+
+
 app.use(session({
-    secret: 'secret',
     saveUninitialized: true,
-    cookie:{_expires : 1500000000000},
-    resave: true
+    resave: true,
+    maxAge: new Date(Date.now() + 3600000),
+    secret: 'secret',
+    store: new MongoStore({
+        mongooseConnection: mongoose.connection,
+        collection: 'session'
+    })
 }));
 
 // Passport init
@@ -83,6 +107,7 @@ app.use(cookieParser());
 //app.use('/rest/user', userAPI);
 app.use('/rest/projects', projectAPI);
 app.use('/rest/attachments', attachmentsAPI);
+app.use('/rest/ownerships', ownershipAPI);
 app.use('/rest/user', userAPI);
 
 app.use('/users', users);

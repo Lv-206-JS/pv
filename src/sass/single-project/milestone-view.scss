@@ -9,10 +9,10 @@ $milestone-color: #D80027;
 $milestone-date-after-border-step: 5px;
 
 .milestone-view {
-    @extend .row-container;
+  @extend .row-container;
   order:2;
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
   position: relative;
   width: 100%;
   height: $milestone-container-height;

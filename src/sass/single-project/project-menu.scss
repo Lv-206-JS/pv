@@ -2,7 +2,7 @@
 
 .menu-toolbar {
   @extend .row-container;
-  order:1;
+  order: 1;
   justify-content: space-between;
   height: $menu-container-height;
   color: $text-blue;
@@ -71,3 +71,8 @@
 .tool-img.tool-settings {
   background-image: url('../../../images/settings.svg');
 }
+
+.tool-img.tool-ownership {
+  background-image: url('../../../images/ownership.svg');
+}
+

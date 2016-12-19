@@ -26,6 +26,7 @@ define([
                 this.$el.html(this.template({
                     tasks: this.tasks
                 }));
+                //this.getMinWidth();
                 this.renderTaskRows();
                 return this;
             },
@@ -40,6 +41,15 @@ define([
                     lastElem = this.$el.find('.table-task-row:last');
                 }
             },
+
+            // getMinWidth: function () {
+            //     var children = this.$el.find('.table-header-row:first').children();
+            //     var minWidth = 0;
+            //     for (var i = 0; i < children.length; i++) {
+            //         minWidth += children[i].css("min-width");
+            //     }
+            //     $('#task-list').css("min-width", minWidth);
+            // },
 
             renderTaskView: function (id) {
                 var task = null;
