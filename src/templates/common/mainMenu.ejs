@@ -1,14 +1,16 @@
 <nav class="menu">
-    <div>
+    <ul>
+        <li class="menu-left">
         <a class="back-to-landing-view" >
-            <img class="logo" src="../../../images/plan-view-logo.svg" alt="logo">
+            <img class="logo" src="/images/plan-view-logo.svg" alt="logo">
         </a>
         <% if (page !== 'projects') { %>
-        <a class="go-to-projects button-dark menu-button">my projects</a>
+            <a class="go-to-projects button-dark">my projects</a>
         <% } %>
-    </div>
-    <div>
-        <p class="show-user-name user-name">hello, <%= userName %> </p>
-        <a class="sign-out-button button-dark menu-button">Sign Out</a>
-    </div>
+        </li>
+        <li class="menu-right">
+            <p class="show-user-name user-name">hello, <%= userName %> </p>
+            <a class="sign-out-button button-dark menu-button">Sign Out</a>
+        </li>
+    </ul>
 </nav>

@@ -1,4 +1,8 @@
-<div id="task-container" class="resizable resize-left">
-</div>
+<% if ($('#gantt-view-container').hasClass('resizable')) { %>
+<div id="task-container" class="resize-left"></div>
 <div id="splitter"></div>
 <div id="gantt-chart-container"></div>
+<% }  else { %>
+<div id="task-container"></div>
+<div id="gantt-chart-container"></div>
+<% } %>

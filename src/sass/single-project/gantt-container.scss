@@ -12,7 +12,7 @@ $container-min-width: 200px;
 #task-container {
   width: 50%;
   min-width: $container-min-width;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   //position: relative;
 }
@@ -35,4 +35,6 @@ $container-min-width: 200px;
 #gantt-container {
   flex: 1;
   min-width: $container-min-width;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
