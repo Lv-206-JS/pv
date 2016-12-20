@@ -40,40 +40,68 @@ $transition-background: background-color 500ms ease;
 /* Button */
 $button-border-white: 1px solid #fff;
 $button-border-blue: 1px solid $blue;
-$border-radius: 4px;
+$border-radius: 1.5px;
 
-.button-dark {
-  display: inline-block;
-  width: 100px;
-  background: $light-blue;
-  border: $button-border-white;
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.button {
+  height: 36px;
+  padding: 10px 12px;
+  border: none;
   border-radius: $border-radius;
+  font-size: 14px;
   text-align: center;
   text-transform: capitalize;
+}
+.button-flat {
+  height: 36px;
+  min-width: 88px;
+  margin: 12px 12px 12px 0px;
+  padding: 6px;
+  border: none;
+  border-radius: $border-radius;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: capitalize;
+}
+.button-dark {
+  @extend .button;
+  background: $light-blue;
   color: $text-white;
-  padding: 5px 10px;
 
   &:hover{
-    background-color: $blue;
     cursor: pointer;
+    background-color: $blue;
     transition: $transition-background;
+  }
+
+  &:active {
+    cursor: pointer;
+    background-color: $blue;
+    darken: ($blue, 25%);
   }
 }
 
 .button-light {
-  display: inline-block;
-  width: 100px;
-  height: 25px;
-  background: $light-grey;
-  border: $button-border-blue;
-  border-radius: $border-radius;
-  text-transform: capitalize;
-  color: $text-white;
+  @extend .button-flat;
+  background: #fff;
+  color: $text-blue;
 
-  &:hover{
-    background-color: $grey;
+  &:hover {
     cursor: pointer;
+    background-color: $grey;
     transition: $transition-background;
+  }
+
+  &:active {
+    cursor: pointer;
+    background-color: $dark-grey;
   }
 }
 
@@ -100,12 +128,12 @@ $icon-hover-opacity: 1; // hover
 /* Pencil icon */
 .icon-edit {
   @extend .icon-as-background;
-  background-image: url('../../../images/edit.svg');
+  background-image: url("../../../images/edit.svg");
 }
 /* Cross icon */
 .icon-remove {
   @extend .icon-as-background;
-  background-image: url('../../../images/cancel.svg');
+  background-image: url("../../../images/cancel.svg");
 }
 
 /* Container or rows */
@@ -122,11 +150,11 @@ $table-row-height: 40px;
 
 /* Table row */
 .table-row {
-  @extend .row-container;
+  display: flex;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   height: $table-row-height;
-  background-color: $light-grey;
   border-bottom: $divider-border;
 
   &:hover {
@@ -134,8 +162,17 @@ $table-row-height: 40px;
   }
 }
 .table-cell {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
+  padding: 0px 0px 0px 18px;
+  margin: 0px 42px 0px 0px;
+}
+.table-cell-number {
+  text-align: left;
+ }
+.table-cell-text {
+  text-align: right;
 }
 
 /* Table header wrapper */
@@ -146,16 +183,17 @@ $table-row-height: 40px;
   background-color: #fff;
   border-bottom: $divider-dark-border;
 }
-.table-header-row {   
-  @extend .row-container;
+.table-header-row {
+  display: flex;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   height: $table-row-height;
   font-weight: $font-weight-bold;
   color: rgba(0,0,0, 0.87);
 
-  &:hover {
-    color: rgba(0,0,0,1);
+  .table-header-row .table-cell:hover {
+    color: rgba(0,0,0, 1.0);
   }
 }
 

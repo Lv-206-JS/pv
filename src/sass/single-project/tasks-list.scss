@@ -1,42 +1,40 @@
-$table-cell-width: 100px;
-$table-cell-padding-left: 24px;
-$table-cell-task-width: $table-cell-width*2.5;
-$table-cell-depends-width: $table-cell-width*2;
+$table-cell-width: 120px;
+$table-cell-task-width: $table-cell-width*1.5;
+$table-cell-depends-width: $table-cell-width*1.5;
 $icon-width: 20px;
 $icon-margin-left-right: 5px;
-$inner-cell-task-width: $table-cell-width*2.5 - $icon-width*2 - $icon-margin-left-right*4;
+$inner-cell-task-width: $table-cell-width;
 
 #tasks-list{
-  min-width: 750px;
+  min-width: 700px;
 }
-
+button.add-task {
+  margin-left: -8px;
+  text-transform: uppercase;
+}
 .table-cell {
+  @extend .table-cell;
   display: flex;
   align-items: center;
   min-width: $table-cell-width;
   max-width: $table-cell-width;
-  padding-left: $table-cell-padding-left;
 }
-
 .table-task-header {
-    flex-direction: column;
-    height: $table-row-height*2;
-    border-bottom: $divider-dark-border;
+  flex-direction: column;
+  height: $table-row-height*2;
 }
 .table-task-row {
   @extend .table-row;
-  padding: 0px;
 }
-
 .table-cell-task {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-between;
-    min-width: $table-cell-task-width;
-    max-width: $table-cell-task-width;
+  @extend .table-cell;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  min-width: $table-cell-task-width;
+  max-width: $table-cell-task-width;
 }
-
 .cell-task {
   display: inline-block;
   min-width: $inner-cell-task-width;
@@ -48,28 +46,16 @@ $inner-cell-task-width: $table-cell-width*2.5 - $icon-width*2 - $icon-margin-lef
     overflow: visible;
   }
 }
-
-.table-cell-dependsOn {
-    min-width: $table-cell-depends-width;
-    max-width: $table-cell-depends-width;
-    height: $line-height;
-    overflow: hidden;
-
-  &:hover {
-    overflow: visible;
-  }
-}
-
-.add-link {
-  padding-right: 10px;
-  padding-left: 10px;
-  color: $blue;
-}
-.add-task-img {
-  width: $icon-width;
-  height: $icon-width;
-  margin-right: 12px;
-}
+//.table-cell-dependsOn {
+//    min-width: $table-cell-depends-width;
+//    max-width: $table-cell-depends-width;
+//    height: $line-height;
+//    overflow: hidden;
+//
+//  &:hover {
+//    overflow: visible;
+//  }
+//}
 
 .task-link {
   @extend .icon;
@@ -77,3 +63,8 @@ $inner-cell-task-width: $table-cell-width*2.5 - $icon-width*2 - $icon-margin-lef
   height: $icon-width;
   margin: 0 $icon-margin-left-right;
 }
+//.add-task-img {
+//  width: $icon-width;
+//  height: $icon-width;
+//  margin-right: 12px;
+//}

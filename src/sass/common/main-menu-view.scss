@@ -17,5 +17,30 @@
 .logo {
   width: 120px;
   height: 27px;
-  float: left;
+  //float: left;
+}
+ul {
+  flex: 1;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+
+  .menu-left {
+    flex: 0 0 50%;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .menu-right {
+    flex: 0 0 50%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+  }
 }

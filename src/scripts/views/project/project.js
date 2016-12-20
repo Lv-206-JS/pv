@@ -61,14 +61,12 @@ define([
             this.tasksListView = new TasksListView({model: this.model}).render();
             this.$el.find('#task-container').html(this.tasksListView.$el);
             // this.$el.find('#task-container').append('<div id="splitter"></div>');
-            // this.$el.find('.left-panel').html(this.tasksListView.$el);
 
             this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup); //???
             this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup); //???
 
             this.ganttChartView = new GanttChartView({model: this.model}).render();
             this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
-            // this.$el.find('.right-panel').html(this.ganttChartView.$el);
 
             this.infoBarView = new InfoBarView({model: this.model}).render();
             this.$el.find('#info-bar-view-container').html(this.infoBarView.$el);
@@ -80,13 +78,20 @@ define([
         showTaskEditPopup: function(allTasks,task){
             this.taskView = new TaskView({tasks: allTasks, task: task}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
+            this.listenTo(this.taskView, 'deleteTask', this.deleteTaskHandler);
             this.$el.append(this.taskView.$el);
         },
         //move to ganttContainerView???
         showTaskAddPopup: function(allTasks){
             this.taskView = new TaskView({tasks: allTasks}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
+            this.listenTo(this.taskView, 'deleteTask', this.deleteTaskHandler);
             this.$el.append(this.taskView.$el);
+        },
+
+        deleteTaskHandler: function(allTasks){
+            this.model.set('tasks',allTasks);
+            this.model.save();
         },
         //move to ganttContainerView???
         upsertTaskHandler: function (allTasks,changedTask){
