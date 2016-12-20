@@ -60,7 +60,6 @@ define([
 
             this.tasksListView = new TasksListView({model: this.model}).render();
             this.$el.find('#task-container').html(this.tasksListView.$el);
-            // this.$el.find('#task-container').append('<div id="splitter"></div>');
 
             this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup); //???
             this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup); //???
