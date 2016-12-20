@@ -64,7 +64,7 @@ define([
             this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup); //???
             this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup); //???
 
-            this.ganttChartView = new GanttChartView({model: this.model}).render();
+            this.ganttChartView = new GanttChartView({model: this.model}).render(); //TODO get array of tasks (position-x, width)
             this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
 
             this.infoBarView = new InfoBarView({model: this.model}).render();
