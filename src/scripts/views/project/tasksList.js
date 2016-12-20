@@ -14,6 +14,7 @@ define([
             events: {
                 'click .add-task': 'onTaskAdd',
                 'click .icon-edit': 'onTaskEdit',
+                'dblclick .cell-task': 'onTaskEdit',
                 'click .icon-remove': 'onTaskRemove' //TODO Delete from here -> Move to tasks.js
             },
 
