@@ -12,7 +12,6 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
         },
 
         render: function render() {
-            console.log(this.model.get('attachments'));
             this.$el.html(this.template({attachments: this.model.get('attachments')}));
             return this;
         },

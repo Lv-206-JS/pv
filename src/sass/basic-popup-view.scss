@@ -1,5 +1,14 @@
 $basic-popup-background-color: rgba(0,0,0,0.3);
-//$form-background-color: #DED8D8;
+$blue: #2980b9;
+$light-blue: #5499c7;
+$white: #fff;
+$light-grey: #f5f5f5;
+$grey: #e0e0e0;
+$dark-grey: #a9a9a9;
+$black: #000;
+$drop-list-background-color: #f5f5f5;
+$form-wrapper-width: 500px;
+$tab-height: 40px;
 //$task-form-width: 500px;
 //$task-form-height: 420px;
 //$task-form-border-color: #333;
@@ -21,26 +30,28 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
 
   .form-wrapper {
     display: block;
-    width: 500px;
+    width: $form-wrapper-width;
     height: inherit;
     margin-top: 5%;
     margin-right: auto;
     margin-left: auto;
-    border: 1px solid #2980b9;
+    border: 1px solid $blue;
     font-family: Roboto, sans-serif;
-    background-color: #fff;
+    background-color: $white;
     font-size: 13px;
     font-weight: 400;
     z-index: 1005;
 
     .form-title {
-      height: 30px;
-      padding-top: 10px;
+      height: $tab-height;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
       padding-left: 20px;
-      background-image: -webkit-linear-gradient(270deg, #5499c7, #5499c7);
-      background-image: linear-gradient(180deg, #5499c7, #5499c7);
+      background-color: $light-blue;
       font-family: Roboto, sans-serif;
-      color: #fff;
+      color: $white;
       font-size: 14px;
       line-height: 20px;
       font-weight: 700;
@@ -48,29 +59,28 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
 
     .tabs-menu {
       width: 100%;
-      height: 40px;
-      background-image: -webkit-linear-gradient(270deg, rgba(0, 0, 0, .04), rgba(0, 0, 0, .04));
-      background-image: linear-gradient(180deg, rgba(0, 0, 0, .04), rgba(0, 0, 0, .04));
+      height: $tab-height;
+      background-color: $light-grey;
 
       .tab-link {
-        background-color: rgba(0, 0, 0, .08);
+        background-color: $grey;
         padding: 9px 30px;
         line-height: 20px;
         float: left;
       }
 
       .tab-link:focus {
-        background-color: #fff;
+        background-color: $white;
       }
 
       .tab-link:hover {
-        border: 1px solid #2980b9;
+        border: 1px solid $blue;
       }
 
       .tab-link.w--current {
         display: inline-block;
         margin-left: -1px;
-        background-color: #fff;
+        background-color: $white;
         font-family: Roboto, sans-serif;
       }
 
@@ -110,7 +120,7 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
         display: inline-block;
         width: 330px;
         border-radius: 10px;
-        border: 1px solid #a9a9a9;
+        border: 1px solid $dark-grey;
         padding: 8px 12px;
         font-family: Roboto, sans-serif;
         line-height: 20px;
@@ -120,28 +130,9 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
 
       .form-input-text:focus,
       .form-input-description:focus {
-        border: 1px solid #2980b9;
+        border: 1px solid $blue;
         border-radius: 10px;
         outline: none;
-      }
-//error for registration
-      .error{
-        border-color: #FF0000;
-      }
-
-      .error::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-        color:    #FF0000;
-      }
-      .error:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-        color:    #FF0000;
-        opacity:  1;
-      }
-      .error::-moz-placeholder { /* Mozilla Firefox 19+ */
-        color:    #FF0000;
-        opacity:  1;
-      }
-      .error:-ms-input-placeholder { /* Internet Explorer 10-11 */
-        color:    #FF0000;
       }
 
       .form-input-description {
@@ -152,7 +143,7 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
         font-family: Roboto, sans-serif;
         min-height: 120px;
         border-radius: 10px;
-        border: 1px solid #a9a9a9;
+        border: 1px solid $dark-grey;
       }
 
       .all-tasks {
@@ -165,7 +156,6 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
 
       .drop-list {
         display: inline-block;
-        display: absolute;
         overflow-y: auto;
         width: 44%;
         height: 80%;
@@ -174,9 +164,9 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
         border-style: solid;
         padding-left: 5px;
         border-width: 1px;
-        border-color: rgba(0, 0, 0, .3);
+        border-color: $dark-grey;
         border-radius: 10px;
-        background-color: rgba(0, 0, 0, .04);
+        background-color: $drop-list-background-color;
 
         .task-item {
           height: 25px;
@@ -187,14 +177,19 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
         }
       }
 
-      .clone{
-        position: relative;
-        //display: none;
-        width: inherit;
-        height: inherit;
-        //width: 0px;
+      .is-dragging{
+        background-color: $light-blue;
+        color:$white;
+        padding: 5px 10px;
+        border-radius: 7px;
+        border-color:$blue;
       }
 
+      .clone{
+        position: relative;
+        width: inherit;
+        height: inherit;
+      }
 
       .add-attachment {
         display: -webkit-box;
@@ -223,7 +218,7 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
           overflow: hidden;
           width: 25%;
           height: 30px;
-          background-color: #fff;
+          background-color: $white;
           border-radius: 10px;
           padding-top: 5px;
           padding-bottom: 5px;
@@ -232,16 +227,15 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
           margin-left: 5px;
           -webkit-transition: background-color 500ms ease;
           transition: background-color 500ms ease;
-          color: #5499c7;
+          color: $light-blue;
           font-weight: 700;
-          border: 1px solid #2980b9;
+          border: 1px solid $blue;
 
           input[type="file"] {
             display: none;
           }
 
           label {
-
             display: block;
             position: absolute;
             top: 0;
@@ -260,10 +254,6 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
         overflow-y: auto;
         width: 450px;
         height: 220px;
-        ////height for edit task attachments
-        //.task-attachments{
-        //
-        //}
 
         .attachment-item {
           position: relative;
@@ -295,7 +285,7 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
           }
 
           a :hover {
-            color: #2980b9;
+            color: $blue;
           }
 
           #delete-attachment {
@@ -336,7 +326,7 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
             position: relative;
             top: -10px;
             left: -20px;
-            color: #000;
+            color: $black;
           }
         }
       }
@@ -348,7 +338,6 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
       display: -ms-flexbox;
       display: flex;
       height: 50px;
-
       padding-right: 20px;
       padding-left: 20px;
       -webkit-box-pack: end;
@@ -359,8 +348,7 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
       -webkit-align-items: center;
       -ms-flex-align: center;
       align-items: center;
-      background-image: -webkit-linear-gradient(270deg, #5499c7, #5499c7);
-      background-image: linear-gradient(180deg, #5499c7, #5499c7);
+      background-color: $light-blue;
 
       .form-button {
         width: 80px;
@@ -368,10 +356,10 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
         margin-left: 5px;
         padding: 5px 10px;
         line-height: 20px;
-        color: #fff;
-        border: 1px solid #fff;
+        color: $white;
+        border: 1px solid $white;
         border-radius: 10px;
-        background-color: #5499c7;
+        background-color: $light-blue;
         -webkit-transition: background-color 500ms ease;
         transition: background-color 500ms ease;
         font-weight: 700;
@@ -379,7 +367,7 @@ $basic-popup-background-color: rgba(0,0,0,0.3);
       }
 
       .form-button:hover {
-        background-color: #2980b9;
+        background-color: $blue;
       }
     }
   }

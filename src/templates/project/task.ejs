@@ -62,8 +62,8 @@
                                 <div id="delete-attachment" data-id="<%= task.attachments[i].attachmentId %>" >
                                     <img src="/images/cancel.svg" class="delete"  alt="delete attachment"/>
                                 </div>
-                                <a class="file-reference" href="<%=task.attachments[i].relativePath%>" target="_blank">
-                                    <img src="/images/word.png" class="attachment-image" alt="attachment image"/>
+                                <a class="file-reference" download href="<%=task.attachments[i].relativePath%>" target="_blank">
+                                    <img src="<%= mimetypes[i]%>" class="attachment-image" alt="attachment image"/>
                                     <% var str = task.attachments[i].fileName; %>
                                     <% if(task.attachments[i].fileName.length>9)  { str = task.attachments[i].fileName.substring(0,9)+'..';} %>
 

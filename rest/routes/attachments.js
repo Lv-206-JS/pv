@@ -24,11 +24,11 @@ function checkOwnership(request, response, next) {
     var projectReference = request.headers.referer;
     var lastSlash = projectReference.lastIndexOf("/");
     var projectId = projectReference.slice(lastSlash+1);
-    Ownerships.findOne({'projectId': projectId, 'userId': request.user.userId}, function (err, ownerShip) {
+    Ownerships.findOne({'projectId': projectId, 'email': request.user.email}, function (err, ownerShip) {
         if(err) {
             //error
         }
-        else if(ownerShip != undefined && ownerShip.role === 'creator') {
+        else if(ownerShip != undefined && (ownerShip.role === 'creator' || ownerShip.role === 'editor')) {
             next();
         }
         else {
