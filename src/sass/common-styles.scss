@@ -165,14 +165,14 @@ $table-row-height: 40px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  padding: 0px 0px 0px 18px;
-  margin: 0px 42px 0px 0px;
+  padding: 0 0 0 18px;
+  margin: 0 42px 0 0;
 }
-.table-cell-number {
-  text-align: left;
- }
-.table-cell-text {
+.table-cell.table-cell-number {
   text-align: right;
+}
+.table-cell.table-cell-text {
+  text-align: left;
 }
 
 /* Table header wrapper */

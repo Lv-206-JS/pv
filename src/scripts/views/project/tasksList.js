@@ -14,8 +14,7 @@ define([
             events: {
                 'click .add-task': 'onTaskAdd',
                 'click .icon-edit': 'onTaskEdit',
-                'dblclick .cell-task': 'onTaskEdit',
-                'click .icon-remove': 'onTaskRemove' //TODO Delete from here -> Move to tasks.js
+                'dblclick .cell-task': 'onTaskEdit'
             },
 
             initialize: function (options) {
@@ -65,20 +64,6 @@ define([
 
             onTaskAdd: function onTaskAdd() {
                 this.renderTaskAddView();
-            },
-            //TODO Delete from here -> Move to tasks.js
-            onTaskRemove : function onTaskRemove(e) {
-                var target = $(e.currentTarget);
-                var taskId = target["0"].id;
-                for (var i = 0; i < this.tasks.length; i++) {
-                    if (this.tasks[i].taskId == taskId) {
-                        break;
-                    }
-                }
-
-                this.tasks.splice(i,1);
-                this.model.set("tasks", this.tasks);
-                this.model.save();
             }
 
         });

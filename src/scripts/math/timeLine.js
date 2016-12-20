@@ -48,7 +48,7 @@ define(['backbone', 'moment'], function (Backbone, Moment) {
             }
             tasksEnd.sort(function(a, b) {return b - a;});
             return tasksEnd[0];
-    }
+    };
 
     return TimeLineLib;
 });
