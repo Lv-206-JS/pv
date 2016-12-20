@@ -12,8 +12,7 @@ define(['backbone', 'JST', 'moment', 'timeLine'], function (Backbone, JST, Momen
             this.projectEstimateTime = this.calcProjectEstimateTime();
             this.settings = this.model.get('settings');
             this.projectStart = this.model.get('startDate');
-            this.timeLine = new TimeLine(this.projectStart, Number(this.settings.dayStart),
-                Number(this.settings.dayDuration));
+            this.timeLine = new TimeLine(this.model);
 
         },
 
@@ -22,7 +21,7 @@ define(['backbone', 'JST', 'moment', 'timeLine'], function (Backbone, JST, Momen
                 milestones: this.milestones,
                 milestonesPositions: this.getMilestonesPositions(),
                 milestonesDates: this.getMilestonesDates(),
-                startDate: Moment.unix(this.timeLine.toDate(0)).format('DD/MM/YY h:mm'),
+                startDate: Moment.unix(this.timeLine.toDate(0)).format('DD/MM/YY h:mm a'),
                 endDate: this.projectEndDate()
             }));
             return this;
@@ -67,7 +66,7 @@ define(['backbone', 'JST', 'moment', 'timeLine'], function (Backbone, JST, Momen
                 milestoneDate = this.calculateEstimateTime(dependsOn); //in hours!!!???
                 milestoneDate = Moment.duration(milestoneDate, 'hours').asSeconds();
                 milestoneDate = this.timeLine.toDate(milestoneDate);
-                milestoneDate = Moment.unix(milestoneDate).format('DD/MM/YY h:mm');
+                milestoneDate = Moment.unix(milestoneDate).format('DD/MM/YY h:mm a');
                 milestonesDates.push(milestoneDate);
             }
             return milestonesDates;
@@ -77,7 +76,7 @@ define(['backbone', 'JST', 'moment', 'timeLine'], function (Backbone, JST, Momen
             //this.timeLine(Moment.duration(this.projectEstimateTime, 'hours').asSeconds())
             var ptlPrjEnd = Moment.duration(this.projectEstimateTime, 'hours').asSeconds();
             var realPrjEnd = this.timeLine.toDate(ptlPrjEnd);
-            return Moment.unix(realPrjEnd).format('DD/MM/YY h:mm');
+            return Moment.unix(realPrjEnd).format('DD/MM/YY h:mm a');
         }
     });
     return MilestoneView;

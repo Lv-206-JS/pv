@@ -77,13 +77,20 @@ define([
         showTaskEditPopup: function(allTasks,task){
             this.taskView = new TaskView({tasks: allTasks, task: task}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
+            this.listenTo(this.taskView, 'deleteTask', this.deleteTaskHandler);
             this.$el.append(this.taskView.$el);
         },
         //move to ganttContainerView???
         showTaskAddPopup: function(allTasks){
             this.taskView = new TaskView({tasks: allTasks}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
+            this.listenTo(this.taskView, 'deleteTask', this.deleteTaskHandler);
             this.$el.append(this.taskView.$el);
+        },
+
+        deleteTaskHandler: function(allTasks){
+            this.model.set('tasks',allTasks);
+            this.model.save();
         },
         //move to ganttContainerView???
         upsertTaskHandler: function (allTasks,changedTask){
