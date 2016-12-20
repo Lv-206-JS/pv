@@ -167,7 +167,7 @@ define(['backbone',
 
                 }
                 if (this.position.x < 170) {
-                    $("#tasks-list tbody").append(this.element);
+                    $("#all-tasks-list tbody").append(this.element);
                     $(this.element).css({'position': 'relative'});
                     $(this.element).css({'left': '0'});
                 }
