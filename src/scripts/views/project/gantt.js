@@ -40,9 +40,7 @@ define([
                         var x = e.pageX;
                         // var w = parseInt($('#splitter').css("width"));
                         if (x > min && x < max && e.pageX < ($(window).width() - minwidth)) {
-                            $('.resizable').css("width", x);
-                            // $('#task-container').css("width", x);
-                            // $('#splitter').css("right", -w);
+                            $('.resize-left').css('width', x);
                         }
                     })
                 });

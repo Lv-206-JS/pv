@@ -14,7 +14,7 @@ define([
             events: {
                 'click .add-task': 'onTaskAdd',
                 'click .icon-edit': 'onTaskEdit',
-                'click .icon-remove': 'onTaskRemove'
+                'click .icon-remove': 'onTaskRemove' //TODO Delete from here -> Move to tasks.js
             },
 
             initialize: function (options) {
@@ -26,7 +26,6 @@ define([
                 this.$el.html(this.template({
                     tasks: this.tasks
                 }));
-                //this.getMinWidth();
                 this.renderTaskRows();
                 return this;
             },
@@ -41,15 +40,6 @@ define([
                     lastElem = this.$el.find('.table-task-row:last');
                 }
             },
-
-            // getMinWidth: function () {
-            //     var children = this.$el.find('.table-header-row:first').children();
-            //     var minWidth = 0;
-            //     for (var i = 0; i < children.length; i++) {
-            //         minWidth += children[i].css("min-width");
-            //     }
-            //     $('#task-list').css("min-width", minWidth);
-            // },
 
             renderTaskView: function (id) {
                 var task = null;
@@ -75,7 +65,7 @@ define([
             onTaskAdd: function onTaskAdd() {
                 this.renderTaskAddView();
             },
-
+            //TODO Delete from here -> Move to tasks.js
             onTaskRemove : function onTaskRemove(e) {
                 var target = $(e.currentTarget);
                 var taskId = target["0"].id;
