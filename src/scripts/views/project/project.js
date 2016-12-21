@@ -133,7 +133,6 @@ define([
                 var width = (tasks[i].estimateTime*3600)*(50/3600)*this.zoom;
                 tasksPositions[i] = {taskId: tasks[i].taskId,positionX: positionX, width: width};
             }
-            console.log(tasksPositions);
             this.ganttChartView = new GanttChartView({model: this.model, tasksPositions: tasksPositions}).render();
             this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
         },
