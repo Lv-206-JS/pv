@@ -3,16 +3,19 @@
     <p class="show-project-name"> </p>
     <% } %>
     <div class="tool-bar">
-        <a class="tool-img tool-zoom-in"></a>
         <a class="tool-img tool-zoom-out"></a>
+        <label id="zoom-value" class="zoom-value">100%</label>
+        <a class="tool-img tool-zoom-in"></a>
         <a class="tool-img tool-undo"></a>
         <a class="tool-img tool-redo"></a>
         <a class="edit-milestone tool-img tool-milestone"></a>
         <a class="tool-critical-way tool-img"></a>
         <a class="show-attachments tool-attachment tool-img"></a>
+        <a class="show-ownership tool-ownership tool-img"></a>
         <a class="show-settings tool-settings tool-img"></a>
     </div>
 </div>
 <div id="milestone-view-container"></div>
-<div id="gantt-view-container"></div>
+<!--Added class resible to show splitter between inner containers-->
+<div id="gantt-view-container" class="resizable"></div>
 <div id="info-bar-view-container"></div>

@@ -42,8 +42,11 @@ router.post('/register', function (req, res) {
 
     User.findOne({email: email}, function (error, email) {
         if(email != undefined) {
-            errors['email'] = 'Email already exist';
-            // return res.status(401).json(JSON.stringify({"error":'Email already exist'}));
+            /*if(errors == false){
+                errors = [];
+            }*/
+            errors = errors || [];
+            errors.push({ param: 'email', msg: 'Email already exists', value: '' });
         }
         return res.status(200).json(JSON.stringify({"error": errors}));
     }).then(function () {
@@ -58,9 +61,7 @@ router.post('/register', function (req, res) {
         User.createUser(newUser, function (err, user) {
             if (err) throw err;
         });
-        // var res_err = {"error": errors};
-        // res.status(200).json(JSON.stringify(res_err));
-        res.status(201);
+        res.status(201).json(JSON.stringify({"error": errors}));
     });
 });
 
@@ -102,13 +103,12 @@ passport.deserializeUser(function (id, done) {
 var fn = passport.authenticate('local', {
     successRedirect: '/projects',
     failureRedirect: 'users/login'
-    //failureFlash: true
 });
 
 
 router.post('/login', passport.authenticate('local', {
         successRedirect: '/projects',
-        failureRedirect: '/users/login'
+        failureRedirect: 'users/login'
     })
 );
 

@@ -1,8 +1,6 @@
-.panel {
-  width: 100%;
-  height: 100%;
-  overflow-x: scroll;
-}
+$splitter-width: 10px;
+$container-min-width: 200px;
+
 #gantt-container {
   order: 3;
   display: flex;
@@ -11,26 +9,32 @@
   overflow-y: scroll;
   width: 100%;
 }
-.left-panel {
-    @extend .panel;
-  order: 1;
-}
-.right-panel {
-    @extend .panel;
-  order: 3;
+#task-container {
+  width: 50%;
+  min-width: $container-min-width;
+  overflow-x: auto;
+  overflow-y: hidden;
+  //position: relative;
 }
 #splitter {
-  left: 50%;
-  order: 2;
   display: block;
-  overflow: hidden;
-  width: 10px;
+  width: $splitter-width;
   height: 100%;
-  padding: 5px;
+  overflow: hidden;
+  padding: $splitter-width/2;
   background-color: $grey;
+  //position: absolute;
+  //top: 0;
+  //right: 0;
 
   &:hover {
     cursor: col-resize;
     background-color: $dark-grey;
   }
+}
+#gantt-container {
+  flex: 1;
+  min-width: $container-min-width;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
