@@ -64,10 +64,10 @@ define([
             this.tasksListView = new TasksListView({model: this.model}).render();
             this.$el.find('#task-container').html(this.tasksListView.$el);
 
-            this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup); //???
-            this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup); //???
+            this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
+            this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
 
-            this.ganttChartView = new GanttChartView({model: this.model}).render(); //TODO get array of tasks (position-x, width)
+            this.ganttChartView = new GanttChartView({model: this.model}).render();
             this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
 
             this.infoBarView = new InfoBarView({model: this.model}).render();
@@ -134,7 +134,7 @@ define([
                 tasksPositions[i] = {taskId: tasks[i].taskId,positionX: positionX, width: width};
             }
             console.log(tasksPositions);
-            this.ganttChartView = new GanttChartView({model: this.model, tasksPositions}).render();
+            this.ganttChartView = new GanttChartView({model: this.model, tasksPositions: tasksPositions}).render();
             this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
         },
 
