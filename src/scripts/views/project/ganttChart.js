@@ -55,11 +55,11 @@ define([
             },
 
             renderTaskRows: function () {
-                var task = null;
-                var lastElem = this.$el.find('.table-task-header');
-                for (var i = 0; i < this.tasks.length; i++) {
-                    task = this.tasks[i];
-                    this.ganttTaskRowView = new GanttTaskRowView({task: task, tasksPositions: this.tasksPositions}).render();
+                var task = null,
+                    lastElem = this.$el.find('.table-task-header');
+                for (var i = 0; i < this.tasksPositions; i++) {
+                    task = this.tasksPositions[i];
+                    this.ganttTaskRowView = new GanttTaskRowView({tasks: this.tasks, task: task}).render();
                     $(this.ganttTaskRowView.$el).insertAfter(lastElem);
                     lastElem = this.$el.find('.table-task-row:last');
                 }
