@@ -1,10 +1,12 @@
-define(['moment'], function (Moment) {
+define(['backbone', 'moment'], function (Backbone, Moment) {
     'use strict';
 
-    var TimeLineLib = function (startDate, dayStart, dayDuration) {
-        this.startDate = startDate;
-        this.dayStart = dayStart;
-        this.dayDuration = dayDuration;
+    var TimeLineLib = function (model) {
+        this.startDate =  model.get('startDate');
+        this.settings = model.get('settings');
+        this.dayStart = Number(this.settings.dayStart);
+        this.dayDuration = Number(this.settings.dayDuration);
+        this.tasks = model.get('tasks');
     };
 
     TimeLineLib.prototype.getStartTime = function() {
@@ -35,5 +37,18 @@ define(['moment'], function (Moment) {
         realDate = realDate.add(ptlSeconds % ptlDay, 'seconds');
         return Moment(realDate).format('X');
     };
+
+    TimeLineLib.prototype.getProjectEstimateTime = function () {
+            var tasksEnd = [];
+            var currentTaskEnd;
+            for (var i = 0; i < this.tasks.length; i++) {
+                currentTaskEnd = Number(this.tasks[i].startDate) +
+                    Number(this.tasks[i].estimateTime);
+                tasksEnd.push(currentTaskEnd);
+            }
+            tasksEnd.sort(function(a, b) {return b - a;});
+            return tasksEnd[0];
+    };
+
     return TimeLineLib;
 });
