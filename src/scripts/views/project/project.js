@@ -25,7 +25,9 @@ define([
             'click .show-attachments': 'showAttachmentsPopup',
             'click .show-settings': 'showSettingsPopup',
             'click .edit-milestone': 'showMilestoneEditPopup',
-            'click .show-ownership': 'showOwnershipPopup'
+            'click .show-ownership': 'showOwnershipPopup',
+            'click .tool-zoom-in' : 'increaseZoom',
+            'click .tool-zoom-out' : 'decreaseZoom'
         },
 
         initialize: function (options) {
@@ -37,6 +39,7 @@ define([
             this.model.on('sync', _.bind(this.onChange, this));
             Backbone.Events.off('onProjectNameReceived');
             Backbone.Events.on('onProjectNameReceived', _.bind(this.updateProjectName, this));
+            this.zoom = 1;
 
         },
 
@@ -74,14 +77,13 @@ define([
             return this;
         },
 
-        //move to ganttContainerView???
         showTaskEditPopup: function(allTasks,task){
             this.taskView = new TaskView({tasks: allTasks, task: task}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
             this.listenTo(this.taskView, 'deleteTask', this.deleteTaskHandler);
             this.$el.append(this.taskView.$el);
         },
-        //move to ganttContainerView???
+
         showTaskAddPopup: function(allTasks){
             this.taskView = new TaskView({tasks: allTasks}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
@@ -93,7 +95,7 @@ define([
             this.model.set('tasks',allTasks);
             this.model.save();
         },
-        //move to ganttContainerView???
+
         upsertTaskHandler: function (allTasks,changedTask){
             if (changedTask.taskId)
                 for (var i = 0; i < allTasks.length; i++){
@@ -109,7 +111,33 @@ define([
             this.model.set('tasks',allTasks);
             this.model.save();
         },
-        //move to ganttContainerView???
+
+        increaseZoom: function(){
+            if(this.zoom<5)
+            this.zoom+=0.25;
+            this.findPositionsForTasks();
+            document.getElementById('zoom-value').innerHTML = this.zoom * 100 + "%";
+        },
+
+        decreaseZoom: function(){
+            if(this.zoom>0.25)
+            this.zoom-=0.25;
+            this.findPositionsForTasks();
+            document.getElementById('zoom-value').innerHTML = this.zoom * 100 + "%";
+        },
+
+        findPositionsForTasks: function(){
+            var tasks = this.model.get('tasks');
+            var tasksPositions = [];
+            for(var i = 0; i < tasks.length; i++){
+                var positionX = (tasks[i].startDate*3600)*(50/3600)*this.zoom;
+                var width = (tasks[i].estimateTime*3600)*(50/3600)*this.zoom;
+                tasksPositions[i] = {positionX: positionX, width: width};
+            }
+            this.ganttChartView = new GanttChartView({model: this.model, tasksPositions}).render();
+            this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
+        },
+
         createId: function(allTasks){
             var max = 0;
             for (var i = 0; i < allTasks.length-1; i++){
