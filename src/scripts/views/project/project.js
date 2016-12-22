@@ -67,8 +67,9 @@ define([
             this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
             this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
 
-            this.ganttChartView = new GanttChartView({model: this.model}).render();
-            this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
+            this.findPositionsForTasks();
+            // this.ganttChartView = new GanttChartView({model: this.model}).render();
+            // this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
 
             this.infoBarView = new InfoBarView({model: this.model}).render();
             this.$el.find('#info-bar-view-container').html(this.infoBarView.$el);
