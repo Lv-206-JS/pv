@@ -38,17 +38,62 @@ define(['backbone', 'moment'], function (Backbone, Moment) {
         return Moment(realDate).format('X');
     };
 
-    TimeLineLib.prototype.getProjectEstimateTime = function () {
+    TimeLineLib.prototype.calculateEstimateTime = function (tasks) {
+            var tasks = tasks || this.tasks;
             var tasksEnd = [];
             var currentTaskEnd;
-            for (var i = 0; i < this.tasks.length; i++) {
-                currentTaskEnd = Number(this.tasks[i].startDate) +
-                    Number(this.tasks[i].estimateTime);
+            for (var i = 0; i < tasks.length; i++) {
+                currentTaskEnd = Number(tasks[i].startDate) +
+                    Number(tasks[i].estimateTime);
                 tasksEnd.push(currentTaskEnd);
             }
             tasksEnd.sort(function(a, b) {return b - a;});
             return tasksEnd[0];
-    }
+    };
+
+    TimeLineLib.prototype.getWorkDays = function(ptlStart, ptlTaskDuration) {
+        //prepare string data form mongo db
+        var ptlStart = Moment.duration(Number(ptlStart), 'hours').asSeconds();
+        var ptlTaskDuration = Moment.duration(Number(ptlTaskDuration), 'hours').asSeconds();
+        var workDay = Moment.duration(this.dayDuration, 'hours').asSeconds();
+        var dayStart = Moment.duration(this.dayStart, 'hours').asSeconds();
+
+        var startDate = this.toDate(ptlStart);
+
+        var firstDayStartTime = Moment.duration(Moment.unix(startDate).hours(), 'hours').asSeconds();
+        var workDayForLoop = workDay - (firstDayStartTime - dayStart);
+        var result = [];
+        var stepDuration = 0;
+        var currentDate = startDate;
+
+        while (ptlTaskDuration > 0) {
+            stepDuration++;
+            ptlTaskDuration--;
+            if (stepDuration == workDayForLoop || ptlTaskDuration == 0) {
+
+                if (Moment.unix(currentDate).day() == 6) {
+                    currentDate = Moment.unix(currentDate).add(2, 'day').format('X');
+                } else if (Moment.unix(currentDate).day() == 0) {
+                    currentDate = Moment.unix(currentDate).add(1, 'day').format('X');
+                }
+
+                result.push({realDate: currentDate, workHours: stepDuration});
+                stepDuration = 0;
+                currentDate = Moment.unix(currentDate).add(1, 'day').startOf('day').seconds(dayStart).format('X');
+                if (workDayForLoop != workDay) {
+                    workDayForLoop = workDay;
+                }
+            }
+        }
+
+        var string = '';
+        for (var i = 0; i < result.length; i++) {
+            string += Moment.unix(result[i].realDate).format('DD/MM/YY hh:mm a dddd') + ', ' +
+                (result[i].workHours / 3600) + '\n';
+        }
+
+        return 'Start date: ' + Moment.unix(startDate).format('DD/MM/YY hh:mm a dddd') + '\n' + string;
+    };
 
     return TimeLineLib;
 });
