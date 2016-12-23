@@ -13,7 +13,9 @@
           .tab-container.attachments-content {
             height: 290px;
           }
-
+          .task-resource{
+            background-color: $white;
+          }
           .task-attachments {
             @extend .attachments;
           }

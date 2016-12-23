@@ -12,8 +12,9 @@ define([
     'views/project/attachments',
     'views/project/settings',
     'views/project/milestoneEdit',
-    'views/project/ownership'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView) {
+    'views/project/ownership',
+    'views/project/resources'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
@@ -25,6 +26,7 @@ define([
             'click .show-attachments': 'showAttachmentsPopup',
             'click .show-settings': 'showSettingsPopup',
             'click .edit-milestone': 'showMilestoneEditPopup',
+            'click .show-resources': 'showResourcesPopup',
             'click .show-ownership': 'showOwnershipPopup',
             'click .tool-zoom-in' : 'increaseZoom',
             'click .tool-zoom-out' : 'decreaseZoom'
@@ -77,14 +79,16 @@ define([
         },
 
         showTaskEditPopup: function(allTasks,task){
-            this.taskView = new TaskView({tasks: allTasks, task: task}).render();
+            var resources = this.model.get('resources');
+            this.taskView = new TaskView({tasks: allTasks, task: task, resources: resources}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
             this.listenTo(this.taskView, 'deleteTask', this.deleteTaskHandler);
             this.$el.append(this.taskView.$el);
         },
 
         showTaskAddPopup: function(allTasks){
-            this.taskView = new TaskView({tasks: allTasks}).render();
+            var resources = this.model.get('resources');
+            this.taskView = new TaskView({tasks: allTasks, resources: resources}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
             this.listenTo(this.taskView, 'deleteTask', this.deleteTaskHandler);
             this.$el.append(this.taskView.$el);
@@ -107,8 +111,13 @@ define([
                 allTasks[allTasks.length] = changedTask;
                 allTasks[allTasks.length-1].taskId = this.createId(allTasks);
             }
+            console.log('all tasks before saving');
+            console.log(allTasks);
             this.model.set('tasks',allTasks);
             this.model.save();
+            var tasks = this.model.get('tasks');
+            console.log('all tasks after saving');
+            console.log(tasks);
         },
 
         increaseZoom: function(){
@@ -133,7 +142,6 @@ define([
                 var width = (tasks[i].estimateTime*3600)*(50/3600)*this.zoom;
                 tasksPositions[i] = {taskId: tasks[i].taskId,positionX: positionX, width: width};
             }
-            console.log(tasksPositions);
             this.ganttChartView = new GanttChartView({model: this.model, tasksPositions}).render();
             this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
         },
@@ -187,6 +195,12 @@ define([
             });
             this.ownershipView.render();
             this.$el.append(this.ownershipView.$el);
+        },
+
+        showResourcesPopup: function () {
+            var resources = this.model.get('resources');
+            this.resourcesView = new ResourcesView({resources: resources, model: this.model}).render();
+            this.$el.append(this.resourcesView.$el);
         },
 
         updateProjectName: function (name) {

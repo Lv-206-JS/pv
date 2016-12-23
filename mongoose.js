@@ -55,6 +55,12 @@ var ProjectsSchema = new Schema({
         fileName: {type: String, required: false},
         relativePath: {type: String, required: false},
         mimetype: {type: String, required: false}
+    }],
+    resources: [{
+        resourceId: {type: String, required: false},
+        resourceName: {type: String, required: false},
+        type: {type: String, required: false},
+        rate: {type: String, required: false}
     }]
 });
 

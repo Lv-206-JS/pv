@@ -122,7 +122,8 @@ router.put('/:id', authenticateUser, checkOwnership, function (request, response
         settings : request.body.settings,
         milestones: request.body.milestones,
         tasks: request.body.tasks,
-        attachments: request.body.attachments
+        attachments: request.body.attachments,
+        resources: request.body.resources
     });
     Project.findOne({'id': request.params.id}, function (err, project) {
         Project.schema.eachPath(function(path) {
