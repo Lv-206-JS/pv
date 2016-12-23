@@ -39,7 +39,8 @@ define([
             this.model.on('sync', _.bind(this.onChange, this));
             Backbone.Events.off('onProjectNameReceived');
             Backbone.Events.on('onProjectNameReceived', _.bind(this.updateProjectName, this));
-            this.zoom = 1;
+            this.zoom = 100; // zoom value in %
+            this.hourLength = 6; // hour length in px
 
         },
 
@@ -68,8 +69,6 @@ define([
             this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
 
             this.findPositionsForTasks();
-            // this.ganttChartView = new GanttChartView({model: this.model}).render();
-            // this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
 
             this.infoBarView = new InfoBarView({model: this.model}).render();
             this.$el.find('#info-bar-view-container').html(this.infoBarView.$el);
@@ -113,25 +112,33 @@ define([
         },
 
         increaseZoom: function(){
-            if(this.zoom<5)
-            this.zoom+=0.25;
-            this.findPositionsForTasks();
-            document.getElementById('zoom-value').innerHTML = this.zoom * 100 + "%";
+            if(this.zoom < 200) {
+                this.zoom += 20;
+                this.findPositionsForTasks(true);
+                document.getElementById('zoom-value').innerHTML = this.zoom + "%";
+            }
         },
 
         decreaseZoom: function(){
-            if(this.zoom>0.25)
-            this.zoom-=0.25;
-            this.findPositionsForTasks();
-            document.getElementById('zoom-value').innerHTML = this.zoom * 100 + "%";
+            if(this.zoom > 20) {
+                this.zoom -= 20;
+                this.findPositionsForTasks(false);
+                document.getElementById('zoom-value').innerHTML = this.zoom + "%";
+            }
         },
 
-        findPositionsForTasks: function(){
+        findPositionsForTasks: function(trigger){
             var tasks = this.model.get('tasks');
             var tasksPositions = [];
+            //change width of 1 hour
+            if( trigger === true) {
+                this.hourLength *= 2;
+            } else {
+                this.hourLength /= 2;
+            }
             for(var i = 0; i < tasks.length; i++){
-                var positionX = (tasks[i].startDate*3600)*(50/3600)*this.zoom;
-                var width = (tasks[i].estimateTime*3600)*(50/3600)*this.zoom;
+                var positionX = (tasks[i].startDate)*(this.hourLength/3600);
+                var width = (tasks[i].estimateTime)*(this.hourLength/3600);
                 tasksPositions[i] = {taskId: tasks[i].taskId,positionX: positionX, width: width};
             }
             this.ganttChartView = new GanttChartView({model: this.model, tasksPositions: tasksPositions}).render();

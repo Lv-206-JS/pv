@@ -30,33 +30,46 @@ define([
 
             drawTaskRow: function(id, task, positionX, width) {
                 $(document).ready(function(){
+                    var rowWidth = 40,
+                        rectWidth = rowWidth * 0.6,
+                        borderRadius = 2;
+
                     var taskName = (task.name) ? task.name : null;
-
                     //get svg from the template
-                    var paper = Snap("#t"+id);
-
-                    // rectangle with rounded corners
-                    var rect = paper.rect(positionX, 7.5, width, 25, 2, 2).attr({
+                    var paper = Snap("#task"+id);
+                    // task rectangle
+                    var rect = paper.rect(positionX, (rowWidth-rectWidth)/2, width, rectWidth, borderRadius, borderRadius);
+                    rect.attr({
                         fill: "#28b463"
                     });
-
+                    // show task name
                     if (taskName) {
-                        //text start
-                        var text = paper.text(positionX + 10, 20, taskName);
+                        //text left
+                        var text = paper.text(positionX + 10, rowWidth/2, taskName);
                         //text center
                         // var text = paper.text(positionX+width/2, 20, taskName);
                         text.attr({
-                            fill: "#fff",
+                            fill: '#fff',
                             'font-size': 14,
-                            //'text-anchor':"middle",
-                            "alignment-baseline": "middle"
+                            // text center
+                            //'text-anchor': "middle",
+                            'alignment-baseline': 'middle'
                         });
+                        // TODO check for the zoom value ?
+                        // check if to place task name in the rect
+                        var textW = parseInt($('#t'+id+' text').css('width'), 10);
+                        var rectW = parseInt(width, 10);
+                        if(textW > rectW) {
+                            text.attr({
+                                'visibility': 'hidden'
+                            });
+                        }
                         //group elements
                         var g = paper.g(rect, text);
                     }
-                    //set Gantt Chart min-width
-                    var w = positionX + width;
-                    $("#gantt-chart").css("min-width", w);
+                    //set min-width of gantt chart div
+                    var ganttMinWidth = positionX + width;
+                    $("#gantt-chart").css('min-width', ganttMinWidth);
                 });
             },
 
@@ -69,7 +82,6 @@ define([
                     }
                 }
             }
-
 
         });
 
