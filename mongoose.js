@@ -37,6 +37,7 @@ var ProjectsSchema = new Schema({
         projectId: {type: String, required: false},
         name: {type: String, required: false},
         description: {type: String, required: false},
+        startDate: {type: String, required: false},
         estimateTime: {type: Number, required: false},
         resource: {type: String, required: false},
         dependsOn: [{
