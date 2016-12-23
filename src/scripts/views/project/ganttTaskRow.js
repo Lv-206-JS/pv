@@ -40,7 +40,7 @@ define([
                         fill: "#28b463"
                     });
 
-                    if (task.name) {
+                    if (taskName) {
                         //text start
                         var text = paper.text(positionX + 10, 20, taskName);
                         //text center
@@ -51,8 +51,9 @@ define([
                             //'text-anchor':"middle",
                             "alignment-baseline": "middle"
                         });
+                        //group elements
+                        var g = paper.g(rect, text);
                     }
-                    var g = paper.g(rect, text);
                     //set Gantt Chart min-width
                     var w = positionX + width;
                     $("#gantt-chart").css("min-width", w);
