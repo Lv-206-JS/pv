@@ -56,12 +56,12 @@ define([
 
             renderTaskRows: function () {
                 var task = null,
-                    lastElem = this.$el.find('.table-task-header');
-                for (var i = 0; i < this.tasksPositions; i++) {
+                    lastElem = this.$el.find('.gantt-date-header');
+                for (var i = 0; i < this.tasksPositions.length; i++) {
                     task = this.tasksPositions[i];
                     this.ganttTaskRowView = new GanttTaskRowView({tasks: this.tasks, task: task}).render();
                     $(this.ganttTaskRowView.$el).insertAfter(lastElem);
-                    lastElem = this.$el.find('.table-task-row:last');
+                    lastElem = this.$el.find('.gantt-task-row:last');
                 }
             }
 
