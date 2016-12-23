@@ -30,22 +30,23 @@ define([
 
             drawTaskRow: function(id, task, positionX, width) {
                 $(document).ready(function(){
-                    var rowWidth = 40,
-                        rectWidth = rowWidth * 0.6,
-                        borderRadius = 2;
+                    var rowHeight = 40,
+                        rectHeight = rowHeight * 0.6,
+                        borderRadius = 2,
+                        rectPaddind = 10;
 
                     var taskName = (task.name) ? task.name : null;
                     //get svg from the template
                     var paper = Snap("#task"+id);
                     // task rectangle
-                    var rect = paper.rect(positionX, (rowWidth-rectWidth)/2, width, rectWidth, borderRadius, borderRadius);
+                    var rect = paper.rect(positionX, (rowHeight-rectHeight)/2, width, rectHeight, borderRadius, borderRadius);
                     rect.attr({
                         fill: "#28b463"
                     });
                     // show task name
                     if (taskName) {
                         //text left
-                        var text = paper.text(positionX + 10, rowWidth/2, taskName);
+                        var text = paper.text(positionX + rectPaddind, rowHeight/2, taskName);
                         //text center
                         // var text = paper.text(positionX+width/2, 20, taskName);
                         text.attr({
@@ -57,9 +58,9 @@ define([
                         });
                         // TODO check for the zoom value ?
                         // check if to place task name in the rect
-                        var textW = parseInt($('#t'+id+' text').css('width'), 10);
+                        var textW = parseInt($('#task'+id+' text').css('width'), 10);
                         var rectW = parseInt(width, 10);
-                        if(textW > rectW) {
+                        if((textW + rectPaddind*2) > rectW) {
                             text.attr({
                                 'visibility': 'hidden'
                             });
