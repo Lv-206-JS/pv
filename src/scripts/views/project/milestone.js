@@ -13,13 +13,13 @@ define(['backbone', 'JST', 'moment', 'timeLine'], function (Backbone, JST, Momen
         },
 
         render: function render() {
-
             this.$el.html(this.template({
                 milestones: this.milestones,
                 milestonesPositions: this.getMilestonesPositions(),
                 milestonesDates: this.getMilestonesDates(),
-                startDate: Moment.unix(this.timeLine.toDate(0)).format('DD/MM/YY hh:mm a'),
-                endDate: this.projectEndDate()
+                startDate: this.timeLine.toDate(0),
+                endDate: this.projectEndDate(),
+                moment: Moment
             }));
             return this;
         },
@@ -40,23 +40,20 @@ define(['backbone', 'JST', 'moment', 'timeLine'], function (Backbone, JST, Momen
         },
 
         getMilestonesDates: function() {
-            var dependsOn, milestoneDate;
+            var dependsOn, milestonePTLdate, milestoneDate;
             var milestonesDates = [];
             for (var m = 0; m < this.milestones.length; m++) {
                 dependsOn = this.milestones[m].dependsOn;
-                milestoneDate = this.timeLine.calculateEstimateTime(dependsOn); //in hours!!!???
-                milestoneDate = Moment.duration(milestoneDate, 'hours').asSeconds();
-                milestoneDate = this.timeLine.toDate(milestoneDate);
-                milestoneDate = Moment.unix(milestoneDate).format('DD/MM/YY hh:mm a');
+                milestonePTLdate = this.timeLine.calculateEstimateTime(dependsOn);
+                milestoneDate = this.timeLine.toDate(milestonePTLdate);
                 milestonesDates.push(milestoneDate);
             }
             return milestonesDates;
         },
 
         projectEndDate: function() {
-            var ptlPrjEnd = Moment.duration(this.projectEstimateTime, 'hours').asSeconds();
-            var realPrjEnd = this.timeLine.toDate(ptlPrjEnd);
-            return Moment.unix(realPrjEnd).format('DD/MM/YY hh:mm a');
+            var ptlProjectEnd = this.projectEstimateTime;
+            return this.timeLine.toDate(ptlProjectEnd);
         }
     });
     return MilestoneView;

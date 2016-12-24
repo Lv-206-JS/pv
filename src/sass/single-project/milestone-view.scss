@@ -1,6 +1,6 @@
 $milestone-container-height: 80px;
 $milestone-container-background: rgba(0,0,0, 0.05);
-$project-timeline-width: 77%;
+$project-timeline-width: 80%;
 $project-timeline-height: 25px;
 $project-timeline-background: linear-gradient(265deg, $green, $light-green);
 $milestone-size: 25px;
@@ -64,9 +64,9 @@ $milestone-date-after-border-step: 5px;
 .milestone-date {
   position: absolute;
   bottom: $milestone-position-step;
-  right: -$milestone-position-step*4;
+  right: -$milestone-position-step*3;
   z-index: 1;
-  width: $milestone-size*6;
+  width: $milestone-size*5;
   background-color: $milestone-color;
   text-align: center;
   padding: 5px 0;

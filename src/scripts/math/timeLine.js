@@ -9,33 +9,32 @@ define(['backbone', 'moment'], function (Backbone, Moment) {
         this.tasks = model.get('tasks');
     };
 
+    //returns moment object
     TimeLineLib.prototype.getStartTime = function() {
-        var date = Moment(this.startDate).startOf('day');
-        date = Moment(date).hours(this.dayStart);
-        return date;
+        var date = Moment.unix(this.startDate).startOf('day');
+        return date.seconds(this.dayStart);
     };
 
     TimeLineLib.prototype.toDate = function(ptlSeconds) {
-        var ptlDay = Moment.duration(this.dayDuration, 'hours').asSeconds();
+        var ptlDay = this.dayDuration;
         var ptlDays = Math.floor(ptlSeconds / ptlDay);
 
-        var realDate = Moment(this.getStartTime());
+        var realDate = this.getStartTime();
         var weekDay = "";
         while (ptlDays > 0) {
             weekDay = realDate.day();
             if (weekDay != 0 && weekDay != 6) {
                 ptlDays--;
             }
-            realDate = realDate.add(1, 'days');
+            realDate.add(1, 'days');
         }
         if (realDate.day() == 0) {
-            realDate = realDate.add(1, 'days');
+            realDate.add(1, 'days');
         } else if (realDate.day() == 6) {
-            realDate = realDate.add(2, 'days');
+            realDate.add(2, 'days');
         }
-
-        realDate = realDate.add(ptlSeconds % ptlDay, 'seconds');
-        return Moment(realDate).format('X');
+        realDate.add(ptlSeconds % ptlDay, 'seconds');
+        return realDate.format('X');
     };
 
     TimeLineLib.prototype.calculateEstimateTime = function (tasks) {
@@ -51,12 +50,11 @@ define(['backbone', 'moment'], function (Backbone, Moment) {
             return tasksEnd[0];
     };
 
-    TimeLineLib.prototype.getWorkDays = function(ptlStart, ptlTaskDuration) {
-        //prepare string data form mongo db
-        var ptlStart = Moment.duration(Number(ptlStart), 'hours').asSeconds();
-        var ptlTaskDuration = Moment.duration(Number(ptlTaskDuration), 'hours').asSeconds();
-        var workDay = Moment.duration(this.dayDuration, 'hours').asSeconds();
-        var dayStart = Moment.duration(this.dayStart, 'hours').asSeconds();
+    TimeLineLib.prototype.getWorkDays = function(ptlTaskStart, ptlTaskDuration) {
+        var ptlStart = Number(ptlTaskStart);
+        var taskDuration = Number(ptlTaskDuration);
+        var workDay = this.dayDuration;
+        var dayStart = this.dayStart;
 
         var startDate = this.toDate(ptlStart);
 
@@ -66,33 +64,28 @@ define(['backbone', 'moment'], function (Backbone, Moment) {
         var stepDuration = 0;
         var currentDate = startDate;
 
-        while (ptlTaskDuration > 0) {
+        while (taskDuration > 0) {
             stepDuration++;
-            ptlTaskDuration--;
-            if (stepDuration == workDayForLoop || ptlTaskDuration == 0) {
+            taskDuration--;
+            if (stepDuration == workDayForLoop || taskDuration == 0) {
 
                 if (Moment.unix(currentDate).day() == 6) {
                     currentDate = Moment.unix(currentDate).add(2, 'day').format('X');
                 } else if (Moment.unix(currentDate).day() == 0) {
                     currentDate = Moment.unix(currentDate).add(1, 'day').format('X');
                 }
-
                 result.push({realDate: currentDate, workHours: stepDuration});
                 stepDuration = 0;
-                currentDate = Moment.unix(currentDate).add(1, 'day').startOf('day').seconds(dayStart).format('X');
+                if (Moment.unix(currentDate).seconds() != dayStart) {
+                    currentDate = Moment.unix(currentDate).add(1, 'day').startOf('day').seconds(dayStart).format('X');
+                }
                 if (workDayForLoop != workDay) {
                     workDayForLoop = workDay;
                 }
             }
         }
 
-        var string = '';
-        for (var i = 0; i < result.length; i++) {
-            string += Moment.unix(result[i].realDate).format('DD/MM/YY hh:mm a dddd') + ', ' +
-                (result[i].workHours / 3600) + '\n';
-        }
-
-        return 'Start date: ' + Moment.unix(startDate).format('DD/MM/YY hh:mm a dddd') + '\n' + string;
+        return result;
     };
 
     return TimeLineLib;

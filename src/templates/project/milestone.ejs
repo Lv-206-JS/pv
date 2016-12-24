@@ -1,14 +1,14 @@
 <div class="milestone-center">
-    <div class="start-date"><%= startDate %></div>
+    <div class="start-date"><%= moment.unix(startDate).format('DD/MM/YY HH:mm') %></div>
     <div class="project-timeline">
         <% for (var i = 0; i < milestones.length; i++) { %>
         <div class="milestone-position" style="left:<%= milestonesPositions[i] %>%">
             <div class="milestone-img"></div>
             <div class="milestone-date-wrap">
-            <div class="milestone-date"><%= milestonesDates[i] %></div>
+            <div class="milestone-date"><%= moment.unix(milestonesDates[i]).format('DD/MM/YY HH:mm') %></div>
             </div>
         </div>
         <% } %>
     </div>
-    <div class="end-date"><%= endDate %></div>
+    <div class="end-date"><%= moment.unix(endDate).format('DD/MM/YY HH:mm') %></div>
 </div>
