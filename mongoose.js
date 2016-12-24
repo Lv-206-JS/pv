@@ -14,12 +14,12 @@ var ProjectsSchema = new Schema({
     name: {type: String, required: false},
     description: {type: String, required: false},
     author: {type: String, required: false},
-    startDate: {type: String, required: false},
-    createDate: {type: String, required: false},
-    modifiedDate: {type: String, required: false},
+    startDate: {type: Number, required: false},
+    createDate: {type: Number, required: false},
+    modifiedDate: {type: Number, required: false},
     milestones: [{
         name: {type: String, required: false},
-        date: {type: String, required: false},
+        date: {type: Number, required: false},
         dependsOn: [{
             taskId: {type: String, required: false},
             taskName : {type: String, required: false},
@@ -37,7 +37,8 @@ var ProjectsSchema = new Schema({
         projectId: {type: String, required: false},
         name: {type: String, required: false},
         description: {type: String, required: false},
-        estimateTime: {type: String, required: false},
+        startDate: {type: String, required: false},
+        estimateTime: {type: Number, required: false},
         resource: {type: String, required: false},
         dependsOn: [{
             taskId: {type: String, required: false},
@@ -55,6 +56,12 @@ var ProjectsSchema = new Schema({
         fileName: {type: String, required: false},
         relativePath: {type: String, required: false},
         mimetype: {type: String, required: false}
+    }],
+    resources: [{
+        resourceId: {type: String, required: false},
+        resourceName: {type: String, required: false},
+        type: {type: String, required: false},
+        rate: {type: String, required: false}
     }]
 });
 

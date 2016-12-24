@@ -63,6 +63,14 @@ define([
                         }
                     ]
                 }
+            ],
+            "resources": [
+                {
+                    "resourceId": 0,
+                    "resourceName": "",
+                    "type": "",
+                    "rate": 0
+                }
             ]
         }
 

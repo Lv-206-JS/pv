@@ -12,8 +12,9 @@ define([
     'views/project/attachments',
     'views/project/settings',
     'views/project/milestoneEdit',
-    'views/project/ownership'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView) {
+    'views/project/ownership',
+    'views/project/resources'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
@@ -25,7 +26,10 @@ define([
             'click .show-attachments': 'showAttachmentsPopup',
             'click .show-settings': 'showSettingsPopup',
             'click .edit-milestone': 'showMilestoneEditPopup',
-            'click .show-ownership': 'showOwnershipPopup'
+            'click .show-resources': 'showResourcesPopup',
+            'click .show-ownership': 'showOwnershipPopup',
+            'click .tool-zoom-in' : 'increaseZoom',
+            'click .tool-zoom-out' : 'decreaseZoom'
         },
 
         initialize: function (options) {
@@ -37,6 +41,8 @@ define([
             this.model.on('sync', _.bind(this.onChange, this));
             Backbone.Events.off('onProjectNameReceived');
             Backbone.Events.on('onProjectNameReceived', _.bind(this.updateProjectName, this));
+            this.zoom = 100; // zoom value in %
+            this.hourLength = 6; // hour length in px
 
         },
 
@@ -60,13 +66,11 @@ define([
 
             this.tasksListView = new TasksListView({model: this.model}).render();
             this.$el.find('#task-container').html(this.tasksListView.$el);
-            // this.$el.find('#task-container').append('<div id="splitter"></div>');
 
-            this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup); //???
-            this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup); //???
+            this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
+            this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
 
-            this.ganttChartView = new GanttChartView({model: this.model}).render();
-            this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
+            this.findPositionsForTasks();
 
             this.infoBarView = new InfoBarView({model: this.model}).render();
             this.$el.find('#info-bar-view-container').html(this.infoBarView.$el);
@@ -74,16 +78,17 @@ define([
             return this;
         },
 
-        //move to ganttContainerView???
         showTaskEditPopup: function(allTasks,task){
-            this.taskView = new TaskView({tasks: allTasks, task: task}).render();
+            var resources = this.model.get('resources');
+            this.taskView = new TaskView({tasks: allTasks, task: task, resources: resources}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
             this.listenTo(this.taskView, 'deleteTask', this.deleteTaskHandler);
             this.$el.append(this.taskView.$el);
         },
-        //move to ganttContainerView???
+
         showTaskAddPopup: function(allTasks){
-            this.taskView = new TaskView({tasks: allTasks}).render();
+            var resources = this.model.get('resources');
+            this.taskView = new TaskView({tasks: allTasks, resources: resources}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
             this.listenTo(this.taskView, 'deleteTask', this.deleteTaskHandler);
             this.$el.append(this.taskView.$el);
@@ -93,7 +98,7 @@ define([
             this.model.set('tasks',allTasks);
             this.model.save();
         },
-        //move to ganttContainerView???
+
         upsertTaskHandler: function (allTasks,changedTask){
             if (changedTask.taskId)
                 for (var i = 0; i < allTasks.length; i++){
@@ -106,10 +111,49 @@ define([
                 allTasks[allTasks.length] = changedTask;
                 allTasks[allTasks.length-1].taskId = this.createId(allTasks);
             }
+            console.log('all tasks before saving');
+            console.log(allTasks);
             this.model.set('tasks',allTasks);
             this.model.save();
+            var tasks = this.model.get('tasks');
+            console.log('all tasks after saving');
+            console.log(tasks);
         },
-        //move to ganttContainerView???
+
+        increaseZoom: function(){
+            if(this.zoom < 200) {
+                this.zoom += 20;
+                this.findPositionsForTasks(true);
+                document.getElementById('zoom-value').innerHTML = this.zoom + "%";
+            }
+        },
+
+        decreaseZoom: function(){
+            if(this.zoom > 20) {
+                this.zoom -= 20;
+                this.findPositionsForTasks(false);
+                document.getElementById('zoom-value').innerHTML = this.zoom + "%";
+            }
+        },
+
+        findPositionsForTasks: function(trigger){
+            var tasks = this.model.get('tasks');
+            var tasksPositions = [];
+            //change width of 1 hour
+            if( trigger === true) {
+                this.hourLength *= 2;
+            } else {
+                this.hourLength /= 2;
+            }
+            for(var i = 0; i < tasks.length; i++){
+                var positionX = (tasks[i].startDate)*(this.hourLength/3600);
+                var width = (tasks[i].estimateTime)*(this.hourLength/3600);
+                tasksPositions[i] = {taskId: tasks[i].taskId,positionX: positionX, width: width};
+            }
+            this.ganttChartView = new GanttChartView({model: this.model, tasksPositions: tasksPositions}).render();
+            this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
+        },
+
         createId: function(allTasks){
             var max = 0;
             for (var i = 0; i < allTasks.length-1; i++){
@@ -159,6 +203,12 @@ define([
             });
             this.ownershipView.render();
             this.$el.append(this.ownershipView.$el);
+        },
+
+        showResourcesPopup: function () {
+            var resources = this.model.get('resources');
+            this.resourcesView = new ResourcesView({resources: resources, model: this.model}).render();
+            this.$el.append(this.resourcesView.$el);
         },
 
         updateProjectName: function (name) {

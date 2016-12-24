@@ -1,0 +1,57 @@
+<div class="form-wrapper">
+    <form class="main-form">
+        <div class="form-title">
+            <div>Resources Edit</div>
+        </div>
+        <div class="tabs">
+            <div class="tabs-menu ">
+                <a class="tab-link tab-general w--current">General</a>
+                <a class="tab-link tab-edit-resource hide-content">Edit</a>
+            </div>
+            <div class="resources-container">
+                <div class="tab-container">
+                    <div class="tab-container tab-general-content show-content">
+                        <div class="table-resource-header-row">
+                            <div class="table-header-resource-cell">Name</div>
+                            <div class="table-header-resource-cell">Rate</div>
+                        </div>
+                        <div class="table-row">
+                            <img class="add-resource-img" src="../../../images/add.svg">
+                            <a class="add-resource-link" id="create-resource">Resource</a>
+                        </div>
+                        <div class="resources-list">
+                            <%for(var i = 0; i < resources.length; i++) {%>
+                            <div class="table-resource-row">
+                                <div class="table-cell-resource">
+                                    <div class="<%= resources[i].resourceId %>"><%= resources[i].resourceName %></div>
+                                    <span class="resource-link remove-resource" id="<%= resources[i].resourceId %>"></span>
+                                    <span class="resource-link edit-resource" id="<%= resources[i].resourceId %>"></span>
+                                </div>
+                                <div id="<%= resources[i].resourceId %>" class="table-cell-resource resource-rate-value"><%= resources[i].rate %></div>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="tab-container tab-edit-resource-content hide-content">
+                        <label class="form-label">Resource Name:</label>
+                        <input class="form-input-text resource-name" maxlength="256" placeholder="Resource Name" required="required" type="text">
+                        <label class="form-label">Type:</label>
+                        <select class="form-input-text resource-type" name="type" placeholder="Resource Type">
+                            <option value="default" ></option>
+                            <option value="human">Human</option>
+                            <option value="machine">Machine</option>
+                        </select>
+                        <label class="form-label">Rate:</label>
+                        <input class="form-input-text resource-rate" maxlength="256" placeholder="Money Per Hour" type="number">
+                        <button class="form-button save-resource">Save</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="resources-form-bottom">
+            <input class="form-button ok-button" type="submit" value="ok">
+            <input class="form-button cancel-button" type="submit" value="cancel">
+        </div>
+    </form>
+</div>

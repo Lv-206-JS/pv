@@ -9,7 +9,6 @@ define(['backbone', 'moment'], function (Backbone, Moment) {
         this.tasks = model.get('tasks');
     };
 
-    //returns moment object
     TimeLineLib.prototype.getStartTime = function() {
         var date = Moment.unix(this.startDate).startOf('day');
         return date.seconds(this.dayStart);

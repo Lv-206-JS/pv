@@ -22,6 +22,7 @@ define(['backbone',
                     attachments:[],
                     dependsOn: []
                 };
+            this.resources = options.resources;
             this.tasksList = this.getTasksList(true);
             this.dependenciesList = this.getTasksList(false);
             this.mimetypesList = this.getMimetypesList(this.task.attachments);
@@ -31,6 +32,7 @@ define(['backbone',
             this.$el.html(this.template({
                 task: this.task,
                 tasks: this.tasks,
+                resources: this.resources,
                 tasksList: this.tasksList,
                 dependenciesList: this.dependenciesList,
                 mimetypes: this.mimetypesList
@@ -293,6 +295,8 @@ define(['backbone',
             this.task.name = this.$el.find('.task-name').val();
             this.task.estimateTime = this.$el.find('.task-estimate').val();
             this.task.resource = this.$el.find('.task-resource').val();
+            console.log('resource');
+            console.log(this.task.resource);
             this.task.description = this.$el.find('.task-description').val();
             this.task.dependsOn = [];
             if(this.dependenciesList[0] !== undefined) {
