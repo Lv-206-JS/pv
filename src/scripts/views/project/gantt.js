@@ -24,8 +24,18 @@ define([
                 this.$el.html(this.template({
                     model: this.model, tasks: this.tasks, milestones: this.milestones
                 }));
-
+                this.setGanttHeight();
+                // this.scrollMove();
                 return this;
+            },
+
+            setGanttHeight: function () {
+                var mainMenuH = parseInt($('.main-menu-container').css('height'), 10);
+                var mainToolbarH = parseInt($('.menu-toolbar').css('height'), 10);
+                var milestoneH = parseInt($('#milestone-view-container').css('height'), 10);
+                var infoBarH = parseInt($('#info-bar-view-container').css('height'), 10);
+                var ganttHeight = $(window).height() - mainMenuH - mainToolbarH - milestoneH - infoBarH;
+                $('#gantt-view-container').css('height', ganttHeight);
             },
 
             splitterMove: function splitterMove () {
@@ -48,7 +58,20 @@ define([
                 $(document).mouseup(function (e) {
                     $(document).unbind('mousemove');
                 });
+            },
+
+            scrollMove: function() {
+                //TODO make it work faster
+                $('#gantt-chart-container').scroll(function() {
+                    var scrollPos = $('#gantt-chart-container').scrollTop();
+                    $('#task-container').scrollTop(scrollPos);
+                });
+                $('#task-container').scroll(function() {
+                    var scrollPos = $('#task-container').scrollTop();
+                    $('#gantt-chart-container').scrollTop($('#task-container').scrollTop());
+                });
             }
+
 
         });
 

@@ -61,6 +61,9 @@ define([
             this.milestoneView = new MilestoneView({model: this.model}).render();
             this.$el.find('#milestone-view-container').html(this.milestoneView.$el);
 
+            this.infoBarView = new InfoBarView({model: this.model}).render();
+            this.$el.find('#info-bar-view-container').html(this.infoBarView.$el);
+
             this.ganttContainerView = new GanttContainerView({model: this.model}).render();
             this.$el.find('#gantt-view-container').html(this.ganttContainerView.$el);
 
@@ -72,8 +75,7 @@ define([
 
             this.findPositionsForTasks();
 
-            this.infoBarView = new InfoBarView({model: this.model}).render();
-            this.$el.find('#info-bar-view-container').html(this.infoBarView.$el);
+            this.ganttContainerView.scrollMove();
 
             return this;
         },
