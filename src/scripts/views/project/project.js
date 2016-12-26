@@ -138,8 +138,8 @@ define([
             var tasks = this.model.get('tasks');
             var tasksPositions = [];
             for(var i = 0; i < tasks.length; i++){
-                var positionX = (tasks[i].startDate*3600)*(50/3600)*this.zoom;
-                var width = (tasks[i].estimateTime*3600)*(50/3600)*this.zoom;
+                var positionX = tasks[i].startDate*(50/3600)*this.zoom;
+                var width = tasks[i].estimateTime*(50/3600)*this.zoom;
                 tasksPositions[i] = {taskId: tasks[i].taskId,positionX: positionX, width: width};
             }
             this.ganttChartView = new GanttChartView({model: this.model, tasksPositions: tasksPositions}).render();
