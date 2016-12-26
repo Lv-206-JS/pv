@@ -35,7 +35,7 @@ define([
                 var lastElem = this.$el.find('.table-task-header');
                 for (var i = 0; i < this.tasks.length; i++) {
                     task = this.tasks[i];
-                    this.taskRowView = new TaskRowView({tasks: this.tasks, task: task}).render();
+                    this.taskRowView = new TaskRowView({model: this.model, task: task}).render();
                     $(this.taskRowView.$el).insertAfter(lastElem);
                     lastElem = this.$el.find('.table-task-row:last');
                 }

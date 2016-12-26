@@ -1,11 +1,11 @@
 <div class="table-cell-task">
-    <button class="task-link icon-edit" id="<%= task.taskId%>"></button>
+    <button class="task-link icon-edit" title="Edit" id="<%= task.taskId%>"></button>
     <div id="<%= task.taskId%>" class="cell-task"><%= task.name%></div>
 </div>
 
-<div class="table-cell task-estimateTime table-cell-number"><%= task.estimateTime%></div>
+<div class="table-cell task-estimateTime table-cell-number"><%= estimateTime%></div>
 
-<div class="table-cell task-startDate table-cell-number"><%= task.startDate%></div>
+<div class="table-cell task-startDate table-cell-number"><%= startDate %></div>
 <!--<% var dependencies = [];%>-->
 <!--<% for (var j = 0; j < task.dependsOn.length; j++) { %>-->
     <!--TO DO "false" string in db-->

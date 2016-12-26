@@ -1,8 +1,9 @@
 define(['backbone',
     'underscore',
     'JST',
-    'Draggabilly'],
-    function (Backbone, _, JST, Draggabilly) {
+    'Draggabilly',
+    'moment'],
+    function (Backbone, _, JST, Draggabilly, Moment) {
     'use strict';
 
     var TaskView = Backbone.View.extend({
@@ -22,18 +23,22 @@ define(['backbone',
                     attachments:[],
                     dependsOn: []
                 };
+            this.resources = options.resources;
             this.tasksList = this.getTasksList(true);
             this.dependenciesList = this.getTasksList(false);
             this.mimetypesList = this.getMimetypesList(this.task.attachments);
+            this.moment = Moment;
         },
 
         render: function render() {
             this.$el.html(this.template({
                 task: this.task,
                 tasks: this.tasks,
+                resources: this.resources,
                 tasksList: this.tasksList,
                 dependenciesList: this.dependenciesList,
-                mimetypes: this.mimetypesList
+                mimetypes: this.mimetypesList,
+                moment: this.moment
             }));
             return this;
         },
@@ -291,7 +296,8 @@ define(['backbone',
 
         onSubmitChanges: function onSubmitChanges (){
             this.task.name = this.$el.find('.task-name').val();
-            this.task.estimateTime = this.$el.find('.task-estimate').val();
+            var estimateTime = this.$el.find('.task-estimate').val();
+            this.task.estimateTime = Moment.duration(+estimateTime, 'hours').asSeconds();
             this.task.resource = this.$el.find('.task-resource').val();
             this.task.description = this.$el.find('.task-description').val();
             this.task.dependsOn = [];

@@ -15,9 +15,14 @@
                         <label class="form-label">Task Name:</label>
                         <input class="form-input-text task-name" maxlength="256" value="<%= task.name %>" placeholder="Task Name" required="required" type="text">
                         <label class="form-label">Assignee:</label>
-                        <input class="form-input-text task-resource" maxlength="256" value="<%= task.resource %>" placeholder="Assignee Name" type="text">
+                        <select class="form-input-text task-resource" name="resource" value="<%= task.resource%>">
+                            <option value="default" ></option>
+                            <% for(var i = 0; i < resources.length; i++) { %>
+                                <option value="<%= resources[i].resourceName %>" <% if(task.resource == resources[i].resourceName) { %>selected<% } %>><%= resources[i].resourceName %></option>
+                            <% } %>
+                        </select>
                         <label class="form-label">Estimate:</label>
-                        <input class="form-input-text task-estimate" maxlength="256" value="<%= task.estimateTime %>" placeholder="Estimate hours" type="number">
+                        <input class="form-input-text task-estimate" maxlength="256" value="<%= moment.duration(task.estimateTime, 'seconds').asHours() %>" placeholder="Estimate hours" type="number">
                         <label class="form-label description-label">Description:</label>
                         <textarea class="form-input-description task-description" maxlength="5000" placeholder="Task Description"><%= task.description %></textarea>
                     </div>
