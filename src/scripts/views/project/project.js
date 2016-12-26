@@ -13,8 +13,10 @@ define([
     'views/project/settings',
     'views/project/milestoneEdit',
     'views/project/ownership',
-    'views/project/resources'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView) {
+    'views/project/resources',
+    'timeLine'
+
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, TimeLineLib) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
@@ -39,6 +41,7 @@ define([
             this.model.setUrl(this.projectId);
             this.model.fetch();
             this.model.on('sync', _.bind(this.onChange, this));
+            //TODO move events unsubscription to destroy method
             Backbone.Events.off('onProjectNameReceived');
             Backbone.Events.on('onProjectNameReceived', _.bind(this.updateProjectName, this));
             this.zoom = 100; // zoom value in %
@@ -58,18 +61,22 @@ define([
         },
 
         renderViews: function () {
-            this.milestoneView = new MilestoneView({model: this.model}).render();
-            this.$el.find('#milestone-view-container').html(this.milestoneView.$el);
+            this.milestoneView = new MilestoneView({
+                model: this.model,
+                el: this.$el.find('#milestone-view-container')[0]
+            }).render();
+            // this.$el.find('#milestone-view-container').html(this.milestoneView.$el);
 
+            //TODO change rendering el passing
             this.ganttContainerView = new GanttContainerView({model: this.model}).render();
             this.$el.find('#gantt-view-container').html(this.ganttContainerView.$el);
 
             this.tasksListView = new TasksListView({model: this.model}).render();
             this.$el.find('#task-container').html(this.tasksListView.$el);
-
             this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
             this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
 
+            //TODO move to ganttchart view
             this.findPositionsForTasks();
 
             this.infoBarView = new InfoBarView({model: this.model}).render();
@@ -138,6 +145,7 @@ define([
 
         findPositionsForTasks: function(trigger){
             var tasks = this.model.get('tasks');
+            var timeLine = new TimeLineLib(this.model);
             var tasksPositions = [];
             //change width of 1 hour
             if( trigger === true) {
@@ -146,10 +154,22 @@ define([
                 this.hourLength /= 2;
             }
             for(var i = 0; i < tasks.length; i++){
-                var positionX = (tasks[i].startDate)*(this.hourLength/3600);
-                var width = (tasks[i].estimateTime)*(this.hourLength/3600);
-                tasksPositions[i] = {taskId: tasks[i].taskId,positionX: positionX, width: width};
+                var singleTask = {taskId: tasks[i].taskId, singleTaskPositions: []};
+                var task = timeLine.getWorkDays(tasks[i].startDate,tasks[i].estimateTime);
+                var projectStartDate = timeLine.toDate(0);
+                // console.log('task ' + i);
+                // console.log(task);
+                for( var j = 0; j < task.length; j++){
+                    var positionX = (task[j].realDate-projectStartDate)*(this.hourLength/3600);
+                    var width = (task[j].workHours)*(this.hourLength/3600);
+                    singleTask.singleTaskPositions[j] = {positionX: positionX, width: width};
+                }
+                // console.log("singleTask " + i);
+                // console.log(singleTask);
+                tasksPositions[tasksPositions.length] = singleTask;
             }
+            console.log('tasksPositions');
+            console.log(tasksPositions);
             this.ganttChartView = new GanttChartView({model: this.model, tasksPositions: tasksPositions}).render();
             this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
         },
@@ -216,6 +236,7 @@ define([
         },
 
         onChange: function () {
+            //TODO Change to handle model change event.
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
             this.renderViews();
         }
