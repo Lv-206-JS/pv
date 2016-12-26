@@ -39,7 +39,7 @@ define([
             },
 
             splitterMove: function splitterMove () {
-                var min = 400;
+                var min = 200;
                 var max = 3600;
                 var minwidth = 200;
 

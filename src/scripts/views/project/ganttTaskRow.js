@@ -33,7 +33,7 @@ define([
                     var rowHeight = 40,
                         rectHeight = rowHeight * 0.6,
                         borderRadius = 2,
-                        rectPaddind = 10;
+                        padding = 20;
 
                     var taskName = (task.name) ? task.name : null;
                     //get svg from the template
@@ -45,26 +45,21 @@ define([
                     });
                     // show task name
                     if (taskName) {
-                        //text left
-                        var text = paper.text(positionX + rectPaddind, rowHeight/2, taskName);
-                        //text center
-                        // var text = paper.text(positionX+width/2, 20, taskName);
+                        var text = paper.text(positionX + width + padding, rowHeight/2, taskName);
                         text.attr({
-                            fill: '#fff',
+                            fill: '#000',
                             'font-size': 14,
-                            // text center
-                            //'text-anchor': "middle",
                             'alignment-baseline': 'middle'
                         });
-                        // TODO check for the zoom value ?
-                        // check if to place task name in the rect
-                        var textW = parseInt($('#task'+id+' text').css('width'), 10);
-                        var rectW = parseInt(width, 10);
-                        if((textW + rectPaddind*2) > rectW) {
-                            text.attr({
-                                'visibility': 'hidden'
-                            });
-                        }
+                        // // TODO check for the zoom value ?
+                        // // check if to place task name in the rect
+                        // var textW = parseInt($('#task'+id+' text').css('width'), 10);
+                        // var rectW = parseInt(width, 10);
+                        // if((textW + rectPaddind*2) > rectW) {
+                        //     text.attr({
+                        //         'visibility': 'hidden'
+                        //     });
+                        // }
                         //group elements
                         var g = paper.g(rect, text);
                     }

@@ -13,7 +13,6 @@ $container-min-width: 200px;
   min-width: $container-min-width;
   overflow-x: auto;
   overflow-y: scroll;
-  //position: relative;
 }
 #splitter {
   display: block;
@@ -22,9 +21,6 @@ $container-min-width: 200px;
   overflow: hidden;
   padding: $splitter-width/2;
   background-color: $grey;
-  //position: absolute;
-  //top: 0;
-  //right: 0;
 
   &:hover {
     cursor: col-resize;
