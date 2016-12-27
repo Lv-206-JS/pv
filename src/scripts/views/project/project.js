@@ -236,7 +236,9 @@ define([
         },
 
         setUndo: function (){
-            this.undoRedo.undo();
+            var newModel = this.undoRedo.undo();
+            this.model = newModel;
+            this.renderViews();
             console.log("Katya");
             console.log(this.undoRedo.history.length);
             console.log(this.undoRedo.iterator);
