@@ -15,9 +15,10 @@ define([
     'views/project/ownership',
     'views/project/resources',
     'timeLine',
-    'moment'
+    'moment',
+    'undoRedoAlgorithm'
 
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, TimeLineLib, Moment) {
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, TimeLineLib, Moment, UndoRedoAlgorithm) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
@@ -50,9 +51,8 @@ define([
             this.zoom = 100; // zoom value in %
             this.hourLength = 6; // hour length in px
             this.moment = Moment;
-            //Hide Undo button on page load;
-            this.setUndo();
 
+            this.undoRedo = new UndoRedoAlgorithm(this.model);
         },
 
         onBackToLandingPage: function onBackToLandingPage() {
@@ -255,6 +255,8 @@ define([
         onChange: function () {
             //TODO Change to handle model change event.
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
+            this.undoRedo.save(this.model);
+            console.log(this.undoRedo.history);
             this.renderViews();
         }
     });
