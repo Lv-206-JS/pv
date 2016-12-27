@@ -43,7 +43,7 @@ define([
                     for (var i = 0; i < taskPositions.length; i++) {
                         positionX = taskPositions[i].positionX;
                         width = taskPositions[i].width;
-                        rect = paper.rect(positionX, (rowHeight-rectHeight)/2, width, rectHeight, borderRadius, borderRadius);
+                        rect = paper.rect(positionX, (rowHeight-rectHeight)/2, width, rectHeight);
                         rect.attr({
                             fill: "#28b463"
                         });
