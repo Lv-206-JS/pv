@@ -32,7 +32,9 @@ define([
             'click .show-resources': 'showResourcesPopup',
             'click .show-ownership': 'showOwnershipPopup',
             'click .tool-zoom-in' : 'increaseZoom',
-            'click .tool-zoom-out' : 'decreaseZoom'
+            'click .tool-zoom-out' : 'decreaseZoom',
+            'click .tool-undo' : 'setUndo',
+            'click .tool-redo' : 'setRedo'
         },
 
         initialize: function (options) {
@@ -48,6 +50,8 @@ define([
             this.zoom = 100; // zoom value in %
             this.hourLength = 6; // hour length in px
             this.moment = Moment;
+            //Hide Undo button on page load;
+            this.setUndo();
 
         },
 
@@ -230,6 +234,22 @@ define([
 
         updateProjectName: function (name) {
             this.$el.find('.show-project-name').html(name);
+        },
+
+        setUndo: function (){
+            console.log("Katya");
+            console.log(this.$el.find('#undo'));
+            if( arr.length <= 1){
+                this.$el.find('#undo').hide(); 
+            }
+            
+            
+        },
+
+        setRedo: function (){
+            if( arr.length == 1){
+                this.$el.find('#redo').hide(); 
+            }            
         },
 
         onChange: function () {
