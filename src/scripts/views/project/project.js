@@ -239,6 +239,7 @@ define([
             var newModel = this.undoRedo.undo();
             this.model = newModel;
             this.renderViews();
+
             console.log("Katya");
             console.log(this.undoRedo.history.length + "  arr length ");
             console.log(this.undoRedo.iterator + "  iterator ");
@@ -246,6 +247,7 @@ define([
             if( this.undoRedo.iterator == 1){
                 console.log("Opapapapa");
                 this.$el.find('#undo').addClass('hide-button'); 
+
             }
             if( this.undoRedo.iterator != this.undoRedo.history.length){
                 console.log("Opapapapa");
@@ -256,10 +258,14 @@ define([
         },
 
         setRedo: function (){
+
             this.undoRedo.redo();
             console.log("Katya111111");
             console.log(this.undoRedo.history.length + "  arr length ");
             console.log(this.undoRedo.iterator + "  iterator");
+            var newModel = this.undoRedo.redo();
+            this.model = newModel;
+            this.renderViews();
             if( this.undoRedo.iterator > 1){
                 console.log("Opapapapa");
                 this.$el.find('#undo').removeClass('hide-button'); 
@@ -268,6 +274,7 @@ define([
                 this.$el.find('#redo').addClass('hide-button'); 
             }
                         
+
         },
 
         onChange: function () {
@@ -279,6 +286,7 @@ define([
                 console.log(this.undoRedo.history.length + " history onchange");
                 console.log(this.undoRedo.iterator + " iterator  onchange");
                 this.$el.find('#undo').removeClass('hide-button');
+
                 if(this.undoRedo.history.length != this.undoRedo.history.iterator){
                    this.$el.find('#redo').removeClass('hide-button'); 
                 }
@@ -291,6 +299,7 @@ define([
                 this.$el.find('#undo').hide(); 
             }*/       
             //console.log(this.undoRedo.history);
+
             this.renderViews();
         }
     });
