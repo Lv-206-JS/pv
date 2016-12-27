@@ -10,7 +10,7 @@ define(['backbone'], function (Backbone) {
         constructor: UndoRedoAlgorithm,
         save: function(model){
             this.history.splice(this.iterator+1);
-            console.lo()
+            console.log()
             var copiedObject = jQuery.extend(true, {}, model);
             this.history.push(copiedObject);
 
