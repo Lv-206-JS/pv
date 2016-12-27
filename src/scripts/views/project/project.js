@@ -14,9 +14,10 @@ define([
     'views/project/milestoneEdit',
     'views/project/ownership',
     'views/project/resources',
-    'timeLine'
+    'timeLine',
+    'moment'
 
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, TimeLineLib) {
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, TimeLineLib, Moment) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
@@ -46,6 +47,7 @@ define([
             Backbone.Events.on('onProjectNameReceived', _.bind(this.updateProjectName, this));
             this.zoom = 100; // zoom value in %
             this.hourLength = 6; // hour length in px
+            this.moment = Moment;
 
         },
 
@@ -159,19 +161,19 @@ define([
                 var singleTask = {taskId: tasks[i].taskId, singleTaskPositions: []};
                 var task = timeLine.getWorkDays(tasks[i].startDate,tasks[i].estimateTime);
                 var projectStartDate = timeLine.toDate(0);
-                // console.log('task ' + i);
-                // console.log(task);
                 for( var j = 0; j < task.length; j++){
-                    var positionX = (task[j].realDate-projectStartDate)*(this.hourLength/3600);
+                    var days = this.moment.duration(task[j].realDate - projectStartDate,'seconds').asDays();
+                    days = days - days % 1;
+                    var settings = this.model.get('settings');
+                    var workingHoursPerDay = this.moment.duration(+settings.dayDuration,'seconds').asHours();
+                    var notWorkingHours = days * (24 - workingHoursPerDay);
+                    var newTaskStart = task[j].realDate - projectStartDate - notWorkingHours*3600;
+                    var positionX = (newTaskStart)*(this.hourLength/3600);
                     var width = (task[j].workHours)*(this.hourLength/3600);
                     singleTask.singleTaskPositions[j] = {positionX: positionX, width: width};
                 }
-                // console.log("singleTask " + i);
-                // console.log(singleTask);
                 tasksPositions[tasksPositions.length] = singleTask;
             }
-            console.log('tasksPositions');
-            console.log(tasksPositions);
             this.ganttChartView = new GanttChartView({model: this.model, tasksPositions: tasksPositions}).render();
             this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
         },
