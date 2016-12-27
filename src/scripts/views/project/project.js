@@ -238,16 +238,17 @@ define([
 
         setUndo: function (){
             console.log("Katya");
-            console.log(this.$el.find('#undo'));
-            if( arr.length <= 1){
+            console.log(this.undoRedo.history.length);
+            if( this.undoRedo.iterator == this.undoRedo.history.length){
                 this.$el.find('#undo').hide(); 
             }
-            
             
         },
 
         setRedo: function (){
-            if( arr.length == 1){
+            console.log("Katya111111");
+            console.log(this.undoRedo.history.length);
+            if( this.undoRedo.history.length == 1){
                 this.$el.find('#redo').hide(); 
             }            
         },
@@ -255,7 +256,7 @@ define([
         onChange: function () {
             //TODO Change to handle model change event.
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
-            this.undoRedo.save(this.model);
+            this.undoRedo.save(this.model);           
             console.log(this.undoRedo.history);
             this.renderViews();
         }
