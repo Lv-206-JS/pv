@@ -49,9 +49,7 @@ define([
             this.zoom = 100; // zoom value in %
             this.hourLength = 6; // hour length in px
             this.moment = Moment;
-            this.history = new UndoRedoAlgorithm(this.model);
-            // this.hideUndo();
-            console.log(this.history);
+            this.undoRedo = new UndoRedoAlgorithm(this.model);
 
         },
 
@@ -239,6 +237,8 @@ define([
         onChange: function () {
             //TODO Change to handle model change event.
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
+            this.undoRedo.save(this.model);
+            console.log(this.undoRedo.history);
             this.renderViews();
         }
     });
