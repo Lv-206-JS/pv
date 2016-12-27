@@ -46,8 +46,8 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
             this.model.set({name: newName});
             var newAuthor = this.$el.find('.author').val();
             this.model.set({author: newAuthor});
-            if (this.$el.find('.description').val() != undefined) {
-                var newDescription = this.$el.find('.description').val();
+            if (this.$el.find('.task-description').val() !== undefined) {
+                var newDescription = this.$el.find('.task-description').val();
                 this.model.set({description: newDescription});
             } else {
                 this.model.set({description: null});
