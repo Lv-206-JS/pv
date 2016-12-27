@@ -239,9 +239,6 @@ define([
             var newModel = this.undoRedo.undo();
             this.model = newModel;
             this.renderViews();
-            console.log("Katya");
-            console.log(this.undoRedo.history.length);
-            console.log(this.undoRedo.iterator);
             if( this.undoRedo.iterator == this.undoRedo.history.length){
                 this.$el.find('#undo').hide(); 
             }
@@ -249,10 +246,9 @@ define([
         },
 
         setRedo: function (){
-            this.undoRedo.redo();
-            console.log("Katya111111");
-            console.log(this.undoRedo.history.length);
-            console.log(this.undoRedo.iterator);
+            var newModel = this.undoRedo.redo();
+            this.model = newModel;
+            this.renderViews();
             if( this.undoRedo.history.iterator == 0){
                 this.$el.find('#redo').hide(); 
             }            
@@ -265,8 +261,9 @@ define([
             if (this.undoRedo.history.length > 1){
                 this.$el.find('#undo').removeClass('hide-button');
                 this.$el.find('#redo').removeClass('hide-button');
-            }         
-            console.log(this.undoRedo.history);
+            }
+            // console.log('history in onChange');
+            // console.log(this.undoRedo.history.length);
             this.renderViews();
         }
     });
