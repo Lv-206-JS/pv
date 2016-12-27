@@ -11,16 +11,15 @@ $milestone-date-after-border-step: 5px;
 .milestone-view {
   @extend .row-container;
   order:2;
-  justify-content: center;
-  align-items: center;
-  position: relative;
   width: 100%;
   height: $milestone-container-height;
   background-color: $milestone-container-background;
 }
 
 .milestone-center {
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   width: 100%;
 }
 
@@ -29,8 +28,6 @@ $milestone-date-after-border-step: 5px;
   display: block;
   width: $project-timeline-width;
   height: $project-timeline-height;
-  margin-right: auto;
-  margin-left: auto;
   border-radius: $border-radius;
   background-image: $project-timeline-background;
     
@@ -39,16 +36,9 @@ $milestone-date-after-border-step: 5px;
     }
 }
 
-.start-date {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-}
-
+.start-date,
 .end-date {
-  position: absolute;
-  top: 0px;
-  right: 0px;
+text-align: center;
 }
 
 .milestone-position {

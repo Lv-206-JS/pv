@@ -34,7 +34,6 @@ define([
                         rectHeight = rowHeight * 0.6,
                         borderRadius = 2,
                         padding = 20;
-
                     var taskName = (task.name) ? task.name : null;
                     //get svg from the template
                     var paper = Snap("#task"+id);
@@ -51,15 +50,6 @@ define([
                             'font-size': 14,
                             'alignment-baseline': 'middle'
                         });
-                        // // TODO check for the zoom value ?
-                        // // check if to place task name in the rect
-                        // var textW = parseInt($('#task'+id+' text').css('width'), 10);
-                        // var rectW = parseInt(width, 10);
-                        // if((textW + rectPaddind*2) > rectW) {
-                        //     text.attr({
-                        //         'visibility': 'hidden'
-                        //     });
-                        // }
                         //group elements
                         var g = paper.g(rect, text);
                     }
