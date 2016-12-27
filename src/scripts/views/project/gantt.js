@@ -68,7 +68,7 @@ define([
                 });
                 $('#task-container').scroll(function() {
                     var scrollPos = $('#task-container').scrollTop();
-                    $('#gantt-chart-container').scrollTop($('#task-container').scrollTop());
+                    $('#gantt-chart-container').scrollTop(scrollPos);
                 });
             }
 

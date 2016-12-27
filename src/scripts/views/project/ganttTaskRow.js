@@ -14,8 +14,7 @@ define([
 
             initialize: function (options) {
                 this.tasks = options.tasks;
-                this.positionX = options.task.positionX;
-                this.width = options.task.width;
+                this.taskPositions = options.task.singleTaskPositions;
                 this.id = options.task.taskId;
                 this.task = this.findTaskById(this.tasks, this.id);
             },
@@ -24,13 +23,16 @@ define([
                 this.$el.html(this.template({
                     id: this.id, positionX: this.positionX, width: this.width
                 }));
-                this.drawTaskRow(this.id, this.task, this.positionX, this.width);
+                this.drawTaskRow(this.id, this.task, this.taskPositions);
                 return this;
             },
 
-            drawTaskRow: function(id, task, positionX, width) {
+            drawTaskRow: function(id, task, taskPositions) {
                 $(document).ready(function(){
-                    var rowHeight = 40,
+                    var positionX,
+                        width,
+                        rect,
+                        rowHeight = 40,
                         rectHeight = rowHeight * 0.6,
                         borderRadius = 2,
                         padding = 20;
@@ -38,10 +40,14 @@ define([
                     //get svg from the template
                     var paper = Snap("#task"+id);
                     // task rectangle
-                    var rect = paper.rect(positionX, (rowHeight-rectHeight)/2, width, rectHeight, borderRadius, borderRadius);
-                    rect.attr({
-                        fill: "#28b463"
-                    });
+                    for (var i = 0; i < taskPositions.length; i++) {
+                        positionX = taskPositions[i].positionX;
+                        width = taskPositions[i].width;
+                        rect = paper.rect(positionX, (rowHeight-rectHeight)/2, width, rectHeight, borderRadius, borderRadius);
+                        rect.attr({
+                            fill: "#28b463"
+                        });
+                    }
                     // show task name
                     if (taskName) {
                         var text = paper.text(positionX + width + padding, rowHeight/2, taskName);
