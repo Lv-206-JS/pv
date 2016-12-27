@@ -2,7 +2,7 @@ define(['backbone'], function (Backbone) {
     'use strict';
 
     function UndoRedoAlgorithm(model){
-        this.history = [model];
+        this.history = [];
         this.iterator = 0;
     }
 
@@ -16,10 +16,12 @@ define(['backbone'], function (Backbone) {
         undo: function(){
             if(this.iterator > 0)
                 this.iterator--;
+            return this.history[this.iterator];
         },
         redo: function(){
             if(this.iterator < this.history.length-1)
                 this.iterator++;
+            return this.history[this.iterator];
         }
     };
 

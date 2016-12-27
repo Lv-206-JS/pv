@@ -49,7 +49,7 @@ define([
             this.zoom = 100; // zoom value in %
             this.hourLength = 6; // hour length in px
             this.moment = Moment;
-            this.undoRedo = new UndoRedoAlgorithm(this.model);
+            this.undoRedo = new UndoRedoAlgorithm();
 
         },
 

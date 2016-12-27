@@ -17,7 +17,7 @@ define(['backbone',
             else
                this.task = {
                     name: "",
-                    estimateTime: 2,
+                    estimateTime: 3600,
                     resource: "",
                     description: "",
                     attachments:[],
