@@ -33,7 +33,9 @@ define([
             'click .show-resources': 'showResourcesPopup',
             'click .show-ownership': 'showOwnershipPopup',
             'click .tool-zoom-in' : 'increaseZoom',
-            'click .tool-zoom-out' : 'decreaseZoom'
+            'click .tool-zoom-out' : 'decreaseZoom',
+            'click .tool-undo' : 'setUndo',
+            'click .tool-redo' : 'setRedo'
         },
 
         initialize: function (options) {
@@ -50,7 +52,6 @@ define([
             this.hourLength = 6; // hour length in px
             this.moment = Moment;
             this.undoRedo = new UndoRedoAlgorithm();
-
         },
 
         onBackToLandingPage: function onBackToLandingPage() {
@@ -234,10 +235,27 @@ define([
             this.$el.find('.show-project-name').html(name);
         },
 
+        setUndo: function (){
+            console.log("Katya");
+            console.log(this.undoRedo.history.length);
+            if( this.undoRedo.iterator == this.undoRedo.history.length){
+                this.$el.find('#undo').hide(); 
+            }
+            
+        },
+
+        setRedo: function (){
+            console.log("Katya111111");
+            console.log(this.undoRedo.history.length);
+            if( this.undoRedo.history.length == 1){
+                this.$el.find('#redo').hide(); 
+            }            
+        },
+
         onChange: function () {
             //TODO Change to handle model change event.
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
-            this.undoRedo.save(this.model);
+            this.undoRedo.save(this.model);           
             console.log(this.undoRedo.history);
             this.renderViews();
         }
