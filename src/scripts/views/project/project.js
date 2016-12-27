@@ -251,7 +251,7 @@ define([
             console.log("Katya111111");
             console.log(this.undoRedo.history.length);
             console.log(this.undoRedo.iterator);
-            if( this.undoRedo.history.length == 1){
+            if( this.undoRedo.history.iterator == 0){
                 this.$el.find('#redo').hide(); 
             }            
         },
