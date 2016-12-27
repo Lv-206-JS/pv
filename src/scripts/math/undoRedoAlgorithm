@@ -1,9 +1,7 @@
 define(['backbone'], function (Backbone) {
     'use strict';
 
-
     function UndoRedoAlgorithm(model){
-        this.model = model;
         this.history = [model];
         this.iterator = 0;
     }
