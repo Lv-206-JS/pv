@@ -41,9 +41,6 @@ define([
             this.model.setUrl(this.projectId);
             this.model.fetch();
             this.model.on('sync', _.bind(this.onChange, this));
-            //TODO move events unsubscription to destroy method
-            Backbone.Events.off('onProjectNameReceived');
-            Backbone.Events.on('onProjectNameReceived', _.bind(this.updateProjectName, this));
             this.zoom = 100; // zoom value in %
             this.hourLength = 6; // hour length in px
 
@@ -236,9 +233,8 @@ define([
         },
 
         onChange: function () {
-            //TODO Change to handle model change event.
-            Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
             this.renderViews();
+            this.updateProjectName(this.model.get('name'));
         }
     });
 
