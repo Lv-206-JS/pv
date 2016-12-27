@@ -259,7 +259,11 @@ define([
         onChange: function () {
             //TODO Change to handle model change event.
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
-            this.undoRedo.save(this.model);           
+            this.undoRedo.save(this.model); 
+            if (this.undoRedo.history.length > 1){
+                this.$el.find('#undo').removeClass('hide-button');
+                this.$el.find('#redo').removeClass('hide-button');
+            }         
             console.log(this.undoRedo.history);
             this.renderViews();
         }
