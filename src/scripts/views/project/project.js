@@ -240,22 +240,34 @@ define([
             this.model = newModel;
             this.renderViews();
             console.log("Katya");
-            console.log(this.undoRedo.history.length);
-            console.log(this.undoRedo.iterator);
-            if( this.undoRedo.iterator == this.undoRedo.history.length){
-                this.$el.find('#undo').hide(); 
+            console.log(this.undoRedo.history.length + "  arr length ");
+            console.log(this.undoRedo.iterator + "  iterator ");
+            
+            if( this.undoRedo.iterator == 1){
+                console.log("Opapapapa");
+                this.$el.find('#undo').addClass('hide-button'); 
             }
+            if( this.undoRedo.iterator != this.undoRedo.history.length){
+                console.log("Opapapapa");
+                this.$el.find('#redo').removeClass('hide-button'); 
+            }
+
             
         },
 
         setRedo: function (){
             this.undoRedo.redo();
             console.log("Katya111111");
-            console.log(this.undoRedo.history.length);
-            console.log(this.undoRedo.iterator);
-            if( this.undoRedo.history.iterator == 0){
-                this.$el.find('#redo').hide(); 
-            }            
+            console.log(this.undoRedo.history.length + "  arr length ");
+            console.log(this.undoRedo.iterator + "  iterator");
+            if( this.undoRedo.iterator > 1){
+                console.log("Opapapapa");
+                this.$el.find('#undo').removeClass('hide-button'); 
+            }
+            if( this.undoRedo.iterator == this.undoRedo.history.length){
+                this.$el.find('#redo').addClass('hide-button'); 
+            }
+                        
         },
 
         onChange: function () {
@@ -263,10 +275,22 @@ define([
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
             this.undoRedo.save(this.model); 
             if (this.undoRedo.history.length > 1){
+                console.log("hahaha");
+                console.log(this.undoRedo.history.length + " history onchange");
+                console.log(this.undoRedo.iterator + " iterator  onchange");
                 this.$el.find('#undo').removeClass('hide-button');
-                this.$el.find('#redo').removeClass('hide-button');
-            }         
-            console.log(this.undoRedo.history);
+                if(this.undoRedo.history.length != this.undoRedo.history.iterator){
+                   this.$el.find('#redo').removeClass('hide-button'); 
+                }
+                if( this.undoRedo.iterator == this.undoRedo.history.length){
+                    this.$el.find('#redo').addClass('hide-button'); 
+                }                
+            } 
+            
+            /*if( this.undoRedo.iterator == this.undoRedo.history.length){
+                this.$el.find('#undo').hide(); 
+            }*/       
+            //console.log(this.undoRedo.history);
             this.renderViews();
         }
     });
