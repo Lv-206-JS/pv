@@ -236,8 +236,10 @@ define([
         },
 
         setUndo: function (){
+            this.undoRedo.undo();
             console.log("Katya");
             console.log(this.undoRedo.history.length);
+            console.log(this.undoRedo.iterator);
             if( this.undoRedo.iterator == this.undoRedo.history.length){
                 this.$el.find('#undo').hide(); 
             }
@@ -245,8 +247,10 @@ define([
         },
 
         setRedo: function (){
+            this.undoRedo.redo();
             console.log("Katya111111");
             console.log(this.undoRedo.history.length);
+            console.log(this.undoRedo.iterator);
             if( this.undoRedo.history.length == 1){
                 this.$el.find('#redo').hide(); 
             }            

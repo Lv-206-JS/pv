@@ -12,6 +12,7 @@ define(['backbone'], function (Backbone) {
             this.history.splice(this.iterator+1);
             this.history.push(model);
             this.iterator++;
+            console.log(this.iterator);
         },
         undo: function(){
             if(this.iterator > 0)
