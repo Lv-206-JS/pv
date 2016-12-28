@@ -6,15 +6,13 @@ $container-min-width: 200px;
   display: flex;
   flex: 1;
   flex-direction: row;
-  overflow-y: scroll;
   width: 100%;
 }
 #task-container {
   width: 50%;
   min-width: $container-min-width;
   overflow-x: auto;
-  overflow-y: hidden;
-  //position: relative;
+  overflow-y: scroll;
 }
 #splitter {
   display: block;
@@ -23,9 +21,6 @@ $container-min-width: 200px;
   overflow: hidden;
   padding: $splitter-width/2;
   background-color: $grey;
-  //position: absolute;
-  //top: 0;
-  //right: 0;
 
   &:hover {
     cursor: col-resize;
@@ -36,5 +31,5 @@ $container-min-width: 200px;
   flex: 1;
   min-width: $container-min-width;
   overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: scroll;
 }

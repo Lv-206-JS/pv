@@ -17,7 +17,7 @@ define([
                 this.milestones = options.model.get('milestones');
                 this.settings = options.model.get('settings');
                 this.dayStart = Number(this.settings.dayStart);
-                this.tasksPositions = (options.tasksPositions != undefined) ? options.tasksPositions : null;
+                this.tasksPositions = (options.tasksPositions !== undefined) ? options.tasksPositions : null;
             },
 
             render: function render() {
