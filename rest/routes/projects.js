@@ -72,6 +72,24 @@ router.get('/', authenticateUser, function (request, response) {
 
 //create project
 router.post('/', authenticateUser, function (request, response) {
+
+    var name = request.body.name;
+    var description = request.body.description;
+
+    // //Validation
+    request.checkBody('name', 'Project Name').notEmpty();
+    request.checkBody('description', 'Project Description').notEmpty();
+
+    var errors = request.validationErrors();
+
+    console.log(errors);
+
+    if (errors.length) {
+         response.status(300);
+         response.send("Fill in the fields!");
+         return;
+    }
+
     var projectToCreate = new Project({
         id: Guid.create().value,
         name: request.body.name,
