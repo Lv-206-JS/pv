@@ -10,7 +10,8 @@ define(['backbone'], function (Backbone) {
         constructor: UndoRedoAlgorithm,
         save: function(model){
             this.history.splice(this.iterator+1);
-            console.log()
+            console.log
+            ()
             var copiedObject = jQuery.extend(true, {}, model);
             this.history.push(copiedObject);
 
@@ -19,7 +20,7 @@ define(['backbone'], function (Backbone) {
             console.log(this.iterator);
         },
         undo: function(){
-            if(this.iterator > 1)
+            if(this.iterator > 1)//here and everywhere I need somth like this.iterator > 1 && this.iterator < this.history.length
                 --this.iterator;
             console.log('undo');
             console.log(this.iterator);
