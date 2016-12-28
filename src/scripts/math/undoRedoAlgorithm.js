@@ -15,7 +15,7 @@ define(['backbone'], function (Backbone) {
             this.iterator++;
         },
         undo: function(){
-            if(this.iterator > 1)
+            if(this.iterator > 1)//here and everywhere I need somth like this.iterator > 1 && this.iterator < this.history.length
                 --this.iterator;
             var copiedObject = jQuery.extend(true, {}, this.history[this.iterator-1]);
             return copiedObject;
