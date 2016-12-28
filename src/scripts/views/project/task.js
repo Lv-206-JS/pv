@@ -294,7 +294,8 @@ define(['backbone',
             this.$el.remove();
         },
 
-        onSubmitChanges: function onSubmitChanges (){
+        onSubmitChanges: function onSubmitChanges (event){
+            event.preventDefault();
             this.task.name = this.$el.find('.task-name').val();
             var estimateTime = this.$el.find('.task-estimate').val();
             this.task.estimateTime = Moment.duration(+estimateTime, 'hours').asSeconds();
@@ -309,7 +310,7 @@ define(['backbone',
                 this.task.dependsOn = false;
             }
             this.trigger('upsertTask', this.tasks, this.task);
-            event.preventDefault();
+
             this.$el.remove();
         }
 

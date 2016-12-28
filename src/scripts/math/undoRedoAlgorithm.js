@@ -9,28 +9,22 @@ define(['backbone'], function (Backbone) {
     UndoRedoAlgorithm.prototype = {
         constructor: UndoRedoAlgorithm,
         save: function(model){
-            this.history.splice(this.iterator+1);
-            console.lo()
+            this.history.splice(this.iterator);
             var copiedObject = jQuery.extend(true, {}, model);
-            this.history.push(copiedObject);
-
+            this.history[this.history.length] = copiedObject;
             this.iterator++;
-            console.log('save');
-            console.log(this.iterator);
         },
         undo: function(){
             if(this.iterator > 1)
                 --this.iterator;
-            console.log('undo');
-            console.log(this.iterator);
-            return this.history[this.iterator-1];
+            var copiedObject = jQuery.extend(true, {}, this.history[this.iterator-1]);
+            return copiedObject;
         },
         redo: function(){
-            if(this.iterator <= this.history.length)
+            if(this.iterator < this.history.length)
                 ++this.iterator;
-            console.log('redo');
-            console.log(this.iterator);
-            return this.history[this.iterator-1];
+            var copiedObject = jQuery.extend(true, {}, this.history[this.iterator-1]);
+            return copiedObject;
         }
     };
 
