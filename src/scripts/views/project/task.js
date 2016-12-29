@@ -197,7 +197,7 @@ define(['backbone',
             var element = $(event.currentTarget);
             var taskId = element.attr('id');
             var listName = element.parent().parent().attr('id');
-            if(listName === 'tasks-list'){
+            if(listName === 'all-tasks-list'){
                 for( var i = 0; i < this.tasksList.length; i++)
                     if(this.tasksList[i].taskId === taskId){
                         this.dependenciesList.push(this.tasksList[i]);
@@ -213,7 +213,7 @@ define(['backbone',
                         this.dependenciesList.splice(i,1);
                         break;
                     }
-                $("#tasks-list tbody").append(element);
+                $("#all-tasks-list tbody").append(element);
             }
         },
 

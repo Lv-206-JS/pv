@@ -129,6 +129,10 @@ router.put('/:id', authenticateUser, checkOwnership, function (request, response
         Project.schema.eachPath(function(path) {
             if (path != '_id' && path != '__v' && path != 'id') {
                 project[path] = projectToUpdate[path];
+                console.log('projectToUpdate[path]');
+                console.log(projectToUpdate[path]);
+                console.log('project[path]');
+                console.log(project[path]);
             }
         });
         project.save(function (err, savedProject) {
@@ -137,6 +141,8 @@ router.put('/:id', authenticateUser, checkOwnership, function (request, response
             }
             else {
                 response.send(savedProject);
+                console.log('savedProject');
+                console.log(savedProject);
             }
         });
     });

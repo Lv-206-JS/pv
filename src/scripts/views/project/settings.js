@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
+define(['backbone', 'underscore', 'JST', 'moment'], function (Backbone, _, JST, Moment) {
     'use strict';
 
     var SettingsView = Backbone.View.extend({
@@ -14,12 +14,13 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
 
         initialize: function (options) {
             this.model = options.model;
-            this.settings = options.settings;
+            this.settings = this.model.get('settings');
+            this.moment = Moment;
         },
 
 
         render: function render() {
-            this.$el.html(this.template({model: this.model.attributes,  settings: this.settings}));
+            this.$el.html(this.template({model: this.model.attributes,  settings: this.settings, moment: this.moment}));
             return this;
         },
 
@@ -53,37 +54,23 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
                 this.model.set({description: null});
             }
             var newStartDate = this.$el.find('.start-date').val();
-            this.model.set({startDate: newStartDate});
-            var newCreateDate = this.$el.find('.create-date').val();
-            this.model.set({createDate: newCreateDate});
-            var newModifiedDate = this.$el.find('.modified-date').val();
-            this.model.set({modifiedDate: newModifiedDate});
-            // var newDayStart = this.$el.find('.day-start').val();
-            // this.settings.dayStart = newDayStart;
+            var newStartDateInSeconds = this.moment(newStartDate).unix();
+            this.model.set({startDate: newStartDateInSeconds});
 
-            var weekCollection =  $('.weekend');
-            var days = [];
-            for (var i = 0; i < weekCollection.length; i++){
-                if(weekCollection[i].checked == true){
-                    days[i] = weekCollection[i].value;
-                }
-            };
+            var newDayDuration = this.$el.find('.day-duration').val();
+            var dayDurationSeconds = this.moment.duration(+newDayDuration,'hours').asSeconds();
+            var newDayStart = this.$el.find('.working-day-start').val();
+            var dayStartSeconds = this.moment.duration(+newDayStart,'hours').asSeconds();
 
-            var projSetting = {
-                weekend: days,
-                dayDuration: this.$el.find('.day-duration').val()
-            };
+            this.settings.dayStart = dayStartSeconds;
+            this.settings.dayDuration = dayDurationSeconds;
+            console.log('this.settings');
+            console.log(this.settings);
 
-            this.model.set('settings', projSetting);
-            this.model.save(
-                {
-                    success: function (model, response) {
-                        console.log("success");
-                    },
-                    error: function (model, response) {
-                        console.log("error");
-                    }
-                });
+            this.model.set('settings', this.settings);
+            this.model.save();
+            var newSettings = this.model.get('settings');
+            console.log(newSettings);
 
             event.preventDefault();
             this.$el.remove();

@@ -28,8 +28,9 @@ var ProjectsSchema = new Schema({
 
     }],
     settings: {
-        dayDuration: {type: String, required: false},
-        weekend: {type: Array, required: false},
+        dayDuration: {type: Number, required: false},
+        dayStart: {type: Number, required: false},
+        // weekend: {type: Array, required: false},
         icon: {type: String, required: false}
     },
     tasks: [{

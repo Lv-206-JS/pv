@@ -150,19 +150,31 @@ define([
             //change width of 1 hour
             if( trigger === true) {
                 this.hourLength *= 2;
-            } else {
+            } else if(trigger === false) {
                 this.hourLength /= 2;
             }
             for(var i = 0; i < tasks.length; i++){
                 var singleTask = {taskId: tasks[i].taskId, singleTaskPositions: []};
                 var task = timeLine.getWorkDays(tasks[i].startDate,tasks[i].estimateTime);
                 var projectStartDate = timeLine.toDate(0);
+                var projectStartDay = this.moment.unix(projectStartDate,'seconds').format("e");
                 for( var j = 0; j < task.length; j++){
                     var days = this.moment.duration(task[j].realDate - projectStartDate,'seconds').asDays();
                     days = days - days % 1;
                     var settings = this.model.get('settings');
                     var workingHoursPerDay = this.moment.duration(+settings.dayDuration,'seconds').asHours();
                     var notWorkingHours = days * (24 - workingHoursPerDay);
+                    if((this.hourLength <= 3) || (this.hourLength >= 48)) {
+                        var remainder = days % 7;
+                        var notWorkingDays = (days - remainder) / 7 * 2;
+                        if(((projectStartDay === 2) && (remainder >=6 )) ||
+                            ((projectStartDay === 3) && (remainder >=5 )) ||
+                            ((projectStartDay === 4) && (remainder >=4 )) ||
+                            ((projectStartDay === 5) && (remainder >=3 )) ||
+                            ((projectStartDay === 6) && (remainder >=2 )))
+                            notWorkingDays += 2;
+                        notWorkingHours += notWorkingDays * workingHoursPerDay;
+                    }
                     var newTaskStart = task[j].realDate - projectStartDate - notWorkingHours*3600;
                     var positionX = (newTaskStart)*(this.hourLength/3600);
                     var width = (task[j].workHours)*(this.hourLength/3600);
@@ -197,8 +209,7 @@ define([
 
         showSettingsPopup: function() {
             this.settingsView = new SettingsView({
-                model: this.model,
-                settings: this.model.get('settings')
+                model: this.model
             });
 
 
@@ -244,7 +255,7 @@ define([
             console.log(this.undoRedo.history.length + "  arr length ");
             console.log(this.undoRedo.iterator + "  iterator ");
             
-            if( this.undoRedo.iterator == 1){                
+            if( this.undoRedo.iterator == 1){
                 this.$el.find('#undo').addClass('hide-button'); 
 
             }
@@ -265,7 +276,7 @@ define([
             var newModel = this.undoRedo.redo();
             this.model = newModel;
             this.renderViews();
-            if( this.undoRedo.iterator > 1){                
+            if( this.undoRedo.iterator > 1){
                 this.$el.find('#undo').removeClass('hide-button'); 
             }
             if( this.undoRedo.iterator == this.undoRedo.history.length){
@@ -280,9 +291,9 @@ define([
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
             this.undoRedo.save(this.model); 
             if (this.undoRedo.history.length > 1){
-                console.log("hahaha");
-                console.log(this.undoRedo.history.length + " history onchange");
-                console.log(this.undoRedo.iterator + " iterator  onchange");
+                // console.log("hahaha");
+                // console.log(this.undoRedo.history.length + " history onchange");
+                // console.log(this.undoRedo.iterator + " iterator  onchange");
                 this.$el.find('#undo').removeClass('hide-button');
 
                 if(this.undoRedo.history.length != this.undoRedo.iterator){
