@@ -77,14 +77,8 @@ router.post('/', authenticateUser, function (request, response) {
         name: request.body.name,
         description: request.body.description,
         author: request.user.firstname + ' ' + request.user.lastname,
-        startDate: request.body.startDate,
         createDate: (new Date()).getTime(),
-        modifiedDate: (new Date()).getTime(),
-        settings : {
-            dayDuration : request.body.settings.dayDuration,
-            weekend : request.body.settings.weekend,
-            icon : request.body.settings.icon
-        }
+        modifiedDate: (new Date()).getTime()
     });
     addOwnership(projectToCreate.id, request.user.email);
     projectToCreate.save(function (err, project) {
@@ -125,14 +119,15 @@ router.put('/:id', authenticateUser, checkOwnership, function (request, response
         attachments: request.body.attachments,
         resources: request.body.resources
     });
+    //console.log(projectToUpdate);
     Project.findOne({'id': request.params.id}, function (err, project) {
         Project.schema.eachPath(function(path) {
             if (path != '_id' && path != '__v' && path != 'id') {
+                if(path.indexOf('.') != -1) {
+                    var pathes = path.split('.');
+                    path = pathes[0];
+                }
                 project[path] = projectToUpdate[path];
-                console.log('projectToUpdate[path]');
-                console.log(projectToUpdate[path]);
-                console.log('project[path]');
-                console.log(project[path]);
             }
         });
         project.save(function (err, savedProject) {
@@ -141,8 +136,6 @@ router.put('/:id', authenticateUser, checkOwnership, function (request, response
             }
             else {
                 response.send(savedProject);
-                console.log('savedProject');
-                console.log(savedProject);
             }
         });
     });
