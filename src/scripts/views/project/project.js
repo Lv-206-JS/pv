@@ -16,8 +16,10 @@ define([
     'views/project/resources',
     'timeLine',
     'moment',
-    'TaskAlgorithm'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, TimeLineLib, Moment, TaskAlgorithm) {
+    'TaskAlgorithm',
+    'undoRedoAlgorithm'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, TimeLineLib, Moment, TaskAlgorithm, UndoRedoAlgorithm) {
+
     'use strict';
 
     var ProjectView = Backbone.View.extend({
@@ -32,7 +34,9 @@ define([
             'click .show-resources': 'showResourcesPopup',
             'click .show-ownership': 'showOwnershipPopup',
             'click .tool-zoom-in' : 'increaseZoom',
-            'click .tool-zoom-out' : 'decreaseZoom'
+            'click .tool-zoom-out' : 'decreaseZoom',
+            'click .tool-undo' : 'setUndo',
+            'click .tool-redo' : 'setRedo'
         },
 
         initialize: function (options) {
@@ -46,6 +50,7 @@ define([
             this.hourLength = 6; // hour length in px
             this.moment = Moment;
             this.taskAlgorithm = TaskAlgorithm;
+            this.undoRedo = new UndoRedoAlgorithm();
         },
 
         onBackToLandingPage: function onBackToLandingPage() {
@@ -119,13 +124,8 @@ define([
                 allTasks[allTasks.length] = changedTask;
                 allTasks[allTasks.length-1].taskId = this.createId(allTasks);
             }
-            console.log('all tasks before saving');
-            console.log(allTasks);
             this.model.set('tasks',allTasks);
             this.model.save();
-            var tasks = this.model.get('tasks');
-            console.log('all tasks after saving');
-            console.log(tasks);
         },
 
         increaseZoom: function(){
@@ -151,19 +151,31 @@ define([
             //change width of 1 hour
             if( trigger === true) {
                 this.hourLength *= 2;
-            } else {
+            } else if(trigger === false) {
                 this.hourLength /= 2;
             }
             for(var i = 0; i < tasks.length; i++){
                 var singleTask = {taskId: tasks[i].taskId, singleTaskPositions: []};
                 var task = timeLine.getWorkDays(tasks[i].startDate,tasks[i].estimateTime);
                 var projectStartDate = timeLine.toDate(0);
+                var projectStartDay = this.moment.unix(projectStartDate,'seconds').format("e");
                 for( var j = 0; j < task.length; j++){
                     var days = this.moment.duration(task[j].realDate - projectStartDate,'seconds').asDays();
                     days = days - days % 1;
                     var settings = this.model.get('settings');
                     var workingHoursPerDay = this.moment.duration(+settings.dayDuration,'seconds').asHours();
                     var notWorkingHours = days * (24 - workingHoursPerDay);
+                    if((this.hourLength <= 3) || (this.hourLength >= 48)) {
+                        var remainder = days % 7;
+                        var notWorkingDays = (days - remainder) / 7 * 2;
+                        if(((projectStartDay === 2) && (remainder >=6 )) ||
+                           ((projectStartDay === 3) && (remainder >=5 )) ||
+                           ((projectStartDay === 4) && (remainder >=4 )) ||
+                           ((projectStartDay === 5) && (remainder >=3 )) ||
+                           ((projectStartDay === 6) && (remainder >=2 )))
+                            notWorkingDays += 2;
+                        notWorkingHours += notWorkingDays * workingHoursPerDay;
+                    }
                     var newTaskStart = task[j].realDate - projectStartDate - notWorkingHours*3600;
                     var positionX = (newTaskStart)*(this.hourLength/3600);
                     var width = (task[j].workHours)*(this.hourLength/3600);
@@ -195,11 +207,9 @@ define([
             this.$el.append(this.attachmentsView.$el);
         },
 
-
         showSettingsPopup: function() {
             this.settingsView = new SettingsView({
-                model: this.model,
-                settings: this.model.get('settings')
+                model: this.model
             });
 
 
@@ -236,10 +246,25 @@ define([
             this.$el.find('.show-project-name').html(name);
         },
 
+        setUndo: function (){
+            var newModel = this.undoRedo.undo();
+            this.model = newModel;
+            this.renderViews();
+        },
+
+        setRedo: function (){
+            var newModel = this.undoRedo.redo();
+            this.model = newModel;
+            this.renderViews();
+        },
+
         onChange: function () {
             /*var updateTasks = this.taskAlgorithm.startAlgorithm(this.model.get('tasks'));
             this.model.set({tasks:updateTasks});
             this.model.save();*/
+            //TODO Change to handle model change event.
+            Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
+            this.undoRedo.save(this.model);
             this.renderViews();
             this.updateProjectName(this.model.get('name'));
         }

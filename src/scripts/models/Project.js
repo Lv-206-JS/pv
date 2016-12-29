@@ -33,12 +33,7 @@ define([
                 }
             ],
             "settings": {
-                "dayDuration": 0,
-                "weekend": [
-                    "",
-                    ""
-                ],
-                "icon": ""
+                "dayDuration": 0
             },
             "tasks": [
                 {

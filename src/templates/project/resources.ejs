@@ -23,9 +23,9 @@
                             <%for(var i = 0; i < resources.length; i++) {%>
                             <div class="table-resource-row">
                                 <div class="table-cell-resource">
-                                    <div class="<%= resources[i].resourceId %>"><%= resources[i].resourceName %></div>
-                                    <span class="resource-link remove-resource" title="Delete" id="<%= resources[i].resourceId %>"></span>
-                                    <span class="resource-link edit-resource" title="Edit" id="<%= resources[i].resourceId %>"></span>
+                                    <div class="<%= resources[i].resourceId %> edit" id="<%= resources[i].resourceId%>"><%= resources[i].resourceName %></div>
+                                    <span class="resource-link remove-resource" id="<%= resources[i].resourceId %>"></span>
+                                    <span class="resource-link edit-resource" id="<%= resources[i].resourceId %>"></span>
                                 </div>
                                 <div id="<%= resources[i].resourceId %>" class="table-cell-resource resource-rate-value"><%= resources[i].rate %></div>
                             </div>
