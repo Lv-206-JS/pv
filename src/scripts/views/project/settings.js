@@ -53,25 +53,14 @@ define(['backbone', 'underscore', 'JST', 'moment'], function (Backbone, _, JST, 
             } else {
                 this.model.set({description: null});
             }
-            var newStartDate = this.$el.find('.start-date').val();
-            var newStartDateInSeconds = this.moment(newStartDate).unix();
+            var newStartDateInSeconds = this.moment(this.$el.find('.start-date').val()).unix();
             this.model.set({startDate: newStartDateInSeconds});
-
             var newDayDuration = this.$el.find('.day-duration').val();
-            var dayDurationSeconds = this.moment.duration(+newDayDuration,'hours').asSeconds();
             var newDayStart = this.$el.find('.working-day-start').val();
-            var dayStartSeconds = this.moment.duration(+newDayStart,'hours').asSeconds();
-
-            this.settings.dayStart = dayStartSeconds;
-            this.settings.dayDuration = dayDurationSeconds;
-            console.log('this.settings');
-            console.log(this.settings);
-
+            this.settings.dayStart = this.moment.duration(+newDayStart,'hours').asSeconds();
+            this.settings.dayDuration = this.moment.duration(+newDayDuration,'hours').asSeconds();
             this.model.set('settings', this.settings);
             this.model.save();
-            var newSettings = this.model.get('settings');
-            console.log(newSettings);
-
             event.preventDefault();
             this.$el.remove();
         },
@@ -80,21 +69,6 @@ define(['backbone', 'underscore', 'JST', 'moment'], function (Backbone, _, JST, 
             event.preventDefault();
             this.$el.remove();
         },
-
-        // formatDate: function formatDate(date){
-        //     var formattedDate = new Date(date);
-        //         console.log(formattedDate);
-        //     var d = formattedDate.getDate();
-        //     var m = formattedDate.getMonth();
-        //     //m += 1;  // JavaScript months are 0-11
-        //     var y = formattedDate.getYear();
-        //     var newDate = new Date(y, m, d);
-        //     console.log(newDate);
-        //     return newDate;
-        //
-        // }
-
-
 
     });
     return SettingsView;
