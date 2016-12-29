@@ -7,7 +7,8 @@ requirejs.config({
         JST: '/scripts/templates',
         Draggabilly: '/bower_components/draggabilly/dist/draggabilly.pkgd',
         timeLine: '/src/scripts/math/timeLine',
-        moment: '/node_modules/moment/moment'
+        moment: '/node_modules/moment/moment',
+        TaskAlgorithm: '/src/scripts/algorithms/taskAlgorithm'
     },
     baseUrl: '/src/scripts'
 });

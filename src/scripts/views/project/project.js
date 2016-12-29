@@ -15,9 +15,9 @@ define([
     'views/project/ownership',
     'views/project/resources',
     'timeLine',
-    'moment'
-
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, TimeLineLib, Moment) {
+    'moment',
+    'TaskAlgorithm'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, TimeLineLib, Moment, TaskAlgorithm) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
@@ -45,7 +45,7 @@ define([
             this.zoom = 100; // zoom value in %
             this.hourLength = 6; // hour length in px
             this.moment = Moment;
-
+            this.taskAlgorithm = TaskAlgorithm;
         },
 
         onBackToLandingPage: function onBackToLandingPage() {
@@ -237,6 +237,9 @@ define([
         },
 
         onChange: function () {
+            /*var updateTasks = this.taskAlgorithm.startAlgorithm(this.model.get('tasks'));
+            this.model.set({tasks:updateTasks});
+            this.model.save();*/
             this.renderViews();
             this.updateProjectName(this.model.get('name'));
         }
