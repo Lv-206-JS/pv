@@ -168,10 +168,10 @@ define([
                         var remainder = days % 7;
                         var notWorkingDays = (days - remainder) / 7 * 2;
                         if(((projectStartDay === 2) && (remainder >=6 )) ||
-                            ((projectStartDay === 3) && (remainder >=5 )) ||
-                            ((projectStartDay === 4) && (remainder >=4 )) ||
-                            ((projectStartDay === 5) && (remainder >=3 )) ||
-                            ((projectStartDay === 6) && (remainder >=2 )))
+                           ((projectStartDay === 3) && (remainder >=5 )) ||
+                           ((projectStartDay === 4) && (remainder >=4 )) ||
+                           ((projectStartDay === 5) && (remainder >=3 )) ||
+                           ((projectStartDay === 6) && (remainder >=2 )))
                             notWorkingDays += 2;
                         notWorkingHours += notWorkingDays * workingHoursPerDay;
                     }
