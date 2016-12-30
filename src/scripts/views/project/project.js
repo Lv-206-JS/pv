@@ -154,7 +154,7 @@ define([
             //change width of 1 hour
             if( trigger === true) {
                 this.hourLength *= 2;
-            } else {
+            } else if (trigger === false) {
                 this.hourLength /= 2;
             }
             for(var i = 0; i < tasks.length; i++){
@@ -174,7 +174,10 @@ define([
                 }
                 tasksPositions[tasksPositions.length] = singleTask;
             }
-            this.ganttChartView = new GanttChartView({model: this.model, tasksPositions: tasksPositions}).render();
+            this.ganttChartView = new GanttChartView({
+                model: this.model, tasksPositions: tasksPositions,
+                zoom: this.zoom, hourLength: this.hourLength
+            }).render();
             this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
         },
 
