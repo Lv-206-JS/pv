@@ -1,0 +1,12 @@
+@import "../basic-popup-view";
+
+.project-price-view {
+  @extend .basic-popup-view;
+
+  .form-wrapper {
+
+    .project-price-form-bottom {
+      @extend .form-bottom;
+    }
+  }
+}

@@ -14,11 +14,12 @@ define([
     'views/project/milestoneEdit',
     'views/project/ownership',
     'views/project/resources',
+    'views/project/projectPrice',
     'timeLine',
     'moment',
     'TaskAlgorithm',
     'undoRedoAlgorithm'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, TimeLineLib, Moment, TaskAlgorithm, UndoRedoAlgorithm) {
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, ProjectPriceView, TimeLineLib, Moment, TaskAlgorithm, UndoRedoAlgorithm) {
 
     'use strict';
 
@@ -32,6 +33,7 @@ define([
             'click .show-settings': 'showSettingsPopup',
             'click .edit-milestone': 'showMilestoneEditPopup',
             'click .show-resources': 'showResourcesPopup',
+            'click .tool-price': 'showProjectPrice',
             'click .show-ownership': 'showOwnershipPopup',
             'click .tool-zoom-in' : 'increaseZoom',
             'click .tool-zoom-out' : 'decreaseZoom',
@@ -241,6 +243,12 @@ define([
             this.resourcesView = new ResourcesView({resources: resources, model: this.model}).render();
             this.$el.append(this.resourcesView.$el);
         },
+
+        showProjectPrice: function(){
+            this.projectPriceView = new ProjectPriceView({model: this.model}).render();
+            this.$el.append(this.projectPriceView.$el);
+        },
+
 
         updateProjectName: function (name) {
             this.$el.find('.show-project-name').html(name);
