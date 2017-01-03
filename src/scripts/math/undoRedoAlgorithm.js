@@ -14,7 +14,7 @@ define(['backbone'], function (Backbone) {
             this.history[this.history.length] = copiedObject;
             this.iterator++;
             if (this.history.length > 1){
-                $('#undo').removeClass('hide-button');
+                $('#undo').attr('disabled',null);
                 this.hideButton('#redo');
                 if(this.history.length === 50)
                     this.rewriteHistory();
@@ -42,12 +42,12 @@ define(['backbone'], function (Backbone) {
         hideButton: function(buttonId){
             if(buttonId === '#undo'){
                 if( this.iterator == 1){
-                    $('#undo').addClass('hide-button');
+                    $('#undo').attr('disabled','disabled');
                 }
             }
             else if(buttonId === '#redo'){
                 if( this.iterator == this.history.length){
-                    $('#redo').addClass('hide-button');
+                    $('#redo').attr('disabled','disabled');
                 }
             }
         },
@@ -55,12 +55,12 @@ define(['backbone'], function (Backbone) {
         showButton: function(buttonId){
             if(buttonId === '#undo'){
                 if( this.iterator > 1){
-                    $('#undo').removeClass('hide-button');
+                    $('#undo').attr('disabled',null);
                 }
             }
             else if(buttonId === '#redo'){
                 if( this.iterator != this.history.length){
-                    $('#redo').removeClass('hide-button');
+                    $('#redo').attr('disabled',null);
                 }
             }
         },
