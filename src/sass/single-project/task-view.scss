@@ -12,6 +12,12 @@
           .tab-container.dependencies-content,
           .tab-container.attachments-content {
             height: 290px;
+            .clone{
+              height: 90%;
+            }
+            .drop-list{
+              height: 100%;
+            }
           }
           .task-resource{
             background-color: $white;

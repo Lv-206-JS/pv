@@ -30,25 +30,25 @@
                         <label class="dependancy-label form-label">Task List</label>
                         <label class="dependancy-label form-label">Depends On</label>
                         <div class="clone">
-                        <div class="drop-list scrollable" id="list-of-tasks">
-                            <table id="all-tasks-list">
-                                <tbody>
-                                    <% for(var i=0;i<tasksList.length;i++) { %>
-                                    <tr class="task-item" id="<%= tasksList[i].taskId%>"><td> <%= tasksList[i].name %></td></tr>
-                                    <% } %>
-                                </tbody>
-                            </table>
-                        </div>
+                            <div class="drop-list scrollable" id="list-of-tasks">
+                                <table id="all-tasks-list">
+                                    <tbody>
+                                        <% for(var i=0;i<tasksList.length;i++) { %>
+                                        <tr class="task-item" id="<%= tasksList[i].taskId%>"><td> <%= tasksList[i].name %></td></tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                        <div class="drop-list scrollable" id="list-of-dependencies">
-                            <table id="dependencies-list">
-                                <tbody>
-                                    <% for(var i=0;i<dependenciesList.length;i++) { %>
-                                    <tr class="task-item" id="<%= dependenciesList[i].taskId%>"><td><%= dependenciesList[i].name %></td> </tr>
-                                    <% } %>
-                                </tbody>
-                            </table>
-                        </div>
+                            <div class="drop-list scrollable" id="list-of-dependencies">
+                                <table id="dependencies-list">
+                                    <tbody>
+                                        <% for(var i=0;i<dependenciesList.length;i++) { %>
+                                        <tr class="task-item" id="<%= dependenciesList[i].taskId%>"><td><%= dependenciesList[i].name %></td> </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-container attachments-content hide-content" >
@@ -78,7 +78,7 @@
                             <% } %>
                         </div>
                     </div>
-                    <input class="form-button delete-task" value="delete">
+                    <input class="form-button delete-task <% if (deleteTask === true) { %> hide-content <% } %> <% if (deleteTask === false) { %> show-content <% } %>" value="delete">
                 </div>
 
             </div>
