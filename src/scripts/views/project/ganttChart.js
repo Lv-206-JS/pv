@@ -164,9 +164,10 @@ define([
                     }
                     // bottomDates are month | topDates are year
                     if (this.hourLength <= 15/10) {
-                        topW = yearWidth;
                         bottomW = this.getMonthWidth(dayWidth);
-                        this.drawGanttChartDateHeaderSVG(topDates, bottomDates, topW, bottomW, rowHeight, header, top, bottom);}
+                        topW = bottomDates.length * bottomW;
+                        this.drawGanttChartDateHeaderSVG(topDates, bottomDates, topW, bottomW, rowHeight, header, top, bottom);
+                    }
                 }.bind(this));
             },
 

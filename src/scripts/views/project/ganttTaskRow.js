@@ -35,7 +35,8 @@ define([
                         rowHeight = 40,
                         rectHeight = rowHeight * 0.6,
                         borderRadius = 2,
-                        padding = 20;
+                        padding = 20,
+                        ganttMinWidth;
                     var taskName = (task.name) ? task.name : null;
                     //get svg from the template
                     var paper = Snap("#task"+id);
@@ -58,9 +59,10 @@ define([
                         });
                         //group elements
                         var g = paper.g(rect, text);
+                        ganttMinWidth = positionX + width + padding + taskName.length * 10;
                     }
                     //set min-width of gantt chart div
-                    var ganttMinWidth = positionX + width + padding + taskName.length * 10;
+                    ganttMinWidth = positionX + width + padding;
                     $("#gantt-chart").css('min-width', ganttMinWidth);
                 });
             },
