@@ -17,7 +17,6 @@ define(['backbone', 'moment'], function (Backbone, Moment) {
     TimeLineLib.prototype.toDate = function(ptlSeconds) {
         var ptlDay = this.dayDuration;
         var ptlDays = Math.floor(ptlSeconds / ptlDay);
-
         var realDate = this.getStartTime();
         var weekDay = "";
         while (ptlDays > 0) {
