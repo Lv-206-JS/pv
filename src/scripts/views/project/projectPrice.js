@@ -32,26 +32,21 @@ define(['backbone',
                 var price = 0;
                 for(var i = 0; i < this.resources.length; i++)
                 {
-                    if(this.resources[i].type === 'human'){
+                    if(this.resources[i].type === 'worker'){
                         var maxDate = 0;
                         for(var j = 0; j < this.tasks.length; j++){
                             var taskEnd = Number(this.tasks[j].startDate) + Number(this.tasks[j].estimateTime);
                             if((this.resources[i].resourceName === this.tasks[j].resource)
                                 && (this.tasks[j].resource !== 'default')
                                 && (maxDate < taskEnd)) {
-                                console.log('taskEnd');
-                                console.log(taskEnd);
                                 maxDate = Number(taskEnd);
                             }
                         }
-                        console.log('maxDate');
-                        console.log(maxDate);
+
                         var workingHours = Moment.duration(+maxDate, 'seconds').asHours();
-                        console.log('workingHours');
-                        console.log(workingHours);
                         price += this.resources[i].rate * workingHours;
                     }
-                    if(this.resources[i].type === 'machine'){
+                    if((this.resources[i].type === 'machine') || (this.resources[i].type === 'freelancer')){
                         var workingTime = 0;
                         for( var j = 0; j < this.tasks.length; j++){
                             if((this.resources[i].resourceName === this.tasks[j].resource)
@@ -59,8 +54,6 @@ define(['backbone',
                                 workingTime += this.tasks[j].estimateTime;
                             }
                         }
-                        console.log('workingTime');
-                        console.log(workingTime);
                         var workingHours = Moment.duration(+workingTime, 'seconds').asHours();
                         price += this.resources[i].rate * workingHours;
                     }
