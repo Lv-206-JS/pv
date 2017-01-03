@@ -60,7 +60,7 @@ define([
                         var g = paper.g(rect, text);
                     }
                     //set min-width of gantt chart div
-                    var ganttMinWidth = positionX + width;
+                    var ganttMinWidth = positionX + width + padding + taskName.length * 10;
                     $("#gantt-chart").css('min-width', ganttMinWidth);
                 });
             },
