@@ -12,9 +12,11 @@ define(['backbone',
 
         initialize: function (options) {
             this.tasks = options.tasks;
-            if(options.task)
+            if(options.task) {
                 this.task = options.task;
-            else
+                this.delete = false;
+            }
+            else {
                this.task = {
                     name: "",
                     estimateTime: 3600,
@@ -23,6 +25,8 @@ define(['backbone',
                     attachments:[],
                     dependsOn: []
                 };
+                this.delete = true;
+            }
             this.resources = options.resources;
             this.tasksList = this.getTasksList(true);
             this.dependenciesList = this.getTasksList(false);
@@ -38,7 +42,8 @@ define(['backbone',
                 tasksList: this.tasksList,
                 dependenciesList: this.dependenciesList,
                 mimetypes: this.mimetypesList,
-                moment: this.moment
+                moment: this.moment,
+                deleteTask: this.delete
             }));
             return this;
         },
