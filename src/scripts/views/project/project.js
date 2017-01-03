@@ -48,8 +48,6 @@ define([
             this.model.setUrl(this.projectId);
             this.model.fetch();
             this.model.on('sync', _.bind(this.onChange, this));
-            this.zoom = 100; // zoom value in %
-            this.hourLength = 6; // hour length in px
             this.moment = Moment;
             this.taskAlgorithm = TaskAlgorithm;
             this.undoRedo = new UndoRedoAlgorithm();
@@ -71,25 +69,16 @@ define([
                 model: this.model,
                 el: this.$el.find('#milestone-view-container')[0]
             }).render();
-            // this.$el.find('#milestone-view-container').html(this.milestoneView.$el);
-
-            this.infoBarView = new InfoBarView({model: this.model}).render();
-            this.$el.find('#info-bar-view-container').html(this.infoBarView.$el);
-
-            //TODO change rendering el passing
-            this.ganttContainerView = new GanttContainerView({model: this.model}).render();
-            this.$el.find('#gantt-view-container').html(this.ganttContainerView.$el);
-
-            this.tasksListView = new TasksListView({model: this.model}).render();
-            this.$el.find('#task-container').html(this.tasksListView.$el);
-            this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
-            this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
-
-            //TODO move to ganttchart view
-            this.findPositionsForTasks();
-
-            this.ganttContainerView.scrollMove();
-
+            this.infoBarView = new InfoBarView({
+                model: this.model,
+                el: this.$el.find('#info-bar-view-container')[0]
+            }).render();
+            this.ganttContainerView = new GanttContainerView({
+                model: this.model,
+                el: this.$el.find('#gantt-view-container')[0]
+            }).render();
+            this.listenTo(this.ganttContainerView.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
+            this.listenTo(this.ganttContainerView.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
             return this;
         },
 
@@ -131,65 +120,11 @@ define([
         },
 
         increaseZoom: function(){
-            if(this.zoom < 200) {
-                this.zoom += 20;
-                this.findPositionsForTasks(true);
-                document.getElementById('zoom-value').innerHTML = this.zoom + "%";
-            }
+            this.ganttContainerView.increaseZoom();
         },
 
         decreaseZoom: function(){
-            if(this.zoom > 20) {
-                this.zoom -= 20;
-                this.findPositionsForTasks(false);
-                document.getElementById('zoom-value').innerHTML = this.zoom + "%";
-            }
-        },
-
-        findPositionsForTasks: function(trigger){
-            var tasks = this.model.get('tasks');
-            var timeLine = new TimeLineLib(this.model);
-            var tasksPositions = [];
-            //change width of 1 hour
-            if( trigger === true) {
-                this.hourLength *= 2;
-            } else if(trigger === false) {
-                this.hourLength /= 2;
-            }
-            for(var i = 0; i < tasks.length; i++){
-                var singleTask = {taskId: tasks[i].taskId, singleTaskPositions: []};
-                var task = timeLine.getWorkDays(tasks[i].startDate,tasks[i].estimateTime);
-                var projectStartDate = timeLine.toDate(0);
-                var projectStartDay = this.moment.unix(projectStartDate,'seconds').format("e");
-                for( var j = 0; j < task.length; j++){
-                    var days = this.moment.duration(task[j].realDate - projectStartDate,'seconds').asDays();
-                    days = days - days % 1;
-                    var settings = this.model.get('settings');
-                    var workingHoursPerDay = this.moment.duration(+settings.dayDuration,'seconds').asHours();
-                    var notWorkingHours = days * (24 - workingHoursPerDay);
-                    if((this.hourLength <= 3) || (this.hourLength >= 48)) {
-                        var remainder = days % 7;
-                        var notWorkingDays = (days - remainder) / 7 * 2;
-                        if(((projectStartDay === 2) && (remainder >=6 )) ||
-                           ((projectStartDay === 3) && (remainder >=5 )) ||
-                           ((projectStartDay === 4) && (remainder >=4 )) ||
-                           ((projectStartDay === 5) && (remainder >=3 )) ||
-                           ((projectStartDay === 6) && (remainder >=2 )))
-                            notWorkingDays += 2;
-                        notWorkingHours += notWorkingDays * workingHoursPerDay;
-                    }
-                    var newTaskStart = task[j].realDate - projectStartDate - notWorkingHours*3600;
-                    var positionX = (newTaskStart)*(this.hourLength/3600);
-                    var width = (task[j].workHours)*(this.hourLength/3600);
-                    singleTask.singleTaskPositions[j] = {positionX: positionX, width: width};
-                }
-                tasksPositions[tasksPositions.length] = singleTask;
-            }
-            this.ganttChartView = new GanttChartView({
-                model: this.model, tasksPositions: tasksPositions,
-                zoom: this.zoom, hourLength: this.hourLength
-            }).render();
-            this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
+            this.ganttContainerView.decreaseZoom();
         },
 
         createId: function(allTasks){

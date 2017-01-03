@@ -59,11 +59,10 @@ define([
                         });
                         //group elements
                         var g = paper.g(rect, text);
+                        //set min-width of gantt chart div
                         ganttMinWidth = positionX + width + padding + taskName.length * 10;
+                        $("#gantt-chart").css('min-width', ganttMinWidth);
                     }
-                    //set min-width of gantt chart div
-                    ganttMinWidth = positionX + width + padding;
-                    $("#gantt-chart").css('min-width', ganttMinWidth);
                 });
             },
 
