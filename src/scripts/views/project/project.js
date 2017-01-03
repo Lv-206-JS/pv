@@ -185,7 +185,10 @@ define([
                 }
                 tasksPositions[tasksPositions.length] = singleTask;
             }
-            this.ganttChartView = new GanttChartView({model: this.model, tasksPositions: tasksPositions}).render();
+            this.ganttChartView = new GanttChartView({
+                model: this.model, tasksPositions: tasksPositions,
+                zoom: this.zoom, hourLength: this.hourLength
+            }).render();
             this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
         },
 
