@@ -86,8 +86,17 @@ define([
                         }
                     }
                     for (i = projectDurationAsDays, j = 0; i >= 0; i--, j++) {
+                        var weekDay;
                         topDates[j] = Moment(date, 'DD/MM/YY').format('DD/MM/YY');
                         date = Moment(date, 'DD/MM/YY').add(1, 'd');
+                        //check if date is weekend
+                        weekDay = Moment(date,'seconds').format('e');
+                        if (weekDay == 0) {
+                            date = Moment(date, 'DD/MM/YY').add(1, 'd');
+                        }
+                        if (weekDay == 6) {
+                            date = Moment(date, 'DD/MM/YY').add(2, 'd');
+                        }
                     }
                 }
                 // bottomDates are dates | topDates are weeks
