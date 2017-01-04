@@ -20,6 +20,7 @@ define([
         initialize: function (options) {
             this.collection = options.collection;
             this.activeId = options.activeId;
+            this.clickTimer = null;
         },
 
         render: function render() {
@@ -31,7 +32,18 @@ define([
 
         onClick: function onClick(e) {
             var id = this.getTargetId(e);
-            Backbone.Events.trigger('selectProject', id);
+            if (!this.clickTimer ) {
+                this.clickTimer = setTimeout(function () {
+                    Backbone.Events.trigger('selectProject', id);
+                    console.log("onClick");
+                }, 700);
+            } else {
+                console.log("onDbClick");
+                clearTimeout(this.clickTimer);
+                this.clickTimer = null;
+                this.onSelectProject(e);
+            }
+
         },
 
         onDoubleClick: function onDoubleClick(e) {

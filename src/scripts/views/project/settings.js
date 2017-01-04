@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
+define(['backbone', 'underscore', 'JST', 'moment'], function (Backbone, _, JST, Moment) {
     'use strict';
 
     var SettingsView = Backbone.View.extend({
@@ -14,12 +14,13 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
 
         initialize: function (options) {
             this.model = options.model;
-            this.settings = options.settings;
+            this.settings = this.model.get('settings');
+            this.moment = Moment;
         },
 
 
         render: function render() {
-            this.$el.html(this.template({model: this.model.attributes,  settings: this.settings}));
+            this.$el.html(this.template({model: this.model.attributes,  settings: this.settings, moment: this.moment}));
             return this;
         },
 
@@ -46,45 +47,20 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
             this.model.set({name: newName});
             var newAuthor = this.$el.find('.author').val();
             this.model.set({author: newAuthor});
-            if (this.$el.find('.task-description').val() !== undefined) {
-                var newDescription = this.$el.find('.task-description').val();
+            if (this.$el.find('.description').val() !== undefined) {
+                var newDescription = this.$el.find('.description').val();
                 this.model.set({description: newDescription});
             } else {
                 this.model.set({description: null});
             }
-            var newStartDate = this.$el.find('.start-date').val();
-            this.model.set({startDate: newStartDate});
-            var newCreateDate = this.$el.find('.create-date').val();
-            this.model.set({createDate: newCreateDate});
-            var newModifiedDate = this.$el.find('.modified-date').val();
-            this.model.set({modifiedDate: newModifiedDate});
-            // var newDayStart = this.$el.find('.day-start').val();
-            // this.settings.dayStart = newDayStart;
-
-            var weekCollection =  $('.weekend');
-            var days = [];
-            for (var i = 0; i < weekCollection.length; i++){
-                if(weekCollection[i].checked == true){
-                    days[i] = weekCollection[i].value;
-                }
-            };
-
-            var projSetting = {
-                weekend: days,
-                dayDuration: this.$el.find('.day-duration').val()
-            };
-
-            this.model.set('settings', projSetting);
-            this.model.save(
-                {
-                    success: function (model, response) {
-                        console.log("success");
-                    },
-                    error: function (model, response) {
-                        console.log("error");
-                    }
-                });
-
+            var newStartDateInSeconds = this.moment(this.$el.find('.start-date').val()).unix();
+            this.model.set({startDate: newStartDateInSeconds});
+            var newDayDuration = this.$el.find('.day-duration').val();
+            var newDayStart = this.$el.find('.working-day-start').val();
+            this.settings.dayStart = this.moment.duration(+newDayStart,'hours').asSeconds();
+            this.settings.dayDuration = this.moment.duration(+newDayDuration,'hours').asSeconds();
+            this.model.set('settings', this.settings);
+            this.model.save();
             event.preventDefault();
             this.$el.remove();
         },
@@ -93,21 +69,6 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
             event.preventDefault();
             this.$el.remove();
         },
-
-        // formatDate: function formatDate(date){
-        //     var formattedDate = new Date(date);
-        //         console.log(formattedDate);
-        //     var d = formattedDate.getDate();
-        //     var m = formattedDate.getMonth();
-        //     //m += 1;  // JavaScript months are 0-11
-        //     var y = formattedDate.getYear();
-        //     var newDate = new Date(y, m, d);
-        //     console.log(newDate);
-        //     return newDate;
-        //
-        // }
-
-
 
     });
     return SettingsView;

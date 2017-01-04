@@ -24,6 +24,7 @@ define(['backbone',
                 'click .tab-general' : 'showResourcesList',
                 'click #create-resource' : 'showResourceEdit',
                 'click .edit-resource' : 'showResourceEdit',
+                'click .edit' : 'showResourceEdit',
                 'click .remove-resource': 'deleteResource',
                 'click .save-resource' : 'saveResource',
                 'click .cancel-button' : 'hideTaskView',
@@ -40,7 +41,6 @@ define(['backbone',
                 this.$el.find('.tab-edit-resource-content').addClass('show-content');
                 var element = $(event.currentTarget);
                 var resourceId = element.attr('id');
-                console.log(this.resources);
                 if( resourceId!=='create-resource'){
                     var arrayNumber;
                     for(var i = 0; i < this.resources.length; i++)
@@ -83,7 +83,6 @@ define(['backbone',
                     "<span class='resource-link edit-resource' id='"+ resource.resourceId +"'></span></div>"+
                     "<div id='"+resource.resourceId+"' class='table-cell-resource'>"+resource.rate+"</div></div>"
                 );
-                console.log(this.resources);
             },
 
             deleteResource: function(event){

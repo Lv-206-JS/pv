@@ -12,17 +12,21 @@ define(['backbone',
 
         initialize: function (options) {
             this.tasks = options.tasks;
-            if(options.task)
+            if(options.task) {
                 this.task = options.task;
-            else
+                this.delete = false;
+            }
+            else {
                this.task = {
                     name: "",
-                    estimateTime: 2,
+                    estimateTime: 3600,
                     resource: "",
                     description: "",
                     attachments:[],
                     dependsOn: []
                 };
+                this.delete = true;
+            }
             this.resources = options.resources;
             this.tasksList = this.getTasksList(true);
             this.dependenciesList = this.getTasksList(false);
@@ -38,7 +42,8 @@ define(['backbone',
                 tasksList: this.tasksList,
                 dependenciesList: this.dependenciesList,
                 mimetypes: this.mimetypesList,
-                moment: this.moment
+                moment: this.moment,
+                deleteTask: this.delete
             }));
             return this;
         },
@@ -197,7 +202,7 @@ define(['backbone',
             var element = $(event.currentTarget);
             var taskId = element.attr('id');
             var listName = element.parent().parent().attr('id');
-            if(listName === 'tasks-list'){
+            if(listName === 'all-tasks-list'){
                 for( var i = 0; i < this.tasksList.length; i++)
                     if(this.tasksList[i].taskId === taskId){
                         this.dependenciesList.push(this.tasksList[i]);
@@ -213,7 +218,7 @@ define(['backbone',
                         this.dependenciesList.splice(i,1);
                         break;
                     }
-                $("#tasks-list tbody").append(element);
+                $("#all-tasks-list tbody").append(element);
             }
         },
 
@@ -294,7 +299,8 @@ define(['backbone',
             this.$el.remove();
         },
 
-        onSubmitChanges: function onSubmitChanges (){
+        onSubmitChanges: function onSubmitChanges (event){
+            event.preventDefault();
             this.task.name = this.$el.find('.task-name').val();
             var estimateTime = this.$el.find('.task-estimate').val();
             this.task.estimateTime = Moment.duration(+estimateTime, 'hours').asSeconds();
@@ -309,7 +315,7 @@ define(['backbone',
                 this.task.dependsOn = false;
             }
             this.trigger('upsertTask', this.tasks, this.task);
-            event.preventDefault();
+
             this.$el.remove();
         }
 

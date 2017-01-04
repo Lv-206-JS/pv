@@ -38,18 +38,18 @@ module.exports.createUser = function(newUser, callback){
       newUser.save(callback);
     });
   });
-}
+};
 
 //find user by username
 module.exports.getUserByUsername = function(username, callback){
   var query = {username: username};
   User.findOne(query, callback);
-}
+};
 
 //find user by id
 module.exports.getUserById = function(id, callback){  
   User.findById(id, callback);
-}
+};
 
 //checking users password
 module.exports.comparePassword = function(candidatePassword, hash, callback){
@@ -57,4 +57,4 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     if(err) throw err;
     callback(null, isMatch);
   });
-}
+};

@@ -27,7 +27,16 @@ define([
                     tasks: this.tasks
                 }));
                 this.renderTaskRows();
+                this.scrollMove();
                 return this;
+            },
+
+            scrollMove: function() {
+                //TODO make it work faster
+                $('#task-container').scroll(function() {
+                    var scrollPos = $('#task-container').scrollTop();
+                    $('#gantt-chart-container').scrollTop(scrollPos);
+                });
             },
 
             renderTaskRows: function () {
