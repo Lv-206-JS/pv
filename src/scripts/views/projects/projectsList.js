@@ -40,7 +40,6 @@ define([
                 this.clickTimer = null;
                 this.onSelectProject(e);
             }
-
         },
 
         onSelectProject: function (e) {
