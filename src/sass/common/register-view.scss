@@ -5,25 +5,25 @@
   .form-wrapper{
     .tab-container{
       .form-input-text.error{
-          border-color: #FF0000;
+          border-color: $red;
         }
 
       .form-input-text.error::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-          color:    #FF0000;
+          color:    $red;
         }
 
       .form-input-text.error:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-          color:    #FF0000;
+          color:    $red;
           opacity:  1;
         }
 
       .form-input-text.error::-moz-placeholder { /* Mozilla Firefox 19+ */
-          color:    #FF0000;
+          color:    $red;
           opacity:  1;
         }
 
       .form-input-text.error:-ms-input-placeholder { /* Internet Explorer 10-11 */
-          color:    #FF0000;
+          color:    $red;
         }
 
       .form-label.confirm-password-label{

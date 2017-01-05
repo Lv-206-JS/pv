@@ -4,20 +4,22 @@ $project-timeline-width: 80%;
 $project-timeline-height: 25px;
 $project-timeline-background: linear-gradient(265deg, $green, $light-green);
 $milestone-size: 25px;
+$milestone-position-step: 50%;
+$milestone-color: #D80027;
+$milestone-date-after-border-step: 5px;
 
 .milestone-view {
   @extend .row-container;
   order:2;
-  justify-content: center;
-  align-items: center;
-  position: relative;
   width: 100%;
   height: $milestone-container-height;
   background-color: $milestone-container-background;
 }
 
 .milestone-center {
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   width: 100%;
 }
 
@@ -26,8 +28,6 @@ $milestone-size: 25px;
   display: block;
   width: $project-timeline-width;
   height: $project-timeline-height;
-  margin-right: auto;
-  margin-left: auto;
   border-radius: $border-radius;
   background-image: $project-timeline-background;
     
@@ -36,26 +36,48 @@ $milestone-size: 25px;
     }
 }
 
-.start-date {
-  //position: absolute;
-  top: 0px;
-  left: 0px;
+.start-date,
+.end-date {
+text-align: center;
 }
 
-.end-date {
+.milestone-position {
   position: absolute;
-  top: 0px;
-  right: 0px;
+}
+
+.milestone-date-wrap {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 700ms ease;
 }
 
 .milestone-date {
   position: absolute;
-  top: -20px;
+  bottom: $milestone-position-step;
+  right: -$milestone-position-step*3;
+  z-index: 1;
+  width: $milestone-size*5;
+  background-color: $milestone-color;
+  text-align: center;
+  padding: 5px 0;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.milestone-date::after {
+  content: "";
+  position: absolute;
+  top: $milestone-position-step*2;
+  left: $milestone-position-step;
+  margin-left: -$milestone-date-after-border-step;
+  border-width: $milestone-date-after-border-step;
+  border-style: solid;
+  border-color: $milestone-color transparent transparent transparent;
 }
 
 .milestone-img {
-  position: absolute;
-  left: 30px;
+  position: relative;
+  right: $milestone-size/2;
   bottom: -($project-timeline-height/2);
   width: $milestone-size;
   height: $milestone-size;
@@ -66,5 +88,10 @@ $milestone-size: 25px;
     &:hover {
       background-image: url('../../../images/milestone1.svg');
       transform: translate(0px, $project-timeline-height/2);
+    }
+
+    &:hover + .milestone-date-wrap {
+      visibility: visible;
+      opacity: 1;
     }
 }

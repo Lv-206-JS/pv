@@ -3,16 +3,37 @@
 .task-view {
   @extend .basic-popup-view;
 
-  .task-attachments{
-    @extend .attachments;
-    //heigth: 220px;
-    //margin: 0 auto;
-  }
+  .form-wrapper {
 
-  .task-form-bottom{
-    @extend .form-bottom;
-  }
-  .tasks-container{
-    height: 320px;
+      .tasks-container {
+        height: 340px;
+        .tab-container {
+          .tab-container.general-content,
+          .tab-container.dependencies-content,
+          .tab-container.attachments-content {
+            height: 290px;
+            .clone{
+              height: 90%;
+            }
+            .drop-list{
+              height: 100%;
+            }
+          }
+          .task-resource{
+            background-color: $white;
+          }
+          .task-attachments {
+            @extend .attachments;
+          }
+          .form-button.delete-task{
+            background-color: $red;
+            width: 75px;
+          }
+        }
+      }
+
+    .task-form-bottom {
+      @extend .form-bottom;
+    }
   }
 }

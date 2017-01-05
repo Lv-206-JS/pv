@@ -5,8 +5,8 @@
     <% for(var i = 0; i < projects.length; i++) {%>
         <li class="projects-list-item" id="dbl-click-item"<% if (projects[i].id === activeId) { %>active<% } %>" data-id="<%= projects[i].id %>">
             <a class="projects-link-name"> <%= projects[i].name %> </a>
-            <a class="project-link edit-project" data-id="<%= projects[i].id %>"></a>
-            <a class="project-link delete-project" data-id="<%= projects[i].id %>"></a>
+            <a class="project-link edit-project" title="Edit" data-id="<%= projects[i].id %>"></a>
+            <a class="project-link delete-project" title="Delete" data-id="<%= projects[i].id %>"></a>
             <button class="projects-go-link" data-id="<%= projects[i].id %>">Go to!</button>
         </li>
     <% } %>

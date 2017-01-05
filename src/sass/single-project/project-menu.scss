@@ -18,7 +18,14 @@
 }
 
 .tool-bar {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.zoom-value{
   display: inline-block;
+  margin-right: 10px;
 }
 
 .tool-img {
@@ -26,7 +33,6 @@
   overflow: visible;
   width: 25px;
   height: 25px;
-  margin-top: 7px;
   margin-right: 5px;
   margin-left: 5px;
   opacity: $icon-opacity;
@@ -40,7 +46,6 @@
 }
 
 .tool-img.tool-zoom-in {
-  margin-top: 5px;
   background-image: url('../../../images/zoom-in.svg');
 }
 
@@ -54,6 +59,10 @@
 
 .tool-img.tool-redo {
   background-image: url('../../../images/redo.svg');
+}
+
+.tool-img.tool-price {
+  background-image: url('../../../images/price.svg');
 }
 
 .tool-img.tool-critical-way {
@@ -71,3 +80,19 @@
 .tool-img.tool-settings {
   background-image: url('../../../images/settings.svg');
 }
+
+.tool-img.tool-ownership {
+  background-image: url('../../../images/ownership.svg');
+}
+
+.tool-img.tool-resources {
+  background-image: url('../../../images/resources.svg');
+}
+
+.hide-button{
+  display: none;
+}
+
+
+
+

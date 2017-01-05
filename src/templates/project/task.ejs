@@ -15,9 +15,14 @@
                         <label class="form-label">Task Name:</label>
                         <input class="form-input-text task-name" maxlength="256" value="<%= task.name %>" placeholder="Task Name" required="required" type="text">
                         <label class="form-label">Assignee:</label>
-                        <input class="form-input-text task-resource" maxlength="256" value="<%= task.resource %>" placeholder="Assignee Name" type="text">
+                        <select class="form-input-text task-resource" name="resource" value="<%= task.resource%>">
+                            <option value="default" ></option>
+                            <% for(var i = 0; i < resources.length; i++) { %>
+                                <option value="<%= resources[i].resourceName %>" <% if(task.resource == resources[i].resourceName) { %>selected<% } %>><%= resources[i].resourceName %></option>
+                            <% } %>
+                        </select>
                         <label class="form-label">Estimate:</label>
-                        <input class="form-input-text task-estimate" maxlength="256" value="<%= task.estimateTime %>" placeholder="Estimate hours" type="text">
+                        <input class="form-input-text task-estimate" maxlength="256" value="<%= moment.duration(task.estimateTime, 'seconds').asHours() %>" placeholder="Estimate hours" type="number">
                         <label class="form-label description-label">Description:</label>
                         <textarea class="form-input-description task-description" maxlength="5000" placeholder="Task Description"><%= task.description %></textarea>
                     </div>
@@ -25,25 +30,25 @@
                         <label class="dependancy-label form-label">Task List</label>
                         <label class="dependancy-label form-label">Depends On</label>
                         <div class="clone">
-                        <div class="drop-list scrollable" id="list-of-tasks">
-                            <table id="tasks-list">
-                                <tbody>
-                                    <% for(var i=0;i<tasksList.length;i++) { %>
-                                    <tr class="task-item" id="<%= tasksList[i].taskId%>"><td> <%= tasksList[i].name %></td></tr>
-                                    <% } %>
-                                </tbody>
-                            </table>
-                        </div>
+                            <div class="drop-list scrollable" id="list-of-tasks">
+                                <table id="all-tasks-list">
+                                    <tbody>
+                                        <% for(var i=0;i<tasksList.length;i++) { %>
+                                        <tr class="task-item" id="<%= tasksList[i].taskId%>"><td> <%= tasksList[i].name %></td></tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                        <div class="drop-list scrollable" id="list-of-dependencies">
-                            <table id="dependencies-list">
-                                <tbody>
-                                    <% for(var i=0;i<dependenciesList.length;i++) { %>
-                                    <tr class="task-item" id="<%= dependenciesList[i].taskId%>"><td><%= dependenciesList[i].name %></td> </tr>
-                                    <% } %>
-                                </tbody>
-                            </table>
-                        </div>
+                            <div class="drop-list scrollable" id="list-of-dependencies">
+                                <table id="dependencies-list">
+                                    <tbody>
+                                        <% for(var i=0;i<dependenciesList.length;i++) { %>
+                                        <tr class="task-item" id="<%= dependenciesList[i].taskId%>"><td><%= dependenciesList[i].name %></td> </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-container attachments-content hide-content" >
@@ -62,8 +67,8 @@
                                 <div id="delete-attachment" data-id="<%= task.attachments[i].attachmentId %>" >
                                     <img src="/images/cancel.svg" class="delete"  alt="delete attachment"/>
                                 </div>
-                                <a class="file-reference" href="<%=task.attachments[i].relativePath%>" target="_blank">
-                                    <img src="/images/word.png" class="attachment-image" alt="attachment image"/>
+                                <a class="file-reference" download href="<%=task.attachments[i].relativePath%>" target="_blank">
+                                    <img src="<%= mimetypes[i]%>" class="attachment-image" alt="attachment image"/>
                                     <% var str = task.attachments[i].fileName; %>
                                     <% if(task.attachments[i].fileName.length>9)  { str = task.attachments[i].fileName.substring(0,9)+'..';} %>
 
@@ -73,12 +78,14 @@
                             <% } %>
                         </div>
                     </div>
+                    <input class="form-button delete-task <% if (deleteTask === true) { %> hide-content <% } %> <% if (deleteTask === false) { %> show-content <% } %>" value="delete">
                 </div>
+
             </div>
         </div>
         <div class="task-form-bottom">
-            <input class="form-button ok-button" type="submit" value="ok">
-            <input class="form-button cancel-button" type="submit" value="cancel">
+            <input type="button" class="form-button ok-button" value="ok">
+            <input type="button" class="form-button cancel-button" value="cancel">
         </div>
     </form>
 </div>

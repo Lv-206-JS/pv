@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
+define(['backbone', 'underscore', 'JST', 'moment'], function (Backbone, _, JST, Moment) {
     'use strict';
 
     var InfoBarView = Backbone.View.extend({
@@ -7,6 +7,7 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
 
         initialize: function (options) {
             this.model = options.model;
+            this.moment = Moment;
         },
 
         render: function render() {
@@ -19,7 +20,8 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
                 modifiedDate: this.model.get('modifiedDate'),
                 settings : this.model.get('settings'),
                 milestones: this.model.get('milestones'),
-                tasks: this.model.get('tasks')
+                tasks: this.model.get('tasks'),
+                moment: this.moment
             }));
             return this;
         }

@@ -16,32 +16,22 @@
                         <label class="form-label">Author:</label>
                         <input class="form-input-text author" maxlength="256" value="<%= model.author %>" placeholder="Author" type="text">
                         <label class="form-label description-label">Description:</label>
-                        <textarea class="form-input-description task-description" maxlength="5000" placeholder="Project Description"><%= model.description %></textarea>
+                        <textarea class="form-input-description description" maxlength="5000" placeholder="Project Description"><%= model.description %></textarea>
                     </div>
                     <div class="tab-container settings-content hide-content">
                         <label class="form-label">Start Date:</label>
-                        <input class="form-input-text project-start-date" maxlength="256" value="" placeholder="Project Start Date" type="date">
+                        <input class="form-input-text start-date" maxlength="256" value="<%= moment.unix(+model.startDate).format('YYYY-MM-DD')%>" placeholder="Project Start Date" type="date">
                         <label class="form-label day-start-label">Working Day Start:</label>
-                        <input class="form-input-text day-start" maxlength="256" value="" placeholder="Working Day Start" type="number">
+                        <input class="form-input-text working-day-start" maxlength="256" value="<%= moment.duration(+settings.dayStart, 'seconds').asHours() %>" placeholder="Working Day Start" type="number">
                         <label class="form-label">Hours Per Day:</label>
-                        <input class="form-input-text day-duration" maxlength="256" value="" placeholder="Working Hours Per Day" type="number">
-                        <div class="days-off">
-                            <label class="form-label">Weekend:</label>
-                            <input class="weekend" type="checkbox" value=1>Mon
-                            <input class="weekend" type="checkbox" value=2>Tue
-                            <input class="weekend" type="checkbox" value=3>Wed
-                            <input class="weekend" type="checkbox" value=4>Thu
-                            <input class="weekend" type="checkbox" value=5>Fri
-                            <input class="weekend" type="checkbox" value=6>Sat
-                            <input class="weekend" type="checkbox" value=7>Sun
-                        </div>
+                        <input class="form-input-text day-duration" maxlength="256" value="<%= moment.duration(+settings.dayDuration, 'seconds').asHours() %>" placeholder="Working Hours Per Day" type="number">
                     </div>
                 </div>
             </div>
         </div>
         <div class="settings-form-bottom">
-            <input class="form-button ok-button" type="submit" value="ok">
-            <input class="form-button cancel-button" type="submit" value="cancel">
+            <input class="form-button ok-button" type="button" value="ok">
+            <input class="form-button cancel-button" type="button" value="cancel">
         </div>
     </form>
 </div>

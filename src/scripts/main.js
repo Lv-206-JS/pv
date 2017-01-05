@@ -5,7 +5,11 @@ requirejs.config({
         underscore: '/bower_components/underscore/underscore',
         Snap: '/bower_components/Snap.svg/dist/snap.svg',
         JST: '/scripts/templates',
-        Draggabilly: '/bower_components/draggabilly/dist/draggabilly.pkgd'
+        Draggabilly: '/bower_components/draggabilly/dist/draggabilly.pkgd',
+        timeLine: '/src/scripts/math/timeLine',
+        moment: '/node_modules/moment/moment',
+        TaskAlgorithm: '/src/scripts/algorithms/taskAlgorithm',
+        undoRedoAlgorithm: '/src/scripts/math/undoRedoAlgorithm'
     },
     baseUrl: '/src/scripts'
 });

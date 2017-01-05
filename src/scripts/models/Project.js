@@ -33,12 +33,7 @@ define([
                 }
             ],
             "settings": {
-                "dayDuration": 0,
-                "weekend": [
-                    "",
-                    ""
-                ],
-                "icon": ""
+                "dayDuration": 0
             },
             "tasks": [
                 {
@@ -62,6 +57,14 @@ define([
                             "mimetype": ""
                         }
                     ]
+                }
+            ],
+            "resources": [
+                {
+                    "resourceId": 0,
+                    "resourceName": "",
+                    "type": "",
+                    "rate": 0
                 }
             ]
         }

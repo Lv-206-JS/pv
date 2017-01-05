@@ -10,12 +10,11 @@ define([
                 var TasksListView = Backbone.View.extend({
                     template: JST['project:tasksList'],
                     id: 'tasks-list',
-                    className: 'resizable',
 
             events: {
                 'click .add-task': 'onTaskAdd',
                 'click .icon-edit': 'onTaskEdit',
-                'click .icon-remove': 'onTaskRemove'
+                'dblclick .cell-task': 'onTaskEdit'
             },
 
             initialize: function (options) {
@@ -28,7 +27,16 @@ define([
                     tasks: this.tasks
                 }));
                 this.renderTaskRows();
+                this.scrollMove();
                 return this;
+            },
+
+            scrollMove: function() {
+                //TODO make it work faster
+                $('#task-container').scroll(function() {
+                    var scrollPos = $('#task-container').scrollTop();
+                    $('#gantt-chart-container').scrollTop(scrollPos);
+                });
             },
 
             renderTaskRows: function () {
@@ -36,7 +44,7 @@ define([
                 var lastElem = this.$el.find('.table-task-header');
                 for (var i = 0; i < this.tasks.length; i++) {
                     task = this.tasks[i];
-                    this.taskRowView = new TaskRowView({tasks: this.tasks, task: task}).render();
+                    this.taskRowView = new TaskRowView({model: this.model, task: task}).render();
                     $(this.taskRowView.$el).insertAfter(lastElem);
                     lastElem = this.$el.find('.table-task-row:last');
                 }
@@ -65,20 +73,6 @@ define([
 
             onTaskAdd: function onTaskAdd() {
                 this.renderTaskAddView();
-            },
-
-            onTaskRemove : function onTaskRemove(e) {
-                var target = $(e.currentTarget);
-                var taskId = target["0"].id;
-                for (var i = 0; i < this.tasks.length; i++) {
-                    if (this.tasks[i].taskId == taskId) {
-                        break;
-                    }
-                }
-
-                this.tasks.splice(i,1);
-                this.model.set("tasks", this.tasks);
-                this.model.save();
             }
 
         });

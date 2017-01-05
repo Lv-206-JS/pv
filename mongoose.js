@@ -14,12 +14,12 @@ var ProjectsSchema = new Schema({
     name: {type: String, required: false},
     description: {type: String, required: false},
     author: {type: String, required: false},
-    startDate: {type: Date, required: false},
-    createDate: {type: Date, required: false},
-    modifiedDate: {type: Date, required: false},
+    startDate: {type: Number, required: false},
+    createDate: {type: Number, required: false},
+    modifiedDate: {type: Number, required: false},
     milestones: [{
         name: {type: String, required: false},
-        date: {type: Date, required: false},
+        date: {type: Number, required: false},
         dependsOn: [{
             taskId: {type: String, required: false},
             taskName : {type: String, required: false},
@@ -28,8 +28,9 @@ var ProjectsSchema = new Schema({
 
     }],
     settings: {
-        dayDuration: {type: String, required: false},
-        weekend: {type: Array, required: false},
+        dayDuration: {type: Number, required: false},
+        dayStart: {type: Number, required: false},
+        // weekend: {type: Array, required: false},
         icon: {type: String, required: false}
     },
     tasks: [{
@@ -37,7 +38,8 @@ var ProjectsSchema = new Schema({
         projectId: {type: String, required: false},
         name: {type: String, required: false},
         description: {type: String, required: false},
-        estimateTime: {type: String, required: false},
+        startDate: {type: String, required: false},
+        estimateTime: {type: Number, required: false},
         resource: {type: String, required: false},
         dependsOn: [{
             taskId: {type: String, required: false},
@@ -55,6 +57,12 @@ var ProjectsSchema = new Schema({
         fileName: {type: String, required: false},
         relativePath: {type: String, required: false},
         mimetype: {type: String, required: false}
+    }],
+    resources: [{
+        resourceId: {type: String, required: false},
+        resourceName: {type: String, required: false},
+        type: {type: String, required: false},
+        rate: {type: String, required: false}
     }]
 });
 
@@ -74,7 +82,7 @@ var UsersSchema = new Schema ({
 
 var OwnershipsSchema = new Schema ({
     projectId: {type: String, required: false},
-    userId: {type: String, required: false},
+    email: {type: String, required: false},
     role: {type: String, required: false}
 }, { collection: 'ownerships' });
 
