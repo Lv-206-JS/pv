@@ -1,29 +1,33 @@
 'use strict';
-function TaskAlgo() {
-
-    this.tasks;
-    //creating matrix
-    this.matrix = this.matrixCreate();
-
-    this.levels = [];
-}
+function TaskAlgo() {}
 
 var proto = TaskAlgo.prototype;
 
 //function for starting task algorithm
 proto.startAlgorithm = function (tasks) {
     this.tasks = tasks;
-
+    this.levels = [];
+    if(this.tasks.length == 0) {
+        return this.tasks;
+    }
+    this.matrix = this.matrixCreate();
     this.setMatrix();
-    
+    var levels, tasksInLevels, profitLevels;
+    if(!this.checkDependenciesExist()) {
+        levels =  this.setTasksWithoutDepToLevels();
+        profitLevels = this.setTasksWithRes(levels);
+        this.getLevelsInLine(profitLevels);
+        this.getTasksStartDays();
+        return this.tasks;
+    }
     //creating levels and setting tasks to sub levels
-    var levels = this.createLevels(this.matrix);
-    var tasksInLevels = this.setTasksToLevels(levels);
+    levels = this.createLevels(this.matrix);
+    tasksInLevels = this.setTasksToLevels(levels);
 
-    //var profitLevels = this.setTasksToSubLevels(tasksInLevels);
-    var profitLevels = this.setTasksWithRes(tasksInLevels);
+    profitLevels = this.setTasksWithRes(tasksInLevels);
     this.getLevelsInLine(profitLevels);
     this.getTasksStartDays(profitLevels);
+
     //return setted tasks by sub levels
     return this.tasks;
 };
@@ -43,7 +47,7 @@ proto.setMatrix = function () {
     var tasks = this.tasks;
     for(var i = 0; i < tasks.length; i++){
         for(var j = 0; j < tasks[i].dependsOn.length; j++) {
-            this.matrix[tasks[i].dependsOn[j]][tasks[i].val] = 1;
+            this.matrix[this.findTaskObject(tasks[i].dependsOn[j].taskId, 'id')][i] = 1;
         }
     }
 };
@@ -117,7 +121,7 @@ proto.setTasksToLevels = function (levels) {
         tasksLevels[i] = [];
         for(var j = 0; j < levels[i].length; j++) {
             if(levels[i][j] == 0 && (i == 0 || (i > 0 && levels[i-1][j] != 0))) {
-                tasksLevels[i].push(tasks[j].val);
+                tasksLevels[i].push(tasks[j].taskId);
             }         
         }
     }
@@ -128,14 +132,19 @@ proto.setTasksToLevels = function (levels) {
 proto.setTasksWithRes = function(tasksLevels) {
     var levels = [];
     for(var i = 0; i < tasksLevels.length; i++) {
-        var count = 0;
+        var count = 0,
+            idPresentTask;
         levels[i] = [];
         levels[i][count] = [];
         for(var j = 0; j < tasksLevels[i].length; j++) {
-            if(j == 0) {
+            idPresentTask = this.findTaskObject(tasksLevels[i][j], 'id');
+            if(i != 0 && this.checkSettedDependenciesExist(levels[i-1][levels[i-1].length-1], tasksLevels[i][j])) {
+                levels[i-1][levels[i-1].length-1].push(tasksLevels[i][j]);
+            }
+            else if(j == 0) {
                 levels[i][count].push(tasksLevels[i][j]);
             }
-            else if(this.checkSimilarResource(tasksLevels[i], this.tasks[tasksLevels[i][j]].val)) {
+            else if(this.checkSimilarResource(tasksLevels[i], this.tasks[idPresentTask].taskId)) {
                 count++;
                 levels[i][count] = [];
                 levels[i][count].push(tasksLevels[i][j]);
@@ -164,18 +173,24 @@ proto.getTasksStartDays = function() {
 	var prevDate = 0, estimates = [], tempTask;
 	for(var i = 0; i < this.levels.length; i++) {
 		for(var j = 0; j < this.levels[i].length; j++) {
-			tempTask = this.findTaskObject(this.levels[i][j]);
-			estimates.push(tempTask.estimateDate);
-			tempTask.startDay = prevDate;
+			tempTask = this.findTaskObject(this.levels[i][j], 'object');
+			estimates.push(tempTask.estimateTime);
+			tempTask.startDate = prevDate;
 		}
 		prevDate += Math.max.apply(Math, estimates);
 	} 
 };
 
-proto.findTaskObject = function(id) {
+proto.findTaskObject = function(id, whatReturn) {
 	for(var i = 0; i < this.tasks.length; i++) {
-		if(this.tasks[i].val == id) {
-			return this.tasks[i];
+		if(this.tasks[i].taskId == id) {
+            if(whatReturn == 'object') {
+                return this.tasks[i];
+            }
+            else if(whatReturn == 'id') {
+                return i;
+            }
+
 		}
 	}
 };
@@ -183,10 +198,42 @@ proto.findTaskObject = function(id) {
 //return true if task in current level have similar resource
 proto.checkSimilarResource = function(tasksLevels, taskVal) {
     for(var i = 0; i < tasksLevels.length; i++) {
-        if(this.tasks[tasksLevels[i]].resource == this.tasks[taskVal].resource && tasksLevels[i] != taskVal) {
+        if(this.tasks[this.findTaskObject(tasksLevels[i], 'id')].resource == this.tasks[this.findTaskObject(taskVal, 'id')].resource && tasksLevels[i] != taskVal) {
             return true;
         }
     }
     return false;
 };
 
+proto.checkDependenciesExist = function () {
+    for(var i = 0; i < this.tasks.length; i++) {
+        if(this.tasks[i].dependsOn.length != 0) {
+            return true;
+        }
+    }
+    return false;
+};
+
+proto.checkSettedDependenciesExist = function (level, id) {
+    var presentId = this.findTaskObject(id, 'id'), tempId;
+    for(var i = 0; i < level.length; i++) {
+        tempId = this.findTaskObject(level[i], 'id');
+        for(var j = 0; j < this.tasks[presentId].dependsOn.length; j++) {
+            if(this.tasks[presentId].dependsOn[j].taskId == level[i] || this.tasks[presentId].resource == this.tasks[tempId].resource) {
+                return false;
+            }
+        }
+    }
+    return true;
+};
+
+proto.setTasksWithoutDepToLevels = function () {
+    var levels = [];
+    levels[0] = [];
+    for(var i = 0; i < this.tasks.length; i++) {
+        levels[0].push(this.tasks[i].taskId);
+    }
+    return levels;
+};
+
+exports.taskAlgo = TaskAlgo.prototype;

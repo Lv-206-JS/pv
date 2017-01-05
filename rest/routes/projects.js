@@ -4,19 +4,23 @@ var router = express.Router();
 var Project  = require('../../mongoose').ProjectModel;
 var Ownerships  = require('../../mongoose').OwnershipsModel;
 
+//Error handler function
+function handleError(response, message, code) {
+    response.status(code || 500).json({"error": message});
+}
 
 function authenticateUser(req, res, next){
     if(req.isAuthenticated()){
         return next();
     } else {
-        return res.send(401);
+        return handleError(response, 'User is not authenticate!', 401);
     }
 }
 
 function checkOwnership(request, response, next) {
     Ownerships.findOne({'projectId': request.params.id, 'email': request.user.email}, function (err, ownerShip) {
         if(err) {
-            //error
+            return handleError(response, err.message, err.code);
         }
         else if(ownerShip != undefined) {
             if(ownerShip.role === 'creator' || ownerShip.role === 'editor') {
@@ -37,7 +41,7 @@ function addOwnership(pid, email) {
     });
     ownerShipToCreate.save(function (err, ownerShip) {
         if (err) {
-            //error
+            return handleError(response, err.message, err.code);
         }
     });
 }
@@ -51,11 +55,6 @@ function deleteOwnerShip(pid) {
             handleError(response, "Failed to delete ownerShip!", 404);
         }
     });
-}
-
-//Error handler function
-function handleError(response, message, code) {
-    response.status(code || 500).json({"error": message});
 }
 
 //get all projects
@@ -82,12 +81,8 @@ router.post('/', authenticateUser, function (request, response) {
 
     var errors = request.validationErrors();
 
-    console.log(errors);
-
     if (errors.length) {
-         response.status(300);
-         response.send("Fill in the fields!");
-         return;
+        return handleError(response, 'Fill in the fields!', 300);
     }
 
     var projectToCreate = new Project({
@@ -137,7 +132,7 @@ router.put('/:id', authenticateUser, checkOwnership, function (request, response
         attachments: request.body.attachments,
         resources: request.body.resources
     });
-    //console.log(projectToUpdate);
+
     Project.findOne({'id': request.params.id}, function (err, project) {
         Project.schema.eachPath(function(path) {
             if (path != '_id' && path != '__v' && path != 'id') {

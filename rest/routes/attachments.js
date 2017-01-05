@@ -21,9 +21,9 @@ function authenticateUser(req, res, next){
 }
 
 function checkOwnership(request, response, next) {
-    var projectReference = request.headers.referer;
-    var lastSlash = projectReference.lastIndexOf("/");
-    var projectId = projectReference.slice(lastSlash+1);
+    var projectReference = request.headers.referer,
+        lastSlash = projectReference.lastIndexOf("/"),
+        projectId = projectReference.slice(lastSlash+1);
     Ownerships.findOne({'projectId': projectId, 'email': request.user.email}, function (err, ownerShip) {
         if(err) {
             //error
