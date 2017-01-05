@@ -4,15 +4,15 @@ var Ownerships  = require('../../mongoose').OwnershipsModel;
 var Users  = require('../../mongoose').UsersModel;
 
 //Error handler function
-function handleError(response, message, code) {
-    response.status(code || 500).json({"error": message});
+function handleError(response, error, code) {
+    response.status(code || 500).json({"error": error});
 }
 
 function authenticateUser(req, res, next){
     if(req.isAuthenticated()){
         return next();
     } else {
-        return res.send(401);
+        return handleError(response, 'User is not authenticate!', 401);
     }
 }
 
@@ -22,10 +22,10 @@ function getProjectId(request) {
     return projectReference.slice(lastSlash+1);
 }
 
-function checkOwnership(request, response, next) {
+function checkCreatorOwnership(request, response, next) {
     Ownerships.findOne({'projectId': getProjectId(request), 'email': request.user.email}, function (err, ownerShip) {
         if(err) {
-            //error
+            return handleError(response, err.message, err.code);
         }
         else if(ownerShip != undefined) {
             if(ownerShip.role === 'creator') {
@@ -38,7 +38,23 @@ function checkOwnership(request, response, next) {
     });
 }
 
-router.get('/', authenticateUser, checkOwnership, function (request, response) {
+function checkEditorOwnership(request, response, next) {
+    Ownerships.findOne({'projectId': getProjectId(request), 'email': request.user.email}, function (err, ownerShip) {
+        if(err) {
+            return handleError(response, err.message, err.code);
+        }
+        else if(ownerShip != undefined) {
+            if(ownerShip.role === 'creator' || ownerShip.role === 'editor') {
+                next();
+            }
+            else {
+                return response.send({access: 'Denied!'});
+            }
+        }
+    });
+}
+
+router.get('/', authenticateUser, checkEditorOwnership, function (request, response) {
     Ownerships.find({'projectId': getProjectId(request)}, function (err, ownerShips) {
         if(!ownerShips || err) {
             handleError(response, "Failed to find ownerShip!", 404);
@@ -49,7 +65,7 @@ router.get('/', authenticateUser, checkOwnership, function (request, response) {
     });
 });
 
-router.post('/', authenticateUser, checkOwnership, function (request, response) {
+router.post('/', authenticateUser, checkCreatorOwnership, function (request, response) {
     var errors = [];
 
     //check is there email
@@ -73,7 +89,7 @@ router.post('/', authenticateUser, checkOwnership, function (request, response) 
     }).then(function () {
         //response errors if any
         if(errors.length) {
-            return response.status(200).json(JSON.stringify({"error": errors}));
+            return handleError(response, errors, 200);
         }
         var ownerShipToCreate = new Ownerships({
             projectId: request.body.projectId,
@@ -91,7 +107,7 @@ router.post('/', authenticateUser, checkOwnership, function (request, response) 
     });
 });
 
-router.delete('/:email', authenticateUser, checkOwnership, function (request, response) {
+router.delete('/:email', authenticateUser, checkCreatorOwnership, function (request, response) {
     var errors = [];
 
     //check is there email
@@ -106,11 +122,12 @@ router.delete('/:email', authenticateUser, checkOwnership, function (request, re
         if(err || !ownership) {
             errors.push({'error': 'User don`t have this ownership!'})
         }
+
     }).then(function () {
 
         //response errors if any
         if(errors.length) {
-            return response.status(200).json(JSON.stringify({"error": errors}))
+            return handleError(response, errors, 200);
         }
         Ownerships.findOneAndRemove({
             'projectId': getProjectId(request),
