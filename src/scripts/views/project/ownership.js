@@ -63,7 +63,6 @@ define(['backbone',
             });
             ownershipToCreate.save({
                 success:function (model, response) {
-                    console.log(arguments);
                     this.collection.add(ownershipToCreate);
                     this.onCollectionLoad();
                 }.call(this)
@@ -82,7 +81,6 @@ define(['backbone',
                     this.onCollectionLoad();
                 }.call(this, email)
             });
-
         },
 
         hideOwnershipView : function(event){

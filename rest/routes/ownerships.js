@@ -19,8 +19,7 @@ function authenticateUser(req, res, next){
 function getProjectId(request) {
     var projectReference = request.headers.referer;
     var lastSlash = projectReference.lastIndexOf("/");
-    var projectId = projectReference.slice(lastSlash+1);
-    return projectId;
+    return projectReference.slice(lastSlash+1);
 }
 
 function checkOwnership(request, response, next) {
