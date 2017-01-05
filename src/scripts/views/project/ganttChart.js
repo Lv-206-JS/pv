@@ -31,20 +31,7 @@ define([
                 }));
                 this.createGanttChartDateHeader();
                 this.renderTaskRows();
-                this.scrollMove();
                 return this;
-            },
-
-            scrollMove: function() {
-                //TODO make it work faster
-                $('#gantt-chart-container').scroll(function() {
-                    var scrollPos = $('#gantt-chart-container').scrollTop();
-                    $('#task-container').scrollTop(scrollPos);
-                });
-                $('#task-container').scroll(function() {
-                    var scrollPos = $('#task-container').scrollTop();
-                    $('#gantt-chart-container').scrollTop(scrollPos);
-                });
             },
 
             createGanttChartDateHeader: function () {

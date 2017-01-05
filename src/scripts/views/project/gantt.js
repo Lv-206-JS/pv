@@ -35,6 +35,7 @@ define([
                 this.$el.find('#task-container').html(this.tasksListView.$el);
                 this.findPositionsForTasks();
                 this.setGanttHeight();
+                this.scrollMove();
                 return this;
             },
 
@@ -129,6 +130,31 @@ define([
                     zoom: this.zoom, hourLength: this.hourLength
                 }).render();
                 this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
+            },
+
+            scrollMove: function() {
+                var flag = false;
+                (function scroll() {
+                    $('#gantt-chart-container').scroll(function () {
+                        if (flag) {
+                            flag = false;
+                            return 0;
+                        }
+                        var scrollPos = $('#gantt-chart-container').scrollTop();
+                        $('#task-container').scrollTop(scrollPos);
+                        flag = true;
+                    });
+                    $('#task-container').scroll(function () {
+                        if (flag) {
+                            flag = false;
+                            return 0;
+                        }
+                        var scrollPos = $('#task-container').scrollTop();
+                        $('#gantt-chart-container').scrollTop(scrollPos);
+                        flag = true;
+                    });
+                    return 0;
+                })();
             }
         });
 
