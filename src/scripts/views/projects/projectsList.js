@@ -11,7 +11,6 @@ define([
         className: 'projects-list',
         events: {
             'click .projects-list-item': 'onClick',
-            'click #dbl-click-item': 'onDoubleClick',
             'click .projects-go-link': 'onSelectProject',
             'click .edit-project': 'onEditProject',
             'click .delete-project': 'onDeleteProject'
@@ -35,40 +34,13 @@ define([
             if (!this.clickTimer ) {
                 this.clickTimer = setTimeout(function () {
                     Backbone.Events.trigger('selectProject', id);
-                    console.log("onClick");
-                }, 700);
+                }, 500);
             } else {
-                console.log("onDbClick");
                 clearTimeout(this.clickTimer);
                 this.clickTimer = null;
                 this.onSelectProject(e);
             }
-
         },
-
-        onDoubleClick: function onDoubleClick(e) {
-            var that = this;
-
-            var timer = 0;
-            var delay = 2000;
-            var prevent = false;
-
-            timer = setTimeout(function () {
-                if (!prevent) {
-
-                    that.onClick(e);
-
-                }
-                prevent = false;
-            }, delay);
-
-            clearTimeout(timer);
-            prevent = true;
-
-            that.onSelectProject(e);
-
-        },
-
 
         onSelectProject: function (e) {
             var id = this.getTargetId(e);
