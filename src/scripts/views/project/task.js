@@ -182,7 +182,7 @@ define(['backbone',
                     $(this.element).css({'left': '0'});
                 }
                 var trigger = false;
-                for (var i = 0; i < tasksList.length; i++)
+                for (i = 0; i < tasksList.length; i++)
                     if (tasksList[i].taskId === $(this.element).attr('id')) {
                         dependenciesList[dependenciesList.length] = tasksList[i];
                         tasksList.splice(i, 1);
@@ -190,7 +190,7 @@ define(['backbone',
                         break;
                     }
                 if (!trigger)
-                    for (var i = 0; i < dependenciesList.length; i++)
+                    for (i = 0; i < dependenciesList.length; i++)
                         if (dependenciesList[i].taskId === $(this.element).attr('id')) {
                             tasksList[tasksList.length] = dependenciesList[i];
                             dependenciesList.splice(i, 1);
@@ -203,7 +203,7 @@ define(['backbone',
             var taskId = element.attr('id');
             var listName = element.parent().parent().attr('id');
             if(listName === 'all-tasks-list'){
-                for( var i = 0; i < this.tasksList.length; i++)
+                for(i = 0; i < this.tasksList.length; i++)
                     if(this.tasksList[i].taskId === taskId){
                         this.dependenciesList.push(this.tasksList[i]);
                         this.tasksList.splice(i,1);
@@ -212,7 +212,7 @@ define(['backbone',
                 $("#dependencies-list tbody").append(element);
             }
             else{
-                for( var i = 0; i < this.dependenciesList.length; i++)
+                for(i = 0; i < this.dependenciesList.length; i++)
                     if(this.dependenciesList[i].taskId === taskId){
                         this.tasksList.push(this.dependenciesList[i]);
                         this.dependenciesList.splice(i,1);

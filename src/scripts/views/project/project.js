@@ -193,15 +193,21 @@ define([
         },
 
         setUndo: function (){
-            var newModel = this.undoRedo.undo();
-            this.model = newModel;
-            this.renderViews();
+            if( $('#undo').attr('disabled')){}
+            else {
+                var newModel = this.undoRedo.undo();
+                this.model = newModel;
+                this.renderViews();
+            }
         },
 
         setRedo: function (){
-            var newModel = this.undoRedo.redo();
-            this.model = newModel;
-            this.renderViews();
+            if( $('#redo').attr('disabled')){}
+            else {
+                var newModel = this.undoRedo.redo();
+                this.model = newModel;
+                this.renderViews();
+            }
         },
 
         onChange: function () {

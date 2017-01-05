@@ -57,7 +57,6 @@ define(['backbone',
                         var workingHours = Moment.duration(+workingTime, 'seconds').asHours();
                         price += this.resources[i].rate * workingHours;
                     }
-                    console.log(price);
                 }
                 return price;
             },
