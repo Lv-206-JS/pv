@@ -59,13 +59,24 @@ function deleteOwnerShip(pid) {
 
 //get all projects
 router.get('/', authenticateUser, function (request, response) {
-    Project.find({}, function (err, projects) {
-        if(!projects || err) {
-            handleError(response, "Failed to find projects!", 404);
+    var projects = [];
+    Ownerships.find({'email': request.user.email}, function (err, ownerShips) {
+        if (err) {
+            return handleError(response, err.message, err.code);
         }
-        else {
-            response.send(projects);
+        for(var i = 0; i < ownerShips.length; i++) {
+            projects[i] = ownerShips[i].projectId;
         }
+
+    }).then(function () {
+        Project.find({'id': {'$in':projects}}, function (err, projects) {
+            if(!projects || err) {
+                handleError(response, "Failed to find projects!", 404);
+            }
+            else {
+                response.send(projects);
+            }
+        });
     });
 });
 
