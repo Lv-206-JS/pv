@@ -82,8 +82,6 @@ router.post('/', authenticateUser, function (request, response) {
 
     var errors = request.validationErrors();
 
-    console.log(errors);
-
     if (errors.length) {
          response.status(300);
          response.send("Fill in the fields!");
