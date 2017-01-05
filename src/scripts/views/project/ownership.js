@@ -49,6 +49,8 @@ define(['backbone',
                     this.editorsList.push(this.owneships[i]);
                 }
             }
+            console.log(this.readersList);
+            console.log(this.editorsList);
             this.render();
         },
 
