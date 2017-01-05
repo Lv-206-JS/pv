@@ -8,7 +8,7 @@ requirejs.config({
         Draggabilly: '/bower_components/draggabilly/dist/draggabilly.pkgd',
         timeLine: '/src/scripts/math/timeLine',
         moment: '/node_modules/moment/moment',
-        TaskAlgorithm: '/src/scripts/algorithms/taskAlgorithm',
+        TaskAlgorithm: '/src/scripts/math/taskAlgorithm',
         undoRedoAlgorithm: '/src/scripts/math/undoRedoAlgorithm'
     },
     baseUrl: '/src/scripts'
