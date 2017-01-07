@@ -31,10 +31,11 @@ define([
                     tasksPositions[i] = this.tasksPositionWidth[i].singleTaskPositions;
                 }
                 $(document).ready(function(){
-                    var positionX,
+                    var heightFault = 8, // TODO Why?
+                        positionX,
                         width,
                         rowHeight = 40,
-                        svgHeight = rowHeight * this.tasksPositionWidth.length,
+                        svgHeight = rowHeight * this.tasksPositionWidth.length - heightFault,
                         rectHeight = rowHeight * 0.6,
                         padding = 20,
                         task,
@@ -46,7 +47,7 @@ define([
                         'height': svgHeight
                     });
                     //row rectangle
-                    for (var row = 0, rect = null, line = null, positionY = 0;
+                    for (var row = 0, rect = null, line = null, positionY = -heightFault/2;
                          row < this.tasksPositionWidth.length;
                          row++, positionY += rowHeight) {
                             rect = paper.rect(0, positionY, "100%", rowHeight);
@@ -83,7 +84,7 @@ define([
                                 ganttMinWidth = positionX + width + padding + taskName.length * 10;
                             }
                     }
-                    $("#gantt-chart").css('min-width', ganttMinWidth);
+                    $(".gantt-chart-container-svg").css('min-width', ganttMinWidth);
                     $(".gantt-chart-container-svg").css('height', svgHeight);
                 }.bind(this));
             },

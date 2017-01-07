@@ -75,7 +75,7 @@ define([
                 if(this.zoom < 200) {
                     this.zoom += 20;
                     this.findPositionsForTasks(true);
-                    $('zoom-value').html(this.zoom + '%');
+                    document.getElementById('zoom-value').innerHTML = this.zoom + '%';
                 }
             },
 
@@ -83,7 +83,7 @@ define([
                 if(this.zoom > 20) {
                     this.zoom -= 20;
                     this.findPositionsForTasks(false);
-                    $('zoom-value').html(this.zoom + '%');
+                    document.getElementById('zoom-value').innerHTML = this.zoom + '%';
                 }
             },
 
