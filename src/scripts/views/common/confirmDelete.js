@@ -42,14 +42,14 @@ define(['backbone', 'JST'], function(Backbone, JST) {
     /*
         To create a Confirm Delete View:
 
-        1. connect this file in require.js define() function by adding '../common/confirmDelete' string to its first
-        array parameter, and by passing to its second function parameter returned renderConfirmDeleteView object (can
-        use any prefered custom name)
+        1. connect this file in require.js define() function by adding path to this file, e.g.
+        '../common/confirmDelete' string to its first array parameter, and by passing to its second function parameter
+        returned renderConfirmDeleteView object (can use any prefered custom name)
 
         2. add to your view's methods a function that will handle deletion through the Confirm Delete View, some kind
         of that one: confirmDelete: function(event){confirmDeleteView(event, this, this.originalDeleteMethod);}
 
-        3. notice that your original delete method doesn't need event.preventDefault() any more, so delete it
+        3. notice that your original delete method doesn't need event.preventDefault()
 
         4. in events property of your view bound to 'click .your-delete-button' event your method handling deletion
         through the Confirm Delete View
