@@ -1,8 +1,10 @@
 define(['backbone',
     'underscore',
     'JST',
-    'Draggabilly'],
-    function (Backbone, _, JST, Draggabilly) {
+    'Draggabilly',
+    '../common/confirmDelete'
+    ],
+    function (Backbone, _, JST, Draggabilly, confirmDeleteView) {
     'use strict';
 
     var TaskView = Backbone.View.extend({
@@ -46,12 +48,15 @@ define(['backbone',
             'click .tab-attachments' : 'taskAttachmentslInformation',
             'click .cancel-button' : 'hideTaskView',
             'click .ok-button' : 'onSubmitChanges',
-            'click .delete-task' : 'deleteTask',
+            //'click .delete-task' : 'deleteTask',
             'change #add-attachment-file' : 'addAttachment',
             'click #delete-attachment' : 'deleteAttachment',
-            'dblclick .task-item' : 'addTaskToList'
+            'dblclick .task-item' : 'addTaskToList',
+            'click .confirm-delete' : 'confirmDelete'
         },
-
+        confirmDelete: function(event){
+            confirmDeleteView(event, this, this.deleteTask);
+        },
         getTasksList: function(el){
             var isNotDependency = [];
             var isDependency = [];
@@ -274,7 +279,9 @@ define(['backbone',
             }
         },
 
-        deleteTask: function(event){
+        //as it seems, the event.preventDefault method is not needed here, the default event is handled in
+        //renderConfirmDelete method
+        deleteTask: function(){
             for(var i = 0; i < this.tasks.length; i++){
                 if(this.tasks[i].taskId === this.task.taskId) {
                     this.tasks.splice(i, 1);
@@ -282,7 +289,7 @@ define(['backbone',
                 }
             }
             this.trigger('deleteTask', this.tasks);
-            event.preventDefault();
+            //event.preventDefault();
             this.$el.remove();
         },
 
@@ -310,7 +317,6 @@ define(['backbone',
             event.preventDefault();
             this.$el.remove();
         }
-
     });
 
     return TaskView;
