@@ -3,7 +3,7 @@
     <div class="info-bar-label"> Author: <%= author %></div>
 </div>
 <div class="info-bar-item">
-    <div class="info-bar-label">Start Date: <%= moment(startDate).format("DD MMM YYYY hh:mm a") %></div>
+    <div class="info-bar-label">Start Date: <%= moment.unix(startDate).format("DD MMM YYYY hh:mm a") %></div>
     <div class="info-bar-label">Modified: <%=  moment.unix(modifiedDate/1000).format('DD MMM YYYY hh:mm a') %></div>
 </div>
 <div class="info-bar-item">

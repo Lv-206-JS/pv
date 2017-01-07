@@ -1,9 +1,9 @@
 define(['backbone',
     'underscore',
     'JST',
-    'Draggabilly'
-    ],
-    function (Backbone, _, JST, Draggabilly) {
+    'Draggabilly',
+    'moment'],
+    function (Backbone, _, JST, Draggabilly, Moment) {
     'use strict';
 
     var TaskView = Backbone.View.extend({
@@ -12,21 +12,26 @@ define(['backbone',
 
         initialize: function (options) {
             this.tasks = options.tasks;
-            if(options.task)
+            if(options.task) {
                 this.task = options.task;
-            else
+                this.delete = false;
+            }
+            else {
                this.task = {
                     name: "",
-                    estimateTime: 2,
+                    estimateTime: 3600,
                     resource: "",
                     description: "",
                     attachments:[],
                     dependsOn: []
                 };
+                this.delete = true;
+            }
             this.resources = options.resources;
             this.tasksList = this.getTasksList(true);
             this.dependenciesList = this.getTasksList(false);
             this.mimetypesList = this.getMimetypesList(this.task.attachments);
+            this.moment = Moment;
         },
 
         render: function render() {
@@ -36,7 +41,9 @@ define(['backbone',
                 resources: this.resources,
                 tasksList: this.tasksList,
                 dependenciesList: this.dependenciesList,
-                mimetypes: this.mimetypesList
+                mimetypes: this.mimetypesList,
+                moment: this.moment,
+                deleteTask: this.delete
             }));
             return this;
         },
@@ -52,6 +59,7 @@ define(['backbone',
             'click #delete-attachment' : 'deleteAttachment',
             'dblclick .task-item' : 'addTaskToList'
         },
+
         getTasksList: function(el){
             var isNotDependency = [];
             var isDependency = [];
@@ -194,7 +202,7 @@ define(['backbone',
             var element = $(event.currentTarget);
             var taskId = element.attr('id');
             var listName = element.parent().parent().attr('id');
-            if(listName === 'tasks-list'){
+            if(listName === 'all-tasks-list'){
                 for( var i = 0; i < this.tasksList.length; i++)
                     if(this.tasksList[i].taskId === taskId){
                         this.dependenciesList.push(this.tasksList[i]);
@@ -210,7 +218,7 @@ define(['backbone',
                         this.dependenciesList.splice(i,1);
                         break;
                     }
-                $("#tasks-list tbody").append(element);
+                $("#all-tasks-list tbody").append(element);
             }
         },
 
@@ -274,9 +282,7 @@ define(['backbone',
             }
         },
 
-        //as it seems, the event.preventDefault method is not needed here, the default event is handled in
-        //renderConfirmDelete method
-        deleteTask: function(){
+        deleteTask: function(event){
             for(var i = 0; i < this.tasks.length; i++){
                 if(this.tasks[i].taskId === this.task.taskId) {
                     this.tasks.splice(i, 1);
@@ -284,7 +290,7 @@ define(['backbone',
                 }
             }
             this.trigger('deleteTask', this.tasks);
-            //event.preventDefault();
+            event.preventDefault();
             this.$el.remove();
         },
 
@@ -293,12 +299,12 @@ define(['backbone',
             this.$el.remove();
         },
 
-        onSubmitChanges: function onSubmitChanges (){
+        onSubmitChanges: function onSubmitChanges (event){
+            event.preventDefault();
             this.task.name = this.$el.find('.task-name').val();
-            this.task.estimateTime = this.$el.find('.task-estimate').val();
+            var estimateTime = this.$el.find('.task-estimate').val();
+            this.task.estimateTime = Moment.duration(+estimateTime, 'hours').asSeconds();
             this.task.resource = this.$el.find('.task-resource').val();
-            console.log('resource');
-            console.log(this.task.resource);
             this.task.description = this.$el.find('.task-description').val();
             this.task.dependsOn = [];
             if(this.dependenciesList[0] !== undefined) {
@@ -309,9 +315,10 @@ define(['backbone',
                 this.task.dependsOn = false;
             }
             this.trigger('upsertTask', this.tasks, this.task);
-            event.preventDefault();
+
             this.$el.remove();
         }
+
     });
 
     return TaskView;

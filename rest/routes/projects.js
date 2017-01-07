@@ -4,19 +4,23 @@ var router = express.Router();
 var Project  = require('../../mongoose').ProjectModel;
 var Ownerships  = require('../../mongoose').OwnershipsModel;
 
+//Error handler function
+function handleError(response, message, code) {
+    response.status(code || 500).json({"error": message});
+}
 
 function authenticateUser(req, res, next){
     if(req.isAuthenticated()){
         return next();
     } else {
-        return res.send(401);
+        return handleError(response, 'User is not authenticate!', 401);
     }
 }
 
 function checkOwnership(request, response, next) {
     Ownerships.findOne({'projectId': request.params.id, 'email': request.user.email}, function (err, ownerShip) {
         if(err) {
-            //error
+            return handleError(response, err.message, err.code);
         }
         else if(ownerShip != undefined) {
             if(ownerShip.role === 'creator' || ownerShip.role === 'editor') {
@@ -37,7 +41,7 @@ function addOwnership(pid, email) {
     });
     ownerShipToCreate.save(function (err, ownerShip) {
         if (err) {
-            //error
+            return handleError(response, err.message, err.code);
         }
     });
 }
@@ -53,38 +57,52 @@ function deleteOwnerShip(pid) {
     });
 }
 
-//Error handler function
-function handleError(response, message, code) {
-    response.status(code || 500).json({"error": message});
-}
-
 //get all projects
 router.get('/', authenticateUser, function (request, response) {
-    Project.find({}, function (err, projects) {
-        if(!projects || err) {
-            handleError(response, "Failed to find projects!", 404);
+    var projects = [];
+    Ownerships.find({'email': request.user.email}, function (err, ownerShips) {
+        if (err) {
+            return handleError(response, err.message, err.code);
         }
-        else {
-            response.send(projects);
+        for(var i = 0; i < ownerShips.length; i++) {
+            projects[i] = ownerShips[i].projectId;
         }
+
+    }).then(function () {
+        Project.find({'id': {'$in':projects}}, function (err, projects) {
+            if(!projects || err) {
+                handleError(response, "Failed to find projects!", 404);
+            }
+            else {
+                response.send(projects);
+            }
+        });
     });
 });
 
 //create project
 router.post('/', authenticateUser, function (request, response) {
+
+    var name = request.body.name;
+    var description = request.body.description;
+
+    // //Validation
+    request.checkBody('name', 'Project Name').notEmpty();
+    request.checkBody('description', 'Project Description').notEmpty();
+
+    var errors = request.validationErrors();
+
+    if (errors.length) {
+        return handleError(response, 'Fill in the fields!', 300);
+    }
+
     var projectToCreate = new Project({
         id: Guid.create().value,
         name: request.body.name,
         description: request.body.description,
         author: request.user.firstname + ' ' + request.user.lastname,
-        startDate: request.body.startDate,
         createDate: (new Date()).getTime(),
-        modifiedDate: (new Date()).getTime(),
-        settings : {
-            dayDuration : request.body.settings.dayDuration,
-            weekend : request.body.settings.weekend,
-            icon : request.body.settings.icon
-        }
+        modifiedDate: (new Date()).getTime()
     });
     addOwnership(projectToCreate.id, request.user.email);
     projectToCreate.save(function (err, project) {
@@ -125,9 +143,14 @@ router.put('/:id', authenticateUser, checkOwnership, function (request, response
         attachments: request.body.attachments,
         resources: request.body.resources
     });
+
     Project.findOne({'id': request.params.id}, function (err, project) {
         Project.schema.eachPath(function(path) {
             if (path != '_id' && path != '__v' && path != 'id') {
+                if(path.indexOf('.') != -1) {
+                    var pathes = path.split('.');
+                    path = pathes[0];
+                }
                 project[path] = projectToUpdate[path];
             }
         });

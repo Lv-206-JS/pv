@@ -9,17 +9,6 @@ var LocalStrategy = require('passport-local').Strategy;
 //setting user from a model
 var User = require('../models/user');
 
-//Registration
-/*router.get('/register', function (req, res) {
-    res.render('register');
-});*/
-
-//Login
-/*router.get('/login', function (req, res) {
-    res.render('login');
-});*/
-
-
 //Register user
 router.post('/register', function (req, res) {
     console.log("REGISTER");
@@ -40,17 +29,14 @@ router.post('/register', function (req, res) {
     req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
     var errors = req.validationErrors();
 
-    User.findOne({email: email}, function (error, email) {
-        if(email != undefined) {
-            /*if(errors == false){
-                errors = [];
-            }*/
+    return User.findOne({email: email}, function (error, findedEmail) {
+        if(findedEmail != undefined) {
             errors = errors || [];
             errors.push({ param: 'email', msg: 'Email already exists', value: '' });
+            return res.status(200).json(JSON.stringify({"error": errors}));
         }
-        return res.status(200).json(JSON.stringify({"error": errors}));
-    }).then(function () {
-                var newUser = new User({
+        else {
+            var newUser = new User({
                 userId: userId,
                 firstname: firstname,
                 email: email,
@@ -58,10 +44,11 @@ router.post('/register', function (req, res) {
                 password: password
             });
 
-        User.createUser(newUser, function (err, user) {
-            if (err) throw err;
-        });
-        res.status(201).json(JSON.stringify({"error": errors}));
+            User.createUser(newUser, function (err, user) {
+                if (err) throw err;
+            });
+            return res.status(201).json(JSON.stringify({"error": errors}));
+        }
     });
 });
 
@@ -116,8 +103,6 @@ router.post('/login', passport.authenticate('local', {
 router.get('/logout', function (req, res) {
     req.logout();
     res.send(200, 'You are logged out');
-    // res.redirect('/users/login');
 });
-
 
 module.exports = router;
