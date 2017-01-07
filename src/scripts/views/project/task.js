@@ -1,10 +1,9 @@
 define(['backbone',
     'underscore',
     'JST',
-    'Draggabilly',
-    '../common/confirmDelete'
+    'Draggabilly'
     ],
-    function (Backbone, _, JST, Draggabilly, confirmDeleteView) {
+    function (Backbone, _, JST, Draggabilly) {
     'use strict';
 
     var TaskView = Backbone.View.extend({
@@ -48,14 +47,10 @@ define(['backbone',
             'click .tab-attachments' : 'taskAttachmentslInformation',
             'click .cancel-button' : 'hideTaskView',
             'click .ok-button' : 'onSubmitChanges',
-            //'click .delete-task' : 'deleteTask',
+            'click .delete-task' : 'deleteTask',
             'change #add-attachment-file' : 'addAttachment',
             'click #delete-attachment' : 'deleteAttachment',
-            'dblclick .task-item' : 'addTaskToList',
-            'click .confirm-delete' : 'confirmDelete'
-        },
-        confirmDelete: function(event){
-            confirmDeleteView(event, this, this.deleteTask);
+            'dblclick .task-item' : 'addTaskToList'
         },
         getTasksList: function(el){
             var isNotDependency = [];
