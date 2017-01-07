@@ -3,9 +3,9 @@ define([
     'JST',
     'moment',
     'timeLine',
-    'views/project/ganttTaskRow',
+    'views/project/ganttTasksSvg',
     'Snap'
-    ], function (Backbone, JST, Moment, TimeLineLib, GanttTaskRowView, Snap) {
+    ], function (Backbone, JST, Moment, TimeLineLib, GanttTasks, Snap) {
         'use strict';
 
         var GanttChartView = Backbone.View.extend({
@@ -29,7 +29,7 @@ define([
                     model: this.model, tasks: this.tasks, milestones: this.milestones
                 }));
                 this.createGanttChartDateHeader();
-                this.renderTaskRows();
+                this.renderTasks();
                 return this;
             },
 
@@ -286,13 +286,13 @@ define([
                 return monthWidth;
             },
 
-            renderTaskRows: function () {
-                this.ganttTaskRowView = new GanttTaskRowView({
+            renderTasks: function () {
+                this.ganttTasks = new GanttTasks({
                     tasks: this.tasks,
                     tasksPositions: this.tasksPositions
                 }).render();
                 var lastElem = this.$el.find('.gantt-date-header');
-                $(this.ganttTaskRowView.$el).insertAfter(lastElem);
+                $(this.ganttTasks.$el).insertAfter(lastElem);
             }
 
         });

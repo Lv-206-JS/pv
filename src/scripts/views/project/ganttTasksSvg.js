@@ -7,9 +7,8 @@ define([
     function (Backbone, _, JST, Snap) {
         'use strict';
 
-        var GanttTaskRowView = Backbone.View.extend({
+        var GanttTasksView = Backbone.View.extend({
             template: JST['project:ganttTaskRow'],
-            // className: 'table-row gantt-task-row gantt-chart-container-svg',
             className: 'gantt-chart-container-svg',
             tagName: 'div',
 
@@ -20,11 +19,11 @@ define([
 
             render: function () {
                 this.$el.html(this.template({}));
-                this.drawTaskRow();
+                this.drawTasksSvg();
                 return this;
             },
 
-            drawTaskRow: function() {
+            drawTasksSvg: function() {
                 // create arrays of tasks, tasks id and tasks positions for svg
                 for (var i = 0, tasks = [], classes = [], tasksPositions = []; i < this.tasksPositionWidth.length; i++){
                     tasks[i] = this.findTaskById(this.tasks, this.tasksPositionWidth[i].taskId);
@@ -101,5 +100,5 @@ define([
 
         });
 
-        return GanttTaskRowView;
+        return GanttTasksView;
     });
