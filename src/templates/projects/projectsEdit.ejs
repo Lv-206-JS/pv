@@ -6,18 +6,19 @@
         </div>
 
               <div class="tab-container">
+                  <span class="form-error name-error"></span>
                 <label class="form-label"><%= project.name ? 'Update' : 'Create' %> Project</label>
-                <input class="form-input-text" id="name" type="text" name="name" placeholder="Project Name" value="<%= project.name %>">
+                <input class="form-input-text form-control" id="name" type="text" name="name" placeholder="Project Name" value="<%= project.name %>">
 
 
                 <label class="form-label description-label">Description</label>
-                  <textarea class="form-input-description" id="description" maxlength="5000" name="description" placeholder="Description"><%= project.description %></textarea>
-                <!--<input class="form-input-description" type="text" name="description" placeholder="Description"-->
-                       <!--value="<%= project.description %>">-->
+                  <span class="form-error description-error"></span>
+                  <textarea class="form-input-description form-control" id="description" maxlength="5000" name="description" placeholder="Description"><%= project.description %></textarea>
+                       <%= project.description %>
 
             <% if(project) { %>
             <input type="hidden" name="id" value="<%= project.id %>"/>
-            <% }; %>
+            <% } %>
               </div>
 
         <div class="form-bottom">
@@ -25,5 +26,5 @@
             <input class="form-button cancel-button" type="submit" value="cancel">
         </div>
 
-    </form>
+    </div>
 </div>

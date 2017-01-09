@@ -1,23 +1,24 @@
 
 define([
     'backbone',
+    'backbone-validation',
     'JST',
     'collections/Projects',
     'models/Project'
-], function (Backbone, JST, projectsCollection, ProjectModel) {
+], function (Backbone, BackboneValidation, JST, projectsCollection, ProjectModel) {
     'use strict';
 
     var ProjectEditView = Backbone.View.extend({
         template: JST['projects:projectsEdit'],
         className: 'projects-edit-view',
         events: {
-            // 'submit form': 'saveProject',
             'click .ok-button': 'saveProject',
             'click .cancel-button': 'exitEditProject'
         },
 
         initialize: function initialize(options) {
             this.model = options.model;
+            Backbone.Validation.bind(this);
         },
 
         render: function render() {
@@ -44,21 +45,43 @@ define([
             });
 
             this.model.setUrl(this.model.get('id') || '');
-            this.model.save().then(
-                function(res) {
-                    that.trigger('editedProject', that.model);
 
-                },
-                function(err) {
-                    // Error handling
-                    console.log(err);
-                }
-            );
+            if (this.model.isValid(['name', 'description'])) {
+                this.model.save().then(
+                    function(res) {
+                        that.trigger('editedProject', that.model);
+                        that.toJSON();
+
+                    },
+                    function(error) {
+                        // Error handling
+                        console.log(error);
+                    }
+                );
+            } else {
+                this.handleErrors();
+            }
+
         },
+
+        handleErrors: function () {
+            var errors = this.model.validate();
+            var inputs = this.$el.find('.form-control');
+
+            _.each(inputs, function(input) {
+                var inputName = $(input).attr('name');
+
+                if (errors[inputName]) {
+                    $(input).attr('placeholder', errors[inputName]);
+                }
+            });
+        },
+
         exitEditProject: function(event){
             event.preventDefault();
             this.$el.remove();
-        }
+        },
+
     });
 
     return ProjectEditView;
