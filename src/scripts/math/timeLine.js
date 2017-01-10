@@ -36,16 +36,29 @@ define(['backbone', 'moment'], function (Backbone, Moment) {
     };
 
     TimeLineLib.prototype.calculateEstimateTime = function (tasks) {
-            var tasks = tasks || this.tasks;
-            var tasksEnd = [];
-            var currentTaskEnd;
-            for (var i = 0; i < tasks.length; i++) {
-                currentTaskEnd = Number(tasks[i].startDate) +
-                    Number(tasks[i].estimateTime);
-                tasksEnd.push(currentTaskEnd);
+        var tasksEnd = [], currentTaskEnd, j, k, i;
+
+        if (tasks !== undefined) {
+            for (j = 0; j < tasks.length; j++) {
+                for (k = 0; k < this.tasks.length; k++) {
+                    if (tasks[j].taskId === this.tasks[k].taskId) {
+                        getTasksEnd(this.tasks[k]);
+                    }
+                }
             }
-            tasksEnd.sort(function(a, b) {return b - a;});
-            return tasksEnd[0];
+        } else {
+            for (i = 0; i < tasks.length; i++) {
+                getTasksEnd(tasks[i]);
+            }
+        }
+
+        function getTasksEnd(elem) {
+            currentTaskEnd = Number(elem.startDate) + Number(elem.estimateTime);
+            tasksEnd.push(currentTaskEnd);
+        }
+
+        tasksEnd.sort(function(a, b) {return b - a;});
+        return tasksEnd[0];
     };
 
     TimeLineLib.prototype.getWorkDays = function(ptlTaskStart, ptlTaskDuration) {
