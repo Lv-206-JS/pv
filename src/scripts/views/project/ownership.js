@@ -49,6 +49,8 @@ define(['backbone',
                     this.editorsList.push(this.owneships[i]);
                 }
             }
+            console.log(this.readersList);
+            console.log(this.editorsList);
             this.render();
         },
 
@@ -63,7 +65,6 @@ define(['backbone',
             });
             ownershipToCreate.save({
                 success:function (model, response) {
-                    console.log(arguments);
                     this.collection.add(ownershipToCreate);
                     this.onCollectionLoad();
                 }.call(this)
@@ -82,7 +83,6 @@ define(['backbone',
                     this.onCollectionLoad();
                 }.call(this, email)
             });
-
         },
 
         hideOwnershipView : function(event){

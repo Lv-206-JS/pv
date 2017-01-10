@@ -3,8 +3,9 @@ define([
     'JST',
     'moment',
     'timeLine',
-    'views/project/ganttTaskRow'
-    ], function (Backbone, JST, Moment, TimeLineLib, GanttTaskRowView) {
+    'views/project/ganttTasksSvg',
+    'Snap'
+    ], function (Backbone, JST, Moment, TimeLineLib, GanttTasks, Snap) {
         'use strict';
 
         var GanttChartView = Backbone.View.extend({
@@ -17,52 +18,325 @@ define([
                 this.milestones = options.model.get('milestones');
                 this.settings = options.model.get('settings');
                 this.dayStart = Number(this.settings.dayStart);
+                this.dayDuration = Number(this.settings.dayDuration);
                 this.tasksPositions = (options.tasksPositions !== undefined) ? options.tasksPositions : null;
+                this.hourLength = options.hourLength;
+                this.timeLine = new TimeLineLib(this.model);
             },
 
             render: function render() {
-                this.createGanttChartDateHeader();
                 this.$el.html(this.template({
                     model: this.model, tasks: this.tasks, milestones: this.milestones
                 }));
-                this.renderTaskRows();
+                this.createGanttChartDateHeader();
+                this.renderTasks();
                 return this;
             },
 
             createGanttChartDateHeader: function () {
-                var timeLine = new TimeLineLib(this.model);
-                // var topDates = [],
-                //     bottomDates = [],
-                //     zoom = 1,
-                //     hour = 50,
-                //     projectStartDate,
-                //     projectDuration;
-                // if (zoom == 1) { // if zoom == 100%
-                //
-                //     // bottomDates are hours
-                //     bottomDates[0]; //to Local Time
-                //     for (var i = 1; i < projectDuration; i++) {
-                //         bottomDates[i] = Moment(bottomDates[i-1]).add(1, 'h');
-                //     }
-                //     console.log(bottomDates);
-                //
-                //     //topDates are days
-                //     topDates[0] = projectStartDate;
-                //     for (i = 1; i < Moment.duration(projectDuration, 'h').asDays(); i++) {
-                //         topDates[i] = Moment(topDates[i-1]).add(1, 'd');
-                //     }
-                // }
+                var topDates = [],
+                    bottomDates = [];
+                this.getGanttChartDates(topDates, bottomDates);
+                this.drawGanttChartDateHeader(topDates, bottomDates);
             },
 
-            renderTaskRows: function () {
-                var task = null,
-                    lastElem = this.$el.find('.gantt-date-header');
-                for (var i = 0; i < this.tasksPositions.length; i++) {
-                    task = this.tasksPositions[i];
-                    this.ganttTaskRowView = new GanttTaskRowView({tasks: this.tasks, task: task}).render();
-                    $(this.ganttTaskRowView.$el).insertAfter(lastElem);
-                    lastElem = this.$el.find('.gantt-task-row:last');
+            getGanttChartDates: function (topDates, bottomDates) {
+                var i, j,
+                    projectStart = this.timeLine.toDate(0),
+                    projectStartUnix = Moment.unix(projectStart),
+                    dayStartAsHour = Moment(projectStartUnix, 's').format('hh:mm'),
+                    dayEndAsHour =  Moment(projectStartUnix, 's').add(this.dayDuration/3600, 'h').format('hh:mm'),
+                    projectStartAsCalendarDate =  Moment(projectStartUnix, 's').format('DD/MM/YY'),
+                    weekStartDate = Moment(projectStartUnix, 's').startOf('week'),
+                    projectStartAsWeekStartDate = Moment(weekStartDate, 's').add(1, 'd'),
+                    projectDuration = this.timeLine.calculateEstimateTime(),
+                    projectDurationUnix = this.timeLine.toDate(projectDuration) - this.timeLine.toDate(0),
+                    projectDurationAsHours = Moment.duration(projectDurationUnix, 's').asHours(),
+                    projectDurationAsDays = Math.floor(Moment.duration(projectDurationUnix, 's').asDays()),
+                    projectDurationAsWeeks = Math.ceil(Moment.duration(projectDurationUnix, 's').asWeeks()),
+                    projectDurationAsMonths = Math.ceil(Moment.duration(projectDurationUnix, 's').asMonths()),
+                    projectDurationAsYears = Math.ceil(Moment.duration(projectDurationUnix, 's').asYears()),
+                    weeksInMonth = 4,
+                    daysInMonth = 30,
+                    monthsInYear = 12;
+
+                // bottomDates are hours | topDates are days
+                if (this.hourLength >= 48) {
+                    var hour = dayStartAsHour,
+                        date = projectStartAsCalendarDate;
+                    for (i = projectDurationAsHours, j = 0; i >= 0; i--, j++) {
+                        if (Moment(hour, 'h').format('hh:mm') == dayEndAsHour) {
+                            bottomDates[j] = Moment(hour, 'h').format('hh:mm');
+                            hour = Moment(hour, 'h').add(1, 'h');
+                            hour = Moment(hour, 'h').add(23 - (this.dayDuration/3600), 'h');
+                        } else {
+                            bottomDates[j] = Moment(hour, 'h').format('hh:mm');
+                            hour = Moment(hour, 'h').add(1, 'h');
+                        }
+                    }
+                    for (i = projectDurationAsDays, j = 0; i >= 0; i--, j++) {
+                        var weekDay;
+                        topDates[j] = Moment(date, 'DD/MM/YY').format('DD/MM/YY');
+                        date = Moment(date, 'DD/MM/YY').add(1, 'd');
+                        //check if date is weekend
+                        weekDay = Moment(date,'seconds').format('e');
+                        if (weekDay == 0) {
+                            date = Moment(date, 'DD/MM/YY').add(1, 'd');
+                        }
+                        if (weekDay == 6) {
+                            date = Moment(date, 'DD/MM/YY').add(2, 'd');
+                        }
+                    }
                 }
+                // bottomDates are dates | topDates are weeks
+                if (this.hourLength >= 6 && this.hourLength < 48) {
+                    var date = projectStartAsCalendarDate,
+                        week = projectStartAsWeekStartDate,
+                        dayWidth = this.hourLength * this.dayDuration / 3600;
+                    if(dayWidth < 70) {
+                        var weekDays = Moment.weekdaysMin(),
+                            dayOfWeek = Moment(projectStartUnix).day();
+                        for (i = projectDurationAsDays < (daysInMonth * 2) ? (daysInMonth * 2) : projectDurationAsDays, j = 0;
+                             i >= 0;
+                             i--, j++) {
+                            bottomDates[j] = weekDays[dayOfWeek];
+                            dayOfWeek++;
+                            if(dayOfWeek == 7) {
+                                dayOfWeek = 0;
+                            }
+                        }
+                    } else {
+                        for (i = projectDurationAsDays < (daysInMonth * 2) ? (daysInMonth * 2) : projectDurationAsDays, j = 0;
+                             i >= 0;
+                             i--, j++) {
+                            bottomDates[j] = Moment(date, 'DD/MM/YY').format('DD/MM/YY');
+                            date = Moment(date, 'DD/MM/YY').add(1, 'd');
+                        }
+                    }
+                    for (i = projectDurationAsWeeks < (weeksInMonth * 2) ? (weeksInMonth * 2) : projectDurationAsWeeks, j = 0;
+                         i > 0; i--, j++) {
+                        topDates[j] = Moment(week).format('MMMM Do YYYY');
+                        week = Moment(week, 'w').add(1, 'w');
+                    }
+                }
+                // bottomDates are week | topDates are month
+                if (this.hourLength > 15/10 && this.hourLength < 6) {
+                    var week = projectStartAsWeekStartDate,
+                        month = Moment(projectStartUnix, 's');
+                    for (i = projectDurationAsWeeks < weeksInMonth * 12 ? weeksInMonth * 12 : projectDurationAsWeeks, j = 0;
+                         i > 0;
+                         i--, j++) {
+                        bottomDates[j] = Moment(week).format('ddd Do');
+                        week = Moment(week, 'w').add(1, 'w');
+                    }
+                    for (i = projectDurationAsMonths < monthsInYear ? monthsInYear : projectDurationAsMonths, j = 0;
+                         i > 0;
+                         i--, j++) {
+                        topDates[j] = Moment(month).format('MMMM YYYY');
+                        month = Moment(month, 'M').add(1, 'M');
+                    }
+                }
+                // bottomDates are month | topDates are year
+                if (this.hourLength <= 15/10) {
+                    var month = Moment(projectStartUnix, 's'),
+                        year = Moment(projectStartUnix, 's');
+                    for (i = projectDurationAsMonths < monthsInYear * 5 ? monthsInYear * 5 : projectDurationAsMonths, j = 0;
+                         i > 0;
+                         i--, j++) {
+                        bottomDates[j] = this.hourLength >= 75/100 ? Moment(month).format('MMMM') : Moment(month).format('MMM');
+                        month = Moment(month, 'M').add(1, 'M');
+                    }
+                    for (i = projectDurationAsYears < 5 ? 5 : projectDurationAsYears, j = 0; i > 0; i--, j++) {
+                        topDates[j] = Moment(year).format('YYYY');
+                        year = Moment(year, 'y').add(1, 'y');
+                    }
+                }
+            },
+
+            drawGanttChartDateHeader: function (topDates, bottomDates) {
+                $(document).ready(function () {
+                    var dayWidth = this.hourLength * this.dayDuration / 3600,
+                        weekWidth = dayWidth * 5, // TODO get working days length instead of '5',
+                        monthWidth = 21, // TODO calculate working days in month
+                        yearWidth = dayWidth * 21 * 12,
+                        rowHeight = 40,
+                        topW = null,
+                        bottomW = null,
+                        //get svg from the template
+                        header = Snap('#dates'),
+                        top = Snap("#topDates"),
+                        bottom = Snap("#bottomDates");
+
+                    // bottomDates are hours | topDates are days
+                    if (this.hourLength >= 48) {
+                        topW = dayWidth;
+                        // adjust width of hour to include first and last hour
+                        bottomW = this.hourLength - this.hourLength / (this.dayDuration / 3600 + 1);
+                        this.drawGanttChartDateHeaderSVG(topDates, bottomDates, topW, bottomW, rowHeight, header, top, bottom);
+                        this.drawVerticalDateLines(bottomW, rowHeight);
+
+                    }
+                    // bottomDates are dates | topDates are weeks
+                    if (this.hourLength >= 6 && this.hourLength < 48) {
+                        topW = weekWidth;
+                        bottomW = dayWidth;
+                        this.drawGanttChartDateHeaderSVG(topDates, bottomDates, topW, bottomW, rowHeight, header, top, bottom);
+                        this.drawVerticalDateLines(bottomW, rowHeight);
+                    }
+                    // bottomDates are week | topDates are month
+                    if (this.hourLength > 15/10 && this.hourLength < 6) {
+                        bottomW = weekWidth;
+                        // counting each month has 30 days gives a decent fault compare to getMonthWidth
+                        // topW = this.getMonthWidth(dayWidth);
+                        topW = monthWidth * dayWidth;
+                        this.drawGanttChartDateHeaderSVG(topDates, bottomDates, topW, bottomW, rowHeight, header, top, bottom);
+                        this.drawVerticalDateLines(bottomW, rowHeight);
+                    }
+                    // bottomDates are month | topDates are year
+                    if (this.hourLength <= 15/10) {
+                        // counting each month has 30 days gives a decent fault compare to getMonthWidth
+                        // bottomW = this.getMonthWidth(dayWidth);
+                        bottomW = monthWidth * dayWidth;
+                        topW = this.getYearWidth(bottomDates, bottomW);
+                        this.drawGanttChartDateHeaderSVG(topDates, bottomDates, topW, bottomW, rowHeight, header, top, bottom);
+                        this.drawVerticalDateLines(bottomW, rowHeight);
+                    }
+                }.bind(this));
+            },
+
+            drawGanttChartDateHeaderSVG:
+                function (topDates,bottomDates,topW,bottomW,rowHeight,header,top,bottom) {
+                    var rect, text, g, i, j, positionX;
+                    if(bottomW.length > 1) {
+                        for (i = 0, j = 0, positionX = 0; i < bottomDates.length; i++, j++, positionX += bottomW[j]) {
+                            rect = bottom.rect(positionX, rowHeight, bottomW[j], rowHeight);
+                            rect.attr({
+                                stroke: 'rgba(0,0,0,0.0)',
+                                fill: 'rgba(0,0,0,0.0)'
+                            });
+                            text = bottom.text(positionX + bottomW[j]/2, rowHeight*1.5, bottomDates[i]);
+                            text.attr({
+                                fill: '#000',
+                                'font-size': 14,
+                                'text-anchor': 'middle',
+                                'alignment-baseline': 'middle'
+                            });
+                            //group elements
+                            g = bottom.g(rect, text);
+                        }
+                    } else {
+                        for (i = 0, positionX = 0; i < bottomDates.length; i++, positionX += bottomW){
+                            rect = bottom.rect(positionX, rowHeight, bottomW, rowHeight);
+                            rect.attr({
+                                stroke: 'rgba(0,0,0,0.0)',
+                                fill: 'rgba(0,0,0,0.0)'
+                            });
+                            text = bottom.text(positionX + bottomW/2, rowHeight*1.5, bottomDates[i]);
+                            text.attr({
+                                fill: '#000',
+                                'font-size': 14,
+                                'text-anchor': 'middle',
+                                'alignment-baseline': 'middle'
+                            });
+                            //group elements
+                            g = bottom.g(rect, text);
+                        }
+                    }
+                    if(topW.length > 1) {
+                        for (i = 0, j = 0, positionX = 0; i < topDates.length; positionX += topW[j], i++, j++) {
+                            rect = top.rect(positionX, 0, topW[j], rowHeight);
+                            rect.attr({
+                                stroke: 'rgba(0,0,0,0.0)',
+                                fill: 'rgba(0,0,0,0.0)'
+                            });
+                            text = top.text(positionX + topW[j]/2, rowHeight/2, topDates[i]);
+                            text.attr({
+                                fill: '#000',
+                                'font-size': 14,
+                                'text-anchor': 'middle',
+                                'alignment-baseline': 'middle'
+                            });
+                            //group elements
+                            g = top.g(rect, text);
+                        }
+                    } else {
+                        for (i = 0, positionX = 0; i < topDates.length; i++, positionX += topW) {
+                            rect = top.rect(positionX, 0, topW, rowHeight);
+                            rect.attr({
+                                stroke: 'rgba(0,0,0,0.0)',
+                                fill: 'rgba(0,0,0,0.0)'
+                            });
+                            text = top.text(positionX + topW/2, rowHeight/2, topDates[i]);
+                            text.attr({
+                                fill: '#000',
+                                'font-size': 14,
+                                'text-anchor': 'middle',
+                                'alignment-baseline': 'middle'
+                            });
+                            //group elements
+                            g = top.g(rect, text);
+                        }
+                    }
+                    // get width of the date header
+                    var topWidth = topW.length > 0 ? topW[topW.length-2] : topW;
+                    var dateWidth = topWidth + positionX;
+                    dateWidth = (dateWidth > $(window).width()) ? $(window).width() : dateWidth;
+                    dateWidth = (dateWidth % topWidth) == 0 ? dateWidth : dateWidth - (dateWidth % topWidth) + topWidth;
+                    $('#dates').css('width', dateWidth);
+                    //group top and bottom elements of date header
+                    g = header.g(top, bottom);
+            },
+
+            drawVerticalDateLines: function (dateWidth,rowHeight) {
+                var width = parseInt($('#dates').css('width'), 10),
+                    height = this.tasks.length * rowHeight,
+                    paper = Snap('#gantt-chart-svg'),
+                    line;
+                for (var col = 0; col < width; col += dateWidth) {
+                    line = paper.line(col + dateWidth, 0, col + dateWidth, height);
+                    line.attr({
+                        stroke: 'rgba(0, 0, 0, 0.12)'
+                    });
+                }
+            },
+
+            getYearWidth: function(bottomDates, bottomW) {
+                var topW = [];
+                for (var mnth = 0, year = 0; mnth < bottomDates.length; mnth++) {
+                    topW[year] = topW[year] === undefined ? bottomW : topW[year] + bottomW;
+                    if(Moment().month(bottomDates[mnth]).format("M") == 12) {
+                        year++
+                    }
+                }
+                return topW;
+            },
+
+            getMonthWidth: function (dayWidth) {
+                var i, j,
+                    monthWidth = [],
+                    projectStart = this.timeLine.toDate(0), // in unixstamp
+                    month = Moment.unix(projectStart), // in unix
+                    projectDuration = this.timeLine.calculateEstimateTime(),
+                    projectDurationUnix = this.timeLine.toDate(projectDuration) - this.timeLine.toDate(0), // in unix
+                    projectDurationAsMonths = Math.ceil(Moment.duration(projectDurationUnix, 's').asMonths());
+
+                for (i = projectDurationAsMonths < 12 * 5 ? 12 * 5 : projectDurationAsMonths, j = 0;
+                     i > 0;
+                     i--, j++) {
+                    monthWidth[j] = Moment(month, 'YYYY-MM').daysInMonth();
+                    monthWidth[j] *= dayWidth;
+                    month = Moment(month, 'm').add(1, 'm');
+                }
+                return monthWidth;
+            },
+
+            renderTasks: function () {
+                this.ganttTasks = new GanttTasks({
+                    tasks: this.tasks,
+                    tasksPositions: this.tasksPositions
+                }).render();
+                var lastElem = this.$el.find('.gantt-date-header');
+                $(this.ganttTasks.$el).insertAfter(lastElem);
             }
 
         });

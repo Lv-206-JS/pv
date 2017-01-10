@@ -3,7 +3,7 @@ define([
     'jquery',
     'underscore',
     'JST'
-], function (Backbone, $,  _, JST) {
+], function (Backbone, $, _, JST) {
     'use strict';
 
     var ProjectsListView = Backbone.View.extend({
@@ -13,12 +13,13 @@ define([
             'click .projects-list-item': 'onClick',
             'click .projects-go-link': 'onSelectProject',
             'click .edit-project': 'onEditProject',
-            'click .delete-project' : 'onDeleteProject'
+            'click .delete-project': 'onDeleteProject'
         },
 
         initialize: function (options) {
             this.collection = options.collection;
             this.activeId = options.activeId;
+            this.clickTimer = null;
         },
 
         render: function render() {
@@ -28,9 +29,17 @@ define([
             return this;
         },
 
-        onClick: function (e) {
+        onClick: function onClick(e) {
             var id = this.getTargetId(e);
-            Backbone.Events.trigger('selectProject', id);
+            if (!this.clickTimer ) {
+                this.clickTimer = setTimeout(function () {
+                    Backbone.Events.trigger('selectProject', id);
+                }, 500);
+            } else {
+                clearTimeout(this.clickTimer);
+                this.clickTimer = null;
+                this.onSelectProject(e);
+            }
         },
 
         onSelectProject: function (e) {

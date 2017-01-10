@@ -14,14 +14,15 @@ define([
 
             initialize: function (options) {
                 this.model = options.model;
-                this.tasks = options.model.get("tasks");
+                this.tasks = options.model.get('tasks');
                 this.task = options.task;
                 this.moment = Moment;
                 this.timeLine = new TimeLine(this.model);
                 // convert dates from PTL to unix
-                this.estimateTime = this.moment.duration(this.task.estimateTime, 'seconds').asHours()
-                this.startDate = this.timeLine.toDate(this.task.startDate);
-                this.startDate = this.moment.unix(this.startDate).format('DD/MM/YY');
+                this.estimateTime = this.moment.duration(this.task.estimateTime, 'seconds').asHours();
+                this.startDate = Number(this.task.startDate);
+                this.startDate = this.timeLine.toDate(this.startDate);
+                this.startDate = this.moment.unix(this.startDate, 's').format('DD/MM/YY');
             },
 
             render: function () {

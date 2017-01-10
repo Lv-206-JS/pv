@@ -42,7 +42,9 @@ define(['backbone',
             'click .tab-general': 'getMilestoneListView',
             'click .save-milestones-button' : 'saveMilestoneSettings',
             'click .remove-milestone' : 'deleteMilestone',
-            'dblclick .task-item' : 'addTaskToList'
+            'dblclick .milestone-task-item' : 'addTaskToList',
+            'dblclick .milestone-task-name' : 'getEditView'
+
         },
 
         getTasksList: function(el){
@@ -168,7 +170,7 @@ define(['backbone',
         },
 
         makeTasksDraggable: function(tasksList, dependenciesList){
-            var draggableElements = document.getElementsByClassName('task-item');
+            var draggableElements = document.getElementsByClassName('milestone-task-item');
             var draggies = [];
             for (var i = 0; i < draggableElements.length; i++) {
                 var draggableElem = draggableElements[i];
@@ -180,23 +182,23 @@ define(['backbone',
             }
 
             function onDragStart() {
-                var newParent = $('.clone');
+                var newParent = $('.milestone-clone');
                 $(this.element).css({'position':'absolute'});
                 newParent.append(this.element);
                 $(this.element).css({'top': this.relativeStartPosition.y-45+'px'});
                 $(this.element).css({'left': this.relativeStartPosition.x+'px'});
                 $(this.element).addClass('is-dragging');
-            };
+            }
 
             function onDragEnd() {
                 if (this.position.x >= 200) {
-                    $("#dependencies-list tbody").append(this.element);
+                    $("#dependencies-list").find("tbody").append(this.element);
                     $(this.element).css({'position': 'relative'});
                     $(this.element).css({'left': '260'});
 
                 }
                 if (this.position.x < 200) {
-                    $("#tasks-list tbody").append(this.element);
+                    $("#milestone-tasks-list").find("tbody").append(this.element);
                     $(this.element).css({'position': 'relative'});
                     $(this.element).css({'left': '0'});
                 }
@@ -209,35 +211,35 @@ define(['backbone',
                         break;
                     }
                 if (!trigger)
-                    for (var i = 0; i < dependenciesList.length; i++)
+                    for (i = 0; i < dependenciesList.length; i++)
                         if (dependenciesList[i].taskId === $(this.element).attr('id')) {
                             tasksList[tasksList.length] = dependenciesList[i];
                             dependenciesList.splice(i, 1);
                         }
-            };
+            }
         },
 
         addTaskToList: function(event){
             var element = $(event.currentTarget);
             var taskId = element.attr('id');
             var listName = element.parent().parent().attr('id');
-            if(listName === 'tasks-list'){
-                for( var i = 0; i < this.tasksList.length; i++)
+            if(listName === 'milestone-tasks-list'){
+                for(var i = 0; i < this.tasksList.length; i++)
                     if(this.tasksList[i].taskId === taskId){
                         this.dependenciesList.push(this.tasksList[i]);
                         this.tasksList.splice(i,1);
                         break;
                     }
-                $("#dependencies-list tbody").append(element);
+                $("#dependencies-list").find("tbody").append(element);
             }
-            else{
-                for( var i = 0; i < this.dependenciesList.length; i++)
+            else {
+                for(i = 0; i < this.dependenciesList.length; i++)
                     if(this.dependenciesList[i].taskId === taskId){
                         this.tasksList.push(this.dependenciesList[i]);
                         this.dependenciesList.splice(i,1);
                         break;
                     }
-                $("#tasks-list tbody").append(element);
+                $("#milestone-tasks-list").find("tbody").append(element);
             }
         },
 
@@ -245,8 +247,7 @@ define(['backbone',
             this.render();
         },
 
-        hideMilestoneEditView : function(event){
-            //event.preventDefault();
+        hideMilestoneEditView : function(){
             this.$el.remove();
         }
     });

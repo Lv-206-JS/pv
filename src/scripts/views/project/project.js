@@ -14,10 +14,13 @@ define([
     'views/project/milestoneEdit',
     'views/project/ownership',
     'views/project/resources',
+    'views/project/projectPrice',
     'timeLine',
-    'moment'
+    'moment',
+    'TaskAlgorithm',
+    'undoRedoAlgorithm'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, ProjectPriceView, TimeLineLib, Moment, TaskAlgorithm, UndoRedoAlgorithm) {
 
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, TimeLineLib, Moment) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({
@@ -30,9 +33,12 @@ define([
             'click .show-settings': 'showSettingsPopup',
             'click .edit-milestone': 'showMilestoneEditPopup',
             'click .show-resources': 'showResourcesPopup',
+            'click .tool-price': 'showProjectPrice',
             'click .show-ownership': 'showOwnershipPopup',
             'click .tool-zoom-in' : 'increaseZoom',
-            'click .tool-zoom-out' : 'decreaseZoom'
+            'click .tool-zoom-out' : 'decreaseZoom',
+            'click .tool-undo' : 'setUndo',
+            'click .tool-redo' : 'setRedo'
         },
 
         initialize: function (options) {
@@ -42,10 +48,9 @@ define([
             this.model.setUrl(this.projectId);
             this.model.fetch();
             this.model.on('sync', _.bind(this.onChange, this));
-            this.zoom = 100; // zoom value in %
-            this.hourLength = 6; // hour length in px
             this.moment = Moment;
-
+            this.taskAlgorithm = TaskAlgorithm;
+            this.undoRedo = new UndoRedoAlgorithm();
         },
 
         onBackToLandingPage: function onBackToLandingPage() {
@@ -64,25 +69,16 @@ define([
                 model: this.model,
                 el: this.$el.find('#milestone-view-container')[0]
             }).render();
-            // this.$el.find('#milestone-view-container').html(this.milestoneView.$el);
-
-            this.infoBarView = new InfoBarView({model: this.model}).render();
-            this.$el.find('#info-bar-view-container').html(this.infoBarView.$el);
-
-            //TODO change rendering el passing
-            this.ganttContainerView = new GanttContainerView({model: this.model}).render();
-            this.$el.find('#gantt-view-container').html(this.ganttContainerView.$el);
-
-            this.tasksListView = new TasksListView({model: this.model}).render();
-            this.$el.find('#task-container').html(this.tasksListView.$el);
-            this.listenTo(this.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
-            this.listenTo(this.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
-
-            //TODO move to ganttchart view
-            this.findPositionsForTasks();
-
-            this.ganttContainerView.scrollMove();
-
+            this.infoBarView = new InfoBarView({
+                model: this.model,
+                el: this.$el.find('#info-bar-view-container')[0]
+            }).render();
+            this.ganttContainerView = new GanttContainerView({
+                model: this.model,
+                el: this.$el.find('#gantt-view-container')[0]
+            }).render();
+            this.listenTo(this.ganttContainerView.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
+            this.listenTo(this.ganttContainerView.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
             return this;
         },
 
@@ -119,60 +115,16 @@ define([
                 allTasks[allTasks.length] = changedTask;
                 allTasks[allTasks.length-1].taskId = this.createId(allTasks);
             }
-            console.log('all tasks before saving');
-            console.log(allTasks);
             this.model.set('tasks',allTasks);
             this.model.save();
-            var tasks = this.model.get('tasks');
-            console.log('all tasks after saving');
-            console.log(tasks);
         },
 
         increaseZoom: function(){
-            if(this.zoom < 200) {
-                this.zoom += 20;
-                this.findPositionsForTasks(true);
-                document.getElementById('zoom-value').innerHTML = this.zoom + "%";
-            }
+            this.ganttContainerView.increaseZoom();
         },
 
         decreaseZoom: function(){
-            if(this.zoom > 20) {
-                this.zoom -= 20;
-                this.findPositionsForTasks(false);
-                document.getElementById('zoom-value').innerHTML = this.zoom + "%";
-            }
-        },
-
-        findPositionsForTasks: function(trigger){
-            var tasks = this.model.get('tasks');
-            var timeLine = new TimeLineLib(this.model);
-            var tasksPositions = [];
-            //change width of 1 hour
-            if( trigger === true) {
-                this.hourLength *= 2;
-            } else {
-                this.hourLength /= 2;
-            }
-            for(var i = 0; i < tasks.length; i++){
-                var singleTask = {taskId: tasks[i].taskId, singleTaskPositions: []};
-                var task = timeLine.getWorkDays(tasks[i].startDate,tasks[i].estimateTime);
-                var projectStartDate = timeLine.toDate(0);
-                for( var j = 0; j < task.length; j++){
-                    var days = this.moment.duration(task[j].realDate - projectStartDate,'seconds').asDays();
-                    days = days - days % 1;
-                    var settings = this.model.get('settings');
-                    var workingHoursPerDay = this.moment.duration(+settings.dayDuration,'seconds').asHours();
-                    var notWorkingHours = days * (24 - workingHoursPerDay);
-                    var newTaskStart = task[j].realDate - projectStartDate - notWorkingHours*3600;
-                    var positionX = (newTaskStart)*(this.hourLength/3600);
-                    var width = (task[j].workHours)*(this.hourLength/3600);
-                    singleTask.singleTaskPositions[j] = {positionX: positionX, width: width};
-                }
-                tasksPositions[tasksPositions.length] = singleTask;
-            }
-            this.ganttChartView = new GanttChartView({model: this.model, tasksPositions: tasksPositions}).render();
-            this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
+            this.ganttContainerView.decreaseZoom();
         },
 
         createId: function(allTasks){
@@ -195,11 +147,9 @@ define([
             this.$el.append(this.attachmentsView.$el);
         },
 
-
         showSettingsPopup: function() {
             this.settingsView = new SettingsView({
-                model: this.model,
-                settings: this.model.get('settings')
+                model: this.model
             });
 
 
@@ -232,11 +182,35 @@ define([
             this.$el.append(this.resourcesView.$el);
         },
 
+        showProjectPrice: function(){
+            this.projectPriceView = new ProjectPriceView({model: this.model}).render();
+            this.$el.append(this.projectPriceView.$el);
+        },
+
+
         updateProjectName: function (name) {
             this.$el.find('.show-project-name').html(name);
         },
 
+        setUndo: function (){
+            var newModel = this.undoRedo.undo();
+            this.model = newModel;
+            this.renderViews();
+        },
+
+        setRedo: function (){
+            var newModel = this.undoRedo.redo();
+            this.model = newModel;
+            this.renderViews();
+        },
+
         onChange: function () {
+            /*var updateTasks = this.taskAlgorithm.startAlgorithm(this.model.get('tasks'));
+            this.model.set({tasks:updateTasks});
+            this.model.save();*/
+            //TODO Change to handle model change event.
+            Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
+            this.undoRedo.save(this.model);
             this.renderViews();
             this.updateProjectName(this.model.get('name'));
         }
