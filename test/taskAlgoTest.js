@@ -1,6 +1,6 @@
 'use strict';
 
-var taskAlgo = require('../src/scripts/algorithms/taskAlgorithm');
+var taskAlgo = require('../src/scripts/math/taskAlgorithm');
 var startAlgo = taskAlgo.taskAlgo;
 var chai = require('chai');
 var expect = chai.expect;

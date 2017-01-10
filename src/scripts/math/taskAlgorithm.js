@@ -236,4 +236,4 @@ proto.setTasksWithoutDepToLevels = function () {
     return levels;
 };
 
-exports.taskAlgo = TaskAlgo.prototype;
+//exports.taskAlgo = TaskAlgo.prototype;

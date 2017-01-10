@@ -22,7 +22,7 @@ function getProjectId(request) {
     return projectReference.slice(lastSlash+1);
 }
 
-function checkCreatorOwnership(request, response, next) {
+function checkOwnership(request, response, next) {
     Ownerships.findOne({'projectId': getProjectId(request), 'email': request.user.email}, function (err, ownerShip) {
         if(err) {
             return handleError(response, err.message, err.code);
@@ -38,23 +38,7 @@ function checkCreatorOwnership(request, response, next) {
     });
 }
 
-function checkEditorOwnership(request, response, next) {
-    Ownerships.findOne({'projectId': getProjectId(request), 'email': request.user.email}, function (err, ownerShip) {
-        if(err) {
-            return handleError(response, err.message, err.code);
-        }
-        else if(ownerShip != undefined) {
-            if(ownerShip.role === 'creator' || ownerShip.role === 'editor') {
-                next();
-            }
-            else {
-                return response.send({access: 'Denied!'});
-            }
-        }
-    });
-}
-
-router.get('/', authenticateUser, checkEditorOwnership, function (request, response) {
+router.get('/', authenticateUser, checkOwnership, function (request, response) {
     Ownerships.find({'projectId': getProjectId(request)}, function (err, ownerShips) {
         if(!ownerShips || err) {
             handleError(response, "Failed to find ownerShip!", 404);
@@ -65,7 +49,7 @@ router.get('/', authenticateUser, checkEditorOwnership, function (request, respo
     });
 });
 
-router.post('/', authenticateUser, checkCreatorOwnership, function (request, response) {
+router.post('/', authenticateUser, checkOwnership, function (request, response) {
     var errors = [];
 
     //check is there email
@@ -107,7 +91,7 @@ router.post('/', authenticateUser, checkCreatorOwnership, function (request, res
     });
 });
 
-router.delete('/:email', authenticateUser, checkCreatorOwnership, function (request, response) {
+router.delete('/:email', authenticateUser, checkOwnership, function (request, response) {
     var errors = [];
 
     //check is there email

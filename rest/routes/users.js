@@ -9,17 +9,6 @@ var LocalStrategy = require('passport-local').Strategy;
 //setting user from a model
 var User = require('../models/user');
 
-//Registration
-/*router.get('/register', function (req, res) {
-    res.render('register');
-});*/
-
-//Login
-/*router.get('/login', function (req, res) {
-    res.render('login');
-});*/
-
-
 //Register user
 router.post('/register', function (req, res) {
     console.log("REGISTER");
@@ -115,6 +104,5 @@ router.get('/logout', function (req, res) {
     req.logout();
     res.send(200, 'You are logged out');
 });
-
 
 module.exports = router;

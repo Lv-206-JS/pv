@@ -31,10 +31,13 @@ define([
                 this.$el.html(this.template({
                     model: this.model, tasks: this.tasks, milestones: this.milestones
                 }));
-                this.tasksListView = new TasksListView({model: this.model}).render();
-                this.$el.find('#task-container').html(this.tasksListView.$el);
+                this.tasksListView = new TasksListView({
+                    model: this.model,
+                    el: this.$el.find('#task-container')[0]
+                }).render();
                 this.findPositionsForTasks();
                 this.setGanttHeight();
+                this.scrollMove();
                 return this;
             },
 
@@ -57,7 +60,6 @@ define([
                     $(document).mousemove(function (e) {
                         e.preventDefault();
                         var x = e.pageX;
-                        // var w = parseInt($('#splitter').css("width"));
                         if (x > min && x < max && e.pageX < ($(window).width() - minwidth)) {
                             $('.resize-left').css('width', x);
                         }
@@ -73,7 +75,7 @@ define([
                 if(this.zoom < 200) {
                     this.zoom += 20;
                     this.findPositionsForTasks(true);
-                    document.getElementById('zoom-value').innerHTML = this.zoom + "%";
+                    document.getElementById('zoom-value').innerHTML = this.zoom + '%';
                 }
             },
 
@@ -81,7 +83,7 @@ define([
                 if(this.zoom > 20) {
                     this.zoom -= 20;
                     this.findPositionsForTasks(false);
-                    document.getElementById('zoom-value').innerHTML = this.zoom + "%";
+                    document.getElementById('zoom-value').innerHTML = this.zoom + '%';
                 }
             },
 
@@ -125,10 +127,36 @@ define([
                     tasksPositions[tasksPositions.length] = singleTask;
                 }
                 this.ganttChartView = new GanttChartView({
-                    model: this.model, tasksPositions: tasksPositions,
-                    zoom: this.zoom, hourLength: this.hourLength
+                    model: this.model,
+                    tasksPositions: tasksPositions,
+                    hourLength: this.hourLength,
+                    el: this.$el.find('#gantt-chart-container')[0]
                 }).render();
-                this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
+            },
+
+            scrollMove: function() {
+                var flag = false;
+                (function scroll() {
+                    $('#gantt-chart-container').scroll(function () {
+                        if (flag) {
+                            flag = false;
+                            return 0;
+                        }
+                        var scrollPos = $('#gantt-chart-container').scrollTop();
+                        $('#task-container').scrollTop(scrollPos);
+                        flag = true;
+                    });
+                    $('#task-container').scroll(function () {
+                        if (flag) {
+                            flag = false;
+                            return 0;
+                        }
+                        var scrollPos = $('#task-container').scrollTop();
+                        $('#gantt-chart-container').scrollTop(scrollPos);
+                        flag = true;
+                    });
+                    return 0;
+                })();
             }
         });
 

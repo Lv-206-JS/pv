@@ -1,14 +1,16 @@
 
-.landing-menu {
+#landing-menu {
   height: 40px;
   padding: 0 70px 0 70px;
   display: flex;
   flex-direction: row;
   flex-flow: row wrap;
   align-items: center;
-  background-color: #5499c7;
+ // background-color: lightgoldenrodyellow;
+  //background-color: #5499c7;
   color: #fff;
-
+  z-index: 1000;
+  
   .logo {
     flex: 0 0 120px;
     align-items: flex-start;
@@ -24,12 +26,14 @@
       flex: 0 0 50%;
       display: flex;
       justify-content: flex-start;
+     // position: fixed;
     }
 
     .landing-menu-right {
       flex: 0 0 50%;
       display: flex;
       justify-content: flex-end;
+     // position: fixed;
     }
 
     .not-logined {
@@ -45,6 +49,7 @@
 
       .menu-button {
         margin-left: 20px;
+        background: none;
       }
     }
   }

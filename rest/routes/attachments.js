@@ -16,7 +16,7 @@ function authenticateUser(req, res, next){
     if(req.isAuthenticated()){
         return next();
     } else {
-        return res.redirect('users/login');
+        return handleError(response, 'User is not authenticate!', 401);
     }
 }
 
@@ -26,7 +26,7 @@ function checkOwnership(request, response, next) {
         projectId = projectReference.slice(lastSlash+1);
     Ownerships.findOne({'projectId': projectId, 'email': request.user.email}, function (err, ownerShip) {
         if(err) {
-            //error
+            return handleError(response, err.message, err.code);
         }
         else if(ownerShip != undefined && (ownerShip.role === 'creator' || ownerShip.role === 'editor')) {
             next();
@@ -39,26 +39,32 @@ function checkOwnership(request, response, next) {
 
 //create attachment
 router.post('/', multipartMiddleware, authenticateUser, checkOwnership, function (request, response) {
-    var pathToFile = request.files.file.path;
-    var origName = request.files.file.originalFilename;
-    var mimeType = request.files.file.headers['content-type'];
-    var fileExt = '.' + origName.split('.').pop();
-    var attachmentToCreate = new Attachment();
+    var pathToSave,
+        pathToFile = request.files.file.path,
+        origName   = request.files.file.originalFilename,
+        mimeType   = request.files.file.headers['content-type'],
+        fileExt    = '.' + origName.split('.').pop(),
+        attachmentToCreate = new Attachment();
+
     fs.existsSync("attachments") || fs.mkdirSync("attachments");
     attachmentToCreate.attachmentId = Guid.create().value;
     attachmentToCreate.relativePath = 'attachments/' + attachmentToCreate.attachmentId + fileExt;
-    var pathToSave = attachmentToCreate.relativePath;
+    pathToSave = attachmentToCreate.relativePath;
+
     fs.readFile(pathToFile, function(err, file_buffer){
         fs.open(pathToSave, 'w', function(err, fd) {
             if (err) {
-                throw 'error opening file: ' + err;
+                return handleError(response, err.message, err.code);
             }
             fs.write(fd, file_buffer, 0, file_buffer.length, null, function(err, data) {
-                if (err) throw 'error writing file: ' + err;
+                if (err) {
+                    return handleError(response, err.message, err.code);
+                }
                 fs.close(fd);
             });
         });
     });
+
     attachmentToCreate.save(function (err, attachment) {
         if (err) {
             handleError(response, "Failed to create attachment!");
@@ -91,7 +97,6 @@ router.delete('/:id', authenticateUser, checkOwnership, function (request, respo
                 else
                     response.send(attachment);
             });
-
         }
     });
 });
