@@ -13,6 +13,7 @@ $landing-block-colum-width:50%;
   display: $landing-display;
   flex-direction: $landing-flex-direction;
   position: relative;
+ // font-stack: Helvetica;
 
     .landing-first-block{
     width: 100%;
@@ -133,6 +134,7 @@ $landing-block-colum-width:50%;
       color: #35363d;
       font-size: 25px;
       line-height: 30px;
+
     }
   }
 
@@ -230,18 +232,17 @@ $landing-block-colum-width:50%;
     }
   }
 
-  //.landing-footer{
-  //  color: #fff;
-  //  //font-family: $font-stack;
-  //  background-color: #5499c7;
-  //  height: 40px;
-  //  //flex: 0 0 auto;
-  //  left: 0;
-  //  bottom: 0;
-  //  line-height: 40px;
-  //  text-align: center;
-  //  font-size: 14px;
-  //  position: absolute;
-  //  width: 100%;
-  //}
+  .landing-footer{
+    height: 40px;
+    left: 0;
+    bottom: 0;
+    line-height: 40px;
+    text-align: center;
+    font-size: 14px;
+    width: 100%;
+    color: #35363d;
+    font-weight: bold;
+    background-color: $light-blue;
+    margin-top:45px;
+  }
 }
