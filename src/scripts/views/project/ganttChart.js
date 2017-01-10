@@ -28,8 +28,13 @@ define([
                 this.$el.html(this.template({
                     model: this.model, tasks: this.tasks, milestones: this.milestones
                 }));
-                this.createGanttChartDateHeader();
-                this.renderTasks();
+                if ((this.model.attributes.startDate != null && this.settings.dayDuration != 0)
+                    && this.settings.hasOwnProperty('dayStart') != null) {
+                    this.createGanttChartDateHeader();
+                }
+                if (this.tasks != 0) {
+                    this.renderTasks();
+                }
                 return this;
             },
 
@@ -115,7 +120,10 @@ define([
                     }
                     for (i = projectDurationAsWeeks < (weeksInMonth * 2) ? (weeksInMonth * 2) : projectDurationAsWeeks, j = 0;
                          i > 0; i--, j++) {
-                        topDates[j] = Moment(week).format('MMMM Do YYYY');
+                        topDates[j] = Moment(week).format('MMM') + " "
+                            + Moment(week).format('Do') + " - "
+                            + Moment(week).add(6, 'd').format('Do') + " "
+                            + Moment(week).format('YYYY');
                         week = Moment(week, 'w').add(1, 'w');
                     }
                 }
@@ -178,19 +186,44 @@ define([
                     }
                     // bottomDates are dates | topDates are weeks
                     if (this.hourLength >= 6 && this.hourLength < 48) {
-                        topW = weekWidth;
                         bottomW = dayWidth;
+                        //ckeck for project start day
+                        var projectStartDay = Moment(bottomDates[0],'dd').format('E');
+                        // if day isn't Mon or weekend, adjust top width of 1st date rectangle
+                        if(projectStartDay > 1 && projectStartDay < 6 ) {
+                            topW = [];
+                            topW[0] = dayWidth * (7 - projectStartDay + 1);
+                            if(topW[0] <= dayWidth * 3) {
+                                topDates[0] = "";
+                            }
+                            for (var i = 1; i < bottomDates.length - 1; i++) {
+                                topW[i] = dayWidth * 7;
+                            }
+                        } else {
+                            topW = dayWidth * 7;
+                        }
                         this.drawGanttChartDateHeaderSVG(topDates, bottomDates, topW, bottomW, rowHeight, header, top, bottom);
                         this.drawVerticalDateLines(bottomW, rowHeight);
                     }
                     // bottomDates are week | topDates are month
                     if (this.hourLength > 15/10 && this.hourLength < 6) {
                         bottomW = weekWidth;
+                        // check project start date, adjust top width of 1st date rectangle
+                        var projectStartDate = Moment(bottomDates[0], 'ddd Do').format('D');
+                        topW = [];
+                        // count width of the month as days * number of days left
+                        topW[0] = dayWidth * (Moment(topDates[0], 'MMMM-YYYY').daysInMonth() - projectStartDate);
+                        if(topW[0] <= bottomW) {
+                            topDates[0] = "";
+                        }
+                        for (var i = 1; i < bottomDates.length - 1; i++) {
+                            topW[i] = monthWidth * dayWidth;
+                        }
                         // counting each month has 30 days gives a decent fault compare to getMonthWidth
                         // topW = this.getMonthWidth(dayWidth);
-                        topW = monthWidth * dayWidth;
                         this.drawGanttChartDateHeaderSVG(topDates, bottomDates, topW, bottomW, rowHeight, header, top, bottom);
                         this.drawVerticalDateLines(bottomW, rowHeight);
+
                     }
                     // bottomDates are month | topDates are year
                     if (this.hourLength <= 15/10) {
