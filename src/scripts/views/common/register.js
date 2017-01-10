@@ -39,6 +39,7 @@ define([
                     } else {
                         response.error.forEach(function(mess){
                             var err_mess = elem.find("#" + mess.param.trim());
+                            err_mess.val('');
                             err_mess.attr("placeholder", mess.msg);
                             err_mess.addClass("error");
                         });
