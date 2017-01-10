@@ -31,34 +31,32 @@ define([
                     tasksPositions[i] = this.tasksPositionWidth[i].singleTaskPositions;
                 }
                 $(document).ready(function(){
-                    var heightFault = 8, // TODO Why?
-                        positionX,
+                    var positionX,
                         width,
                         rowHeight = 40,
-                        svgHeight = rowHeight * this.tasksPositionWidth.length - heightFault,
+                        svgHeight = rowHeight * this.tasksPositionWidth.length - 4,
                         rectHeight = rowHeight * 0.6,
                         padding = 20,
                         task,
                         taskName,
-                        ganttMinWidth;
+                        ganttWidth;
                     //get svg from the template
                     var paper = Snap('#gantt-chart-svg');
                     paper.attr({
                         'height': svgHeight
                     });
                     //row rectangle
-                    for (var row = 0, rect = null, line = null, positionY = -heightFault/2;
+                    for (var row = 0, rect = null, line = null, positionY = 0;
                          row < this.tasksPositionWidth.length;
                          row++, positionY += rowHeight) {
                             rect = paper.rect(0, positionY, "100%", rowHeight);
                             rect.attr({
-                                fill: '#fff',
+                                fill: 'rgba(0,0,0,0.0)',
                                 class: 'table-task-row'
                             });
-                            line = paper.line(0, positionY + rowHeight, "100%", positionY + rowHeight);
+                            line = paper.line(0, positionY, "100%", positionY);
                             line.attr({
-                                // fill: '#fff',
-                                stroke: 'rgba(0, 0, 0, 0.24)'
+                                stroke: 'rgba(0, 0, 0, 0.12)'
                             });
                             // task rectangle
                             for (var part = 0; part < tasksPositions[row].length; part++) {
@@ -67,7 +65,7 @@ define([
                                 rect = paper.rect(positionX, positionY+(rowHeight-rectHeight)/2, width, rectHeight);
                                 rect.attr({
                                     fill: "#28b463",
-                                    class: '.'+this.tasksPositionWidth[row].taskId
+                                    class: this.tasksPositionWidth[row].taskId
                                 });
                             }
                             task = this.findTaskById(this.tasks, this.tasksPositionWidth[row].taskId);
@@ -81,11 +79,18 @@ define([
                                     'alignment-baseline': 'middle'
                                 });
                                 //get min-width of gantt chart div
-                                ganttMinWidth = positionX + width + padding + taskName.length * 10;
+                                ganttWidth = positionX + width + padding + taskName.length * 10;
                             }
                     }
-                    $(".gantt-chart-container-svg").css('min-width', ganttMinWidth);
-                    $(".gantt-chart-container-svg").css('height', svgHeight);
+                    $('.gantt-chart-container-svg').css('height', svgHeight);
+                    var datesWidth = parseInt($('#dates').css('width'),10);
+                    // if gantt width is larger than datesWidth, make both equal gantt width
+                    if(ganttWidth < datesWidth) {
+                        ganttWidth = datesWidth;
+                    } else {
+                        $('#dates').css('width', ganttWidth);
+                    }
+                    $('.gantt-chart-container-svg').css('width', ganttWidth);
                 }.bind(this));
             },
 

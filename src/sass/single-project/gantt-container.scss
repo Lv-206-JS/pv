@@ -11,7 +11,7 @@ $container-min-width: 200px;
 #task-container {
   width: 50%;
   min-width: $container-min-width;
-  overflow-x: auto;
+  overflow-x: scroll;
   overflow-y: scroll;
 }
 #splitter {
@@ -30,6 +30,7 @@ $container-min-width: 200px;
 #gantt-chart-container {
   flex: 1;
   min-width: $container-min-width;
-  overflow-x: auto;
+  overflow-x: scroll;
   overflow-y: scroll;
+  position: relative;
 }
