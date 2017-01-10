@@ -127,6 +127,7 @@ define([
                     }
                     tasksPositions[tasksPositions.length] = singleTask;
                 }
+                console.log(tasksPositions);
                 this.ganttChartView = new GanttChartView({
                     model: this.model,
                     tasksPositions: tasksPositions,

@@ -77,14 +77,14 @@ define([
                 model: this.model,
                 el: this.$el.find('#gantt-view-container')[0]
             }).render();
-            this.listenTo(this.ganttContainerView.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
-            this.listenTo(this.ganttContainerView.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
+            //this.listenTo(this.ganttContainerView.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
+            //this.listenTo(this.ganttContainerView.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
             return this;
         },
 
         showTaskEditPopup: function(allTasks,task){
             var resources = this.model.get('resources');
-            this.taskView = new TaskView({tasks: allTasks, task: task, resources: resources}).render();
+            this.taskView = new TaskView({tasks: allTasks, task: task, resources: resources, model: this.model}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
             this.listenTo(this.taskView, 'deleteTask', this.deleteTaskHandler);
             this.$el.append(this.taskView.$el);
@@ -225,7 +225,6 @@ define([
             else {
                 this.flagSchedule = true;
             }
-            //TODO Change to handle model change event.
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
             this.undoRedo.save(this.model);
             this.renderViews();
