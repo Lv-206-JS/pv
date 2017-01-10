@@ -183,6 +183,7 @@ proto.getTasksStartDays = function() {
 			tempTask.startDate = prevDate;
 		}
 		prevDate += Math.max.apply(Math, estimates);
+		estimates = [];
 	} 
 };
 
