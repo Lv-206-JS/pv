@@ -114,8 +114,10 @@ $tab-height: 40px;
       .form-input-text {
         display: inline-block;
         width: 330px;
-        border-radius: 10px;
-        border: 1px solid $dark-grey;
+        //border-radius: 10px;
+        border: 0;
+        outline: 0;
+        border-bottom: 1px solid $dark-grey;
         padding: 8px 12px;
         font-family: Roboto, sans-serif;
         line-height: 20px;
@@ -125,9 +127,15 @@ $tab-height: 40px;
 
       .form-input-text:focus,
       .form-input-description:focus {
-        border: 1px solid $blue;
-        border-radius: 10px;
+        border: 0;
+        outline: 0;
+        border-bottom: 1px solid $blue;
+        //border-radius: 10px;
         outline: none;
+      }
+
+      .error {
+        border-bottom: 2px solid red;
       }
 
       .form-input-description {
@@ -137,8 +145,10 @@ $tab-height: 40px;
         position: relative;
         font-family: Roboto, sans-serif;
         min-height: 120px;
-        border-radius: 10px;
-        border: 1px solid $dark-grey;
+        //border-radius: 10px;
+        border: 0;
+        outline: 0;
+        border-bottom: 1px solid $dark-grey;
       }
 
       .all-tasks {
@@ -156,11 +166,12 @@ $tab-height: 40px;
         height: 80%;
         margin-right: 2%;
         margin-left: 2%;
-        border-style: solid;
+        border: 1px solid $dark-grey;
+        //border-style: solid;
         padding-left: 5px;
-        border-width: 1px;
-        border-color: $dark-grey;
-        border-radius: 10px;
+        //border-width: 1px;
+        //border-color: $dark-grey;
+        //border-radius: 10px;
         background-color: $drop-list-background-color;
 
         .task-item {
@@ -176,7 +187,7 @@ $tab-height: 40px;
         background-color: $light-blue;
         color:$white;
         padding: 5px 10px;
-        border-radius: 7px;
+        //border-radius: 7px;
         border-color:$blue;
       }
 
@@ -215,7 +226,7 @@ $tab-height: 40px;
           width: 25%;
           height: 30px;
           background-color: $white;
-          border-radius: 10px;
+          //border-radius: 10px;
           padding-top: 5px;
           padding-bottom: 5px;
           text-align: center;
@@ -354,8 +365,9 @@ $tab-height: 40px;
       padding: 5px 10px;
       line-height: 20px;
       color: $white;
-      border: 1px solid $white;
-      border-radius: 10px;
+      border: 1px solid transparent;
+      //border-radius: 10px;
+      outline: none;
       background-color: $light-blue;
       -webkit-transition: background-color 500ms ease;
       transition: background-color 500ms ease;

@@ -15,10 +15,17 @@ define([
                 required: true,
                 msg: 'Please fill in Project Name field.'
             },
-            description: {
+            description: [{
                 required: true,
-                msg: 'Please fill in Project Description field.'
-            }
+                msg: 'Please fill in Project Description field.',
+            }, {
+                minLength: 50,
+                msg: function(attrName, attrValue, attrExpectation) {
+                            return 'Passed ' + attrName + ' is too short. It is expected to be longer than ' + attrExpectation + ' signs';
+                        }
+            }]
+
+
         },
 
         defaults: {

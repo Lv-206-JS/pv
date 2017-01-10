@@ -69,6 +69,7 @@ define([
             var inputs = this.$el.find('.form-control');
 
             _.each(inputs, function(input) {
+                $(input).addClass('error');
                 var inputName = $(input).attr('name');
 
                 if (errors[inputName]) {
