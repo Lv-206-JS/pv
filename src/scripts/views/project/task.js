@@ -203,7 +203,7 @@ define(['backbone',
             var taskId = element.attr('id');
             var listName = element.parent().parent().attr('id');
             if(listName === 'all-tasks-list'){
-                for(i = 0; i < this.tasksList.length; i++)
+                for(var i = 0; i < this.tasksList.length; i++)
                     if(this.tasksList[i].taskId === taskId){
                         this.dependenciesList.push(this.tasksList[i]);
                         this.tasksList.splice(i,1);
@@ -212,7 +212,7 @@ define(['backbone',
                 $("#dependencies-list tbody").append(element);
             }
             else{
-                for(i = 0; i < this.dependenciesList.length; i++)
+                for(var i = 0; i < this.dependenciesList.length; i++)
                     if(this.dependenciesList[i].taskId === taskId){
                         this.tasksList.push(this.dependenciesList[i]);
                         this.dependenciesList.splice(i,1);
@@ -288,6 +288,14 @@ define(['backbone',
                     this.tasks.splice(i, 1);
                     break;
                 }
+            }
+            for(var i = 0; i < this.tasks.length; i++){
+                var dependencies = this.tasks[i].dependsOn;
+                for(var j = 0; j < dependencies.length; j++){
+                    if(dependencies[j].taskId === this.task.taskId)
+                        dependencies.splice(j,1);
+                }
+                this.tasks[i].dependsOn = dependencies;
             }
             this.trigger('deleteTask', this.tasks);
             event.preventDefault();
