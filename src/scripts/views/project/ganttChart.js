@@ -22,6 +22,8 @@ define([
                 this.tasksPositions = (options.tasksPositions !== undefined) ? options.tasksPositions : null;
                 this.hourLength = options.hourLength;
                 this.timeLine = new TimeLineLib(this.model);
+                this.rowHeight = 40;
+                this.padding = 20;
             },
 
             render: function render() {
@@ -321,7 +323,9 @@ define([
             },
 
             drawVerticalDateLines: function (dateWidth,rowHeight) {
-                var width = parseInt($('#dates').css('width'), 10),
+                var headerWidth = parseInt($('#dates').css('width'), 10),
+                    projectWidth = this.getProjectWidth(),
+                    width = projectWidth < headerWidth ? headerWidth : projectWidth,
                     height = this.tasks.length * rowHeight,
                     paper = Snap('#gantt-chart-svg'),
                     line;
@@ -331,6 +335,17 @@ define([
                         stroke: 'rgba(0, 0, 0, 0.12)'
                     });
                 }
+            },
+
+            getProjectWidth: function () {
+                var positionsLength = this.tasksPositions.length,
+                    lastTaskLength = this.tasksPositions[positionsLength-1].singleTaskPositions.length,
+                    positionX = this.tasksPositions[positionsLength-1].singleTaskPositions[lastTaskLength-1].positionX,
+                    width = this.tasksPositions[positionsLength-1].singleTaskPositions[lastTaskLength-1].width,
+                    lastTaskName = this.tasks[this.tasks.length - 1].name;
+                var ganttWidth = positionX + width + this.padding + lastTaskName.length * 10;
+                ganttWidth = (ganttWidth < $(window).width()) ? $(window).width() : ganttWidth;
+                return ganttWidth;
             },
 
             getYearWidth: function(bottomDates, bottomW) {
