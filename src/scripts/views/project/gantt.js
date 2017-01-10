@@ -28,6 +28,7 @@ define([
             },
 
             render: function render() {
+                document.getElementById('zoom-value').innerHTML = '100%';
                 this.$el.html(this.template({
                     model: this.model, tasks: this.tasks, milestones: this.milestones
                 }));
