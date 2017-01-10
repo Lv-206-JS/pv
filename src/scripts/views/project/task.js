@@ -312,7 +312,7 @@ define(['backbone',
                     this.task.dependsOn[i] = {taskId: this.dependenciesList[i].taskId};
             }
             else{
-                this.task.dependsOn = false;
+                this.task.dependsOn = [];
             }
             this.trigger('upsertTask', this.tasks, this.task);
 

@@ -49,7 +49,7 @@ define([
             this.model.fetch();
             this.model.on('sync', _.bind(this.onChange, this));
             this.moment = Moment;
-            this.taskAlgorithm = TaskAlgorithm;
+            this.flagSchedule = true;
             this.undoRedo = new UndoRedoAlgorithm();
         },
 
@@ -204,10 +204,21 @@ define([
             this.renderViews();
         },
 
+        startDateSchedule: function () {
+            this.taskAlgorithm = new TaskAlgorithm({model: this.model, me:this});
+            var updateTasks = this.taskAlgorithm.startAlgorithm();
+            this.model.set({tasks: updateTasks});
+            this.model.save();
+            this.flagSchedule = false;
+        },
+
         onChange: function () {
-            /*var updateTasks = this.taskAlgorithm.startAlgorithm(this.model.get('tasks'));
-            this.model.set({tasks:updateTasks});
-            this.model.save();*/
+            if(this.flagSchedule){
+                this.startDateSchedule();
+            }
+            else {
+                this.flagSchedule = true;
+            }
             //TODO Change to handle model change event.
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
             this.undoRedo.save(this.model);
