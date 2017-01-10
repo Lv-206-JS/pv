@@ -14,7 +14,7 @@ define([
 
             initialize: function (options) {
                 this.model = options.model;
-                this.tasks = options.model.get("tasks");
+                this.tasks = options.model.get('tasks');
                 this.task = options.task;
                 this.moment = Moment;
                 this.timeLine = new TimeLine(this.model);

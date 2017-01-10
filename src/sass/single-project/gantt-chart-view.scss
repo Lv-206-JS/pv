@@ -4,3 +4,7 @@
 .gantt-date-bottom-cell {
   border-right: $divider-border;
 }
+.gantt-chart-container-svg {
+  position: absolute;
+  top: 80px;
+}
