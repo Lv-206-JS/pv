@@ -27,16 +27,7 @@ define([
                     tasks: this.tasks
                 }));
                 this.renderTaskRows();
-                this.scrollMove();
                 return this;
-            },
-
-            scrollMove: function() {
-                //TODO make it work faster
-                $('#task-container').scroll(function() {
-                    var scrollPos = $('#task-container').scrollTop();
-                    $('#gantt-chart-container').scrollTop(scrollPos);
-                });
             },
 
             renderTaskRows: function () {
@@ -44,7 +35,10 @@ define([
                 var lastElem = this.$el.find('.table-task-header');
                 for (var i = 0; i < this.tasks.length; i++) {
                     task = this.tasks[i];
-                    this.taskRowView = new TaskRowView({model: this.model, task: task}).render();
+                    this.taskRowView = new TaskRowView({
+                        model: this.model,
+                        task: task
+                    }).render();
                     $(this.taskRowView.$el).insertAfter(lastElem);
                     lastElem = this.$el.find('.table-task-row:last');
                 }
@@ -67,7 +61,7 @@ define([
 
             onTaskEdit: function onTaskEdit(e) {
                 var target = $(e.currentTarget);
-                var taskId = target["0"].id;
+                var taskId = target['0'].id;
                 this.renderTaskView(taskId);
             },
 
