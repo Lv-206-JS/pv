@@ -28,8 +28,13 @@ define([
                 this.$el.html(this.template({
                     model: this.model, tasks: this.tasks, milestones: this.milestones
                 }));
-                this.createGanttChartDateHeader();
-                this.renderTasks();
+                if ((this.model.attributes.startDate != null && this.settings.dayDuration != 0)
+                    && this.settings.hasOwnProperty('dayStart') != null) {
+                    this.createGanttChartDateHeader();
+                }
+                if (this.tasks != 0) {
+                    this.renderTasks();
+                }
                 return this;
             },
 
