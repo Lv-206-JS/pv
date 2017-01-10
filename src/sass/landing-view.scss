@@ -7,7 +7,7 @@ $landing-align-items: center;
 $landing-text-align: center;
 $landing-p-font-size: 20px;
 $landing-p-line-height: 25px;
-$landing-block-colum-width:50%;
+$landing-block-column-width:50%;
 
 .landing-wrapper{
   display: $landing-display;
@@ -41,10 +41,10 @@ $landing-block-colum-width:50%;
         color: $text-white;
         width: 70%;
       }
-      .landing-started-buttom{
+      .landing-started-button{
         margin-top: 50px;
         padding: 20px;
-        border-radius: 10px;
+        //border-radius: 10px;
         background-color: $text-white;
         color: $light-blue;
         line-height: 25px;
@@ -55,7 +55,7 @@ $landing-block-colum-width:50%;
         text-decoration: none;
         box-shadow: $box-shadow;
       }
-        .landing-started-buttom:hover {
+        .landing-started-button:hover {
           background-color:$blue;
           color: $text-white;
           transition: $transition-background;
@@ -68,7 +68,7 @@ $landing-block-colum-width:50%;
     margin: $landing-block-margin;
 
     .landing-manage-block-description{
-      width: $landing-block-colum-width;
+      width: $landing-block-column-width;
       text-align: $landing-text-align;
       height: $landing-block-height;
       float: left;
@@ -95,7 +95,7 @@ $landing-block-colum-width:50%;
 
     .landing-manage-block-img{
       background-image: url("../../images/gantt-chart.png");
-      width: $landing-block-colum-width;
+      width: $landing-block-column-width;
       text-align: $landing-text-align;
       height: $landing-block-height;
       display: $landing-display;
@@ -127,7 +127,7 @@ $landing-block-colum-width:50%;
     }
 
     .landing-info-p{
-      width: $landing-block-colum-width;
+      width: $landing-block-column-width;
       padding-right: 60px;
       padding-left: 60px;
       float: right;
@@ -146,7 +146,7 @@ $landing-block-colum-width:50%;
   .landing-colum-l{
     background-image: url('../../images/discussion.png');
     background-size: cover;
-    width: $landing-block-colum-width;
+    width: $landing-block-column-width;
     text-align: $landing-text-align;
     height: $landing-block-height;
     float: left;
@@ -158,7 +158,7 @@ $landing-block-colum-width:50%;
 
   .landing-colum-r{
     background-color: $light-blue;
-    width: $landing-block-colum-width;
+    width: $landing-block-column-width;
     text-align: $landing-text-align;
     height: $landing-block-height;
     float: left;
@@ -194,7 +194,7 @@ $landing-block-colum-width:50%;
 
     .landing-features-block-description{
       height: 700px;
-      width: $landing-block-colum-width;
+      width: $landing-block-column-width;
       float: left;
       display: $landing-display;
       flex-direction: $landing-flex-direction;
@@ -240,8 +240,7 @@ $landing-block-colum-width:50%;
     text-align: center;
     font-size: 14px;
     width: 100%;
-    color: #35363d;
-    font-weight: bold;
+    color: #fff;
     background-color: $light-blue;
     margin-top:45px;
   }

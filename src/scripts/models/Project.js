@@ -13,16 +13,15 @@ define([
         validation: {
             name: {
                 required: true,
-                msg: 'Please fill in Project Name field.'
+                msg: 'Please, fill in Project Name field.'
             },
             description: [{
                 required: true,
-                msg: 'Please fill in Project Description field.',
+                msg: 'Please, fill in Project Description field.',
             }, {
-                minLength: 50,
-                msg: function(attrName, attrValue, attrExpectation) {
-                            return 'Passed ' + attrName + ' is too short. It is expected to be longer than ' + attrExpectation + ' signs';
-                        }
+                minLength: 30,
+                msg: 'Description is too short. It is expected to be longer than 30 chars!'
+
             }]
 
 

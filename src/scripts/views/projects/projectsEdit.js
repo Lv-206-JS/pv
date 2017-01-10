@@ -3,9 +3,8 @@ define([
     'backbone',
     'backbone-validation',
     'JST',
-    'collections/Projects',
-    'models/Project'
-], function (Backbone, BackboneValidation, JST, projectsCollection, ProjectModel) {
+    'collections/Projects'
+], function (Backbone, BackboneValidation, JST, projectsCollection) {
     'use strict';
 
     var ProjectEditView = Backbone.View.extend({
@@ -13,7 +12,8 @@ define([
         className: 'projects-edit-view',
         events: {
             'click .ok-button': 'saveProject',
-            'click .cancel-button': 'exitEditProject'
+            'click .cancel-button': 'exitEditProject',
+            'keydown .form-control': 'removeErrors'
         },
 
         initialize: function initialize(options) {
@@ -48,9 +48,8 @@ define([
 
             if (this.model.isValid(['name', 'description'])) {
                 this.model.save().then(
-                    function(res) {
+                    function() {
                         that.trigger('editedProject', that.model);
-                        that.toJSON();
 
                     },
                     function(error) {
@@ -65,23 +64,33 @@ define([
         },
 
         handleErrors: function () {
-            var errors = this.model.validate();
-            var inputs = this.$el.find('.form-control');
+            var that = this,
+                errors = this.model.validate(),
+                inputs = this.$el.find('.form-control');
 
             _.each(inputs, function(input) {
-                $(input).addClass('error');
                 var inputName = $(input).attr('name');
 
                 if (errors[inputName]) {
-                    $(input).attr('placeholder', errors[inputName]);
+                    that.$el.find('.' + inputName + '-error').html(errors[inputName]);
+                    $(input).addClass('error');
                 }
+
             });
+        },
+
+        removeErrors: function (e) {
+            var input = e.currentTarget;
+            var inputName = $(input).attr('name');
+            this.$el.find('.' + inputName + '-error').html('');
+            $(input).removeClass('error');
+
         },
 
         exitEditProject: function(event){
             event.preventDefault();
             this.$el.remove();
-        },
+        }
 
     });
 
