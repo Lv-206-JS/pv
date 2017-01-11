@@ -27,7 +27,7 @@
                         <span class="milestone-link remove-milestone" title="Delete" data-name="<%= milestones[i].name %>"></span>
                         <span class="milestone-link edit-milestone" title="Edit" data-name="<%= milestones[i].name %>"></span>
                     </div>
-                    <div class="table-cell-milestone"><%= moment(milestones[i].date/1000).format('YYYY-MM-DD')%></div>
+                    <div class="table-cell-milestone"><%= moment.unix(milestones[i].date).format('DD/MM/YY HH:mm')%></div>
                 </div>
                 <% } %>
             </div>
