@@ -47,8 +47,8 @@ define(['backbone', 'moment'], function (Backbone, Moment) {
                 }
             }
         } else {
-            for (i = 0; i < tasks.length; i++) {
-                getTasksEnd(tasks[i]);
+            for (i = 0; i < this.tasks.length; i++) {
+                getTasksEnd(this.tasks[i]);
             }
         }
 
