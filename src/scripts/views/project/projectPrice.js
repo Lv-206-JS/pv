@@ -1,8 +1,9 @@
 define(['backbone',
         'underscore',
         'JST',
-        'moment'],
-    function (Backbone, _, JST,Moment) {
+        'moment',
+        'timeLine'],
+    function (Backbone, _, JST, Moment, TimeLineLib) {
         'use strict';
 
         var ProjectPriceView = Backbone.View.extend({
@@ -15,11 +16,13 @@ define(['backbone',
                 this.startDate = this.model.get('startDate');
                 this.tasks = this.model.get('tasks');
                 this.price = this.calculatePrice();
+                this.duration = this.calculateDuration();
             },
 
             render: function render() {
                 this.$el.html(this.template({
-                    price: this.price
+                    price: this.price,
+                    duration: this.duration
                 }));
                 return this;
             },
@@ -59,6 +62,53 @@ define(['backbone',
                     }
                 }
                 return price;
+            },
+
+            calculateDuration: function(){
+                var timeLine = new TimeLineLib(this.model);
+                var projectEnd = 0;
+                for(var i = 0; i < this.tasks.length; i++){
+                    var taskEnd = Number(this.tasks[i].startDate) + Number(this.tasks[i].estimateTime);
+                    if(projectEnd < taskEnd)
+                        projectEnd = Number(taskEnd);
+                }
+                var projectRealEnd = timeLine.toDate(projectEnd);
+                var projectDuration = (projectRealEnd - this.startDate)/3600;
+                var result = '';
+                var days = projectDuration / 24;
+                if(days >= 365 ){
+                    result += (days - (days % 365)) / 365 +' year ';
+                    days = days % 365;
+                }
+                if(days >= 31){
+                    var month = (days - (days % 31)) / 31;
+                    result += month;
+                    if(month > 1) result +=' months ';
+                    else result += ' month ';
+                    days = days % 31;
+                }
+                if((days >= 7) && (days < 31)){
+                    var week = (days - (days % 7)) / 7;
+                    result += week;
+                    if(week > 1) result += ' weeks ';
+                    else result += ' week ';
+                    days = days % 7;
+                }
+                if((days >= 1) && (days < 7)){
+                    var day = (days - (days % 1)) / 1;
+                    result += day;
+                    if(week > 1) result += ' days ';
+                    else result += ' day ';
+                    var hour = Math.ceil((days % 1) * 24);
+                    result += hour;
+                    if(hour > 1) result += ' hours ';
+                    else result += ' hour ';
+
+                }
+
+                // var days = Math.ceil(Moment.duration(projectRealEnd-this.startDate,'seconds').asDays());
+
+                return result;
             },
 
             onSubmitChanges: function onSubmitChanges (event){
