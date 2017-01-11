@@ -2,8 +2,9 @@ define(['backbone',
     'underscore',
     'JST',
     'Draggabilly',
-    'moment'
-], function (Backbone, _, JST, Draggabilly, Moment) {
+    'moment',
+    'timeLine'
+], function (Backbone, _, JST, Draggabilly, Moment, TimeLine) {
     'use strict';
 
     var MilestoneEditView = Backbone.View.extend({
@@ -16,12 +17,13 @@ define(['backbone',
             this.tasks = this.model.get('tasks');
             this.milestoneEdit = {
                 name: "",
-                date: "",
+                date: 0,
                 dependsOn: []
             };
             this.tasksList = [];
             this.dependenciesList = [];
             this.moment = Moment;
+            this.timeLine = new TimeLine(this.model);
         },
 
         render: function render() {
@@ -110,8 +112,8 @@ define(['backbone',
             event.preventDefault();
             var updatedMilestones = this.model.get('milestones');
             var newName = this.$el.find('#milestone-settings-name').val();
-            var newDate = this.$el.find('#milestone-settings-date').val();
             var newDependensies = this.dependenciesList;
+            var newDate = this.getMilestoneDate(newDependensies);
             var target = $(event.currentTarget);
             var milestoneName = target.data('name');
             if(milestoneName == '') {
@@ -241,6 +243,12 @@ define(['backbone',
                     }
                 $("#milestone-tasks-list").find("tbody").append(element);
             }
+        },
+
+        getMilestoneDate: function (dependsOn) {
+                var milestonePTLdate = this.timeLine.calculateEstimateTime(dependsOn);
+                var milestoneDate = this.timeLine.toDate(milestonePTLdate);
+                return milestoneDate;
         },
 
         updateMilestonesPopup:function () {
