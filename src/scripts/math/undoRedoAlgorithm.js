@@ -20,11 +20,12 @@ define(['backbone', 'jquery'], function (Backbone, Jquery) {
                 if(this.history.length === 50)
                     this.rewriteHistory();
             }
+            console.log(this.iterator);
         },
 
         undo: function(){
-            if(this.iterator > 1)
-                --this.iterator;
+            if(this.iterator > 2)
+                this.iterator = this.iterator - 2;
             var copiedObject = this.jquery.extend(true, {}, this.history[this.iterator-1]);
             this.hideButton('#undo');
             this.showButton('#redo');
@@ -32,8 +33,8 @@ define(['backbone', 'jquery'], function (Backbone, Jquery) {
         },
 
         redo: function(){
-            if(this.iterator < this.history.length)
-                ++this.iterator;
+            if(this.iterator < this.history.length-1)
+                this.iterator = this.iterator + 2;
             this.showButton('#undo');
             this.hideButton('#redo');
             var copiedObject = this.jquery.extend(true, {}, this.history[this.iterator-1]);
@@ -42,7 +43,7 @@ define(['backbone', 'jquery'], function (Backbone, Jquery) {
 
         hideButton: function(buttonId){
             if(buttonId === '#undo'){
-                if( this.iterator == 1){
+                if( this.iterator == 2){
                     $('#undo').attr('disabled','disabled');
                 }
             }
@@ -55,7 +56,7 @@ define(['backbone', 'jquery'], function (Backbone, Jquery) {
 
         showButton: function(buttonId){
             if(buttonId === '#undo'){
-                if( this.iterator > 1){
+                if( this.iterator > 2){
                     $('#undo').attr('disabled',null);
                 }
             }
