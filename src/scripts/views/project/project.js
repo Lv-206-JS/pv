@@ -49,7 +49,7 @@ define([
             this.model.fetch();
             this.model.on('sync', _.bind(this.onChange, this));
             this.moment = Moment;
-            this.taskAlgorithm = TaskAlgorithm;
+            this.flagSchedule = true;
             this.undoRedo = new UndoRedoAlgorithm();
         },
 
@@ -77,14 +77,14 @@ define([
                 model: this.model,
                 el: this.$el.find('#gantt-view-container')[0]
             }).render();
-            this.listenTo(this.ganttContainerView.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
-            this.listenTo(this.ganttContainerView.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
+            //this.listenTo(this.ganttContainerView.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
+            //this.listenTo(this.ganttContainerView.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
             return this;
         },
 
         showTaskEditPopup: function(allTasks,task){
             var resources = this.model.get('resources');
-            this.taskView = new TaskView({tasks: allTasks, task: task, resources: resources}).render();
+            this.taskView = new TaskView({tasks: allTasks, task: task, resources: resources, model: this.model}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
             this.listenTo(this.taskView, 'deleteTask', this.deleteTaskHandler);
             this.$el.append(this.taskView.$el);
@@ -193,22 +193,38 @@ define([
         },
 
         setUndo: function (){
-            var newModel = this.undoRedo.undo();
-            this.model = newModel;
-            this.renderViews();
+            if( $('#undo').attr('disabled')){}
+            else {
+                var newModel = this.undoRedo.undo();
+                this.model = newModel;
+                this.renderViews();
+            }
         },
 
         setRedo: function (){
-            var newModel = this.undoRedo.redo();
-            this.model = newModel;
-            this.renderViews();
+            if( $('#redo').attr('disabled')){}
+            else {
+                var newModel = this.undoRedo.redo();
+                this.model = newModel;
+                this.renderViews();
+            }
+        },
+
+        startDateSchedule: function () {
+            this.taskAlgorithm = new TaskAlgorithm({model: this.model, me:this});
+            var updateTasks = this.taskAlgorithm.startAlgorithm();
+            this.model.set({tasks: updateTasks});
+            this.model.save();
+            this.flagSchedule = false;
         },
 
         onChange: function () {
-            /*var updateTasks = this.taskAlgorithm.startAlgorithm(this.model.get('tasks'));
-            this.model.set({tasks:updateTasks});
-            this.model.save();*/
-            //TODO Change to handle model change event.
+            if(this.flagSchedule){
+                this.startDateSchedule();
+            }
+            else {
+                this.flagSchedule = true;
+            }
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
             this.undoRedo.save(this.model);
             this.renderViews();

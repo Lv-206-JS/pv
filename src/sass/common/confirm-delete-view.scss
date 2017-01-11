@@ -1,0 +1,19 @@
+@import "../basic-popup-view";
+$confirm-delete-width: $form-wrapper-width/1.5;
+
+.confirm-delete-view {
+  @extend .basic-popup-view;
+  z-index: 1001;
+}
+
+.confirm-delete-view .form-wrapper {
+  width: $confirm-delete-width;
+  position: relative;
+  top: $confirm-delete-width/2.5;
+}
+
+.confirm-delete-view .confirm-delete-main {
+  @extend .form-title;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}

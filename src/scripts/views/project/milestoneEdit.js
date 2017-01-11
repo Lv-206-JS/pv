@@ -44,6 +44,7 @@ define(['backbone',
             'click .remove-milestone' : 'deleteMilestone',
             'dblclick .milestone-task-item' : 'addTaskToList',
             'dblclick .milestone-task-name' : 'getEditView'
+
         },
 
         getTasksList: function(el){

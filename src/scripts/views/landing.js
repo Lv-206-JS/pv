@@ -6,24 +6,31 @@ define([
     'use strict';
 
     var LandingView = Backbone.View.extend({
-        template: JST.landing,
+        template: JST['landing'],
         className: 'landing-view',
 
         initialize: function (options) {
+
         },
 
-        render: function render() {
+        render: function () {
+            this.$el.html(this.template({}));
             this.renderViews();
-            this.$el.append(this.template({}));
-
+            this.getLandingBlockHeight();
             return this;
         },
 
         renderViews: function () {
-            this.landingMenuView = new LandingMenuView({}).render();
-            this.$el.append(this.landingMenuView.$el);
-
+            this.landingMenuView = new LandingMenuView({
+                el: this.$el.find('#landing-menu')[0]
+            }).render();
+            // this.$el.find('#landing-menu').html(this.landingMenuView.$el);
             return this;
+        },
+
+        getLandingBlockHeight: function () {
+            var height = $(window).height();
+            $('.landing-block-height').css('height', height);
         }
 
 
