@@ -2,8 +2,9 @@ define(['backbone',
     'underscore',
     'JST',
     'Draggabilly',
-    'moment'],
-    function (Backbone, _, JST, Draggabilly, Moment) {
+    'moment',
+    '../common/confirmDelete'],
+    function (Backbone, _, JST, Draggabilly, Moment, renderConfirmDeleteView) {
     'use strict';
 
     var TaskView = Backbone.View.extend({
@@ -28,6 +29,9 @@ define(['backbone',
                 this.delete = true;
             }
             this.resources = options.resources;
+            if(options.model){
+                this.model = options.model;
+            }
             this.tasksList = this.getTasksList(true);
             this.dependenciesList = this.getTasksList(false);
             this.mimetypesList = this.getMimetypesList(this.task.attachments);
@@ -54,7 +58,7 @@ define(['backbone',
             'click .tab-attachments' : 'taskAttachmentslInformation',
             'click .cancel-button' : 'hideTaskView',
             'click .ok-button' : 'onSubmitChanges',
-            'click .delete-task' : 'deleteTask',
+            'click .delete-task' : 'confirmDelete',
             'change #add-attachment-file' : 'addAttachment',
             'click #delete-attachment' : 'deleteAttachment',
             'dblclick .task-item' : 'addTaskToList'
@@ -182,7 +186,7 @@ define(['backbone',
                     $(this.element).css({'left': '0'});
                 }
                 var trigger = false;
-                for (var i = 0; i < tasksList.length; i++)
+                for (i = 0; i < tasksList.length; i++)
                     if (tasksList[i].taskId === $(this.element).attr('id')) {
                         dependenciesList[dependenciesList.length] = tasksList[i];
                         tasksList.splice(i, 1);
@@ -190,7 +194,7 @@ define(['backbone',
                         break;
                     }
                 if (!trigger)
-                    for (var i = 0; i < dependenciesList.length; i++)
+                    for (i = 0; i < dependenciesList.length; i++)
                         if (dependenciesList[i].taskId === $(this.element).attr('id')) {
                             tasksList[tasksList.length] = dependenciesList[i];
                             dependenciesList.splice(i, 1);
@@ -203,7 +207,7 @@ define(['backbone',
             var taskId = element.attr('id');
             var listName = element.parent().parent().attr('id');
             if(listName === 'all-tasks-list'){
-                for( var i = 0; i < this.tasksList.length; i++)
+                for(var i = 0; i < this.tasksList.length; i++)
                     if(this.tasksList[i].taskId === taskId){
                         this.dependenciesList.push(this.tasksList[i]);
                         this.tasksList.splice(i,1);
@@ -212,7 +216,7 @@ define(['backbone',
                 $("#dependencies-list tbody").append(element);
             }
             else{
-                for( var i = 0; i < this.dependenciesList.length; i++)
+                for(var i = 0; i < this.dependenciesList.length; i++)
                     if(this.dependenciesList[i].taskId === taskId){
                         this.tasksList.push(this.dependenciesList[i]);
                         this.dependenciesList.splice(i,1);
@@ -289,9 +293,32 @@ define(['backbone',
                     break;
                 }
             }
+            for(var i = 0; i < this.tasks.length; i++){
+                var dependencies = this.tasks[i].dependsOn;
+                for(var j = 0; j < dependencies.length; j++){
+                    if(dependencies[j].taskId === this.task.taskId)
+                        dependencies.splice(j,1);
+                }
+                this.tasks[i].dependsOn = dependencies;
+            }
+            var milestones = this.model.get('milestones');
+            for(var i = 0; i < milestones.length; i++){
+                var dependencies = milestones[i].dependsOn;
+                for(var j = 0; j < dependencies.length; j++){
+                    if(dependencies[j].taskId === this.task.taskId)
+                        dependencies.splice(j,1);
+                }
+                milestones[i].dependsOn = dependencies;
+                if(milestones[i].dependsOn.length === 0)
+                    milestones.splice(i,1);
+            }
+            this.model.set('milestones', milestones);
             this.trigger('deleteTask', this.tasks);
-            event.preventDefault();
             this.$el.remove();
+        },
+
+        confirmDelete: function(event){
+            renderConfirmDeleteView(event, this, this.deleteTask);
         },
 
         hideTaskView: function(event){
@@ -312,7 +339,7 @@ define(['backbone',
                     this.task.dependsOn[i] = {taskId: this.dependenciesList[i].taskId};
             }
             else{
-                this.task.dependsOn = false;
+                this.task.dependsOn = [];
             }
             this.trigger('upsertTask', this.tasks, this.task);
 

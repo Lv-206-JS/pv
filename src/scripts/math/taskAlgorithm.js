@@ -1,12 +1,17 @@
-'use strict';
-function TaskAlgo() {}
+define(['backbone', 'models/Project'], function (Backbone, Model) {
+    'use strict';
+
+var TaskAlgo =  function (options) {
+    this.model = options.model;
+
+    this.tasks = this.model.get('tasks');
+    this.levels = [];
+};
 
 var proto = TaskAlgo.prototype;
 
 //function for starting task algorithm
-proto.startAlgorithm = function (tasks) {
-    this.tasks = tasks;
-    this.levels = [];
+proto.startAlgorithm = function () {
     if(this.tasks.length == 0) {
         return this.tasks;
     }
@@ -178,6 +183,7 @@ proto.getTasksStartDays = function() {
 			tempTask.startDate = prevDate;
 		}
 		prevDate += Math.max.apply(Math, estimates);
+		estimates = [];
 	} 
 };
 
@@ -237,3 +243,6 @@ proto.setTasksWithoutDepToLevels = function () {
 };
 
 //exports.taskAlgo = TaskAlgo.prototype;
+
+    return TaskAlgo;
+});

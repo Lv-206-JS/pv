@@ -28,11 +28,14 @@ define([
             },
 
             render: function render() {
+                document.getElementById('zoom-value').innerHTML = '100%';
                 this.$el.html(this.template({
                     model: this.model, tasks: this.tasks, milestones: this.milestones
                 }));
-                this.tasksListView = new TasksListView({model: this.model}).render();
-                this.$el.find('#task-container').html(this.tasksListView.$el);
+                this.tasksListView = new TasksListView({
+                    model: this.model,
+                    el: this.$el.find('#task-container')[0]
+                }).render();
                 this.findPositionsForTasks();
                 this.setGanttHeight();
                 this.scrollMove();
@@ -58,7 +61,6 @@ define([
                     $(document).mousemove(function (e) {
                         e.preventDefault();
                         var x = e.pageX;
-                        // var w = parseInt($('#splitter').css("width"));
                         if (x > min && x < max && e.pageX < ($(window).width() - minwidth)) {
                             $('.resize-left').css('width', x);
                         }
@@ -74,7 +76,7 @@ define([
                 if(this.zoom < 200) {
                     this.zoom += 20;
                     this.findPositionsForTasks(true);
-                    document.getElementById('zoom-value').innerHTML = this.zoom + "%";
+                    document.getElementById('zoom-value').innerHTML = this.zoom + '%';
                 }
             },
 
@@ -82,7 +84,7 @@ define([
                 if(this.zoom > 20) {
                     this.zoom -= 20;
                     this.findPositionsForTasks(false);
-                    document.getElementById('zoom-value').innerHTML = this.zoom + "%";
+                    document.getElementById('zoom-value').innerHTML = this.zoom + '%';
                 }
             },
 
@@ -110,11 +112,11 @@ define([
                         if((this.hourLength <= 3) || (this.hourLength >= 48)) {
                             var remainder = days % 7;
                             var notWorkingDays = (days - remainder) / 7 * 2;
-                            if(((projectStartDay === 2) && (remainder >=6 )) ||
-                                ((projectStartDay === 3) && (remainder >=5 )) ||
-                                ((projectStartDay === 4) && (remainder >=4 )) ||
-                                ((projectStartDay === 5) && (remainder >=3 )) ||
-                                ((projectStartDay === 6) && (remainder >=2 )))
+                            if(((projectStartDay == 2) && (remainder >= 6 )) ||
+                                ((projectStartDay == 3) && (remainder >= 5 )) ||
+                                ((projectStartDay == 4) && (remainder >= 4 )) ||
+                                ((projectStartDay == 5) && (remainder >= 3 )) ||
+                                ((projectStartDay == 6) && (remainder >= 2 )))
                                 notWorkingDays += 2;
                             notWorkingHours += notWorkingDays * workingHoursPerDay;
                         }
@@ -125,11 +127,13 @@ define([
                     }
                     tasksPositions[tasksPositions.length] = singleTask;
                 }
+                console.log(tasksPositions);
                 this.ganttChartView = new GanttChartView({
-                    model: this.model, tasksPositions: tasksPositions,
-                    zoom: this.zoom, hourLength: this.hourLength
+                    model: this.model,
+                    tasksPositions: tasksPositions,
+                    hourLength: this.hourLength,
+                    el: this.$el.find('#gantt-chart-container')[0]
                 }).render();
-                this.$el.find('#gantt-chart-container').html(this.ganttChartView.$el);
             },
 
             scrollMove: function() {

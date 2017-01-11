@@ -22,9 +22,9 @@
                         <label class="form-label">Start Date:</label>
                         <input class="form-input-text start-date" maxlength="256" value="<%= moment.unix(+model.startDate).format('YYYY-MM-DD')%>" placeholder="Project Start Date" type="date">
                         <label class="form-label day-start-label">Working Day Start:</label>
-                        <input class="form-input-text working-day-start" maxlength="256" value="<%= moment.duration(+settings.dayStart, 'seconds').asHours() %>" placeholder="Working Day Start" type="number">
+                        <input class="form-input-text working-day-start" maxlength="256" value="<%= moment.duration(+settings.dayStart, 'seconds').asHours() %>" placeholder="Working Day Start" type="number" min="0">
                         <label class="form-label">Hours Per Day:</label>
-                        <input class="form-input-text day-duration" maxlength="256" value="<%= moment.duration(+settings.dayDuration, 'seconds').asHours() %>" placeholder="Working Hours Per Day" type="number">
+                        <input class="form-input-text day-duration" maxlength="256" value="<%= moment.duration(+settings.dayDuration, 'seconds').asHours() %>" placeholder="Working Hours Per Day" type="number" min="0">
                     </div>
                 </div>
             </div>
