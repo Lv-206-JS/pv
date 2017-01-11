@@ -1,0 +1,58 @@
+@import 'single-project/project-view';
+@import 'landing-view';
+@import "landing-menu-view";
+@import "common-styles";
+@import "common/main-view";
+@import "common/main-menu-view";
+@import "common/log-in-view";
+@import "common/register-view";
+@import "single-project/gantt-chart-view";
+@import "single-project/info-bar-view";
+@import "single-project/milestone-view";
+@import "single-project/milestone-edit-view";
+@import "single-project/tasks-list";
+@import "single-project/task-view";
+@import "single-project/attachments-view";
+@import "single-project/settings-view";
+@import "single-project/project-view";
+@import "single-project/resources-view";
+@import "single-project/project-price";
+@import "single-project/gantt-container";
+@import "single-project/ownership-view";
+@import "projects/main-projects-view";
+@import "projects/projects-about-view";
+@import "projects/projects-area-view";
+@import "projects/projects-header-view";
+@import "projects/projects-list-view";
+@import "projects/projects-edit-view";
+@import "common/confirm-delete-view";
+@import url(http://fonts.googleapis.com/css?family=Roboto|Open+Sans:400italic,600italic,400,600);
+
+html, body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  min-width: 768px;
+  height: 100%;
+  //overflow-y: hidden;
+  overflow-x: hidden;
+  font-family: Roboto, sans-serif;
+  font-size: $font-size;
+  line-height: $line-height;
+  font-weight: 400;
+  color: $text-black;
+}
+* {
+  box-sizing: border-box;
+}
+p {
+  //display: inline;
+  margin: 0px;
+  padding: 0px;
+}
+a {
+  display: inline;
+  margin: 0px;
+  padding: 0px;
+  cursor: pointer;
+}
