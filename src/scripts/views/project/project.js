@@ -77,8 +77,8 @@ define([
                 model: this.model,
                 el: this.$el.find('#gantt-view-container')[0]
             }).render();
-            //this.listenTo(this.ganttContainerView.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
-            //this.listenTo(this.ganttContainerView.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
+            this.listenTo(this.ganttContainerView.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
+            this.listenTo(this.ganttContainerView.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
             return this;
         },
 
