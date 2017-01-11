@@ -28,6 +28,10 @@
           color: #5499c7;
           width: 50%;
           cursor: pointer;
+
+          &::selection {
+            background-color:transparent;
+          }
         }
 
         .project-link {
