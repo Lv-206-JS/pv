@@ -225,7 +225,6 @@ define([
             else {
                 this.flagSchedule = true;
             }
-            //TODO Change to handle model change event.
             Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
             this.undoRedo.save(this.model);
             this.renderViews();

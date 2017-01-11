@@ -10,6 +10,23 @@ define([
             this.url = '/rest/projects/' + id;
         },
 
+        validation: {
+            name: {
+                required: true,
+                msg: 'Please, fill in Project Name field.'
+            },
+            description: [{
+                required: true,
+                msg: 'Please, fill in Project Description field.',
+            }, {
+                minLength: 30,
+                msg: 'Description is too short. It is expected to be longer than 30 chars!'
+
+            }]
+
+
+        },
+
         defaults: {
             "id": null,
             "name": "",

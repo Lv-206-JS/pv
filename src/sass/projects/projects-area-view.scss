@@ -13,8 +13,9 @@
     .create-project {
       height: 25px;
       width: 100px;
-      border: 1px solid #5499c7;
-      border-radius: 4px;
+      //border: 1px solid #5499c7;
+      box-shadow: 0 4px 4px 4px rgba(0, 0, 0, 0.2);
+      //border-radius: 4px;
       color: #5499c7;
       background-color: #fff;
       transition: background-color 500ms ease;

@@ -2,8 +2,9 @@ define([
     'backbone',
     'jquery',
     'underscore',
-    'JST'
-], function (Backbone, $, _, JST) {
+    'JST',
+    '../common/confirmDelete'
+], function (Backbone, $, _, JST, ConfirmDeleteView) {
     'use strict';
 
     var ProjectsListView = Backbone.View.extend({
@@ -52,14 +53,9 @@ define([
             this.trigger('editProject', id);
         },
 
-        //TODO Make confirmation popup
-
         onDeleteProject: function onDeleteProject(e) {
             e.stopPropagation();
-            // Open confirmation popup
-            // When OK call this function
-            //When cancel remove confirmation popup
-            this.onDeleteConfirm(e);
+            ConfirmDeleteView(e, this, _.bind(this.onDeleteConfirm, this, e));
         },
 
         onDeleteConfirm: function onDeleteProject(e) {

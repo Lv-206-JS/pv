@@ -3,6 +3,7 @@ requirejs.config({
         jquery: '/bower_components/jquery/dist/jquery',
         backbone: '/bower_components/backbone/backbone',
         underscore: '/bower_components/underscore/underscore',
+        'backbone-validation': '/node_modules/backbone-validation/dist/backbone-validation',
         Snap: '/bower_components/Snap.svg/dist/snap.svg',
         JST: '/scripts/templates',
         Draggabilly: '/bower_components/draggabilly/dist/draggabilly.pkgd',
