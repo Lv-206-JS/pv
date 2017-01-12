@@ -1,82 +1,48 @@
-define(['backbone', 'jquery'], function (Backbone, Jquery) {
+define(['jquery', 'underscore'], function (jQuery, _) {
     'use strict';
 
-    function UndoRedoAlgorithm(model){
+    function UndoRedoAlgorithm(){
         this.history = [];
         this.iterator = 0;
-        this.jquery = Jquery;
     }
 
     UndoRedoAlgorithm.prototype = {
         constructor: UndoRedoAlgorithm,
         save: function(model){
             this.history.splice(this.iterator);
-            var copiedObject = this.jquery.extend(true, {}, model);
+            var copiedObject = jQuery.extend(true, {}, model);
+            console.log(copiedObject);
             this.history[this.history.length] = copiedObject;
             this.iterator++;
-            if (this.history.length > 1){
-                $('#undo').attr('disabled',null);
-                this.hideButton('#redo');
-                if(this.history.length === 50)
-                    this.rewriteHistory();
+            if(this.history.length === 50) {
+                this.rewriteHistory();
+                this.iterator--;
             }
-            console.log(this.iterator);
         },
 
         undo: function(){
-            if(this.iterator > 2)
-                this.iterator = this.iterator - 2;
-            var copiedObject = this.jquery.extend(true, {}, this.history[this.iterator-1]);
-            this.hideButton('#undo');
-            this.showButton('#redo');
+            if(this.iterator > 1)
+                this.iterator = this.iterator - 1;
+            var copiedObject = jQuery.extend(true, {}, this.history[this.iterator-1]);
             return copiedObject;
         },
 
         redo: function(){
-            if(this.iterator < this.history.length-1)
-                this.iterator = this.iterator + 2;
-            this.showButton('#undo');
-            this.hideButton('#redo');
-            var copiedObject = this.jquery.extend(true, {}, this.history[this.iterator-1]);
+            if(this.iterator < this.history.length)
+                this.iterator = this.iterator + 1;
+            var copiedObject = jQuery.extend(true, {}, this.history[this.iterator-1]);
             return copiedObject;
-        },
 
-        hideButton: function(buttonId){
-            if(buttonId === '#undo'){
-                if( this.iterator == 2){
-                    $('#undo').attr('disabled','disabled');
-                }
-            }
-            else if(buttonId === '#redo'){
-                if( this.iterator == this.history.length){
-                    $('#redo').attr('disabled','disabled');
-                }
-            }
-        },
-
-        showButton: function(buttonId){
-            if(buttonId === '#undo'){
-                if( this.iterator > 2){
-                    $('#undo').attr('disabled',null);
-                }
-            }
-            else if(buttonId === '#redo'){
-                if( this.iterator != this.history.length){
-                    $('#redo').attr('disabled',null);
-                }
-            }
         },
 
         rewriteHistory: function(){
             var newHistory = [];
-            for (var i = 0; i < 25; i++){
-                newHistory[i] = this.history[i+25];
+            for (var i = 0; i < 49; i++){
+                newHistory[i] = this.history[i+1];
             }
             this.history.splice(0);
             this.history = newHistory;
-            this.iterator = 25;
         }
-
     };
 
     return UndoRedoAlgorithm;

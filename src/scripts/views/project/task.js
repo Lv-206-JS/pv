@@ -117,6 +117,7 @@ define(['backbone',
             if(this.$el.find('.tab-attachments').hasClass('w--current')){
                 this.makeTabUnvisible('.tab-attachments','.attachments-content');
             }
+            this.visible('#delete-task');
         },
 
         taskDependenciesInformation: function(){
@@ -128,6 +129,7 @@ define(['backbone',
             if(this.$el.find('.tab-attachments').hasClass('w--current')){
                 this.makeTabUnvisible('.tab-attachments','.attachments-content');
             }
+            this.unvisible('#delete-task');
         },
 
         taskAttachmentslInformation: function(){
@@ -138,18 +140,27 @@ define(['backbone',
             if(this.$el.find('.tab-general').hasClass('w--current')){
                 this.makeTabUnvisible('.tab-general','.general-content');
             }
+            this.unvisible('#delete-task');
+        },
+
+        unvisible: function(content){
+            this.$el.find(content).removeClass('show-content');
+            this.$el.find(content).addClass('hide-content');
         },
 
         makeTabUnvisible: function(tabName,tabContent){
             this.$el.find(tabName).removeClass('w--current');
-            this.$el.find(tabContent).removeClass('show-content');
-            this.$el.find(tabContent).addClass('hide-content');
+            this.unvisible(tabContent);
+        },
+
+        visible: function(content){
+            this.$el.find(content).removeClass('hide-content');
+            this.$el.find(content).addClass('show-content');
         },
 
         makeTabVisible: function(tabName,tabContent){
             this.$el.find(tabName).addClass('w--current');
-            this.$el.find(tabContent).removeClass('hide-content');
-            this.$el.find(tabContent).addClass('show-content');
+            this.visible(tabContent);
         },
 
         makeTasksDraggable: function(tasksList, dependenciesList) {

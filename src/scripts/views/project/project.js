@@ -196,6 +196,8 @@ define([
             if( $('#undo').attr('disabled')){}
             else {
                 var newModel = this.undoRedo.undo();
+                this.hideButton('#undo');
+                this.showButton('#redo');
                 this.model = newModel;
                 this.renderViews();
             }
@@ -205,8 +207,36 @@ define([
             if( $('#redo').attr('disabled')){}
             else {
                 var newModel = this.undoRedo.redo();
+                this.showButton('#undo');
+                this.hideButton('#redo');
                 this.model = newModel;
                 this.renderViews();
+            }
+        },
+
+        hideButton: function(buttonId){
+            if(buttonId === '#undo'){
+                if( this.undoRedo.iterator == 1){
+                    $('#undo').attr('disabled','disabled');
+                }
+            }
+            else if(buttonId === '#redo'){
+                if( this.undoRedo.iterator == this.undoRedo.history.length){
+                    $('#redo').attr('disabled','disabled');
+                }
+            }
+        },
+
+        showButton: function(buttonId){
+            if(buttonId === '#undo'){
+                if( this.undoRedo.iterator > 1){
+                    $('#undo').attr('disabled',null);
+                }
+            }
+            else if(buttonId === '#redo'){
+                if( this.undoRedo.iterator != this.undoRedo.history.length){
+                    $('#redo').attr('disabled',null);
+                }
             }
         },
 
@@ -224,11 +254,16 @@ define([
             }
             else {
                 this.flagSchedule = true;
+                this.undoRedo.save(this.model);
+                if (this.undoRedo.history.length > 1){
+                    $('#undo').attr('disabled',null);
+                    this.hideButton('#redo');
+                }
+                this.renderViews();
+                Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
+                this.updateProjectName(this.model.get('name'));
             }
-            Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
-            this.undoRedo.save(this.model);
-            this.renderViews();
-            this.updateProjectName(this.model.get('name'));
+
         }
     });
 
