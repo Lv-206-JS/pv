@@ -5,15 +5,8 @@
 }
 
 .save-milestones-button {
-  position: relative;
-  right: 40%;
   width: 80px;
   height: 35px;
-  float: right;
-  margin-right: 5px;
-  margin-left: 5px;
-  padding: 5px 10px;
-  line-height: 27px;
   color: #fff;
   border: 1px solid #fff;
   border-radius: 10px;
@@ -22,12 +15,19 @@
   transition: background-color 500ms ease;
   font-weight: 700;
   text-transform: uppercase;
+  margin-top: 1%;
 }
 
 .milestone-drop-list {
-  @extend .drop-list;
-  max-height: 180px;
-  background-color: white;
+  display: inline-block;
+  overflow-y: auto;
+  width: 44%;
+  height: 100%;
+  margin-right: 2%;
+  margin-left: 2%;
+  border: 1px solid $dark-grey;
+  padding-left: 5px;
+  background-color: $drop-list-background-color;
 }
 
 .milestone-form-input-text {
@@ -43,6 +43,13 @@
 
 .milestones-container{
   height: 320px;
+}
+
+.milestone-task-name {
+  overflow: hidden;
+  width: 185px;
+  white-space: nowrap; /* Запрещаем перенос строк */
+  text-overflow: ellipsis; /* Добавляем многоточие */
 }
 
 .table-milestone-header-row {
@@ -89,20 +96,16 @@
 
 .table-cell-milestone {
   position: relative;
-  display: block;
+  display: inline-flex;
   overflow: hidden;
-  min-width: 250px;
-  max-width: 250px;
   padding-left: 6px;
   justify-content: flex-start;
 }
 
 .milestone-link {
   position: relative;
-  top: -19px;
+  top: -4px;
   display: block;
-  width: 20px;
-  height: 20px;
   margin-top: 3px;
   margin-right: 5px;
   margin-left: 5px;
@@ -141,6 +144,10 @@
 .milestone-clone {
   position: relative;
   width: inherit;
-  height: 77%;
+  height: 64%;
   padding-left: 15px;
+}
+
+.milestone-button-wrapper {
+  text-align: center;
 }

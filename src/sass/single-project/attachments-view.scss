@@ -13,8 +13,14 @@
     height: 320px;
   }
 
+  .drag-hint {
+    height: 40px;
+    bottom: 0;
+    font-size: 10px;
+    color: green;
+  }
+
   .attachment-form-bottom {
     @extend .form-bottom;
-    margin-top: 40px;
   }
 }
