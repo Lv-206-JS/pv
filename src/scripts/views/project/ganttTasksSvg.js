@@ -39,9 +39,9 @@ define([
             },
 
             drawTasksSvg: function () {
-                this.getTasksData();
-                var svgHeight = this.rowHeight * this.tasksPositions.length - 4,
+                var svgHeight = this.getGanttHeight(),
                     rectHeight = this.rowHeight * 0.6,
+                    positionY = 0,
                     positionX,
                     width,
                     task,
@@ -52,8 +52,11 @@ define([
                 paper.attr({
                     'height': svgHeight
                 });
+
+                this.getTasksData();
+
                 //row rectangle
-                for (var row = 0, rect, line, positionY = 0;
+                for (var row = 0, rect;
                      row < this.tasksPositions.length;
                      row++, positionY += this.rowHeight) {
 
@@ -62,11 +65,6 @@ define([
                     rect.attr({
                         fill: 'rgba(0,0,0,0.0)',
                         class: 'table-task-row'
-                    });
-                    // draw horizontal line for row division
-                    line = paper.line(0, positionY, "100%", positionY);
-                    line.attr({
-                        stroke: 'rgba(0, 0, 0, 0.12)'
                     });
                     // draw task rectangle(s)
                     for (var part = 0; part < this.tasksNameIdPositions[row].taskPositions.length; part++) {
@@ -90,30 +88,57 @@ define([
                         });
                     }
                 }
-                this.getGanttWidthHeight(svgHeight);
+                this.getGanttWidth();
             },
 
             drawVerticalDateLines: function () {
                 var dateWidth = this.getBottomDateWidth(),
                     projectWidth = this.getProjectWidth(),
                     width = projectWidth < $(window).width() ? $(window).width() : projectWidth,
-                    height = this.tasks.length * this.rowHeight,
+                    ganttChartHeight = parseInt($('#gantt-view-container').css('height'), 10),
+                    tasksHeight = this.tasks.length*this.rowHeight,
+                    lineHeight = tasksHeight > ganttChartHeight ? tasksHeight : ganttChartHeight,
                     paper = Snap('#gantt-chart-svg'),
                     line;
                 for (var col = 0; col < width; col += dateWidth) {
-                    line = paper.line(col + dateWidth, 0, col + dateWidth, height);
+                    line = paper.line(col + dateWidth, 0, col + dateWidth, lineHeight);
                     line.attr({
                         stroke: 'rgba(0, 0, 0, 0.12)'
                     });
                 }
             },
 
-            getGanttWidthHeight: function (svgHeight) {
-                // set Gantt height
-                $('.gantt-chart-container-svg').css('height', svgHeight);
+            drawHorizontalLines: function () {
+                var ganttHeight = this.getGanttHeight();
+                var height = ganttHeight/this.rowHeight;
+                var paper = Snap('#gantt-chart-svg');
+                paper.attr({
+                    'height': ganttHeight
+                });
+                for (var row = 0, rect, line, positionY = 0;
+                     row < height;
+                     row++, positionY += this.rowHeight) {
+                    // draw horizontal line for row division
+                    line = paper.line(0, positionY, "100%", positionY);
+                    line.attr({
+                        stroke: 'rgba(0, 0, 0, 0.12)'
+                    });
+                }
+            },
+
+            getGanttHeight: function (svgHeight) {
+                var ganttChartHeight = parseInt($('#gantt-view-container').css('height'), 10) - this.rowHeight * 2,
+                    tasksHeight = this.tasks.length * this.rowHeight,
+                    height = tasksHeight > ganttChartHeight ? tasksHeight : ganttChartHeight;
+                $('.gantt-chart-container-svg').css('height', height);
+                return height;
+            },
+
+            getGanttWidth: function (svgHeight) {
                 var projectWidth = this.getProjectWidth(),
                     ganttWidth = projectWidth < $(window).width() ? $(window).width() : projectWidth;
                 $('.gantt-chart-container-svg').css('width', ganttWidth);
+                return ganttWidth;
             },
 
             getProjectWidth: function () {
