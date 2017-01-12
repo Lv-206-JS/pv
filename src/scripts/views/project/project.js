@@ -178,8 +178,14 @@ define([
 
         showResourcesPopup: function () {
             var resources = this.model.get('resources');
-            this.resourcesView = new ResourcesView({resources: resources, model: this.model}).render();
+            this.resourcesView = new ResourcesView({resources: resources}).render();
+            this.listenTo(this.resourcesView, 'saveResources', this.saveResources);
             this.$el.append(this.resourcesView.$el);
+        },
+
+        saveResources: function(resources){
+            this.model.set('resources', resources);
+            this.model.save();
         },
 
         showProjectPrice: function(){
