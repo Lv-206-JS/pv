@@ -67,7 +67,7 @@ define(['backbone',
             this.saveModel(response.responseText, 'Add');
         },
 
-        addAttachmentByDrop: function () {
+        addAttachmentByDrop: function (file) {
             var uploadfile = new FormData();
             uploadfile.append('file', file);
             var response = $.ajax({
