@@ -233,7 +233,7 @@ proto.checkSettedDependenciesExist = function (level, id) {
     return true;
 };
 
-proto.setTasksWithoutDepToLevels = function () {
+proto.setTasksWithoutDepToLevels = function setTasksWithoutDepToLevels() {
     var levels = [];
     levels[0] = [];
     for(var i = 0; i < this.tasks.length; i++) {

@@ -383,8 +383,11 @@ define([
                     tasks: this.tasks,
                     tasksPositions: this.tasksPositions
                 }).render();
+
                 var lastElem = this.$el.find('.gantt-date-header');
                 $(this.ganttTasks.$el).insertAfter(lastElem);
+
+                this.ganttTasks.drawTasksSvg();
             }
 
         });

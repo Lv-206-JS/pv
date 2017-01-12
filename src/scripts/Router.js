@@ -5,7 +5,7 @@ define([
         'views/common/mainView',
         'models/User',
         'views/common/logIn',
-        'views/common/register',
+        'views/common/register'
 
     ],
     function ($,
@@ -15,11 +15,8 @@ define([
               SignInView,
               userModel,
               LogInView,
-              RegistrationView
-
-)
-{
-    'use strict';
+              RegistrationView) {
+        'use strict';
 
         var Router = Backbone.Router.extend({
             routes: {
@@ -49,14 +46,14 @@ define([
                 }
 
 
-            if (!this.mainView) {
-                // Create new view.
-                this.mainView = new MainView();
-                // Clean body element and append new view element.
+                if (!this.mainView) {
+                    // Create new view.
+                    this.mainView = new MainView();
+                    // Clean body element and append new view element.
 
-            }
+                }
 
-            $('body').html(this.mainView.render().$el);
+                $('body').html(this.mainView.render().$el);
 
                 this.mainView.renderProjects();
             },
@@ -78,10 +75,9 @@ define([
                 this.mainView.renderProject(projectId);
             },
 
-
-        openProjectAndTask: function openProjectAndTask(projectId, taskId) {
-            this.openSingleProject(projectId);
-        },
+            openProjectAndTask: function openProjectAndTask(projectId) {
+                this.openSingleProject(projectId);
+            },
 
             loginForm: function loginForm() {
 
@@ -102,5 +98,4 @@ define([
         });
         return Router;
     }
-)
-;
+);

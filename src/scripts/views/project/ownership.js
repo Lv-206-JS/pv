@@ -77,6 +77,15 @@ define(['backbone',
             var email = target.data('email');
             var ownershipToRemove = this.collection.where({email: email})[0];
             ownershipToRemove.setUrl(email);
+
+            // The same
+            // this.collection.remove(this.collection.where({email: email}));
+            // this.onCollectionLoad();
+            //
+            // ownershipToRemove.destroy({
+            //     success: undefined
+            // });
+
             ownershipToRemove.destroy({
                 success:function () {
                     this.collection.remove(this.collection.where({email: email}));

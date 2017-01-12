@@ -27,16 +27,15 @@ define([
                 password: password
             });
 
-           userModel.setUrl('');
+            userModel.setUrl('');
             userModel.save().then(
-
-                function(res) {
-                    setTimeout(function() {
+                function (res) {
+                    setTimeout(function () {
                         PV.router.navigate('projects', {trigger: true});
                     }, 1000);
 
                 },
-                function(err) {
+                function (err) {
                     // Error handling
                     console.log(err);
                 }

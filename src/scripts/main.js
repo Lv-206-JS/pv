@@ -10,12 +10,13 @@ requirejs.config({
         timeLine: '/src/scripts/math/timeLine',
         moment: '/node_modules/moment/moment',
         TaskAlgorithm: '/src/scripts/math/taskAlgorithm',
-        undoRedoAlgorithm: '/src/scripts/math/undoRedoAlgorithm'
+        undoRedoAlgorithm: '/src/scripts/math/undoRedoAlgorithm',
+        bowser : '/bower_components/bowser/src/bowser'
     },
     baseUrl: '/src/scripts'
 });
 
-requirejs(['jquery', 'backbone', 'Router'], function ($, Backbone, Router) {
+requirejs(['jquery', 'backbone', 'Router', 'MobileRouter', 'bowser'], function ($, Backbone, DesktopRouter, MobileRouter, bowser) {
     'use strict';
     
     $(function () {
@@ -23,7 +24,11 @@ requirejs(['jquery', 'backbone', 'Router'], function ($, Backbone, Router) {
         // Global namespace PV == Plan & View
         //
         window.PV = window.PV || {};
-        PV.router = new Router();
+        if (bowser.mobile) {
+            PV.router = new MobileRouter();
+        } else {
+            PV.router = new DesktopRouter();
+        }
 
         Backbone.history.start({
             pushState: true
