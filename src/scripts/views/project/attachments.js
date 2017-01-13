@@ -1,4 +1,7 @@
-define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
+define(['backbone',
+    'underscore',
+    'JST',
+    '../common/confirmDelete'], function (Backbone, _, JST, ConfirmDeleteView) {
     'use strict';
 
     var AttachmentsView = Backbone.View.extend({
@@ -18,8 +21,10 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
 
         events: {
             'click .ok-button' : 'hideAttachmentsView',
-            'change #add-attachment-file' : 'addAttachment',
-            'click #delete-attachment' : 'deleteAttachment'
+            'change #add-attachment-file' : 'addAttachmentByButton',
+            'click #delete-attachment' : 'confirmDeleteAtt',
+            'drop .tab-container': 'dragNDropAtt',
+            'dragover .tab-container': 'overrideDragover'
         },
 
         saveModel: function (response, action, attachmentId) {
@@ -47,11 +52,7 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
             });
         },
 
-        updateAttachmentsPopup:function () {
-            this.render();
-        },
-
-        addAttachment : function (event) {
+        addAttachmentByButton : function (event) {
             event.preventDefault();
             var uploadfile = new FormData();
             uploadfile.append('file', $("#add-attachment-file").prop('files')[0]);
@@ -64,6 +65,42 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
                 async:false
             });
             this.saveModel(response.responseText, 'Add');
+        },
+
+        addAttachmentByDrop: function (file) {
+            var uploadfile = new FormData();
+            uploadfile.append('file', file);
+            var response = $.ajax({
+                url:  '/rest/attachments',
+                type: 'POST',
+                data: uploadfile,
+                contentType: false,
+                processData: false,
+                async:false
+            });
+            this.saveModel(response.responseText, 'Add');
+        },
+
+        dragNDropAtt: function (event) {
+            event.preventDefault();
+            var files = event.originalEvent.dataTransfer.files;
+
+            $(files).each(function(index, file) {
+                var filereader = new FileReader();
+                filereader.readAsDataURL(file);
+
+                filereader.onloadend = this.addAttachmentByDrop.bind(this, file);
+            }.bind(this));
+        },
+
+        // override the dragover event, otherwise Firefox will just open the file on drop
+        overrideDragover: function () {
+            event.preventDefault();
+        },
+
+        confirmDeleteAtt: function onDeleteProject(e) {
+            e.stopPropagation();
+            ConfirmDeleteView(e, this, _.bind(this.deleteAttachment, this, e));
         },
 
         deleteAttachment: function (event) {
@@ -83,6 +120,10 @@ define(['backbone', 'underscore', 'JST'], function (Backbone, _, JST) {
         hideAttachmentsView : function(event){
             event.preventDefault();
             this.$el.remove();
+        },
+
+        updateAttachmentsPopup:function () {
+            this.render();
         }
     });
 

@@ -50,7 +50,8 @@ define([
                 }
             ],
             "settings": {
-                "dayDuration": 0
+                "dayStart": 9*3600,
+                "dayDuration": 6*3600
             },
             "tasks": [
                 {

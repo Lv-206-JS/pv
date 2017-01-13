@@ -3,8 +3,9 @@ define(['backbone',
     'JST',
     'Draggabilly',
     'moment',
-    'timeLine'
-], function (Backbone, _, JST, Draggabilly, Moment, TimeLine) {
+    'timeLine',
+    '../common/confirmDelete'
+], function (Backbone, _, JST, Draggabilly, Moment, TimeLine, ConfirmDeleteView) {
     'use strict';
 
     var MilestoneEditView = Backbone.View.extend({
@@ -38,36 +39,36 @@ define(['backbone',
         },
 
         events: {
-            'click .ok-button, .cancel-button' : 'hideMilestoneEditView',
-            'click .edit-milestone' : 'getEditView',
+            'click .ok-button, .cancel-button': 'hideMilestoneEditView',
+            'click .edit-milestone': 'getEditView',
             'click #create-milestone': 'getEditView',
             'click .tab-general': 'getMilestoneListView',
-            'click .save-milestones-button' : 'saveMilestoneSettings',
-            'click .remove-milestone' : 'deleteMilestone',
-            'dblclick .milestone-task-item' : 'addTaskToList',
-            'dblclick .milestone-task-name' : 'getEditView'
+            'click .save-milestones-button': 'saveMilestoneSettings',
+            'click .remove-milestone': 'confirmDeleteMilestone',
+            'dblclick .milestone-task-item': 'addTaskToList',
+            'dblclick .milestone-task-name': 'getEditView'
 
         },
 
-        getTasksList: function(el){
+        getTasksList: function (el) {
             var isNotDependency = [];
             var isDependency = [];
             var len = 0;
-            if(this.milestoneEdit.dependsOn) {
+            if (this.milestoneEdit.dependsOn) {
                 len = this.milestoneEdit.dependsOn.length;
             }
-            for( var i = 0; i < this.tasks.length; i++) {
+            for (var i = 0; i < this.tasks.length; i++) {
                 var isCurrentDependensy = false;
-                for( var j = 0; j < len; j++) {
-                    if( this.tasks[i].taskId === this.milestoneEdit.dependsOn[j].taskId) {
+                for (var j = 0; j < len; j++) {
+                    if (this.tasks[i].taskId === this.milestoneEdit.dependsOn[j].taskId) {
                         isCurrentDependensy = true;
-                        isDependency.push({ taskName : this.tasks[i].name, taskId : this.tasks[i].taskId});
+                        isDependency.push({taskName: this.tasks[i].name, taskId: this.tasks[i].taskId});
                     }
                 }
-                if(len === 0 || !isCurrentDependensy)
-                    isNotDependency.push({ taskName : this.tasks[i].name, taskId : this.tasks[i].taskId});
+                if (len === 0 || !isCurrentDependensy)
+                    isNotDependency.push({taskName: this.tasks[i].name, taskId: this.tasks[i].taskId});
             }
-            if(el) return isNotDependency;
+            if (el) return isNotDependency;
             else return isDependency;
         },
 
@@ -78,7 +79,7 @@ define(['backbone',
             var milestoneName = target.data('name');
             var currentObj = {};
             for (var i = 0, len = milestones.length; i < len; i++) {
-                if(milestoneName == milestones[i].name) {
+                if (milestoneName == milestones[i].name) {
                     currentObj = milestones[i];
                 }
             }
@@ -116,7 +117,7 @@ define(['backbone',
             var newDate = this.getMilestoneDate(newDependensies);
             var target = $(event.currentTarget);
             var milestoneName = target.data('name');
-            if(milestoneName == '') {
+            if (milestoneName == '') {
                 updatedMilestones.push({
                     name: newName,
                     date: newDate,
@@ -130,22 +131,20 @@ define(['backbone',
                     dependsOn: newDependensies
                 };
                 for (var i = 0, len = updatedMilestones.length; i < len; i++) {
-                    if(milestoneName == updatedMilestones[i].name) {
+                    if (milestoneName == updatedMilestones[i].name) {
                         updatedMilestones[i] = currentObj;
                         break;
                     }
                 }
             }
-            this.model.set({milestones:updatedMilestones});
-            this.model.save({
-                success:function () {
-                    this.updateMilestonesPopup();
-                }.call(this),
+            this.model.set({milestones: updatedMilestones});
+            this.model.save();
+            this.updateMilestonesPopup();
+        },
 
-                error:function () {
-                    //error handler
-                }
-            });
+        confirmDeleteMilestone: function onDeleteProject(e) {
+            e.stopPropagation();
+            ConfirmDeleteView(e, this, _.bind(this.deleteMilestone, this, e));
         },
 
         deleteMilestone: function (event) {
@@ -154,24 +153,17 @@ define(['backbone',
             var target = $(event.currentTarget);
             var milestoneName = target.data('name');
             for (var i = 0, len = updatedMilestones.length; i < len; i++) {
-                if(milestoneName == updatedMilestones[i].name) {
+                if (milestoneName == updatedMilestones[i].name) {
                     updatedMilestones.splice(i, 1);
                     break;
                 }
             }
-            this.model.set({milestones:updatedMilestones});
-            this.model.save({
-                success:function () {
-                    this.updateMilestonesPopup();
-                }.call(this),
-
-                error:function () {
-                    //error handler
-                }
-            });
+            this.model.set({milestones: updatedMilestones});
+            this.model.save();
+            this.updateMilestonesPopup();
         },
 
-        makeTasksDraggable: function(tasksList, dependenciesList){
+        makeTasksDraggable: function (tasksList, dependenciesList) {
             var draggableElements = document.getElementsByClassName('milestone-task-item');
             var draggies = [];
             for (var i = 0; i < draggableElements.length; i++) {
@@ -185,10 +177,10 @@ define(['backbone',
 
             function onDragStart() {
                 var newParent = $('.milestone-clone');
-                $(this.element).css({'position':'absolute'});
+                $(this.element).css({'position': 'absolute'});
                 newParent.append(this.element);
-                $(this.element).css({'top': this.relativeStartPosition.y-45+'px'});
-                $(this.element).css({'left': this.relativeStartPosition.x+'px'});
+                $(this.element).css({'top': this.relativeStartPosition.y - 45 + 'px'});
+                $(this.element).css({'left': this.relativeStartPosition.x + 'px'});
                 $(this.element).addClass('is-dragging');
             }
 
@@ -221,24 +213,24 @@ define(['backbone',
             }
         },
 
-        addTaskToList: function(event){
+        addTaskToList: function (event) {
             var element = $(event.currentTarget);
             var taskId = element.attr('id');
             var listName = element.parent().parent().attr('id');
-            if(listName === 'milestone-tasks-list'){
-                for(var i = 0; i < this.tasksList.length; i++)
-                    if(this.tasksList[i].taskId === taskId){
+            if (listName === 'milestone-tasks-list') {
+                for (var i = 0; i < this.tasksList.length; i++)
+                    if (this.tasksList[i].taskId === taskId) {
                         this.dependenciesList.push(this.tasksList[i]);
-                        this.tasksList.splice(i,1);
+                        this.tasksList.splice(i, 1);
                         break;
                     }
                 $("#dependencies-list").find("tbody").append(element);
             }
             else {
-                for(i = 0; i < this.dependenciesList.length; i++)
-                    if(this.dependenciesList[i].taskId === taskId){
+                for (i = 0; i < this.dependenciesList.length; i++)
+                    if (this.dependenciesList[i].taskId === taskId) {
                         this.tasksList.push(this.dependenciesList[i]);
-                        this.dependenciesList.splice(i,1);
+                        this.dependenciesList.splice(i, 1);
                         break;
                     }
                 $("#milestone-tasks-list").find("tbody").append(element);
@@ -246,16 +238,16 @@ define(['backbone',
         },
 
         getMilestoneDate: function (dependsOn) {
-                var milestonePTLdate = this.timeLine.calculateEstimateTime(dependsOn);
-                var milestoneDate = this.timeLine.toDate(milestonePTLdate);
-                return milestoneDate;
+            var milestonePTLdate = this.timeLine.calculateEstimateTime(dependsOn);
+            var milestoneDate = this.timeLine.toDate(milestonePTLdate);
+            return milestoneDate;
         },
 
-        updateMilestonesPopup:function () {
+        updateMilestonesPopup: function () {
             this.render();
         },
 
-        hideMilestoneEditView : function(){
+        hideMilestoneEditView: function () {
             this.$el.remove();
         }
     });

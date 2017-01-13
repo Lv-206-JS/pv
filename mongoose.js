@@ -1,11 +1,4 @@
 var mongoose = require('mongoose');
-/*
-//=========== if you need to use global db, uncomment this strings ==========
-
-mongoose.connect('mongodb://ganttcharts:softserve@ds055905.mlab.com:55905/ganttcharts');
-*/
-
-// Most of the types are Strings, because its document oriented DB
 
 var Schema = mongoose.Schema;
 

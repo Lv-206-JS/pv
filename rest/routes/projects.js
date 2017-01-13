@@ -101,8 +101,9 @@ router.post('/', authenticateUser, function (request, response) {
         name: request.body.name,
         description: request.body.description,
         author: request.user.firstname + ' ' + request.user.lastname,
-        createDate: (new Date()).getTime(),
-        modifiedDate: (new Date()).getTime()
+        startDate: (new Date()).getTime()/1000,
+        createDate: (new Date()).getTime()/1000,
+        modifiedDate: (new Date()).getTime()/1000
     });
     addOwnership(projectToCreate.id, request.user.email);
     projectToCreate.save(function (err, project) {
@@ -136,7 +137,7 @@ router.put('/:id', authenticateUser, checkOwnership, function (request, response
         author: request.body.author,
         startDate: request.body.startDate,
         createDate: request.body.createDate,
-        modifiedDate: (new Date()).getTime(),
+        modifiedDate: (new Date()).getTime()/1000,
         settings : request.body.settings,
         milestones: request.body.milestones,
         tasks: request.body.tasks,

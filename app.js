@@ -11,18 +11,16 @@ var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var expressValidator = require('express-validator');
 var session = require('express-session');
-//var MongoStore = require('connect-mongo')(express);
-
-
-
-
 
 
 //mongoose connection
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 mongoose.connect("localhost:27017/ganttcharts");
-var db = mongoose.connection;
+/*
+ //*********** if you need to use global db, uncomment this strings ***********
+ mongoose.connect('mongodb://ganttcharts:softserve@ds055905.mlab.com:55905/ganttcharts');
+*/
 
 var MongoStore = require('connect-mongo')(session);
 

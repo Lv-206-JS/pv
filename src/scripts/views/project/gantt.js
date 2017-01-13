@@ -119,8 +119,6 @@ define([
                                 ((projectStartDay == 6) && (remainder >= 2 )))
                                 notWorkingDays += 2;
                             notWorkingHours += notWorkingDays * workingHoursPerDay;
-                            console.log('notWorkingDays');
-                            console.log(notWorkingDays);
                         }
                         var newTaskStart = task[j].realDate - projectStartDate - notWorkingHours*3600;
                         var positionX = (newTaskStart)*(this.hourLength/3600);
