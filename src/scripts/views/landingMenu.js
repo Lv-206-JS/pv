@@ -2,10 +2,9 @@ define([
     'backbone',
     'underscore',
     'JST',
-    'models/User',
     'views/common/logIn',
     'views/common/register'
-], function (Backbone, _, JST, userModel, LogInView, RegistrationView) {
+], function (Backbone, _, JST, LogInView, RegistrationView) {
     'use strict';
 
     var LandingMenuView = Backbone.View.extend({
@@ -18,12 +17,12 @@ define([
         },
 
         initialize: function () {
-            userModel.fetch();
-            userModel.on('sync', _.bind(this.onUserReceived, this));
+            PV.userModel.fetch();
+            PV.userModel.on('sync', _.bind(this.onUserReceived, this));
         },
 
         render: function render() {
-            this.$el.html(this.template({userId: userModel.get('userId'), userName: userModel.get('firstname')}));
+            this.$el.html(this.template({userId: PV.userModel.get('userId'), userName: PV.userModel.get('firstname')}));
 
             return this;
         },
@@ -60,7 +59,7 @@ define([
 
         onSignOut: function onSingOut(){
             $.ajax({ url:  '/users/logout' });
-            userModel.clear().set(userModel.defaults);
+            PV.userModel.clear().set(PV.userModel.defaults);
             this.render();
         }
     });

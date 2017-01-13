@@ -1,8 +1,7 @@
 define([
     'backbone',
-    'JST',
-    'models/User'
-], function (Backbone, JST, userModel) {
+    'JST'
+], function (Backbone, JST) {
     'use strict';
 
     var LogInView = Backbone.View.extend({

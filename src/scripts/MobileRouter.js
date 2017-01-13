@@ -3,7 +3,6 @@ define([
         'backbone',
         'views/landing',
         'views/common/mainView',
-        'models/User',
         'views/common/logIn',
         'views/common/register'
     ],
@@ -12,7 +11,6 @@ define([
               LandingView,
               MainView,
               SignInView,
-              userModel,
               LogInView,
               RegistrationView) {
         'use strict';

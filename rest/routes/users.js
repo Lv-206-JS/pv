@@ -1,3 +1,4 @@
+
 var express = require('express');
 var router = express.Router();
 var Guid = require('guid');
@@ -30,9 +31,9 @@ router.post('/register', function (req, res) {
     var errors = req.validationErrors();
 
     return User.findOne({email: email}, function (error, findedEmail) {
-        if(findedEmail != undefined) {
+        if (findedEmail != undefined) {
             errors = errors || [];
-            errors.push({ param: 'email', msg: 'Email already exists', value: '' });
+            errors.push({param: 'email', msg: 'Email already exists', value: ''});
             return res.status(200).json(JSON.stringify({"error": errors}));
         }
         else {

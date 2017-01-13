@@ -1,8 +1,7 @@
 define([
     'backbone',
-    'JST',
-    'models/User'
-], function (Backbone, JST, userModel) {
+    'JST'
+], function (Backbone, JST) {
     'use strict';
 
     var SignInView = Backbone.View.extend({
@@ -22,13 +21,13 @@ define([
             var email = $(e.currentTarget).find('[name="email"]')[0].value;
             var password = $(e.currentTarget).find('[name="password"]')[0].value;
 
-            userModel.set({
+            PV.userModel.set({
                 email: email,
                 password: password
             });
 
-            userModel.setUrl('');
-            userModel.save().then(
+            PV.userModel.setUrl('');
+            PV.userModel.save().then(
                 function (res) {
                     setTimeout(function () {
                         PV.router.navigate('projects', {trigger: true});
