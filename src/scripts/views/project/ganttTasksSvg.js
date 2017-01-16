@@ -116,7 +116,7 @@ define([
                     'height': ganttHeight
                 });
                 for (var row = 0, rect, line, positionY = 0;
-                     row < height;
+                     row <= height;
                      row++, positionY += this.rowHeight) {
                     // draw horizontal line for row division
                     line = paper.line(0, positionY, "100%", positionY);
@@ -129,7 +129,8 @@ define([
             getGanttHeight: function () {
                 var ganttChartHeight = parseInt($('#gantt-view-container').css('height'), 10) - this.rowHeight * 2,
                     tasksHeight = this.tasks.length * this.rowHeight,
-                    height = tasksHeight > ganttChartHeight ? tasksHeight : ganttChartHeight;
+                    height = tasksHeight > ganttChartHeight ? tasksHeight : ganttChartHeight,
+                    height = height % this.rowHeight ? height - (height % this.rowHeight) : height;
                 $('.gantt-chart-container-svg').css('height', height);
                 return height;
             },
