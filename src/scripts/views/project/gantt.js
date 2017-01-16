@@ -24,6 +24,8 @@ define([
                 this.milestones = options.model.get('milestones');
                 this.zoom = 100; // zoom value in %
                 this.hourLength = 6; // hour length in px
+                this.rowHeight = 40;
+                this.padding = 20;
                 this.moment = Moment;
             },
 
@@ -34,6 +36,8 @@ define([
                 }));
                 this.tasksListView = new TasksListView({
                     model: this.model,
+                    rowHeight: this.rowHeight,
+                    padding: this.padding,
                     el: this.$el.find('#task-container')[0]
                 }).render();
                 this.findPositionsForTasks();
@@ -131,6 +135,8 @@ define([
                     model: this.model,
                     tasksPositions: tasksPositions,
                     hourLength: this.hourLength,
+                    rowHeight: this.rowHeight,
+                    padding: this.padding,
                     el: this.$el.find('#gantt-chart-container')[0]
                 }).render();
             },

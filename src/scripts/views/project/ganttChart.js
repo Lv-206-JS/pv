@@ -21,8 +21,8 @@ define([
                 this.tasksPositions = (options.tasksPositions !== undefined) ? options.tasksPositions : null;
                 this.hourLength = options.hourLength;
                 this.timeLine = new TimeLineLib(this.model);
-                this.rowHeight = 40;
-                this.padding = 20;
+                this.rowHeight = options.rowHeight;
+                this.padding = options.padding;
             },
 
             render: function render() {
@@ -278,7 +278,7 @@ define([
                             g = top.g(rect, text);
                         }
                     }
-                    this.getDateHeaderWidth(topW);
+                    this.getDateHeaderWidth(bottomW);
                     //group top and bottom elements of date header
                     g = header.g(top, bottom);
             },
@@ -299,11 +299,11 @@ define([
                 return projectWidth;
             },
 
-            getDateHeaderWidth: function (topDateWidth) {
-                // var topWidth = topDateWidth.length > 0 ? topDateWidth[topDateWidth.length-2] : topDateWidth;
+            getDateHeaderWidth: function (bottomW) {
+                var topWidth = bottomW.length > 0 ? bottomW[bottomW.length-1] : bottomW;
                 var projectWidth = this.getProjectWidth();
-                var width = projectWidth > $(window).width() ? projectWidth : $(window).width();
-                    // width = (width % topWidth) == 0 ? width : width - (width % topWidth) + topWidth;
+                var width = projectWidth > $(window).width() ? projectWidth : $(window).width(),
+                    width = (width % topWidth) ? width - (width % topWidth) + topWidth : width;
                 $('#dates').css('width', width);
                 $('.gantt-chart-container-svg').css('width', width);
             },
