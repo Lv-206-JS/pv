@@ -8,10 +8,6 @@ $inner-cell-task-width: $table-cell-width;
 #tasks-list{
   min-width: 700px;
 }
-button.add-task {
-  margin-left: -8px;
-  text-transform: uppercase;
-}
 .table-cell {
   @extend .table-cell;
   display: flex;
@@ -63,7 +59,7 @@ button.add-task {
   margin: 0 $icon-margin-left-right;
 }
 .add-task-icon {
-  background-image: url('../../../images/add-circle.svg');
+  background-image: url('/images/add-circle.svg');
   width: 25px;
   height: 25px;
   margin-right: 18px;
