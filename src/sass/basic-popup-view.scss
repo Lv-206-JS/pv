@@ -1,4 +1,4 @@
-$basic-popup-background-color: rgba(0,0,0,0.3);
+$basic-popup-background-color: rgba(0, 0, 0, 0.3);
 $blue: #2980b9;
 $light-blue: #5499c7;
 $white: #fff;
@@ -91,7 +91,7 @@ $tab-height: 40px;
         top: -70px;
       }
 
-      .confirm-password-label{
+      .confirm-password-label {
         top: 10px;
       }
 
@@ -183,15 +183,15 @@ $tab-height: 40px;
         }
       }
 
-      .is-dragging{
+      .is-dragging {
         background-color: $light-blue;
-        color:$white;
+        color: $white;
         padding: 5px 10px;
         //border-radius: 7px;
-        border-color:$blue;
+        border-color: $blue;
       }
 
-      .clone{
+      .clone {
         position: relative;
         width: inherit;
         height: inherit;

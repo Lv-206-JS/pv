@@ -1,6 +1,6 @@
 define([
     'backbone',
-    '../models/Project'
+    'models/Project'
 ], function (Backbone, ProjectModel) {
     'use strict';
 
@@ -9,5 +9,5 @@ define([
         model: ProjectModel
     });
 
-    return new ProjectsCollection();
+    return ProjectsCollection;
 });

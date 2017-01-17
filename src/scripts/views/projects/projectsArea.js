@@ -1,7 +1,6 @@
 define([
     'backbone',
     'JST',
-    'collections/Projects',
     'models/Project',
     'views/projects/projectsList',
     'views/projects/projectsAbout',
@@ -9,7 +8,6 @@ define([
 ], function (
     Backbone,
     JST,
-    projectsCollection,
     ProjectModel,
     ProjectsListView,
     ProjectsAboutView,
@@ -26,7 +24,7 @@ define([
         },
 
         initialize: function () {
-            this.collection = projectsCollection;
+            this.collection = PV.projectsCollection;
             this.collection.fetch();
             this.collection.on('sync', _.bind(this.onSync, this));
             Backbone.Events.off('selectProject');

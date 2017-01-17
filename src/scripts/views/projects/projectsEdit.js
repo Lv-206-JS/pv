@@ -2,9 +2,8 @@
 define([
     'backbone',
     'backbone-validation',
-    'JST',
-    'collections/Projects'
-], function (Backbone, BackboneValidation, JST, projectsCollection) {
+    'JST'
+], function (Backbone, BackboneValidation, JST) {
     'use strict';
 
     var ProjectEditView = Backbone.View.extend({
@@ -28,7 +27,7 @@ define([
         },
 
         onSync: function onSync() {
-            this.model = projectsCollection.get(this.modelId);
+            this.model = PV.projectsCollection.get(this.modelId);
             this.render();
 
         },
