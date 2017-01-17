@@ -26,10 +26,6 @@ define([
                 '*path': 'openLandingPage'
             },
 
-            initialize: function (options) {
-                console.log(options);
-            },
-
             openLandingPage: function openLandingPage() {
                 if (this.mainView) {
                     this.mainView.remove();

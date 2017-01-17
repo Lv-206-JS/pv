@@ -5,6 +5,7 @@ requirejs.config({
         underscore: '/bower_components/underscore/underscore',
         'backbone-validation': '/node_modules/backbone-validation/dist/backbone-validation',
         userModel: '/src/scripts/models/User',
+        projectsCollection: '/src/scripts/collections/Projects',
         Snap: '/bower_components/Snap.svg/dist/snap.svg',
         JST: '/scripts/templates',
         Draggabilly: '/bower_components/draggabilly/dist/draggabilly.pkgd',
@@ -17,7 +18,7 @@ requirejs.config({
     baseUrl: '/src/scripts'
 });
 
-requirejs(['jquery', 'backbone', 'userModel', 'Router', 'MobileRouter', 'bowser'], function ($, Backbone, UserModel, DesktopRouter, MobileRouter, Bowser) {
+requirejs(['jquery', 'backbone', 'userModel', 'projectsCollection', 'Router', 'MobileRouter', 'bowser'], function ($, Backbone, UserModel, ProjectsCollection, DesktopRouter, MobileRouter, Bowser) {
     'use strict';
     
     $(function () {
@@ -33,6 +34,7 @@ requirejs(['jquery', 'backbone', 'userModel', 'Router', 'MobileRouter', 'bowser'
             PV.router = new MobileRouter();
         } else {
             PV.userModel = new UserModel();
+            PV.projectsCollection = new ProjectsCollection();
             PV.router = new DesktopRouter();
 
         }
