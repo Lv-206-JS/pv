@@ -13,8 +13,8 @@ define([
         events: {
             'click .projects-list-item': 'onClick',
             'click .projects-go-link': 'onSelectProject',
-            'click .edit-project': 'onEditProject',
-            'click .delete-project': 'onDeleteProject'
+            'click .icon-edit': 'onEditProject',
+            'click .icon-remove': 'onDeleteProject'
         },
 
         initialize: function (options) {
