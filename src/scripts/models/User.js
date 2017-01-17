@@ -8,13 +8,13 @@ define([
 
         url: '/rest/user',
 
-        setUrl: function () {
-            this.url = '/users/login/';
+        setUrl: function (url) {
+            this.url = url;
         },
 
         defaults: {
-                '_id': '',
-                'userId': '',
+                '_id': null,
+                'userId': null,
                 'firstname': '',
                 'lastname': '',
                 'email': ''
