@@ -274,7 +274,7 @@ define(['backbone',
         },
 
         confirmDeleteAttachment: function(event){
-            renderConfirmDeleteView(event, this,_.bind(this.deleteAttachment, this, event));
+            renderConfirmDeleteView(event, this, _.bind(this.deleteAttachment, this, event));
         },
 
         addAttachmentItem: function(i){
