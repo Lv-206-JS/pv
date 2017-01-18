@@ -14,7 +14,6 @@ define([
         },
 
         initialize: function initialize() {
-            // this.userModel = PV.userModel;
             this.model = PV.userModel;
             Backbone.Validation.bind(this);
         },
@@ -41,13 +40,13 @@ define([
             if (this.model.isValid(['email', 'password'])) {
                 this.model.save().then(
                     function() {
-                        setTimeout(function () {
+                        setTimeout (function () {
                             PV.router.navigate('projects', {trigger: true});
                         }, 1000);
 
                     },
                     function(error) {
-                        // Error handling
+                        // Error handling from Backend
                         console.log(error);
                     }
                 );

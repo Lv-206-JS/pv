@@ -34,9 +34,9 @@ define([
 
         saveProject: function saveProject(e) {
             e.preventDefault();
+            var that = this;
             var name = this.$el.find('#name').val();
             var description = this.$el.find('#description').val();
-            var that = this;
 
             this.model.set({
                 name: name,
@@ -52,7 +52,7 @@ define([
 
                     },
                     function(error) {
-                        // Error handling
+                        // Error handling from Backend
                         console.log(error);
                     }
                 );
