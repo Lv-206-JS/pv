@@ -328,14 +328,19 @@ $tab-height: 40px;
       color: $white;
       border: 1px solid transparent;
       outline: none;
+      cursor: pointer;
       background-color: $light-blue;
       transition: background-color 500ms ease;
       font-weight: 700;
       text-transform: uppercase;
-    }
 
-    .form-button:hover {
-      background-color: $blue;
+      &:hover {
+        background-color: $blue;
+      }
+
+      &::selection {
+        background-color: transparent;
+      }
     }
   }
 
