@@ -12,7 +12,7 @@ define([
         events: {
             'click #post_user': 'onSubmit',
             'click #exit-button': 'hideLogInView',
-            'click .form-input-text': 'hideError'
+            'keydown .form-control': 'removeErrors'
         },
 
         initialize: function() {
@@ -31,11 +31,7 @@ define([
             var that = this;
             var obj = {};
 
-            console.log($("#regisrationForm").serialize());
-
             _.each($("#regisrationForm").find('.form-control'), function(el) {
-
-                console.log($(el).attr('name'),$(el).val());
 
                 obj[$(el).attr('name')] = $(el).val();
 
@@ -48,7 +44,7 @@ define([
 
 
             if (this.model.isValid(['firstname', 'lastname', 'email', 'password', 'password2'])) {
-                // this.model.setUrl('/users/register');
+
                 this.model.save().then(
                     function(res) {
                         console.log(res);
@@ -56,15 +52,14 @@ define([
                         var response = JSON.parse(res);
                         if (response.error == false) {
                             that.trigger('changeToLogin');
-                            //Backbone.history.navigate('users/login', { trigger: true });
 
                         } else {
-                            response.error.forEach(function (mess) {
-                                var err_mess = that.$el.find("#" + mess.param.trim());
-                                err_mess.val('');
-                                err_mess.attr("placeholder", mess.msg);
-                                err_mess.addClass("error");
-                            });
+                            // response.error.forEach(function (mess) {
+                            //     var err_mess = that.$el.find("#" + mess.param.trim());
+                            //     err_mess.val('');
+                            //     err_mess.attr("placeholder", mess.msg);
+                            //     err_mess.addClass("error");
+                            // });
                         }
 
                     },
@@ -74,7 +69,6 @@ define([
                     }
                 );
             } else {
-                console.log('HANDLE ERRORS FUNCTION');
                 console.log(this.model.validate());
                 this.handleErrors();
             }
@@ -103,12 +97,6 @@ define([
             this.$el.find('.' + inputName + '-error').html('');
             $(input).removeClass('error');
 
-        },
-
-        hideError: function (event) {
-            event.preventDefault();
-            if ($(event.currentTarget).hasClass("error"))
-                $(event.currentTarget).removeClass("error");
         },
 
         hideLogInView: function (event) {

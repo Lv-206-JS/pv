@@ -24,11 +24,11 @@ define([
 
             firstname: {
                 rangeLength: [0, 45],
-                msg: 'Its too short or too long!'
+                msg: 'Name is too short or too long!'
             },
             lastname: {
                 rangeLength: [0, 45],
-                msg: 'Its too short or too long!'
+                msg: 'Last name is too short or too long!'
             },
             email: [{
                 required: true,
@@ -44,9 +44,12 @@ define([
                 minLength: 5,
                 msg: 'Password is too short. It is expected to be longer than 5 chars!'
             }],
-            password2: {
+            password2: [{
                 equalTo: 'password'
-            }
+            }, {
+                minLength: 5,
+                msg: 'Please, enter password confirmation!'
+            }]
 
         }
     });

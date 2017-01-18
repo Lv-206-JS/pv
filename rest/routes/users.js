@@ -92,12 +92,6 @@ var fn = passport.authenticate('local', {
     failureRedirect: 'users/login'
 });
 
-
-// router.post('/login', passport.authenticate('local'), function(req, res) {
-//     console.log(req, res);
-//     res.send('ok');
-// });
-
 router.post('/login', function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
         if (err) {

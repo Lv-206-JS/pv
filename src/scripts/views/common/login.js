@@ -10,7 +10,8 @@ define([
         className: 'login-view',
         events: {
             'click .ok-button': 'onSubmit',
-            'click #exit-button': 'hideLogInView'
+            'click #exit-button': 'hideLogInView',
+            'keydown .form-control': 'removeErrors'
         },
 
         initialize: function initialize() {

@@ -12,7 +12,7 @@ define([
         className: 'projects-list',
         events: {
             'click .projects-list-item': 'onClick',
-            'click .projects-go-link': 'onSelectProject',
+            'click .icon-open': 'onSelectProject',
             'click .icon-edit': 'onEditProject',
             'click .icon-remove': 'onDeleteProject'
         },
