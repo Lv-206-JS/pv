@@ -53,6 +53,9 @@ define(['backbone', 'underscore', 'JST', 'moment'], function (Backbone, _, JST, 
             } else {
                 this.model.set({description: null});
             }
+            // var newProjectIcon = this.$el.find('.project-icon').val();
+            // this.model.set({projectIcon: newProjectIcon})
+
             var newStartDateInSeconds = this.moment(this.$el.find('.start-date').val()).unix();
             this.model.set({startDate: newStartDateInSeconds});
             var newDayDuration = this.$el.find('.day-duration').val();
@@ -73,7 +76,3 @@ define(['backbone', 'underscore', 'JST', 'moment'], function (Backbone, _, JST, 
     });
     return SettingsView;
 });
-//TODO Implement week:days saving to db
-//TODO Date parsing to show in input type=date value field
-//TODO Add function getCurrentDate to save into modifiedDate
-//TODO Further: add validation
