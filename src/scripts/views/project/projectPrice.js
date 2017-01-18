@@ -43,7 +43,6 @@ define(['backbone',
                         for(var j = 0; j < this.tasks.length; j++){
                             var taskEnd = Number(this.tasks[j].startDate) + Number(this.tasks[j].estimateTime);
                             if((this.resources[i].resourceId === this.tasks[j].resource)
-                                && (this.tasks[j].resource !== 'default')
                                 && (maxDate < taskEnd)) {
                                 maxDate = Number(taskEnd);
                             }

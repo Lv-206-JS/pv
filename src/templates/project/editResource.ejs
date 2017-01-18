@@ -10,7 +10,6 @@
                     <input class="form-input-text resource-name" maxlength="256" placeholder="Resource Name" required="required" type="text" value="<%= resource.resourceName %>">
                     <label class="form-label">Type:</label>
                     <select class="form-input-text resource-type" name="type" placeholder="Resource Type">
-                        <option value="default" <% if( resource.type == '') { %> selected <% } %> ></option>
                         <option value="worker" <% if( resource.type == 'worker') { %> selected <% } %> >Worker</option>
                         <option value="freelancer" <% if( resource.type == 'freelancer') { %> selected <% } %> >Freelancer</option>
                         <option value="machine" <% if( resource.type == 'machine') { %> selected <% } %> >Machine</option>
