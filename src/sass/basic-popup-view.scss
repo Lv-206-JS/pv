@@ -131,7 +131,6 @@ $tab-height: 40px;
         font-family: Roboto, sans-serif;
         min-height: 120px;
         resize: none;
-        //border-radius: 10px;
         border: 0;
         outline: 0;
         border-bottom: 1px solid $dark-grey;
@@ -142,12 +141,12 @@ $tab-height: 40px;
         border-bottom: 1px solid red;
       }
 
-      .form-error {
-        color: red;
-        height: 20px;
-        font-size: 10px;
-        margin-left: 110px;
-      }
+      //.form-error {
+      //  color: red;
+      //  height: 20px;
+      //  font-size: 10px;
+      //  margin-left: 110px;
+      //}
 
       .all-tasks {
         width: 45%;
@@ -222,6 +221,7 @@ $tab-height: 40px;
           color: $light-blue;
           font-weight: 700;
           border: 1px solid $blue;
+          cursor: pointer;
 
           input[type="file"] {
             display: none;
