@@ -1,54 +1,49 @@
-
 define([
     'backbone',
-    'backbone-validation',
-    'JST'
-], function (Backbone, BackboneValidation, JST) {
+    'JST',
+    'backbone-validation'
+], function (Backbone, JST) {
     'use strict';
 
-    var ProjectEditView = Backbone.View.extend({
-        template: JST['projects:projectsEdit'],
-        className: 'projects-edit-view',
+    var LogInView = Backbone.View.extend({
+        template: JST['common:login'],
+        className: 'login-view',
         events: {
-            'click .ok-button': 'saveProject',
-            'click .cancel-button': 'exitEditProject',
-            'keydown .form-control': 'removeErrors'
+            'click .ok-button': 'onSubmit',
+            'click #exit-button': 'hideLogInView'
         },
 
-        initialize: function initialize(options) {
-            this.model = options.model;
+        initialize: function initialize() {
+            // this.userModel = PV.userModel;
+            this.model = PV.userModel;
             Backbone.Validation.bind(this);
         },
 
         render: function render() {
-            this.$el.html(this.template({project: this.model.toJSON()}));
-
+            this.$el.html(this.template({}));
             return this;
         },
 
-        onSync: function onSync() {
-            this.model = PV.projectsCollection.get(this.modelId);
-            this.render();
-
-        },
-
-        saveProject: function saveProject(e) {
+        onSubmit: function onSubmit(e) {
             e.preventDefault();
-            var name = this.$el.find('#name').val();
-            var description = this.$el.find('#description').val();
-            var that = this;
+            var email = this.$el.find('[name="email"]')[0].value;
+            var password = this.$el.find('[name="password"]')[0].value;
 
             this.model.set({
-                name: name,
-                description: description
+                email: email,
+                password: password
             });
 
-            this.model.setUrl(this.model.get('id') || '');
+            this.model.setUrl('/users/login/');
 
-            if (this.model.isValid(['name', 'description'])) {
+            console.log(this.model.isValid(['email', 'password']));
+
+            if (this.model.isValid(['email', 'password'])) {
                 this.model.save().then(
                     function() {
-                        that.trigger('editedProject', that.model);
+                        setTimeout(function () {
+                            PV.router.navigate('projects', {trigger: true});
+                        }, 1000);
 
                     },
                     function(error) {
@@ -86,12 +81,11 @@ define([
 
         },
 
-        exitEditProject: function(event){
+        hideLogInView: function (event) {
             event.preventDefault();
             this.$el.remove();
         }
-
     });
 
-    return ProjectEditView;
+    return LogInView;
 });

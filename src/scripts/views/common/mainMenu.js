@@ -1,9 +1,8 @@
 define([
     'backbone',
     'underscore',
-    'JST',
-    'models/User'
-], function (Backbone, _, JST, userModel) {
+    'JST'
+], function (Backbone, _, JST) {
     'use strict';
 
     var MainMenu = Backbone.View.extend({
@@ -19,15 +18,16 @@ define([
             this.name = options.name;
             this.page = options.page;
 
-            userModel.fetch();
-            userModel.on('sync', _.bind(this.onNameReceived, this));
-            userModel.on('error', _.bind(this.onError, this));
+            PV.userModel.setUrl('/rest/user');
+            PV.userModel.fetch();
+            PV.userModel.on('sync', _.bind(this.onNameReceived, this));
+            PV.userModel.on('error', _.bind(this.onError, this));
         },
 
         render: function render() {
             this.$el.html(this.template({
                 page: this.page,
-                userName: userModel.get('firstname')
+                userName: PV.userModel.get('firstname')
             }));
             return this;
         },
@@ -52,7 +52,7 @@ define([
 
         onSignOut: function onSingOut(){
             $.ajax({ url:  '/users/logout' });
-            userModel.clear().set(userModel.defaults);
+            PV.userModel.clear().set(PV.userModel.defaults);
             PV.router.navigate('/', {trigger: true});
         }
     });

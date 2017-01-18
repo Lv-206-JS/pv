@@ -16,6 +16,8 @@ define([
                 this.model = options.model;
                 this.tasks = options.model.get('tasks');
                 this.task = options.task;
+                this.rowHeight = options.rowHeight;
+                this.padding = options.padding;
                 this.moment = Moment;
                 this.timeLine = new TimeLine(this.model);
                 // convert dates from PTL to unix

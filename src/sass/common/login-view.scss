@@ -1,6 +1,11 @@
-@import "../popup-view";
+@import "../basic-popup-view";
 
 .login-view {
-  @extend .popup-view;
-  z-index: 1001;
+  @extend .basic-popup-view;
+
+  .login-form-bottom {
+    @extend .form-bottom;
+  }
+
 }
+

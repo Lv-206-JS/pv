@@ -30,9 +30,9 @@ router.post('/register', function (req, res) {
     var errors = req.validationErrors();
 
     return User.findOne({email: email}, function (error, findedEmail) {
-        if(findedEmail != undefined) {
+        if (findedEmail != undefined) {
             errors = errors || [];
-            errors.push({ param: 'email', msg: 'Email already exists', value: '' });
+            errors.push({param: 'email', msg: 'Email already exists', value: ''});
             return res.status(200).json(JSON.stringify({"error": errors}));
         }
         else {
@@ -93,11 +93,27 @@ var fn = passport.authenticate('local', {
 });
 
 
-router.post('/login', passport.authenticate('local', {
-        successRedirect: '/projects',
-        failureRedirect: 'users/login'
-    })
-);
+// router.post('/login', passport.authenticate('local'), function(req, res) {
+//     console.log(req, res);
+//     res.send('ok');
+// });
+
+router.post('/login', function (req, res, next) {
+    passport.authenticate('local', function (err, user, info) {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.send('Unknown user');
+        }
+        req.logIn(user, function (err) {
+            if (err) {
+                return next(err);
+            }
+            return res.send(user);
+        });
+    })(req, res, next);
+});
 
 //Logout
 router.get('/logout', function (req, res) {

@@ -21,15 +21,15 @@ $text-green: $green;
 $text-red: $red;
 $text-white: #fff;
 $text-black: #000;
-$text-secondary: rgba(0,0,0, 0.54);
-$text-hint: rgba(0,0,0, 0.38);
+$text-secondary: rgba(0, 0, 0, 0.54);
+$text-hint: rgba(0, 0, 0, 0.38);
 
 /* Main menu, Project menu */
 $menu-container-height: 40px;
 
 /* Dividers */
-$divider-dark-border: 1px solid rgba(0,0,0, 0.38);
-$divider-border: 1px solid rgba(0,0,0, 0.12);
+$divider-dark-border: 1px solid rgba(0, 0, 0, 0.38);
+$divider-border: 1px solid rgba(0, 0, 0, 0.12);
 
 /* Box shadow */
 $box-shadow: 0 4px 4px 0px rgba(0, 0, 0, 0.2);
@@ -58,10 +58,11 @@ button {
   text-align: center;
   text-transform: capitalize;
 }
+
 .button-flat {
   height: 36px;
   min-width: 88px;
-  margin: 12px 12px 12px 0px;
+  margin: 12px 12px 12px 0;
   padding: 6px;
   border: none;
   border-radius: $border-radius;
@@ -70,12 +71,13 @@ button {
   text-align: center;
   text-transform: capitalize;
 }
+
 .button-dark {
   @extend .button;
   background: $light-blue;
   color: $text-white;
 
-  &:hover{
+  &:hover {
     cursor: pointer;
     background-color: $blue;
     transition: $transition-background;
@@ -84,7 +86,7 @@ button {
   &:active {
     cursor: pointer;
     background-color: $blue;
-    darken: ($blue, 25%);
+    $darken: ($blue, 25%);
   }
 }
 
@@ -110,30 +112,40 @@ $icon-opacity: 0.5; // normal
 $icon-hover-opacity: 1; // hover
 
 .icon {
-   display: inline-block;
-   opacity: $icon-opacity;
-    
-   &:hover {
-     opacity: $icon-hover-opacity;
-   }
+  display: inline-block;
+  opacity: $icon-opacity;
+
+  &:hover {
+    opacity: $icon-hover-opacity;
+  }
 }
-.icon-outer-link {
-  @extend .icon;
-  // add width, height, margin here
-}
+
 .icon-as-background {
-  background-position: 0px 0px;
+  @extend .icon;
+  background-position: 0 0;
   background-size: contain;
+  width: 20px;
+  height: 20px;
 }
+
 /* Pencil icon */
 .icon-edit {
   @extend .icon-as-background;
-  background-image: url("../../../images/edit.svg");
+  background-image: url("/images/edit.svg");
+  margin-right: 18px;
 }
+
 /* Cross icon */
 .icon-remove {
   @extend .icon-as-background;
-  background-image: url("../../../images/cancel.svg");
+  background-image: url("/images/cancel.svg");
+}
+
+/* Open icon */
+.icon-open {
+  @extend .icon-as-background;
+  background-image: url("/images/icon-link.svg");
+  margin-right: 18px;
 }
 
 /* Container or rows */
@@ -161,28 +173,32 @@ $table-row-height: 40px;
     background-color: $grey;
   }
 }
+
 .table-cell {
   box-sizing: border-box;
   display: flex;
   align-items: center;
   padding: 0 0 0 18px;
-  margin: 0 42px 0 0;
+  margin: 0 20px 0 0;
 }
+
 .table-cell.table-cell-number {
   text-align: right;
 }
+
 .table-cell.table-cell-text {
   text-align: left;
 }
 
 /* Table header wrapper */
-.table-header {   
+.table-header {
   @extend .row-container;
   justify-content: flex-start;
   align-items: center;
   background-color: #fff;
   border-bottom: $divider-dark-border;
 }
+
 .table-header-row {
   display: flex;
   flex-direction: row;
@@ -190,10 +206,10 @@ $table-row-height: 40px;
   align-items: center;
   height: $table-row-height;
   font-weight: $font-weight-bold;
-  color: rgba(0,0,0, 0.87);
+  color: rgba(0, 0, 0, 0.87);
 
   .table-header-row .table-cell:hover {
-    color: rgba(0,0,0, 1.0);
+    color: rgba(0, 0, 0, 1.0);
   }
 }
 

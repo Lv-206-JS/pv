@@ -1,90 +1,47 @@
 
-  .projects-list {
+.projects-list {
+  display: flex;
+  flex-direction: column;
+
+  .projects-list-header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+  }
+
+  ul {
     display: flex;
     flex-direction: column;
 
-    .projects-list-header {
-      height: 60px;
-      display: flex;
+    li {
+      list-style: none;
+      height: 50px;
+      background-color: #fafafa;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      border-left: 2px solid transparent;
       align-items: center;
-    }
-
-    ul {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      justify-content: space-around;
 
-      li {
-        list-style: none;
-        height: 50px;
-        background-color: #fafafa;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-        border-left: 2px solid transparent;
-        align-items: center;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-
-        .projects-link-name {
-          color: #5499c7;
-          width: 50%;
-          cursor: pointer;
-
-          &::selection {
-            background-color:transparent;
-          }
-        }
-
-        .project-link {
-          width: 20px;
-          height: 20px;
-          opacity: 0.3;
-          cursor: pointer;
-
-          &:hover {
-            opacity: 1;
-          }
-        }
-
-        .edit-project {
-          width: 30px;
-          height: 30px;
-          background-image: url(../../../images/edit.svg);
-        }
-
-        .delete-project {
-          width: 30px;
-          height: 30px;
-          background-image: url(../../../images/cancel.svg);
-        }
-
-        &:hover {
-          background-color: #f5f5f5;
-        }
-
-        &.active {
-          border-left: 2px solid #2980b9;
-        }
-
-      }
-
-      .projects-go-link {
-        width: 100px;
-        height: 25px;
-        //border: 1px solid #5499c7;
-        //border-radius: 4px;
-        box-shadow: 0 3px 3px 3px rgba(0, 0, 0, 0.2);
+      .projects-link-name {
         color: #5499c7;
-        background-color: #fff;
-        transition: background-color 500ms ease;
-        text-transform: capitalize;
+        width: 50%;
         cursor: pointer;
-        outline: none;
 
-        &:hover {
-          border: 1px solid #fff;
-          color: #fff;
-          background-color: #5499c7;
+        &::selection {
+          background-color: transparent;
         }
       }
+
+      &:hover {
+        background-color: #f5f5f5;
+      }
+
+      &.active {
+        border-left: 2px solid #2980b9;
+      }
+
     }
   }
+}

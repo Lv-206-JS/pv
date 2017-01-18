@@ -12,6 +12,7 @@ var proto = TaskAlgo.prototype;
 
 //function for starting task algorithm
 proto.startAlgorithm = function () {
+
     if(this.tasks.length == 0) {
         return this.tasks;
     }
