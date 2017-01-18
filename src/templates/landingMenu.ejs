@@ -1,10 +1,10 @@
 <img class="logo" src="/images/plan-view-logo.svg" alt="logo">
 <ul>
-    <div class="landing-menu-left <% if (!userId) {%>not-logined<% } %>">
-        <% if (userId) {%>
+    <div class="landing-menu-left <% if (!userId) { %>not-logined<% } %>">
+        <% if (userId) { %>
         <li><a class="go-to-projects menu-button">my projects</a></li>
     </div>
-    <div class="landing-menu-right <% if (!userId) {%>not-logined<% } %>">
+    <div class="landing-menu-right <% if (!userId) { %>not-logined<% } %>">
         <li><p class="show-user-name user-name">hello, <%= userName %> </p></li>
         <li><a class="sign-out-button menu-button">Sign Out</a></li>
 

@@ -19,9 +19,8 @@ define([
                 required: true,
                 msg: 'Please, fill in Project Description field.',
             }, {
-                minLength: 30,
-                msg: 'Description is too short. It is expected to be longer than 30 chars!'
-
+                rangeLength: [3, 45],
+                msg: 'Description is expected to be 3 - 45 chars long!'
             }]
 
 
