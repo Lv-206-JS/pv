@@ -21,18 +21,19 @@ define([
         },
 
         validation: {
-            email: {
+            email: [{
                 required: true,
+                msg: 'Please, enter an email(username).'
+            }, {
                 pattern: 'email',
-                msg: 'Please fill in username/email field.'
-            },
+                msg: 'Valid email expected!'
+            }],
             password: [{
                 required: true,
-                msg: 'Please fill in password field.',
+                msg: 'Please, enter a password.'
             }, {
                 minLength: 5,
                 msg: 'Password is too short. It is expected to be longer than 5 chars!'
-
             }]
 
         }

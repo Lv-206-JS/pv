@@ -2,7 +2,7 @@ define([
     'backbone',
     'underscore',
     'JST',
-    'views/common/logIn',
+    'views/common/login',
     'views/common/register'
 ], function (Backbone, _, JST, LogInView, RegistrationView) {
     'use strict';

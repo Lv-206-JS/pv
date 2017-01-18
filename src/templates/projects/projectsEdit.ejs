@@ -5,24 +5,25 @@
             <div>Project Edit</div>
         </div>
 
-              <div class="tab-container">
+        <div class="tab-container">
 
-                <label class="form-label"><%= project.name ? 'Update' : 'Create' %> Project</label>
-                  <input class="form-input-text form-control" id="name" type="text" name="name" placeholder="Project Name" value="<%= project.name %>">
-                  <div class="form-error name-error"></div>
+            <label class="form-label"><%= project.name ? 'Update' : 'Create' %> Project</label>
+            <input class="form-input-text form-control" id="name" type="text" name="name" placeholder="Project Name"
+                   value="<%= project.name %>">
+            <div class="form-error name-error"></div>
 
-                <label class="form-label description-label">Description</label>
-
-                  <textarea class="form-input-description form-control" id="description" maxlength="5000" name="description" placeholder="Description (min 30 chars)"><%= project.description %></textarea>
-                  <div class="form-error description-error"></div>
+            <label class="form-label description-label">Description</label>
+            <textarea class="form-input-description form-control" id="description" maxlength="500" name="description"
+                      placeholder="Description (min 30 chars)"><%= project.description %></textarea>
+            <div class="form-error description-error"></div>
             <% if(project) { %>
             <input type="hidden" name="id" value="<%= project.id %>"/>
             <% } %>
-              </div>
+        </div>
 
         <div class="form-bottom">
-            <input class="form-button ok-button" type="submit" value="<%= project.name ? 'Update' : 'Create' %>">
-            <input class="form-button cancel-button" type="submit" value="cancel">
+            <input class="form-button ok-button" value="<%= project.name ? 'Update' : 'Create' %>">
+            <input class="form-button cancel-button" value="cancel">
         </div>
 
     </div>

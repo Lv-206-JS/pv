@@ -3,7 +3,7 @@ define([
         'backbone',
         'views/landing',
         'views/common/mainView',
-        'views/common/logIn',
+        'views/common/login',
         'views/common/register'
 
     ],
