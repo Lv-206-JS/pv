@@ -132,7 +132,6 @@ $icon-hover-opacity: 1; // hover
 .icon-edit {
   @extend .icon-as-background;
   background-image: url("/images/edit.svg");
-  margin-right: 18px;
 }
 
 /* Cross icon */
@@ -145,7 +144,6 @@ $icon-hover-opacity: 1; // hover
 .icon-open {
   @extend .icon-as-background;
   background-image: url("/images/icon-link.svg");
-  margin-right: 18px;
 }
 
 /* Container or rows */
