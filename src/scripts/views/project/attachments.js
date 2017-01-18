@@ -41,14 +41,10 @@ define(['backbone',
                 }
             }
             this.model.set({attachments: updatedAttachments});
-            this.model.save({
+            this.model.save({}, {
                 success:function () {
                     this.updateAttachmentsPopup();
-                }.call(this),
-
-                error:function () {
-                    //error
-                }
+                }.bind(this)
             });
         },
 

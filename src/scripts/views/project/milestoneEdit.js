@@ -138,8 +138,11 @@ define(['backbone',
                 }
             }
             this.model.set({milestones: updatedMilestones});
-            this.model.save();
-            this.updateMilestonesPopup();
+            this.model.save({}, {
+                success: function () {
+                    this.updateMilestonesPopup();
+                }.bind(this)
+            });
         },
 
         confirmDeleteMilestone: function onDeleteProject(e) {
@@ -159,8 +162,11 @@ define(['backbone',
                 }
             }
             this.model.set({milestones: updatedMilestones});
-            this.model.save();
-            this.updateMilestonesPopup();
+            this.model.save({}, {
+                success: function () {
+                    this.updateMilestonesPopup();
+                }.bind(this)
+            });
         },
 
         makeTasksDraggable: function (tasksList, dependenciesList) {
