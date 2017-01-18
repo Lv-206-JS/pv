@@ -60,7 +60,7 @@ define(['backbone',
             'click .ok-button' : 'onSubmitChanges',
             'click .delete-task' : 'confirmDelete',
             'change #add-attachment-file' : 'addAttachment',
-            'click #delete-attachment' : 'deleteAttachment',
+            'click #delete-attachment' : 'confirmDeleteAttachment',
             'dblclick .task-item' : 'addTaskToList'
         },
 
@@ -273,6 +273,10 @@ define(['backbone',
             this.deleteAttachmentItem(attachmentId);
         },
 
+        confirmDeleteAttachment: function(event){
+            renderConfirmDeleteView(event, this,_.bind(this.deleteAttachment, this, event));
+        },
+
         addAttachmentItem: function(i){
             var parent = document.getElementsByClassName("task-attachments");
             var str = this.task.attachments[i].fileName;
@@ -297,7 +301,7 @@ define(['backbone',
             }
         },
 
-        deleteTask: function(event){
+        deleteTask: function(){
             for(var i = 0; i < this.tasks.length; i++){
                 if(this.tasks[i].taskId === this.task.taskId) {
                     this.tasks.splice(i, 1);
@@ -342,7 +346,16 @@ define(['backbone',
             this.task.name = this.$el.find('.task-name').val();
             var estimateTime = this.$el.find('.task-estimate').val();
             this.task.estimateTime = Moment.duration(+estimateTime, 'hours').asSeconds();
-            this.task.resource = this.$el.find('.task-resource').val();
+
+            var resourceValue = this.$el.find('.task-resource').val();
+            var resources = this.model.get('resources');
+            for( var i = 0; i < resources.length; i++){
+                if(resourceValue == resources[i].resourceName)
+                    this.task.resource = resources[i].resourceId;
+            }
+
+            // this.task.resource = this.$el.find('.task-resource').val();
+
             this.task.description = this.$el.find('.task-description').val();
             this.task.dependsOn = [];
             if(this.dependenciesList[0] !== undefined) {

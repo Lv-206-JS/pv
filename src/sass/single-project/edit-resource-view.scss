@@ -2,6 +2,10 @@
 .edit-resource-view {
   @extend .basic-popup-view;
 
+  .form-wrapper.edit-resource {
+    margin-top: 8%;
+  }
+
   .form-wrapper{
 
     .resource-type {

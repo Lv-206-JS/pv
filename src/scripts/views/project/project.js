@@ -35,10 +35,10 @@ define([
             'click .show-resources': 'showResourcesPopup',
             'click .tool-price': 'showProjectPrice',
             'click .show-ownership': 'showOwnershipPopup',
-            'click .tool-zoom-in' : 'increaseZoom',
-            'click .tool-zoom-out' : 'decreaseZoom',
-            'click .tool-undo' : 'setUndo',
-            'click .tool-redo' : 'setRedo'
+            'click .tool-zoom-in': 'increaseZoom',
+            'click .tool-zoom-out': 'decreaseZoom',
+            'click .tool-undo': 'setUndo',
+            'click .tool-redo': 'setRedo'
         },
 
         initialize: function (options) {
@@ -82,15 +82,20 @@ define([
             return this;
         },
 
-        showTaskEditPopup: function(allTasks,task){
+        showTaskEditPopup: function (allTasks, task) {
             var resources = this.model.get('resources');
-            this.taskView = new TaskView({tasks: allTasks, task: task, resources: resources, model: this.model}).render();
+            this.taskView = new TaskView({
+                tasks: allTasks,
+                task: task,
+                resources: resources,
+                model: this.model
+            }).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
             this.listenTo(this.taskView, 'deleteTask', this.deleteTaskHandler);
             this.$el.append(this.taskView.$el);
         },
 
-        showTaskAddPopup: function(allTasks){
+        showTaskAddPopup: function (allTasks) {
             var resources = this.model.get('resources');
             this.taskView = new TaskView({tasks: allTasks, resources: resources}).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
@@ -98,45 +103,44 @@ define([
             this.$el.append(this.taskView.$el);
         },
 
-        deleteTaskHandler: function(allTasks){
-            this.model.set('tasks',allTasks);
+        deleteTaskHandler: function (allTasks) {
+            this.model.set('tasks', allTasks);
             this.model.save();
         },
 
-        upsertTaskHandler: function (allTasks,changedTask){
+        upsertTaskHandler: function (allTasks, changedTask) {
             if (changedTask.taskId)
-                for (var i = 0; i < allTasks.length; i++){
-                    if (allTasks[i].taskId === changedTask.taskId){
+                for (var i = 0; i < allTasks.length; i++) {
+                    if (allTasks[i].taskId === changedTask.taskId) {
                         allTasks[i] = changedTask;
                     }
                 }
-            else
-            {
+            else {
                 allTasks[allTasks.length] = changedTask;
-                allTasks[allTasks.length-1].taskId = this.createId(allTasks);
+                allTasks[allTasks.length - 1].taskId = this.createId(allTasks);
             }
-            this.model.set('tasks',allTasks);
+            this.model.set('tasks', allTasks);
             this.model.save();
         },
 
-        increaseZoom: function(){
+        increaseZoom: function () {
             this.ganttContainerView.increaseZoom();
         },
 
-        decreaseZoom: function(){
+        decreaseZoom: function () {
             this.ganttContainerView.decreaseZoom();
         },
 
-        createId: function(allTasks){
+        createId: function (allTasks) {
             var max = 0;
-            for (var i = 0; i < allTasks.length-1; i++){
-                if (max < allTasks[i].taskId )
+            for (var i = 0; i < allTasks.length - 1; i++) {
+                if (max < allTasks[i].taskId)
                     max = allTasks[i].taskId;
             }
             return ++max;
         },
 
-        showAttachmentsPopup: function(){
+        showAttachmentsPopup: function () {
             var attachments = this.model.get('attachments');
             this.attachmentsView = new AttachmentsView({
                 model: this.model,
@@ -147,7 +151,7 @@ define([
             this.$el.append(this.attachmentsView.$el);
         },
 
-        showSettingsPopup: function() {
+        showSettingsPopup: function () {
             this.settingsView = new SettingsView({
                 model: this.model
             });
@@ -178,76 +182,91 @@ define([
 
         showResourcesPopup: function () {
             var resources = this.model.get('resources');
-            this.resourcesView = new ResourcesView({resources: resources}).render();
+            this.resourcesView = new ResourcesView({resources: resources, model: this.model}).render();
             this.listenTo(this.resourcesView, 'saveResources', this.saveResources);
             this.$el.append(this.resourcesView.$el);
         },
 
-        saveResources: function(resources){
+        saveResources: function (resources) {
             this.model.set('resources', resources);
             this.model.save();
         },
 
-        showProjectPrice: function(){
+        showProjectPrice: function () {
             this.projectPriceView = new ProjectPriceView({model: this.model}).render();
             this.$el.append(this.projectPriceView.$el);
         },
-
 
         updateProjectName: function (name) {
             this.$el.find('.show-project-name').html(name);
         },
 
-        setUndo: function (){
-            if( $('#undo').attr('disabled')){}
+        setUndo: function () {
+            if ($('#undo').attr('disabled')) {
+            }
             else {
                 var newModel = this.undoRedo.undo();
                 this.hideButton('#undo');
                 this.showButton('#redo');
-                this.model = newModel;
+                this.setNewAttributes(newModel);
                 this.renderViews();
+                this.updateProjectName(this.model.get('name'));
             }
         },
 
-        setRedo: function (){
-            if( $('#redo').attr('disabled')){}
+        setNewAttributes: function (model) {
+            var newAttributes = model;
+            var properties = [];
+            for(var prop in newAttributes){
+                properties[properties.length] = prop;
+            }
+            for(var i = 0; i < properties.length; i++){
+                this.model.set(properties[i],newAttributes[properties[i]]);
+            }
+        },
+
+        setRedo: function () {
+            if ($('#redo').attr('disabled')) {
+            }
             else {
                 var newModel = this.undoRedo.redo();
                 this.showButton('#undo');
                 this.hideButton('#redo');
-                this.model = newModel;
+                // this.model = newModel;
+                this.setNewAttributes(newModel);
                 this.renderViews();
+                this.updateProjectName(this.model.get('name'));
             }
         },
 
-        hideButton: function(buttonId){
-            if(buttonId === '#undo'){
-                if( this.undoRedo.iterator == 1){
-                    $('#undo').attr('disabled','disabled');
+        hideButton: function (buttonId) {
+            if (buttonId === '#undo') {
+                if (this.undoRedo.iterator == 1) {
+                    $('#undo').attr('disabled', 'disabled');
                 }
             }
-            else if(buttonId === '#redo'){
-                if( this.undoRedo.iterator == this.undoRedo.history.length){
-                    $('#redo').attr('disabled','disabled');
+            else if (buttonId === '#redo') {
+                if (this.undoRedo.iterator == this.undoRedo.history.length) {
+                    $('#redo').attr('disabled', 'disabled');
                 }
             }
         },
 
-        showButton: function(buttonId){
-            if(buttonId === '#undo'){
-                if( this.undoRedo.iterator > 1){
-                    $('#undo').attr('disabled',null);
+        showButton: function (buttonId) {
+            if (buttonId === '#undo') {
+                if (this.undoRedo.iterator > 1) {
+                    $('#undo').attr('disabled', null);
                 }
             }
-            else if(buttonId === '#redo'){
-                if( this.undoRedo.iterator != this.undoRedo.history.length){
-                    $('#redo').attr('disabled',null);
+            else if (buttonId === '#redo') {
+                if (this.undoRedo.iterator != this.undoRedo.history.length) {
+                    $('#redo').attr('disabled', null);
                 }
             }
         },
 
         startDateSchedule: function () {
-            this.taskAlgorithm = new TaskAlgorithm({model: this.model, me:this});
+            this.taskAlgorithm = new TaskAlgorithm({model: this.model, me: this});
             var updateTasks = this.taskAlgorithm.startAlgorithm();
             this.model.set({tasks: updateTasks});
             this.model.save();
@@ -255,14 +274,14 @@ define([
         },
 
         onChange: function () {
-            if(this.flagSchedule){
+            if (this.flagSchedule) {
                 this.startDateSchedule();
             }
             else {
                 this.flagSchedule = true;
-                this.undoRedo.save(this.model);
-                if (this.undoRedo.history.length > 1){
-                    $('#undo').attr('disabled',null);
+                this.undoRedo.save(this.model.attributes);
+                if (this.undoRedo.history.length > 1) {
+                    $('#undo').attr('disabled', null);
                     this.hideButton('#redo');
                 }
                 this.renderViews();

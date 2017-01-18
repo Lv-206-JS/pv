@@ -15,10 +15,16 @@
                         <label class="form-label">Task Name:</label>
                         <input class="form-input-text task-name" maxlength="256" value="<%= task.name %>" placeholder="Task Name" required="required" type="text">
                         <label class="form-label">Assignee:</label>
-                        <select class="form-input-text task-resource" name="resource" value="<%= task.resource%>">
+                        <% var resourceName = ''; %>
+                        <% for(var i = 0; i < resources.length; i++) { %>
+                        <%    if(task.resource === resources[i].resourceId) { %>
+                        <%         resourceName = resources[i].resourceName; %>
+                        <%    } %>
+                        <% } %>
+                        <select class="form-input-text task-resource" name="resource" value="<%= resourceName %>">
                             <option value="default" ></option>
                             <% for(var i = 0; i < resources.length; i++) { %>
-                                <option value="<%= resources[i].resourceName %>" <% if(task.resource == resources[i].resourceName) { %>selected<% } %>><%= resources[i].resourceName %></option>
+                                <option value="<%= resources[i].resourceName %>" <% if(resourceName == resources[i].resourceName) { %>selected<% } %>><%= resources[i].resourceName %></option>
                             <% } %>
                         </select>
                         <label class="form-label">Estimate:</label>
