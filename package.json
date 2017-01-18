@@ -18,7 +18,8 @@
     "mongoose": "^4.6.8",
     "passport": "*",
     "passport-http": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "underscore.deepclone": "^0.1.1"
   },
   "devDependencies": {
     "bower": "^1.8.0",

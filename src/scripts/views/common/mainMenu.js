@@ -18,6 +18,7 @@ define([
             this.name = options.name;
             this.page = options.page;
 
+            PV.userModel.setUrl('/rest/user');
             PV.userModel.fetch();
             PV.userModel.on('sync', _.bind(this.onNameReceived, this));
             PV.userModel.on('error', _.bind(this.onError, this));

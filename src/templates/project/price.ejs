@@ -6,7 +6,16 @@
         <div class="tab-container">
             <div class="tab-container">
                 <label class="form-label project-price">Project Price:</label>
-                <div class="price-value"><%= price %></div>
+                <div class="price-container">
+                    <div class="details-label show-prices"></div>
+                    <div class="price-value"><%= price.price %></div>
+                    <div class="resources-prices hide-content">
+                        <br>
+                        <% for(var i = 0; i < resources.length; i++) { %>
+                            <div class="price-item"><%= resources[i].resourceName %> - <%= price.resourcesPrice[i]%></div>
+                        <% } %>
+                    </div>
+                </div>
                 <br>
                 <label class="form-label project-duratione">Project Duration:</label>
                 <div class="duration-value"><%= duration %></div>

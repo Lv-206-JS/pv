@@ -4,36 +4,49 @@ define([
     'use strict';
 
     var UserModel = Backbone.Model.extend({
-        idAttribute : 'userId',
+        idAttribute: 'userId',
 
         url: '/rest/user',
 
-        setUrl: function () {
-            this.url = '/users/login/';
+        setUrl: function (url) {
+            this.url = url;
         },
 
         defaults: {
-                '_id': '',
-                'userId': '',
-                'firstname': '',
-                'lastname': '',
-                'email': ''
+            '_id': null,
+            'userId': null,
+            'firstname': '',
+            'lastname': '',
+            'email': ''
         },
 
         validation: {
-            email: {
-                required: true,
-                pattern: 'email',
-                msg: 'Please fill in username/email field.'
+
+            firstname: {
+                rangeLength: [0, 45],
+                msg: 'Its too short or too long!'
             },
+            lastname: {
+                rangeLength: [0, 45],
+                msg: 'Its too short or too long!'
+            },
+            email: [{
+                required: true,
+                msg: 'Please, enter an email (username).'
+            }, {
+                pattern: 'email',
+                msg: 'Valid email expected!'
+            }],
             password: [{
                 required: true,
-                msg: 'Please fill in password field.',
+                msg: 'Please, enter a password.'
             }, {
                 minLength: 5,
                 msg: 'Password is too short. It is expected to be longer than 5 chars!'
-
-            }]
+            }],
+            password2: {
+                equalTo: 'password'
+            }
 
         }
     });

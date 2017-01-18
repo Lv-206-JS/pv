@@ -4,7 +4,7 @@
 @import "common-styles";
 @import "common/main-view";
 @import "common/main-menu-view";
-@import "common/log-in-view";
+@import "common/login-view";
 @import "common/register-view";
 @import "single-project/gantt-chart-view";
 @import "single-project/info-bar-view";
@@ -19,6 +19,7 @@
 @import "single-project/project-price";
 @import "single-project/gantt-container";
 @import "single-project/ownership-view";
+@import "single-project/edit-resource-view";
 @import "projects/main-projects-view";
 @import "projects/projects-about-view";
 @import "projects/projects-area-view";

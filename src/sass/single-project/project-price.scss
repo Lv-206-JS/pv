@@ -5,6 +5,41 @@
 
   .form-wrapper {
 
+    .price-container{
+      display: block;
+      position: relative;
+    }
+
+    .price-value{
+      display: inline-block;
+      position: absolute;
+      left: 20px;
+    }
+
+    .show-prices{
+      width: 15px;
+      height: 15px;
+      margin-right: 0px;
+      background-image: url('../../../images/show-prices.svg');
+      background-position: 0px 0px;
+      background-size: contain;
+      display: inline-block;
+    }
+
+    .hide-prices{
+      width: 15px;
+      height: 15px;
+      margin-right: 0px;
+      background-image: url('../../../images/hide-prices.svg');
+      background-position: 0px 0px;
+      background-size: contain;
+      display: inline-block;
+    }
+
+    .price-item{
+      margin-left: 40px;
+    }
+
     .project-price-form-bottom {
       @extend .form-bottom;
     }

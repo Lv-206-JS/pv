@@ -3,7 +3,7 @@ define([
         'backbone',
         'views/landing',
         'views/common/mainView',
-        'views/common/logIn',
+        'views/common/login',
         'views/common/register'
 
     ],
@@ -24,10 +24,6 @@ define([
                 'users/login': 'loginForm',
                 'users/registration': 'registrationForm',
                 '*path': 'openLandingPage'
-            },
-
-            initialize: function (options) {
-                console.log(options);
             },
 
             openLandingPage: function openLandingPage() {

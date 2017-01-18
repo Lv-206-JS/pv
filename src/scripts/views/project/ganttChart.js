@@ -21,18 +21,18 @@ define([
                 this.tasksPositions = (options.tasksPositions !== undefined) ? options.tasksPositions : null;
                 this.hourLength = options.hourLength;
                 this.timeLine = new TimeLineLib(this.model);
-                this.rowHeight = 40;
-                this.padding = 20;
+                this.rowHeight = options.rowHeight;
+                this.padding = options.padding;
             },
 
             render: function render() {
                 this.$el.html(this.template({
                     model: this.model, tasks: this.tasks
                 }));
-                if (this.tasks != 0) {
-                    this.renderTasks();
-                }
+
+                this.renderTasks();
                 this.createGanttChartDateHeader();
+
                 return this;
             },
 
@@ -59,6 +59,8 @@ define([
                     projectDurationAsWeeks = Math.ceil(Moment.duration(projectDurationUnix, 's').asWeeks()),
                     projectDurationAsMonths = Math.ceil(Moment.duration(projectDurationUnix, 's').asMonths()),
                     projectDurationAsYears = Math.ceil(Moment.duration(projectDurationUnix, 's').asYears()),
+                    hoursInDay = 24,
+                    daysInWeek = 7,
                     weeksInMonth = 4,
                     daysInMonth = 30,
                     monthsInYear = 12;
@@ -67,7 +69,9 @@ define([
                 if (this.hourLength >= 48) {
                     var hour = dayStartAsHour,
                         date = projectStartAsCalendarDate;
-                    for (i = projectDurationAsHours, j = 0; i >= 0; i--, j++) {
+                    for (i = projectDurationAsHours<hoursInDay*4 ? hoursInDay*4 : projectDurationAsHours, j = 0;
+                         i >= 0;
+                         i--, j++) {
                         if (Moment(hour, 'h').format('hh:mm') == dayEndAsHour) {
                             bottomDates[j] = Moment(hour, 'h').format('hh:mm');
                             hour = Moment(hour, 'h').add(1, 'h');
@@ -77,7 +81,9 @@ define([
                             hour = Moment(hour, 'h').add(1, 'h');
                         }
                     }
-                    for (i = projectDurationAsDays, j = 0; i >= 0; i--, j++) {
+                    for (i = projectDurationAsDays<daysInWeek*2 ? daysInWeek*2 : projectDurationAsDays, j = 0;
+                         i >= 0;
+                         i--, j++) {
                         var weekDay;
                         topDates[j] = Moment(date, 'DD/MM/YY').format('DD/MM/YY');
                         date = Moment(date, 'DD/MM/YY').add(1, 'd');
@@ -272,7 +278,7 @@ define([
                             g = top.g(rect, text);
                         }
                     }
-                    this.getDateHeaderWidth(topW);
+                    this.getDateHeaderWidth(bottomW);
                     //group top and bottom elements of date header
                     g = header.g(top, bottom);
             },
@@ -293,11 +299,11 @@ define([
                 return projectWidth;
             },
 
-            getDateHeaderWidth: function (topDateWidth) {
-                // var topWidth = topDateWidth.length > 0 ? topDateWidth[topDateWidth.length-2] : topDateWidth;
+            getDateHeaderWidth: function (bottomW) {
+                var topWidth = bottomW.length > 0 ? bottomW[bottomW.length-1] : bottomW;
                 var projectWidth = this.getProjectWidth();
-                var width = projectWidth > $(window).width() ? projectWidth : $(window).width();
-                    // width = (width % topWidth) == 0 ? width : width - (width % topWidth) + topWidth;
+                var width = projectWidth > $(window).width() ? projectWidth : $(window).width(),
+                    width = (width % topWidth) ? width - (width % topWidth) + topWidth : width;
                 $('#dates').css('width', width);
                 $('.gantt-chart-container-svg').css('width', width);
             },
@@ -381,7 +387,11 @@ define([
                 $(this.ganttTasks.$el).insertAfter(lastElem);
 
                 this.ganttTasks.drawVerticalDateLines();
-                this.ganttTasks.drawTasksSvg();
+                this.ganttTasks.drawHorizontalLines();
+
+                if (this.tasks.length > 0) {
+                    this.ganttTasks.drawTasksSvg();
+                }
             }
 
         });

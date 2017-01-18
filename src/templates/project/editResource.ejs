@@ -1,0 +1,28 @@
+<div class="form-wrapper edit-resource">
+    <form class="main-form">
+        <div class="form-title">
+            <div><%= resource.resourceId ? 'Resource Edit': 'Add Resource' %></div>
+        </div>
+        <div class="tabs">
+            <div class="tab-container">
+                <div class="tab-container tab-edit-resource-content show-content">
+                    <label class="form-label">Resource Name:</label>
+                    <input class="form-input-text resource-name" maxlength="256" placeholder="Resource Name" required="required" type="text" value="<%= resource.resourceName %>">
+                    <label class="form-label">Type:</label>
+                    <select class="form-input-text resource-type" name="type" placeholder="Resource Type">
+                        <option value="worker" <% if( resource.type == 'worker') { %> selected <% } %> >Worker</option>
+                        <option value="freelancer" <% if( resource.type == 'freelancer') { %> selected <% } %> >Freelancer</option>
+                        <option value="machine" <% if( resource.type == 'machine') { %> selected <% } %> >Machine</option>
+                    </select>
+
+                    <label class="form-label">Rate:</label>
+                    <input class="form-input-text resource-rate" maxlength="256" placeholder="Money Per Hour" type="number" value="<%= resource.rate %>">
+                </div>
+            </div>
+        </div>
+        <div class="resources-form-bottom">
+            <input class="form-button save-button" type="submit" value="<%=resource.resourceId ? 'save' : 'add'%>">
+            <input class="form-button cancel-button" type="submit" value="cancel">
+        </div>
+    </form>
+</div>

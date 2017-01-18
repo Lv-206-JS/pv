@@ -8,10 +8,6 @@ $inner-cell-task-width: $table-cell-width;
 #tasks-list{
   min-width: 700px;
 }
-button.add-task {
-  margin-left: -8px;
-  text-transform: uppercase;
-}
 .table-cell {
   @extend .table-cell;
   display: flex;
@@ -31,7 +27,6 @@ button.add-task {
   display: flex;
   align-items: center;
   flex-direction: row;
-  justify-content: space-between;
   min-width: $table-cell-task-width;
   max-width: $table-cell-task-width;
 }
@@ -63,8 +58,17 @@ button.add-task {
   height: $icon-width;
   margin: 0 $icon-margin-left-right;
 }
-//.add-task-img {
-//  width: $icon-width;
-//  height: $icon-width;
-//  margin-right: 12px;
-//}
+.add-task-icon {
+  background-image: url('/images/add-circle.svg');
+  width: 25px;
+  height: 25px;
+  margin-right: 18px;
+  background-size: contain;
+  background-position: 0 0;
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+}
