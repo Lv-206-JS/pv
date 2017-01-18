@@ -221,7 +221,7 @@ $tab-height: 40px;
           color: $light-blue;
           font-weight: 700;
           border: 1px solid $blue;
-          cursor: pointer;
+          //cursor: pointer;
 
           input[type="file"] {
             display: none;
@@ -238,6 +238,7 @@ $tab-height: 40px;
             line-height: 30px;
             margin-left: 10px;
             float: right;
+            cursor: pointer;
           }
         }
       }
