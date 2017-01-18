@@ -32,8 +32,13 @@ $gantt-view-container-height: 66%;
 #info-bar-view-container {
   order: 3;
 }
-//   //position: absolute;
-//   //left: 0;
-//   //bottom: 0;
-//   border: 3px solid blue;
-// }
+#task-info-view-container {
+  @extend .row-container;
+  order: 4;
+  justify-content: space-between;
+  width:100%;
+  height: 60px;
+  background-color: $blue;
+  color: #fff;
+}
+
