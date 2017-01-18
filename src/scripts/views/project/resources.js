@@ -2,7 +2,6 @@ define(['backbone',
         'underscore',
         'JST',
         'views/project/editResource',
-        'views/project/settings',
         '../common/confirmDelete'],
     function (Backbone, _, JST, EditResource, renderConfirmDeleteView) {
         'use strict';
@@ -58,7 +57,7 @@ define(['backbone',
                 'click #create-resource' : 'showResourceEdit',
                 'click .edit-resource' : 'showResourceEdit',
                 'click .edit' : 'showResourceEdit',
-                'click .remove-resource': 'deleteResource',
+                'click .remove-resource': 'confirmDeleteResource',
                 'click .cancel-button' : 'hideTaskView',
                 'click .ok-button' : 'submitChanges'
             },
@@ -91,10 +90,12 @@ define(['backbone',
                 $(element).parent().parent().remove();
             },
 
-            // confirmDeleteResource: function(event){
-            //     console.log('delete resource');
-            //     renderConfirmDeleteView(event, this,_.bind(this.deleteResource, this, event));
-            // },
+            confirmDeleteResource: function(event){
+                console.log('delete resource');
+                console.log(event);
+                console.log(this);
+                renderConfirmDeleteView(event, this, _.bind(this.deleteResource, this, event));
+            },
 
             submitChanges: function(event){
                 if(this.resources.length != this.resourcesToShow.length){
