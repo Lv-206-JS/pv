@@ -15,10 +15,16 @@
                         <label class="form-label">Task Name:</label>
                         <input class="form-input-text task-name" maxlength="256" value="<%= task.name %>" placeholder="Task Name" required="required" type="text">
                         <label class="form-label">Assignee:</label>
-                        <select class="form-input-text task-resource" name="resource" value="<%= task.resource%>">
+                        <% var resourceName = ''; %>
+                        <% for(var i = 0; i < resources.length; i++) { %>
+                        <%    if(task.resource === resources[i].resourceId) { %>
+                        <%         resourceName = resources[i].resourceName; %>
+                        <%    } %>
+                        <% } %>
+                        <select class="form-input-text task-resource" name="resource" value="<%= resourceName %>">
                             <option value="default" ></option>
                             <% for(var i = 0; i < resources.length; i++) { %>
-                                <option value="<%= resources[i].resourceName %>" <% if(task.resource == resources[i].resourceName) { %>selected<% } %>><%= resources[i].resourceName %></option>
+                                <option value="<%= resources[i].resourceName %>" <% if(resourceName == resources[i].resourceName) { %>selected<% } %>><%= resources[i].resourceName %></option>
                             <% } %>
                         </select>
                         <label class="form-label">Estimate:</label>
@@ -39,7 +45,6 @@
                                     </tbody>
                                 </table>
                             </div>
-
                             <div class="drop-list scrollable" id="list-of-dependencies">
                                 <table id="dependencies-list">
                                     <tbody>
@@ -71,19 +76,18 @@
                                     <img src="<%= mimetypes[i]%>" class="attachment-image" alt="attachment image"/>
                                     <% var str = task.attachments[i].fileName; %>
                                     <% if(task.attachments[i].fileName.length>9)  { str = task.attachments[i].fileName.substring(0,9)+'..';} %>
-
                                     <div class="attachment-name" id="reference-name"><%= str %></div>
                                 </a>
                             </div>
                             <% } %>
                         </div>
                     </div>
-                    <input class="form-button delete-task <% if (deleteTask === true) { %> hide-content <% } %> <% if (deleteTask === false) { %> show-content <% } %>" value="delete">
                 </div>
 
             </div>
         </div>
         <div class="task-form-bottom">
+            <input type="button" id="delete-task" class="form-button delete-task <% if (deleteTask === true) { %> hide-content <% } %> <% if (deleteTask === false) { %> show-content <% } %>" value="delete">
             <input type="button" class="form-button ok-button" value="ok">
             <input type="button" class="form-button cancel-button" value="cancel">
         </div>

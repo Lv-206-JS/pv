@@ -22,46 +22,54 @@ define(['backbone',
             render: function render() {
                 this.$el.html(this.template({
                     price: this.price,
+                    resources: this.resources,
                     duration: this.duration
                 }));
                 return this;
             },
 
             events: {
-                'click .ok-button' : 'onSubmitChanges'
+                'click .ok-button' : 'onSubmitChanges',
+                'click .details-label' : 'showPriceDetails'
             },
 
             calculatePrice: function(){
                 var price = 0;
+                var resourcesPrice = [];
                 for(var i = 0; i < this.resources.length; i++)
                 {
                     if(this.resources[i].type === 'worker'){
                         var maxDate = 0;
                         for(var j = 0; j < this.tasks.length; j++){
                             var taskEnd = Number(this.tasks[j].startDate) + Number(this.tasks[j].estimateTime);
-                            if((this.resources[i].resourceName === this.tasks[j].resource)
-                                && (this.tasks[j].resource !== 'default')
+                            if((this.resources[i].resourceId === this.tasks[j].resource)
                                 && (maxDate < taskEnd)) {
                                 maxDate = Number(taskEnd);
                             }
                         }
 
                         var workingHours = Moment.duration(+maxDate, 'seconds').asHours();
-                        price += this.resources[i].rate * workingHours;
+                        var resourcePrice = this.resources[i].rate * workingHours;
+                        price += resourcePrice;
+                        resourcesPrice[i] = resourcePrice;
                     }
                     if((this.resources[i].type === 'machine') || (this.resources[i].type === 'freelancer')){
                         var workingTime = 0;
                         for( var j = 0; j < this.tasks.length; j++){
-                            if((this.resources[i].resourceName === this.tasks[j].resource)
+                            if((this.resources[i].resourceId === this.tasks[j].resource)
                                 && (this.tasks[j].resource !== 'default')){
                                 workingTime += this.tasks[j].estimateTime;
                             }
                         }
                         var workingHours = Moment.duration(+workingTime, 'seconds').asHours();
-                        price += this.resources[i].rate * workingHours;
+                        var resourcePrice = this.resources[i].rate * workingHours;
+                        price += resourcePrice;
+                        resourcesPrice[i] = resourcePrice;
                     }
                 }
-                return price;
+                var totalPrice = {'price': price, 'resourcesPrice': resourcesPrice};
+                console.log(totalPrice);
+                return totalPrice;
             },
 
             calculateDuration: function(){
@@ -109,6 +117,24 @@ define(['backbone',
                 // var days = Math.ceil(Moment.duration(projectRealEnd-this.startDate,'seconds').asDays());
 
                 return result;
+            },
+
+            showPriceDetails: function()
+            {
+                if(this.$el.find('.resources-prices').hasClass('hide-content')){
+                    this.$el.find('.resources-prices').addClass('show-content');
+                    this.$el.find('.resources-prices').removeClass('hide-content');
+                    this.$el.find('.details-label').removeClass('show-prices');
+                    this.$el.find('.details-label').addClass('hide-prices');
+                    return;
+                }
+                if(this.$el.find('.resources-prices').hasClass('show-content')){
+                    this.$el.find('.resources-prices').addClass('hide-content');
+                    this.$el.find('.resources-prices').removeClass('show-content');
+                    this.$el.find('.details-label').removeClass('hide-prices');
+                    this.$el.find('.details-label').addClass('show-prices');
+                    return;
+                }
             },
 
             onSubmitChanges: function onSubmitChanges (event){

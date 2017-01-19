@@ -185,19 +185,19 @@ define(['backbone',
                 var newParent = $('.milestone-clone');
                 $(this.element).css({'position': 'absolute'});
                 newParent.append(this.element);
-                $(this.element).css({'top': this.relativeStartPosition.y - 45 + 'px'});
-                $(this.element).css({'left': this.relativeStartPosition.x + 'px'});
+                $(this.element).css({'top': this.relativeStartPosition.y-100+'px'});
+                $(this.element).css({'left': this.relativeStartPosition.x-65+'px'});
                 $(this.element).addClass('is-dragging');
             }
 
             function onDragEnd() {
-                if (this.position.x >= 200) {
+                if (this.position.x >= 187) {
                     $("#dependencies-list").find("tbody").append(this.element);
                     $(this.element).css({'position': 'relative'});
                     $(this.element).css({'left': '260'});
 
                 }
-                if (this.position.x < 200) {
+                if (this.position.x < 187) {
                     $("#milestone-tasks-list").find("tbody").append(this.element);
                     $(this.element).css({'position': 'relative'});
                     $(this.element).css({'left': '0'});

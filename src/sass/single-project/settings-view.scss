@@ -29,6 +29,14 @@
         .days-off{
           margin-top: 20px;
         }
+
+        .add-project-icon {
+          display: flex;
+
+          .input-project-icon {
+            margin: 0 0 0 20px;
+          }
+        }
       }
     }
     .settings-form-bottom{

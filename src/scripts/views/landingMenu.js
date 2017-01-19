@@ -2,7 +2,7 @@ define([
     'backbone',
     'underscore',
     'JST',
-    'views/common/logIn',
+    'views/common/login',
     'views/common/register'
 ], function (Backbone, _, JST, LogInView, RegistrationView) {
     'use strict';
@@ -13,16 +13,21 @@ define([
             'click .go-to-projects': 'onGoToProjects',
             'click .login-btn': 'onLogIn',
             'click .registration-btn': 'onRegistration',
-            'click .sign-out-button' : 'onSignOut'
+            'click .sign-out-button': 'onSignOut'
         },
 
         initialize: function () {
-            PV.userModel.fetch();
-            PV.userModel.on('sync', _.bind(this.onUserReceived, this));
+            this.userModel = PV.userModel;
+            this.userModel.setUrl('/rest/user');
+            this.userModel.fetch();
+            this.userModel.on('sync', _.bind(this.onUserReceived, this));
         },
 
         render: function render() {
-            this.$el.html(this.template({userId: PV.userModel.get('userId'), userName: PV.userModel.get('firstname')}));
+            this.$el.html(this.template({
+                userId: this.userModel.get('userId'),
+                userName: this.userModel.get('firstname')
+            }));
 
             return this;
         },
@@ -38,9 +43,7 @@ define([
         },
 
         onRegistration: function onLogIn() {
-            this.registerView = new RegistrationView({
-
-            });
+            this.registerView = new RegistrationView({});
 
             this.listenTo(this.registerView, 'changeToLogin', this.onChangeToLogined);
             this.$el.find('.popup-container').html(this.registerView.render().$el);
@@ -48,7 +51,8 @@ define([
             this.registerView.render();
             this.$el.append(this.registerView.$el);
         },
-        onChangeToLogined: function(){
+
+        onChangeToLogined: function () {
             this.registerView.remove();
             this.onLogIn();
         },
@@ -57,11 +61,12 @@ define([
             this.render();
         },
 
-        onSignOut: function onSingOut(){
-            $.ajax({ url:  '/users/logout' });
-            PV.userModel.clear().set(PV.userModel.defaults);
+        onSignOut: function onSingOut() {
+            $.ajax({url: '/users/logout'});
+            PV.userModel.clear().set(this.userModel.defaults);
             this.render();
         }
+
     });
 
     return LandingMenuView;

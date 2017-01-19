@@ -35,6 +35,7 @@ $inner-cell-task-width: $table-cell-width;
   min-width: $inner-cell-task-width;
   max-width: $inner-cell-task-width;
   height: $line-height;
+  margin-left: 10px;
   overflow: hidden;
 
   &:hover {
@@ -62,7 +63,7 @@ $inner-cell-task-width: $table-cell-width;
   background-image: url('/images/add-circle.svg');
   width: 25px;
   height: 25px;
-  margin-right: 18px;
+  margin-right: 14px;
   background-size: contain;
   background-position: 0 0;
   opacity: 0.5;

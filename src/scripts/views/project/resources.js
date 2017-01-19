@@ -1,8 +1,39 @@
 define(['backbone',
         'underscore',
-        'JST'],
-    function (Backbone, _, JST) {
+        'JST',
+        'views/project/editResource',
+        '../common/confirmDelete'],
+    function (Backbone, _, JST, EditResource, renderConfirmDeleteView) {
         'use strict';
+
+        _.deepClone = function(obj) {
+            if (!obj || (typeof obj !== 'object')){
+                return obj;
+            }
+            if(_.isString(obj)){
+                return obj + '';
+            }
+            if (_.isDate(obj)){
+                return new Date(obj.valueOf());
+            }
+            if(_.isArray(obj)){
+                var newArr = [];
+                for (var i = 0; i < obj.length; i++) {
+                    var obj1 = obj[i];
+                    newArr[i] = _.deepClone(obj1);
+                }
+                return newArr;
+            }
+            if(_.isObject(obj)){
+                var newObj = {};
+                var keys = Object.keys(obj);
+                for (var i = 0; i < keys.length; i++) {
+                    var objKey = keys[i];
+                    newObj[objKey] = _.deepClone(obj[objKey]);
+                }
+                return newObj;
+            }
+        };
 
         var ResourcesView = Backbone.View.extend({
             template: JST['project:resources'],
@@ -11,126 +42,76 @@ define(['backbone',
             initialize: function (options) {
                 this.resources = options.resources;
                 this.model = options.model;
-                this.resource = {resourceId:""};
+                this.tasks = this.model.get('tasks');
+                this.resource = {};
+                this.resourcesToShow = _.deepClone(this.resources);
             },
 
             render: function render() {
                 this.$el.html(this.template({
-                    resources: this.resources
+                    resources: this.resourcesToShow
                 }));
                 return this;
             },
             events: {
-                'click .tab-general' : 'showResourcesList',
                 'click #create-resource' : 'showResourceEdit',
                 'click .edit-resource' : 'showResourceEdit',
                 'click .edit' : 'showResourceEdit',
-                'click .remove-resource': 'deleteResource',
-                'click .save-resource' : 'saveResource',
+                'click .remove-resource': 'confirmDeleteResource',
                 'click .cancel-button' : 'hideTaskView',
                 'click .ok-button' : 'submitChanges'
             },
 
             showResourceEdit: function(event){
-                this.$el.find('.tab-general').removeClass('w--current');
-                this.$el.find('.tab-edit-resource').removeClass('hide-content');
-                this.$el.find('.tab-edit-resource').addClass('w--current');
-                this.$el.find('.tab-general-content').removeClass('show-content');
-                this.$el.find('.tab-general-content').addClass('hide-content');
-                this.$el.find('.tab-edit-resource-content').removeClass('hide-content');
-                this.$el.find('.tab-edit-resource-content').addClass('show-content');
+                this.resource = {};
                 var element = $(event.currentTarget);
-                var resourceId = element.attr('id');
-                if( resourceId!=='create-resource'){
-                    var arrayNumber;
-                    for(var i = 0; i < this.resources.length; i++)
-                        if(this.resources[i].resourceId == resourceId) {
-                            arrayNumber = i;
-                            this.resource = this.resources[i];
-                            break;
-                        }
-                    this.$el.find('.resource-name').val(this.resources[arrayNumber].resourceName);
-                    this.$el.find('.resource-type').val(this.resources[arrayNumber].type);
-                    this.$el.find('.resource-rate').val(this.resources[arrayNumber].rate);
+                var resourceNumber = element.attr('id');
+                if( resourceNumber === 'create-resource'){
+                    this.resource.resourceName = '';
+                    this.resource.rate = '';
+                    this.resource.type = '';
                 }
-            },
+                else
+                    this.resource = this.resourcesToShow[resourceNumber];
 
-            showResourcesList: function(){
-                this.$el.find('.tab-general').addClass('w--current');
-                this.$el.find('.tab-general-content').removeClass('hide-content');
-                this.$el.find('.tab-general-content').addClass('show-content');
-                this.$el.find('.tab-edit-resource').removeClass('w--current');
-                this.$el.find('.tab-edit-resource').addClass('hide-content');
-                this.$el.find('.tab-edit-resource-content').removeClass('show-content');
-                this.$el.find('.tab-edit-resource-content').addClass('hide-content');
-                this.$el.find('.resource-name').val("");
-                this.$el.find('.resource-rate').val("");
-            },
-
-            updateResourcesList: function(resourceElementNumber,resource){
-                var element = $('.'+resource.resourceId);
-                element.html(resource.resourceName);
-                var parent = $(element).parent().parent();
-                var elem = $(parent).children('div')[1];
-                $(elem).html(resource.rate);
-            },
-
-            addResourceItem: function(resource){
-                var parent = document.getElementsByClassName("resources-list");
-                $( parent ).append("<div class='table-resource-row'><div class='table-cell-resource'>" +
-                    "<div class='"+resource.resourceId+"'>"+resource.resourceName+"</div>"+
-                    "<span class='resource-link remove-resource' id='"+resource.resourceId+"'></span>"+
-                    "<span class='resource-link edit-resource' id='"+ resource.resourceId +"'></span></div>"+
-                    "<div id='"+resource.resourceId+"' class='table-cell-resource'>"+resource.rate+"</div></div>"
-                );
+                this.editResource = new EditResource({
+                    resources: this.resourcesToShow,
+                    resource: this.resource
+                });
+                this.editResource.render();
+                this.$el.append(this.editResource.$el);
+                this.listenTo(this.editResource,'showResourceChanges',this.render);
             },
 
             deleteResource: function(event){
                 var element = $(event.currentTarget);
-                var resourceId = element.attr('id');
-                for(var i = 0; i < this.resources.length; i++){
-                    if(this.resources[i].resourceId == resourceId){
-                        this.resources.splice(i,1);
-                        break;
-                    }
-                }
+                var resourceNumber = element.attr('id');
+                this.resourcesToShow.splice(resourceNumber,1);
                 $(element).parent().parent().remove();
             },
 
-            saveResource: function(){
-                event.preventDefault();
-                this.resource.resourceName = this.$el.find('.resource-name').val();
-                this.resource.type = this.$el.find('.resource-type').val();
-                this.resource.rate = this.$el.find('.resource-rate').val();
-
-                if( this.resource.resourceId)
-                    for(var i = 0; i < this.resources.length; i++){
-                        if(this.resource.resourceId == this.resources[i].resourceId) {
-                            this.resources[i] = this.resource;
-                            this.updateResourcesList(i,this.resource);
-                        }
-                    }
-                else{
-                    this.resource.resourceId = this.createId();
-                    this.resources.push(this.resource);
-                    this.addResourceItem(this.resource);
-                }
-                this.showResourcesList();
-                this.resource = {resourceId:""};
-            },
-
-            createId: function(){
-                var id = 0;
-                for(var i = 0; i < this.resources.length; i++){
-                    if(id < this.resources[i].resourceId)
-                        id = this.resources[i].resourceId;
-                }
-                return ++id;
+            confirmDeleteResource: function(event){
+                console.log('delete resource');
+                console.log(event);
+                console.log(this);
+                renderConfirmDeleteView(event, this, _.bind(this.deleteResource, this, event));
             },
 
             submitChanges: function(event){
-                this.model.set('resources',this.resources);
-                this.model.save();
+                if(this.resources.length != this.resourcesToShow.length){
+                    for( var i = 0; i < this.tasks.length; i++){
+                        var trigger = false;
+                        for( var j = 0; j < this.resourcesToShow.length; j++){
+                            if(this.tasks[i].resource === this.resourcesToShow[j].resourceId)
+                                trigger = true;
+                        }
+                        if(!trigger)
+                            this.tasks[i].resource = '';
+
+                    }
+                }
+                this.resources = this.resourcesToShow;
+                this.trigger('saveResources',this.resources);
                 event.preventDefault();
                 this.$el.remove();
             },
@@ -139,7 +120,6 @@ define(['backbone',
                 event.preventDefault();
                 this.$el.remove();
             }
-
         });
 
         return ResourcesView;

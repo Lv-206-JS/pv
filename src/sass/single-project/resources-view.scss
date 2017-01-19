@@ -18,8 +18,8 @@
 
     .table-header-resource-cell {
       width: 20%;
-      min-width: 250px;
-      max-width: 250px;
+      min-width: 150px;
+      max-width: 150px;
       padding-top: 3px;
       padding-left: 6px;
       border-top: 1px none rgba(0, 0, 0, .05);
@@ -60,15 +60,20 @@
       position: relative;
       display: block;
       overflow: hidden;
-      min-width: 250px;
-      max-width: 250px;
+      min-width: 150px;
+      max-width: 150px;
       padding-left: 6px;
       justify-content: flex-start;
     }
 
-    .table-cell-resource.resource-rate-value{
-      min-width: 165px;
-      max-width: 165px;
+    .rate{
+      min-width: 95px;
+      max-width: 95px;
+    }
+
+    .type{
+      min-width: 170px;
+      max-width: 170px;
     }
 
     .resource-link {
@@ -106,19 +111,6 @@
       background-image: url('../../../images/cancel.svg');
       background-position: 0px 0px;
       background-size: contain;
-    }
-
-    .resource-type {
-      background-color: white;
-    }
-
-    .resource-type option{
-      border-radius: 10px;
-    }
-
-    .form-button.save-resource{
-      margin-left: 40%;
-      margin-top: 25px;
     }
 
     .form-button:active{

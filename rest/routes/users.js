@@ -1,4 +1,3 @@
-
 var express = require('express');
 var router = express.Router();
 var Guid = require('guid');
@@ -93,12 +92,22 @@ var fn = passport.authenticate('local', {
     failureRedirect: 'users/login'
 });
 
-
-router.post('/login', passport.authenticate('local', {
-        successRedirect: '/projects',
-        failureRedirect: 'users/login'
-    })
-);
+router.post('/login', function (req, res, next) {
+    passport.authenticate('local', function (err, user, info) {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.send('Unknown user');
+        }
+        req.logIn(user, function (err) {
+            if (err) {
+                return next(err);
+            }
+            return res.send(user);
+        });
+    })(req, res, next);
+});
 
 //Logout
 router.get('/logout', function (req, res) {

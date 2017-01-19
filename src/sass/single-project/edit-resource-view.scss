@@ -1,0 +1,32 @@
+@import "../basic-popup-view";
+.edit-resource-view {
+  @extend .basic-popup-view;
+
+  .form-wrapper.edit-resource {
+    margin-top: 8%;
+  }
+
+  .form-wrapper{
+
+    .resource-type {
+      background-color: white;
+    }
+
+    .resource-type option{
+      border-radius: 10px;
+    }
+
+    .form-button.save-resource{
+      margin-left: 40%;
+      margin-top: 25px;
+    }
+
+    .form-button:active{
+      border: none;
+    }
+
+    .resources-form-bottom {
+      @extend .form-bottom;
+    }
+  }
+}

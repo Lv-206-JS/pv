@@ -1,22 +1,21 @@
 define([
     'backbone',
-    'userModel',
     'JST',
     'backbone-validation'
-], function (Backbone, UserModel, JST) {
+], function (Backbone, JST) {
     'use strict';
 
-    var RegistrationView = Backbone.View.extend({
-        template: JST['common:register'],
-        className: 'registration-view',
+    var LogInView = Backbone.View.extend({
+        template: JST['common:login'],
+        className: 'login-view',
         events: {
-            'click #post_user': 'onSubmit',
+            'click .ok-button': 'onSubmit',
             'click #exit-button': 'hideLogInView',
             'keydown .form-control': 'removeErrors'
         },
 
-        initialize: function() {
-            this.model = new UserModel();
+        initialize: function initialize() {
+            this.model = PV.userModel;
             Backbone.Validation.bind(this);
         },
 
@@ -25,42 +24,26 @@ define([
             return this;
         },
 
-
         onSubmit: function onSubmit(e) {
             e.preventDefault();
-            var that = this;
-            var obj = {};
+            var email = this.$el.find('[name="email"]')[0].value;
+            var password = this.$el.find('[name="password"]')[0].value;
 
-            _.each($("#regisrationForm").find('.form-control'), function(el) {
-
-                obj[$(el).attr('name')] = $(el).val();
-
+            this.model.set({
+                email: email,
+                password: password
             });
 
-            this.model.set(obj);
-            console.log(this.model.isValid(['firstname', 'lastname', 'email', 'password', 'password2']));
+            this.model.setUrl('/users/login/');
 
-            this.model.setUrl('/users/register');
+            console.log(this.model.isValid(['email', 'password']));
 
-
-            if (this.model.isValid(['firstname', 'lastname', 'email', 'password', 'password2'])) {
-
+            if (this.model.isValid(['email', 'password'])) {
                 this.model.save().then(
-                    function(res) {
-                        console.log(res);
-
-                        var response = JSON.parse(res);
-                        if (response.error == false) {
-                            that.trigger('changeToLogin');
-
-                        } else {
-                            // response.error.forEach(function (mess) {
-                            //     var err_mess = that.$el.find("#" + mess.param.trim());
-                            //     err_mess.val('');
-                            //     err_mess.attr("placeholder", mess.msg);
-                            //     err_mess.addClass("error");
-                            // });
-                        }
+                    function() {
+                        setTimeout (function () {
+                            PV.router.navigate('projects', {trigger: true});
+                        }, 1000);
 
                     },
                     function(error) {
@@ -69,7 +52,6 @@ define([
                     }
                 );
             } else {
-                console.log(this.model.validate());
                 this.handleErrors();
             }
 
@@ -103,9 +85,7 @@ define([
             event.preventDefault();
             this.$el.remove();
         }
-
     });
 
-
-    return RegistrationView;
+    return LogInView;
 });
