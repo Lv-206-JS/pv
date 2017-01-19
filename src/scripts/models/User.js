@@ -22,17 +22,24 @@ define([
 
         validation: {
 
-            firstname: {
-                rangeLength: [0, 45],
+            firstname: [{
+                required: true,
+                msg: 'First name is required.'
+            }, {
+                rangeLength: [3, 45],
                 msg: 'Name is too short or too long!'
-            },
-            lastname: {
-                rangeLength: [0, 45],
-                msg: 'Last name is too short or too long!'
-            },
+            }],
+
+            lastname: [{
+                required: true,
+                msg: 'Last name is required.'
+            }, {
+                rangeLength: [3, 45],
+                msg: 'Name is too short or too long!'
+            }],
             email: [{
                 required: true,
-                msg: 'Please, enter an email (username).'
+                msg: 'Please, enter an email.'
             }, {
                 pattern: 'email',
                 msg: 'Valid email expected!'
@@ -45,10 +52,13 @@ define([
                 msg: 'Password is too short. It is expected to be longer than 5 chars!'
             }],
             password2: [{
+                required: true,
+                msg: 'Confirm your password.'
+            }, {
                 equalTo: 'password'
             }, {
                 minLength: 5,
-                msg: 'Please, enter password confirmation!'
+                msg: 'Passwords do not match!'
             }]
 
         }
