@@ -52,6 +52,9 @@ define([
                 msg: 'Password is too short. It is expected to be longer than 5 chars!'
             }],
             password2: [{
+                required: true,
+                msg: 'Confirm your password.'
+            }, {
                 equalTo: 'password'
             }, {
                 minLength: 5,
