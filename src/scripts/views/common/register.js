@@ -8,7 +8,7 @@ define([
 
     var RegistrationView = Backbone.View.extend({
         template: JST['common:register'],
-        className: 'registration-view',
+        className: 'register-view',
         events: {
             'click #post_user': 'onSubmit',
             'click #exit-button': 'hideLogInView',

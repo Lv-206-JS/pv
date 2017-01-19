@@ -24,8 +24,8 @@ router.get('/', authenticateUser, function (request, response) {
         }
         if (!err) {
             response.send({
-                "firstname": user.firstname,
                 "userId": user.userId,
+                "firstname": user.firstname,
                 "lastname": user.lastname,
                 "email": user.email
             });
