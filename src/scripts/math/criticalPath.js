@@ -1,40 +1,41 @@
 define([], function () {
     'use strict';
 
-
-    var CriticalPath = function (options) {
-        this.model = options.model;
-
-        this.tasks = this.model.get('tasks');
+    var CriticalPath = function (tasks) {
+        this.tasks = tasks;
+        this.criticalPath = [];
         this.levels = [];
     };
+
 
     var proto = CriticalPath.prototype;
 
 //function for starting task algorithm
-    proto.startAlgorithm = function (tasks) {
-        this.levels = [];
-        this.tasks = tasks;
+    proto.startAlgorithm = function () {
+
+        //if we get no one task - exit
         if (this.tasks.length == 0) {
-            return this.tasks;
+            return [0, []];
         }
+
+        var levels, tasksInLevels;
+
         this.matrix = this.matrixCreate();
         this.setMatrix();
-        var levels, tasksInLevels;
+
+        //if there are no one dependencies
         if (!this.checkDependenciesExist()) {
             levels = this.setTasksWithoutDepToLevels();
-            this.getLevelsInLine(levels);
-            this.getTasksStartDays();
-            return this.tasks;
+            this.getCriticalPath(levels);
+
+            return this.criticalPath;
         }
-        //creating levels and setting tasks to sub levels
+
         levels = this.createLevels(this.matrix);
         tasksInLevels = this.setTasksToLevels(levels);
-        this.getLevelsInLine(tasksInLevels);
-        this.getTasksStartDays();
+        this.getCriticalPath(tasksInLevels);
 
-        //return setted tasks by sub levels
-        return this.tasks;
+        return this.criticalPath;
     };
 
 //function for creating matrix climbing
@@ -93,7 +94,7 @@ define([], function () {
         //filling row by 0 if column sum value is 0
         this.fillMatrixRowNull(copyMatrix, level);
 
-        //checking
+        //checking and exit from recursive calling
         if (this.sumLevel(level) == 0) {
             return level;
         }
@@ -118,6 +119,7 @@ define([], function () {
         else {
             allLevels.push(levelToPush);
         }
+
         return allLevels;
     };
 
@@ -136,32 +138,7 @@ define([], function () {
         return tasksLevels;
     };
 
-
-    proto.getLevelsInLine = function (levels) {
-        for (var i = 0; i < levels.length; i++) {
-            if (!(levels[0] instanceof Array)) {
-                this.levels.push(levels);
-                return;
-            }
-            else {
-                this.getLevelsInLine(levels[i]);
-            }
-        }
-    };
-
-    proto.getTasksStartDays = function () {
-        var prevDate = 0, estimates = [], tempTask;
-        for (var i = 0; i < this.levels.length; i++) {
-            for (var j = 0; j < this.levels[i].length; j++) {
-                tempTask = this.findTaskObject(this.levels[i][j], 'object');
-                estimates.push(tempTask.estimateTime);
-                tempTask.startDate = prevDate;
-            }
-            prevDate += Math.max.apply(Math, estimates);
-            estimates = [];
-        }
-    };
-
+//function for getting task object or task id in array
     proto.findTaskObject = function (id, whatReturn) {
         for (var i = 0; i < this.tasks.length; i++) {
             if (this.tasks[i].taskId == id) {
@@ -176,16 +153,6 @@ define([], function () {
         }
     };
 
-//return true if task in current level have similar resource
-    proto.checkSimilarResource = function (tasksLevels, taskVal) {
-        for (var i = 0; i < tasksLevels.length; i++) {
-            if (this.tasks[this.findTaskObject(tasksLevels[i], 'id')].resource == this.tasks[this.findTaskObject(taskVal, 'id')].resource && tasksLevels[i] != taskVal) {
-                return true;
-            }
-        }
-        return false;
-    };
-
     proto.checkDependenciesExist = function () {
         for (var i = 0; i < this.tasks.length; i++) {
             if (this.tasks[i].dependsOn.length != 0) {
@@ -195,19 +162,7 @@ define([], function () {
         return false;
     };
 
-    proto.checkSettedDependenciesExist = function (level, id) {
-        var presentId = this.findTaskObject(id, 'id'), tempId;
-        for (var i = 0; i < level.length; i++) {
-            tempId = this.findTaskObject(level[i], 'id');
-            for (var j = 0; j < this.tasks[presentId].dependsOn.length; j++) {
-                if (this.tasks[presentId].dependsOn[j].taskId == level[i] || this.tasks[presentId].resource == this.tasks[tempId].resource) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    };
-
+//function for seeting tasks to levels that does not have dependencies
     proto.setTasksWithoutDepToLevels = function setTasksWithoutDepToLevels() {
         var levels = [];
         levels[0] = [];
@@ -217,7 +172,23 @@ define([], function () {
         return levels;
     };
 
+    proto.getCriticalPath = function getCriticalPath(levels) {
+        var criticalPath = [], criticalTime = 0;
+        for (var i = 0; i < levels.length; i++) {
+            var maxDur = -1, taskIdMax, task;
+            for (var j = 0; j < levels[i].length; j++) {
+                task = this.findTaskObject(levels[i][j], 'object');
+                if (task.estimateTime > maxDur) {
+                    maxDur = task.estimateTime;
+                    taskIdMax = task.taskId;
+                }
+            }
+            criticalPath.push(taskIdMax);
+            criticalTime += maxDur;
+        }
+        this.criticalPath.push(criticalTime, criticalPath);
+    };
+
     return CriticalPath;
 });
 
-/*exports.CriticalPath = CriticalPath.prototype;*/
