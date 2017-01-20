@@ -4,8 +4,9 @@ define(['backbone',
     'Draggabilly',
     'moment',
     'timeLine',
-    '../common/confirmDelete'
-], function (Backbone, _, JST, Draggabilly, Moment, TimeLine, ConfirmDeleteView) {
+    '../common/confirmDelete',
+    'views/project/singleMilestoneEdit'
+], function (Backbone, _, JST, Draggabilly, Moment, TimeLine, ConfirmDeleteView, SingleMilestoneEdit) {
     'use strict';
 
     var MilestoneEditView = Backbone.View.extend({
@@ -46,8 +47,28 @@ define(['backbone',
             'click .save-milestones-button': 'saveMilestoneSettings',
             'click .remove-milestone': 'confirmDeleteMilestone',
             'dblclick .milestone-task-item': 'addTaskToList',
-            'dblclick .milestone-task-name': 'getEditView'
+            'dblclick .milestone-task-name': 'showSingleMilestone'
 
+        },
+
+        showSingleMilestone: function(event){
+            var target = $(event.currentTarget);
+            var milestoneName = target.data('name');
+            if( milestoneName === ''){
+
+            }
+            else {
+
+            }
+            this.singleMilestoneEdit = new SingleMilestoneEdit({
+                milestones: this.milestones,
+                milestone: this.milestoneEdit,
+                tasksList: this.tasksList,
+                dependenciesList: this.dependenciesList
+            });
+            this.singleMilestoneEdit.render();
+            this.$el.append(this.singleMilestoneEdit.$el);
+            this.listenTo(this.singleMilestoneEdit,'showMilestoneChanges',this.render);
         },
 
         getTasksList: function (el) {

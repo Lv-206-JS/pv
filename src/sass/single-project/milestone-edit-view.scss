@@ -48,8 +48,8 @@
 .milestone-task-name {
   overflow: hidden;
   width: 185px;
-  white-space: nowrap; /* Запрещаем перенос строк */
-  text-overflow: ellipsis; /* Добавляем многоточие */
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .table-milestone-header-row {
