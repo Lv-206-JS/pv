@@ -10,7 +10,8 @@ define([
         className: 'login-view',
         events: {
             'click .ok-button': 'onSubmit',
-            'click #exit-button': 'hideLogInView'
+            'click #exit-button': 'hideLogInView',
+            'keydown .form-control': 'removeErrors'
         },
 
         initialize: function initialize() {
@@ -38,11 +39,13 @@ define([
             console.log(this.model.isValid(['email', 'password']));
 
             if (this.model.isValid(['email', 'password'])) {
-                this.model.save().then(
+
+                //We are making validation before saving, that's why we set it to false inside save()
+                this.model.save({},{validate: false}).then(
                     function() {
                         setTimeout (function () {
                             PV.router.navigate('projects', {trigger: true});
-                        }, 1000);
+                        }, 500);
 
                     },
                     function(error) {

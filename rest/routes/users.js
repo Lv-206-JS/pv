@@ -39,8 +39,8 @@ router.post('/register', function (req, res) {
             var newUser = new User({
                 userId: userId,
                 firstname: firstname,
-                email: email,
                 lastname: lastname,
+                email: email,
                 password: password
             });
 
@@ -91,12 +91,6 @@ var fn = passport.authenticate('local', {
     successRedirect: '/projects',
     failureRedirect: 'users/login'
 });
-
-
-// router.post('/login', passport.authenticate('local'), function(req, res) {
-//     console.log(req, res);
-//     res.send('ok');
-// });
 
 router.post('/login', function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
