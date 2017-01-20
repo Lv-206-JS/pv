@@ -55,10 +55,11 @@ define([
                 required: true,
                 msg: 'Confirm your password.'
             }, {
-                equalTo: 'password'
+                equalTo: 'password',
+                msg: 'Passwords do not match!'
             }, {
                 minLength: 5,
-                msg: 'Passwords do not match!'
+                msg: 'Password is too short. It is expected to be longer than 5 chars!'
             }]
 
         }

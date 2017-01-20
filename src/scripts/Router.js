@@ -85,6 +85,7 @@ define([
 
                 $('.auth').html(this.logInView.render().$el);
             },
+
             registrationForm: function registrationForm() {
 
                 if (!this.registrationView) {

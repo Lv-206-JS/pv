@@ -5,21 +5,18 @@
 define([
     'backbone',
     'JST',
-    'views/common/login'
-], function (Backbone, JST, LogInView) {
+    'views/common/loginMobile'
+], function (Backbone, JST, LoginMobileView) {
     'use strict';
 
     var LandingMobileView = Backbone.View.extend({
         template: JST['common:landingMobile'],
-        className: 'landing-view-mobile',
+        className: 'landing-mobile-view',
         events: {
-            'click .login-btn': 'onLogIn'
+            'click .login-btn': 'onLogin'
         },
 
         initialize: function () {
-            this.userModel = PV.userModel;
-            this.userModel.setUrl('/rest/user');
-            this.userModel.fetch();
 
         },
 
@@ -29,10 +26,13 @@ define([
             return this;
         },
 
-        onLogIn: function onLogIn() {
-            this.loginView = new LogInView({});
-            this.loginView.render();
-            this.$el.append(this.loginView.$el);
+
+        onLogin: function onLogin() {
+
+            PV.router.navigate('login', {trigger: true});
+
+            this.loginMobileView = new LoginMobileView({});
+
         }
 
     });

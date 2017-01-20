@@ -128,6 +128,7 @@ app.use(function(req, res, next){
 
 app.use(/\/project.*/, express.static('./index.html'));
 app.use(/\/user.*/, express.static('./index.html'));
+app.use(/\/login.*/, express.static('./index.html'));
 app.use(express.static(__dirname));
 
 // catch 404 and forward to error handler

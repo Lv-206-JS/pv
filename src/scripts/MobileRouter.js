@@ -2,14 +2,12 @@ define([
         'jquery',
         'backbone',
         'views/common/landingMobile',
-        'views/common/mainView',
-        'views/common/login',
-        'views/common/register'
+        'views/common/loginMobile'
     ],
     function ($,
               Backbone,
               LandingMobileView,
-              LogInView
+              LoginMobileView
     ) {
         'use strict';
 
@@ -18,8 +16,7 @@ define([
                 'projects': 'openProjects',
                 'project/:projectId': 'openSingleProject',
                 'project/:projectId/task/:taskId': 'openProjectAndTask',
-                'users/login': 'loginForm',
-                'users/registration': 'registrationForm',
+                'login': 'loginMobileForm',
                 '*path': 'openLandingMobilePage'
             },
 
@@ -42,11 +39,17 @@ define([
             openProjectAndTask: function openProjectAndTask(projectId) {
             },
 
-            loginForm: function loginForm() {
-            },
+            loginMobileForm: function loginMobileForm() {
+                if (this.loginMobileView) {
+                    this.loginMobileView.remove();
+                    this.loginMobileView = null;
+                }
+                this.loginMobileView = new LoginMobileView();
 
-            registrationForm: function registrationForm() {
+                $('body').html(this.loginMobileView.render().$el);
+
             }
+
         });
 
         return MobileRouter;

@@ -42,7 +42,7 @@ define([
             this.$el.append(this.loginView.$el);
         },
 
-        onRegistration: function onLogIn() {
+        onRegistration: function onRegistration() {
             this.registerView = new RegistrationView({});
 
             this.listenTo(this.registerView, 'changeToLogin', this.onChangeToLogined);
