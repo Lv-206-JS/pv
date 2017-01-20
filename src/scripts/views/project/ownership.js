@@ -17,6 +17,7 @@ define(['backbone',
             this.collection = OwnershipsCollection;
             this.collection.fetch();
             this.collection.on('sync', _.bind(this.onCollectionLoad, this));
+
         },
 
         events: {
@@ -49,8 +50,6 @@ define(['backbone',
                     this.editorsList.push(this.owneships[i]);
                 }
             }
-            console.log(this.readersList);
-            console.log(this.editorsList);
             this.render();
         },
 
@@ -63,11 +62,16 @@ define(['backbone',
                 email: email,
                 role: role
             });
-            ownershipToCreate.save({
+            ownershipToCreate.save({}, {
                 success:function (model, response) {
-                    this.collection.add(ownershipToCreate);
-                    this.onCollectionLoad();
-                }.call(this)
+                    if(!response.error) {
+                        this.collection.add(ownershipToCreate);
+                    }
+                    else {
+                        var errors = response.error;
+                        console.log(errors);
+                    }
+                }.bind(this)
             });
         },
 
@@ -77,20 +81,12 @@ define(['backbone',
             var email = target.data('email');
             var ownershipToRemove = this.collection.where({email: email})[0];
             ownershipToRemove.setUrl(email);
-
-            // The same
-            // this.collection.remove(this.collection.where({email: email}));
-            // this.onCollectionLoad();
-            //
-            // ownershipToRemove.destroy({
-            //     success: undefined
-            // });
-
+            this.email = email;
             ownershipToRemove.destroy({
-                success:function () {
-                    this.collection.remove(this.collection.where({email: email}));
+                success: function (model, response) {
+                    this.collection.remove(this.collection.where({email: this.email}));
                     this.onCollectionLoad();
-                }.call(this, email)
+                }.bind(this)
             });
         },
 

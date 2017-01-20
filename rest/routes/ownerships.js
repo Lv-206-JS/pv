@@ -54,12 +54,12 @@ router.post('/', authenticateUser, checkOwnership, function (request, response) 
 
     //check is there email
     if(request.body.email == '') {
-        errors.push({'error': 'Email is not defined!'})
+        errors.push('Email is not defined!');
     }
     //check is email registered
     Users.findOne({'email': request.body.email}, function (err, user) {
         if(err || !user) {
-            errors.push({'error': 'Can`t find user!'})
+            errors.push('Can`t find user!')
         }
     }).then(function () {
     //check is email uniq for this ownership
@@ -67,7 +67,7 @@ router.post('/', authenticateUser, checkOwnership, function (request, response) 
             'email': request.body.email
         }, function (err, ownership) {
                 if(ownership) {
-                    errors.push({'error': 'User already have ownership!'})
+                    errors.push('User already have ownership!');
                 }
         });
     }).then(function () {
@@ -96,7 +96,7 @@ router.delete('/:email', authenticateUser, checkOwnership, function (request, re
 
     //check is there email
     if(request.body.email == '') {
-        errors.push({'error': 'Email is not defined!'})
+        errors.push('Email is not defined!')
     }
 
     //check is email have an ownership
@@ -104,7 +104,7 @@ router.delete('/:email', authenticateUser, checkOwnership, function (request, re
         'email': request.params.email
     }, function (err, ownership) {
         if(err || !ownership) {
-            errors.push({'error': 'User don`t have this ownership!'})
+            errors.push('User don`t have this ownership!')
         }
 
     }).then(function () {

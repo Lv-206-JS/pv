@@ -1,4 +1,4 @@
-define(['backbone', 'models/Project'], function (Backbone, Model) {
+define([], function () {
     'use strict';
 
 var TaskAlgo =  function (options) {
@@ -53,6 +53,9 @@ proto.setMatrix = function () {
     var tasks = this.tasks;
     for(var i = 0; i < tasks.length; i++){
         for(var j = 0; j < tasks[i].dependsOn.length; j++) {
+            if(this.matrix[i][this.findTaskObject(tasks[i].dependsOn[j].taskId, 'id')] == 1){
+                continue;
+            }
             this.matrix[this.findTaskObject(tasks[i].dependsOn[j].taskId, 'id')][i] = 1;
         }
     }
