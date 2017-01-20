@@ -1,7 +1,8 @@
 @import 'single-project/project-view';
-@import 'landing-view';
-@import "landing-menu-view";
-@import "common-styles";
+@import 'common/landing-view';
+@import "common/landing-menu-view";
+@import "common/landing-view-mobile";
+@import "common/common-styles";
 @import "common/main-view";
 @import "common/main-menu-view";
 @import "common/login-view";
@@ -47,13 +48,13 @@ html, body {
   box-sizing: border-box;
 }
 p {
-  //display: inline;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
+
 a {
   display: inline;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   cursor: pointer;
 }

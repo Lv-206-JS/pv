@@ -1,18 +1,16 @@
 define([
         'jquery',
         'backbone',
-        'views/landing',
+        'views/common/landingMobile',
         'views/common/mainView',
         'views/common/login',
         'views/common/register'
     ],
     function ($,
               Backbone,
-              LandingView,
-              MainView,
-              SignInView,
-              LogInView,
-              RegistrationView) {
+              LandingMobileView,
+              LogInView
+    ) {
         'use strict';
 
         var MobileRouter = Backbone.Router.extend({
@@ -22,10 +20,17 @@ define([
                 'project/:projectId/task/:taskId': 'openProjectAndTask',
                 'users/login': 'loginForm',
                 'users/registration': 'registrationForm',
-                '*path': 'openLandingPage'
+                '*path': 'openLandingMobilePage'
             },
 
-            openLandingPage: function openLandingPage() {
+            openLandingMobilePage: function openLandingMobilePage() {
+                if (this.mainMobileView) {
+                    this.mainMobileView.remove();
+                    this.mainMobileView = null;
+                }
+
+                this.landingMobileView = new LandingMobileView();
+                $('body').html(this.landingMobileView.render().$el);
             },
 
             openProjects: function () {

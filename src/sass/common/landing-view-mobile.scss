@@ -1,0 +1,26 @@
+$landing-text-align: center;
+
+.landing-view-mobile {
+
+  .login-btn {
+
+    margin-top: 50px;
+    padding: 20px;
+    background-color: greenyellow;
+    color: blue;
+    line-height: 150px;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 50px;
+    text-align: $landing-text-align;
+    //text-decoration: none;
+    //box-shadow: $box-shadow;
+
+    &:hover {
+      background-color: blue;
+      color: white;
+      //transition: $transition-background;
+    }
+  }
+
+}

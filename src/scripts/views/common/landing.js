@@ -1,12 +1,12 @@
 define([
     'backbone',
     'JST',
-    'views/landingMenu'
+    'views/common/landingMenu'
 ], function (Backbone, JST, LandingMenuView) {
     'use strict';
 
     var LandingView = Backbone.View.extend({
-        template: JST['landing'],
+        template: JST['common:landing'],
         className: 'landing-view',
 
         initialize: function (options) {
@@ -32,20 +32,6 @@ define([
             var height = $(window).height();
             $('.landing-block-height').css('height', height);
         }
-
-
-
-        //TODO - Change to .landing-menu-container and create all renders
-        // renderViews: function () {
-        //     this.landingMenuView = new LandingMenuView({}).render();
-        //
-        //     this.$el.find('.landing-menu').html(this.landingMenuView.$el);
-        //
-        //      this.landingView = new LandingView({}).render();
-        //      this.$el.find('.landing-container').html(this.projectsView.$el);
-        //
-        //     return this;
-        // }
 
     });
 
