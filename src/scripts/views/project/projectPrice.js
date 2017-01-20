@@ -68,7 +68,6 @@ define(['backbone',
                     }
                 }
                 var totalPrice = {'price': price, 'resourcesPrice': resourcesPrice};
-                console.log(totalPrice);
                 return totalPrice;
             },
 
@@ -113,9 +112,6 @@ define(['backbone',
                     else result += ' hour ';
 
                 }
-
-                // var days = Math.ceil(Moment.duration(projectRealEnd-this.startDate,'seconds').asDays());
-
                 return result;
             },
 
