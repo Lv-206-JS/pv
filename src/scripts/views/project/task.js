@@ -346,16 +346,11 @@ define(['backbone',
             this.task.name = this.$el.find('.task-name').val();
             var estimateTime = this.$el.find('.task-estimate').val();
             this.task.estimateTime = Moment.duration(+estimateTime, 'hours').asSeconds();
-
             var resourceValue = this.$el.find('.task-resource').val();
-            var resources = this.model.get('resources');
-            for( var i = 0; i < resources.length; i++){
-                if(resourceValue == resources[i].resourceName)
-                    this.task.resource = resources[i].resourceId;
+            for( var i = 0; i < this.resources.length; i++){
+                if(resourceValue == this.resources[i].resourceName)
+                    this.task.resource = this.resources[i].resourceId;
             }
-
-            // this.task.resource = this.$el.find('.task-resource').val();
-
             this.task.description = this.$el.find('.task-description').val();
             this.task.dependsOn = [];
             if(this.dependenciesList[0] !== undefined) {
@@ -366,7 +361,6 @@ define(['backbone',
                 this.task.dependsOn = [];
             }
             this.trigger('upsertTask', this.tasks, this.task);
-
             this.$el.remove();
         }
 

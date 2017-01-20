@@ -97,7 +97,10 @@ define([
 
         showTaskAddPopup: function (allTasks) {
             var resources = this.model.get('resources');
-            this.taskView = new TaskView({tasks: allTasks, resources: resources}).render();
+            this.taskView = new TaskView({
+                tasks: allTasks,
+                resources: resources
+            }).render();
             this.listenTo(this.taskView, 'upsertTask', this.upsertTaskHandler);
             this.listenTo(this.taskView, 'deleteTask', this.deleteTaskHandler);
             this.$el.append(this.taskView.$el);
