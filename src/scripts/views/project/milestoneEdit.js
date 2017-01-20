@@ -21,8 +21,8 @@ define(['backbone',
                 date: 0,
                 dependsOn: []
             };
-            this.tasksList = [];
-            this.dependenciesList = [];
+            this.tasksList = this.getTasksList(true);
+            this.dependenciesList = this.getTasksList(false);
             this.moment = Moment;
             this.timeLine = new TimeLine(this.model);
         },
@@ -62,11 +62,11 @@ define(['backbone',
                 for (var j = 0; j < len; j++) {
                     if (this.tasks[i].taskId === this.milestoneEdit.dependsOn[j].taskId) {
                         isCurrentDependensy = true;
-                        isDependency.push({taskName: this.tasks[i].name, taskId: this.tasks[i].taskId});
+                        isDependency.push({name: this.tasks[i].name, taskId: this.tasks[i].taskId});
                     }
                 }
                 if (len === 0 || !isCurrentDependensy)
-                    isNotDependency.push({taskName: this.tasks[i].name, taskId: this.tasks[i].taskId});
+                    isNotDependency.push({name: this.tasks[i].name, taskId: this.tasks[i].taskId});
             }
             if (el) return isNotDependency;
             else return isDependency;
@@ -87,6 +87,7 @@ define(['backbone',
             this.tasksList = this.getTasksList(true);
             this.dependenciesList = this.getTasksList(false);
             this.updateMilestonesPopup();
+            console.log(this.dependenciesList);
             this.$el.find('.tab-dependencies').addClass('w--current');
             this.$el.find('.tab-general').removeClass('w--current');
             this.$el.find('.general-content').removeClass('show-content');
@@ -230,7 +231,7 @@ define(['backbone',
                         this.tasksList.splice(i, 1);
                         break;
                     }
-                $("#dependencies-list").find("tbody").append(element);
+                $("#dependencies-list").append(element);
             }
             else {
                 for (i = 0; i < this.dependenciesList.length; i++)
@@ -239,7 +240,7 @@ define(['backbone',
                         this.dependenciesList.splice(i, 1);
                         break;
                     }
-                $("#milestone-tasks-list").find("tbody").append(element);
+                $("#milestone-tasks-list").append(element);
             }
         },
 

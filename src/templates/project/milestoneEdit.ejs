@@ -51,7 +51,7 @@
                                 <tbody>
                                 <% for(var i = 0;i < tasksList.length; i++) { %>
                                 <tr class="milestone-task-item" id="<%= tasksList[i].taskId %>">
-                                    <td> <%= tasksList[i].taskName %></td>
+                                    <td> <%= tasksList[i].name %></td>
                                 </tr>
                                 <% } %>
                                 </tbody>
@@ -62,7 +62,7 @@
                                 <tbody>
                                 <% for(var i = 0; i < dependenciesList.length; i++) { %>
                                 <tr class="milestone-task-item" id="<%= dependenciesList[i].taskId %>">
-                                    <td><%= dependenciesList[i].taskName %></td>
+                                    <td><%= dependenciesList[i].name %></td>
                                 </tr>
                                 </tbody>
                                 <% } %>

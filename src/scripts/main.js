@@ -13,7 +13,8 @@ requirejs.config({
         moment: '/node_modules/moment/moment',
         TaskAlgorithm: '/src/scripts/math/taskAlgorithm',
         undoRedoAlgorithm: '/src/scripts/math/undoRedoAlgorithm',
-        bowser : '/bower_components/bowser/src/bowser'
+        bowser : '/bower_components/bowser/src/bowser',
+        CriticalPath: '/src/scripts/math/criticalPath'
     },
     baseUrl: '/src/scripts'
 });
