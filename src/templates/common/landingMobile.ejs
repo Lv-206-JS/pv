@@ -1,2 +1,12 @@
+<div class="mobile-landing-actions <% if (!userId) { %>not-logined<% } %>">
+    <% if (userId) { %>
 
-<div class="login-btn">Sign In</div>
+        <span class="show-user-name user-name">hello, <%= userName %> </span>
+        <input class="go-to-projects mobile-form-button" type="submit" value="my projects">
+        <input class="sign-out-button mobile-form-button" type="submit" value="sign out">
+
+    <% } else { %>
+         <input class="login-btn mobile-form-button" type="submit" value="sign in">
+    <% } %>
+
+</div>

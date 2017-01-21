@@ -14,7 +14,7 @@ define([
         className: 'login-mobile-view',
         events: {
             'click .ok-button': 'onSubmit',
-            'click #exit-button': 'hideLogInView',
+            'click #exit-button': 'hideLoginView',
             'keydown .form-control': 'removeErrors'
         },
 
@@ -90,9 +90,10 @@ define([
 
         },
 
-        hideLogInView: function (event) {
+        hideLoginView: function (event) {
             event.preventDefault();
             this.$el.remove();
+            PV.router.navigate('/', {trigger: true});
         }
     });
 

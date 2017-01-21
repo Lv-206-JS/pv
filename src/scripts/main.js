@@ -32,6 +32,7 @@ requirejs(['jquery', 'backbone', 'userModel', 'projectsCollection', 'Router', 'M
 
         if (Bowser.mobile) {
             PV.userModel = new UserModel();
+            PV.projectsCollection = new ProjectsCollection();
             PV.router = new MobileRouter();
         } else {
             PV.userModel = new UserModel();

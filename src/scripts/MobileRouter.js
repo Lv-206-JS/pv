@@ -2,13 +2,14 @@ define([
         'jquery',
         'backbone',
         'views/common/landingMobile',
-        'views/common/loginMobile'
+        'views/common/loginMobile',
+        'views/projects/projectsListMobile'
     ],
     function ($,
               Backbone,
               LandingMobileView,
-              LoginMobileView
-    ) {
+              LoginMobileView,
+              MobileProjectsView) {
         'use strict';
 
         var MobileRouter = Backbone.Router.extend({
@@ -21,16 +22,27 @@ define([
             },
 
             openLandingMobilePage: function openLandingMobilePage() {
-                if (this.mainMobileView) {
-                    this.mainMobileView.remove();
-                    this.mainMobileView = null;
-                }
 
                 this.landingMobileView = new LandingMobileView();
                 $('body').html(this.landingMobileView.render().$el);
             },
 
+
             openProjects: function () {
+
+                console.log('MobileProjectsView = ' + MobileProjectsView);
+                //If view exists kill it!!!
+                if (this.loginMobileView) {
+                    this.loginMobileView.remove();
+                    this.loginMobileView = null;
+                }
+
+                // Create new view.
+                if (!this.mobileProjectsView) {
+                    this.mobileProjectsView = new MobileProjectsView();
+                }
+                $('body').html(this.mobileProjectsView.$el);
+
             },
 
             openSingleProject: function openSingleProject(projectId) {
