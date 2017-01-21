@@ -3,13 +3,15 @@ define([
         'backbone',
         'views/common/landingMobile',
         'views/common/loginMobile',
-        'views/projects/projectsListMobile'
+        'views/projects/projectsListMobile',
+        'views/project/projectMobile'
     ],
     function ($,
               Backbone,
               LandingMobileView,
               LoginMobileView,
-              MobileProjectsView) {
+              MobileProjectsView,
+              ProjectMobileView) {
         'use strict';
 
         var MobileRouter = Backbone.Router.extend({
@@ -30,7 +32,6 @@ define([
 
             openProjects: function () {
 
-                console.log('MobileProjectsView = ' + MobileProjectsView);
                 //If view exists kill it!!!
                 if (this.loginMobileView) {
                     this.loginMobileView.remove();
@@ -45,7 +46,20 @@ define([
 
             },
 
-            openSingleProject: function openSingleProject(projectId) {
+            openSingleProject: function openSingleProject() {
+                // If view exists kill it!!!
+                if (this.mobileProjectsView) {
+                    this.mobileProjectsView.remove();
+                    this.mobileProjectsView = null;
+                }
+
+                if (!this.projectMobileView) {
+                    // Create new view.
+                    this.projectMobileView = new ProjectMobileView();
+                    // Clean body element and append new view element.
+                }
+
+                $('body').html(this.projectMobileView.$el);
             },
 
             openProjectAndTask: function openProjectAndTask(projectId) {

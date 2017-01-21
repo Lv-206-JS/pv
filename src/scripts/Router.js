@@ -43,12 +43,9 @@ define([
                     this.landingView = null;
                 }
 
-
                 if (!this.mainView) {
                     // Create new view.
                     this.mainView = new MainView();
-                    // Clean body element and append new view element.
-
                 }
 
                 $('body').html(this.mainView.render().$el);
