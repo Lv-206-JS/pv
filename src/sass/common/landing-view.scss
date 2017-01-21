@@ -23,6 +23,9 @@ $landing-block-column-width:50%;
     background: linear-gradient(to right, #6ed4c0 0%, #459bd5 100%);
   }
 
+    .hide-button{
+      visibility: hidden;
+    }
     .landing-first-block-description{
       display: $landing-display;
       flex-direction: $landing-flex-direction;
