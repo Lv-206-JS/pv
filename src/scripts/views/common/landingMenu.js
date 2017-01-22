@@ -65,6 +65,7 @@ define([
 
         onSignOut: function onSingOut() {
             $.ajax({url: '/users/logout'});
+            this.trigger('renderLanding');
             PV.userModel.clear().set(this.userModel.defaults);
             this.trigger('onSignedOutHide');
             this.render();

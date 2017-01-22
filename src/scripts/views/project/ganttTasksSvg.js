@@ -2,17 +2,19 @@ define([
         'backbone',
         'underscore',
         'JST',
-        'Snap'
+        'Snap',
+        'moment',
+        'views/project/taskInfo'
     ],
-    function (Backbone, _, JST, Snap) {
+    function (Backbone, _, JST, Snap, Moment, TaskInfoView) {
         'use strict';
 
         var GanttTasksView = Backbone.View.extend({
             template: JST['project:ganttTaskRow'],
             className: 'gantt-chart-container-svg',
-            tagName: 'div',
 
             initialize: function (options) {
+                this.model = options.model;
                 this.tasks = options.tasks;
                 this.tasksPositions = options.tasksPositions;
                 this.dayDuration = options.dayDuration;
@@ -52,6 +54,8 @@ define([
                 paper.attr({
                     'height': svgHeight
                 });
+                var ganttChartElem = document.getElementById('gantt-chart-container');
+                ganttChartElem.addEventListener('click', this.hideTaskInfo.bind(this));
 
                 this.getTasksData();
 
@@ -75,7 +79,8 @@ define([
                             fill: "#28b463",
                             class: this.tasksPositions[row].taskId
                         });
-                        // rect.prependTo(paper);
+                        var rectElem = document.getElementsByClassName(this.tasksPositions[row].taskId)[part];
+                        rectElem.addEventListener('click', this.showTaskInfo.bind(this), true);
                     }
                     // check if task has name and show its name
                     taskName = (this.tasksNameIdPositions[row].name) ? this.tasksNameIdPositions[row].name : null;
@@ -89,6 +94,26 @@ define([
                     }
                 }
                 this.getGanttWidth();
+            },
+
+            showTaskInfo: function (event) {
+                event.stopPropagation();
+                var taskId = event.target.classList.value;
+                var task = this.findTaskById(taskId);
+                $('#info-bar-view-container').css('display', 'none');
+                var taskInfo = new TaskInfoView({
+                    model: this.model,
+                    task: task,
+                    el: $('#task-info-view-container')[0]
+                }).render();
+                $('#task-info-view').css('display', 'flex');
+                console.log('showTaskInfo');
+            },
+
+            hideTaskInfo: function () {
+                $('#task-info-view').css('display', 'none');
+                $('#info-bar-view-container').css('display', 'flex');
+                console.log('hideTaskInfo');
             },
 
             drawVerticalDateLines: function () {
