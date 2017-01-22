@@ -35,10 +35,11 @@ define([
             'click .show-resources': 'showResourcesPopup',
             'click .tool-price': 'showProjectPrice',
             'click .show-ownership': 'showOwnershipPopup',
-            'click .tool-zoom-in': 'increaseZoom',
-            'click .tool-zoom-out': 'decreaseZoom',
-            'click .tool-undo': 'setUndo',
-            'click .tool-redo': 'setRedo'
+            'click .tool-zoom-in' : 'increaseZoom',
+            'click .tool-zoom-out' : 'decreaseZoom',
+            'click .tool-undo' : 'setUndo',
+            'click .tool-redo' : 'setRedo',
+            'click .tool-fit' : 'fitProjectToScreen'
         },
 
         initialize: function (options) {
@@ -134,7 +135,11 @@ define([
             this.ganttContainerView.decreaseZoom();
         },
 
-        createId: function (allTasks) {
+        fitProjectToScreen: function(){
+            this.ganttContainerView.fitProjectToScreen();
+        },
+
+        createId: function(allTasks){
             var max = 0;
             for (var i = 0; i < allTasks.length - 1; i++) {
                 if (max < allTasks[i].taskId)

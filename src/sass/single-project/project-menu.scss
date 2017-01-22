@@ -53,6 +53,12 @@
   background-image: url('../../../images/zoom-out.svg');
 }
 
+.tool-img.tool-fit {
+  background-image: url('../../../images/fit.svg');
+  width: 23px;
+  height: 23px;
+}
+
 .tool-img.tool-undo {
   background-image: url('../../../images/undo.svg');
 }
