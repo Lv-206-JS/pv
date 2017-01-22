@@ -38,7 +38,8 @@ define([
             'click .tool-zoom-in' : 'increaseZoom',
             'click .tool-zoom-out' : 'decreaseZoom',
             'click .tool-undo' : 'setUndo',
-            'click .tool-redo' : 'setRedo'
+            'click .tool-redo' : 'setRedo',
+            'click .tool-fit' : 'fitProjectToScreen'
         },
 
         initialize: function (options) {
@@ -125,6 +126,10 @@ define([
 
         decreaseZoom: function(){
             this.ganttContainerView.decreaseZoom();
+        },
+
+        fitProjectToScreen: function(){
+            this.ganttContainerView.fitProjectToScreen();
         },
 
         createId: function(allTasks){
