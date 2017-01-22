@@ -9,6 +9,7 @@ requirejs.config({
         Snap: '/bower_components/Snap.svg/dist/snap.svg',
         JST: '/scripts/templates',
         Draggabilly: '/bower_components/draggabilly/dist/draggabilly.pkgd',
+        slideout : '/node_modules/slideout/dist/slideout',
         timeLine: '/src/scripts/math/timeLine',
         moment: '/node_modules/moment/moment',
         TaskAlgorithm: '/src/scripts/math/taskAlgorithm',

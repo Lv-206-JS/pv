@@ -5,8 +5,8 @@ define([
     'use strict';
 
     var ProjectsTitleView = Backbone.View.extend({
-        className: 'projects-title-view',
         template: JST['projects:projectsTitle'],
+        className: 'projects-title-view',
 
         initialize: function () {
 

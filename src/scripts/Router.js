@@ -1,7 +1,7 @@
 define([
         'jquery',
         'backbone',
-        'views/common/landing',
+        'views/common/landingMain',
         'views/common/mainView',
         'views/common/login',
         'views/common/register'

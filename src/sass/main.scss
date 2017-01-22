@@ -1,4 +1,5 @@
 @import "common/common-styles";
+@import "common/landing-main-view";
 @import "common/landing-view";
 @import "common/landing-menu-view";
 @import "common/landing-mobile-view";
@@ -8,6 +9,7 @@
 @import "common/login-mobile-view";
 @import "common/register-view";
 @import 'single-project/project-view';
+@import "single-project/mobile-project-view";
 @import "single-project/gantt-chart-view";
 @import "single-project/info-bar-view";
 @import "single-project/milestone-view";

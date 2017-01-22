@@ -46,7 +46,7 @@ define([
 
             },
 
-            openSingleProject: function openSingleProject() {
+            openSingleProject: function openSingleProject(projectId) {
                 // If view exists kill it!!!
                 if (this.mobileProjectsView) {
                     this.mobileProjectsView.remove();
@@ -55,10 +55,8 @@ define([
 
                 if (!this.projectMobileView) {
                     // Create new view.
-                    this.projectMobileView = new ProjectMobileView();
-                    // Clean body element and append new view element.
+                    this.projectMobileView = new ProjectMobileView(projectId);
                 }
-
                 $('body').html(this.projectMobileView.$el);
             },
 

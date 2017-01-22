@@ -5,44 +5,52 @@
 define([
     'backbone',
     'JST',
+    'slideout',
     'models/Project'
 
-], function (Backbone, JST, Model) {
+], function (Backbone, JST, Slideout, Model) {
 
     'use strict';
 
     var ProjectMobileView = Backbone.View.extend({
         template: JST['project:projectMobile'],
         className: 'mobile-project-view',
-
         events: {
-            'click .back-to-landing-view': 'onBackToLandingPage',
-
+            'click .toggle-button': 'showDrawer'
         },
 
-        initialize: function (options) {
+        initialize: function (projectId) {
 
-            this.projectId = options.projectId;
+            this.projectId = projectId;
             this.model = new Model();
             this.model.setUrl(this.projectId);
             this.model.fetch();
             this.model.on('sync', _.bind(this.onChange, this));
+
         },
 
         render: function () {
             var project = this.model.toJSON();
             this.$el.html(this.template({projectId: project}));
-            return this;
-        },
+            this.slideout = new Slideout({
+                'panel': document.getElementById('panel'),
+                'menu': document.getElementById('menu')
+            });
+            this.slideout.on('translate', function(translated) {
+                console.log('Translate: ' + translated); // 120 in px
+            });
 
-        onBackToLandingPage: function onBackToLandingPage() {
-            PV.router.navigate('/', {trigger: true});
+            return this;
         },
 
         onChange: function () {
             this.render();
-        }
+        },
 
+        showDrawer: function showDrawer() {
+
+            this.slideout.toggle();
+        }
 
     });
 
