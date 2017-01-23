@@ -1,8 +1,9 @@
 define(['backbone',
     'underscore',
     'JST',
-    'Draggabilly'
-], function (Backbone, _, JST, Draggabilly) {
+    'Draggabilly',
+    'timeLine'
+], function (Backbone, _, JST, Draggabilly, TimeLine) {
     'use strict';
 
     var SingleMilestoneEdit = Backbone.View.extend({
@@ -10,10 +11,14 @@ define(['backbone',
         className: 'single-milestone-edit-view',
 
         initialize: function (options) {
+            this.model = options.model;
             this.milestones = options.milestones;
             this.milestone = options.milestone;
             this.tasksList = options.tasksList;
             this.dependenciesList = options.dependenciesList;
+            this.currentName = options.currentName;
+            this.makeTasksDraggable(this.tasksList, this.dependenciesList);
+            this.timeLine = new TimeLine(this.model);
         },
 
         render: function render() {
@@ -27,20 +32,19 @@ define(['backbone',
         },
 
         events: {
-            'click .ok-button, .cancel-button': 'hideMilestoneEditView',
-            'click .save-milestones-button': 'saveMilestoneSettings',
+            'click .cancel-button': 'hideSingleMilestoneEditView',
+            'click .ok-button': 'saveMilestoneSettings',
             'dblclick .milestone-task-item': 'addTaskToList'
         },
 
         saveMilestoneSettings: function (event) {
             event.preventDefault();
-            var updatedMilestones = this.model.get('milestones');
+            var updatedMilestones = this.milestones;
             var newName = this.$el.find('#milestone-settings-name').val();
             var newDependensies = this.dependenciesList;
             var newDate = this.getMilestoneDate(newDependensies);
-            var target = $(event.currentTarget);
-            var milestoneName = target.data('name');
-            if (milestoneName == '') {
+            var milestoneName = this.currentName;
+            if (milestoneName == undefined) {
                 updatedMilestones.push({
                     name: newName,
                     date: newDate,
@@ -60,6 +64,9 @@ define(['backbone',
                     }
                 }
             }
+            this.trigger('showMilestoneChanges', this.singleMilestoneEdit);
+            event.preventDefault();
+            this.$el.remove();
         },
 
         makeTasksDraggable: function (tasksList, dependenciesList) {
@@ -123,7 +130,7 @@ define(['backbone',
                         this.tasksList.splice(i, 1);
                         break;
                     }
-                $("#dependencies-list").append(element);
+                $("#dependencies-list tbody").append(element);
             }
             else {
                 for (i = 0; i < this.dependenciesList.length; i++)
@@ -132,8 +139,14 @@ define(['backbone',
                         this.dependenciesList.splice(i, 1);
                         break;
                     }
-                $("#milestone-tasks-list").append(element);
+                $("#milestone-tasks-list tbody").append(element);
             }
+        },
+
+        getMilestoneDate: function (dependsOn) {
+            var milestonePTLdate = this.timeLine.calculateEstimateTime(dependsOn);
+            var milestoneDate = this.timeLine.toDate(milestonePTLdate);
+            return milestoneDate;
         },
 
         hideSingleMilestoneEditView: function () {
