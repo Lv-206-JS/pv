@@ -35,7 +35,7 @@ define(['backbone',
             'click #create-milestone': 'showSingleMilestone'
         },
 
-        showSingleMilestone: function(event){
+        showSingleMilestone: function (event) {
             var target = $(event.currentTarget);
             var milestoneName = target.data('name');
             var currentObj = {};
@@ -57,7 +57,7 @@ define(['backbone',
             });
             this.singleMilestoneEdit.render();
             this.$el.append(this.singleMilestoneEdit.$el);
-            this.listenTo(this.singleMilestoneEdit,'showMilestoneChanges',this.render);
+            this.listenTo(this.singleMilestoneEdit, 'showMilestoneChanges', this.render);
         },
 
         getTasksList: function (el) {

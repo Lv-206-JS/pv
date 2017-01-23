@@ -33,6 +33,7 @@ describe('Project GET router', function () {
             var contentType = xhr.getResponseHeader('Content-Type'),
                 json = xhr.responseText,
                 projects;
+
             function parseJson() {
                 projects = JSON.parse(json);
             }
@@ -110,6 +111,7 @@ describe('Project GET by ID router', function () {
             var contentType = xhr.getResponseHeader('Content-Type'),
                 json = xhr.responseText,
                 project;
+
             function parseJson() {
                 project = JSON.parse(json);
             }
@@ -181,8 +183,8 @@ describe('Project GET by ID router', function () {
             expect(project.author).toEqual(jasmine.any(String));
             console.log(project.startDate);
             /*expect(project.startDate).toEqual(jasmine.any(Date));
-            expect(project.modifiedDate).toEqual(jasmine.any(Date));
-            expect(project.createDate).toEqual(jasmine.any(Date));*/
+             expect(project.modifiedDate).toEqual(jasmine.any(Date));
+             expect(project.createDate).toEqual(jasmine.any(Date));*/
             expect(project.milestones).toEqual(jasmine.any(Array));
             expect(project.settings).toEqual(jasmine.any(Object));
             expect(project.tasks).toEqual(jasmine.any(Array));

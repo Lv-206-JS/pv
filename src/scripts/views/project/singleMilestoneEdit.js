@@ -85,8 +85,8 @@ define(['backbone',
                 var newParent = $('.milestone-clone');
                 $(this.element).css({'position': 'absolute'});
                 newParent.append(this.element);
-                $(this.element).css({'top': this.relativeStartPosition.y-100+'px'});
-                $(this.element).css({'left': this.relativeStartPosition.x-65+'px'});
+                $(this.element).css({'top': this.relativeStartPosition.y - 100 + 'px'});
+                $(this.element).css({'left': this.relativeStartPosition.x - 65 + 'px'});
                 $(this.element).addClass('is-dragging');
             }
 

@@ -15,7 +15,7 @@ var ProjectsSchema = new Schema({
         date: {type: Number, required: false},
         dependsOn: [{
             taskId: {type: String, required: false},
-            taskName : {type: String, required: false},
+            taskName: {type: String, required: false},
             type: {type: String, required: false}
         }]
 
@@ -59,12 +59,12 @@ var ProjectsSchema = new Schema({
     }]
 });
 
-var FileAttachmentsSchema = new Schema ({
+var FileAttachmentsSchema = new Schema({
     attachmentId: {type: String, required: false},
     relativePath: {type: String, required: false}
-}, { collection: 'fileAttachments' });
+}, {collection: 'fileAttachments'});
 
-var UsersSchema = new Schema ({
+var UsersSchema = new Schema({
     userId: {type: String, required: false},
     firstname: {type: String, required: false},
     lastname: {type: String, required: false},
@@ -73,13 +73,13 @@ var UsersSchema = new Schema ({
 
 });
 
-var OwnershipsSchema = new Schema ({
+var OwnershipsSchema = new Schema({
     projectId: {type: String, required: false},
     email: {type: String, required: false},
     role: {type: String, required: false}
-}, { collection: 'ownerships' });
+}, {collection: 'ownerships'});
 
-var SessionsSchema = new Schema ({
+var SessionsSchema = new Schema({
     sessionId: {type: String, required: false},
     userId: {type: String, required: false}
 });
