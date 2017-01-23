@@ -28,8 +28,6 @@ requirejs(['jquery', 'backbone', 'userModel', 'projectsCollection', 'Router', 'M
         //
         window.PV = window.PV || {};
 
-
-
         if (Bowser.mobile) {
             PV.userModel = new UserModel();
             PV.router = new MobileRouter();
@@ -45,4 +43,3 @@ requirejs(['jquery', 'backbone', 'userModel', 'projectsCollection', 'Router', 'M
         });
     });
 });
-
