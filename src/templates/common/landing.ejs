@@ -1,11 +1,16 @@
 <div class="landing-wrapper">
 
     <div class="landing-first-block landing-block-height">
-        <div id="landing-menu"></div>
         <div class="landing-first-block-description">
         <img class="big-logo" src="images/plan-view-logo-1.svg">
         <h1 class="landing-h">Create a beautiful project plan in minutes with Plan&amp;View free gantt chart software.</h1>
-        <a href="#" class="landing-started-button" >GET STARTED FOR FREE</a>
+
+            <% if (!userId) { %>
+                <a class="landing-started-button" >TRY PLAN&amp;VIEW NOW!</a>
+            <% } else { %>
+            <div class="landing-started-button-hidden"></div>
+            <% } %>
+
         </div>
     </div>
 
@@ -21,15 +26,15 @@
 
 
     <div class="landing-info-block">
-        <h1 class="landiang-info-h">Online Gantt Chart Software</h1>
+        <h1 class="landing-info-h">Online Gantt Chart Software</h1>
         <p class="landing-info-p">Plan&amp;View is the refreshing solution that brings gantt chart software online.You can now plan and manage your projects with this super easy to use gantt software. Inviting your co-workers, teammates, and friends to view and edit your gantt chart is fun!</p>
     </div>
 
     <div class="landing-section landing-block-height">
 
-        <div class="landing-colum-l landing-block-height"></div>
+        <div class="landing-column-l landing-block-height"></div>
 
-        <div class="landing-colum-r landing-block-height">
+        <div class="landing-column-r landing-block-height">
             <h1 class="landing-manage-h">Why Use Gantt Charts?</h1>
             <p class="landing-manage-p">Plan&amp;View&nbsp;A Gantt chart is one of the most important tools in a project’s managers arsenal.
                 It helps organize complex projects, improve project visibility, and keep everyone on track. <br>
@@ -77,7 +82,7 @@
                 </div>
                 <div class="landing-icon-style"><img class="landing-icon" src="images/manage-resourse.svg" width="117">
                     <div class="l-icon-description">
-                        <h5 class="landing-icon-h">Manage resourse</h5>
+                        <h5 class="landing-icon-h">Manage resources</h5>
                         <p class="landing-icon-p">The Resource Utilization gives an overview of how your team member's time is being utilized.</p>
                     </div>
                 </div>

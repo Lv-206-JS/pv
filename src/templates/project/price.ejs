@@ -7,14 +7,21 @@
             <div class="tab-container">
                 <label class="form-label project-price">Project Price:</label>
                 <div class="price-container">
-                    <div class="details-label show-prices"></div>
-                    <div class="price-value"><%= price.price %></div>
-                    <div class="resources-prices hide-content">
-                        <br>
+                    <div class="table-price-header">
+                        <div class="table-item">Name</div>
+                        <div class="table-item">Price</div>
+                    </div>
+                    <div class="resources-prices">
                         <% for(var i = 0; i < resources.length; i++) { %>
-                            <div class="price-item"><%= resources[i].resourceName %> - <%= price.resourcesPrice[i]%></div>
+                            <div class="table-resource-row">
+                                <div class="price-item"><%= resources[i].resourceName %></div>
+                                <div class="price-item"><%= price.resourcesPrice[i]%></div>
+                            </div>
                         <% } %>
                     </div>
+                    <br>
+                    <div class="total-price-label">Total Price: </div>
+                    <div class="total-price-value"><%= price.price %></div>
                 </div>
                 <br>
                 <label class="form-label project-duratione">Project Duration:</label>

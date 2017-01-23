@@ -1,4 +1,4 @@
-@import "../common-styles";
+@import "common-styles";
 
 .menu {
   @extend .row-container;
@@ -17,7 +17,6 @@
 .logo {
   width: 120px;
   height: 27px;
-  //float: left;
 }
 ul {
   flex: 1;

@@ -1,4 +1,4 @@
-$landing-block-margin:0px 0px 30px 0px;
+$landing-block-margin: 0px 0px 30px 0px;
 $landing-block-height: 662px;
 $landing-display: flex;
 $landing-flex-direction: column;
@@ -7,84 +7,85 @@ $landing-align-items: center;
 $landing-text-align: center;
 $landing-p-font-size: 20px;
 $landing-p-line-height: 25px;
-$landing-block-column-width:50%;
+$landing-block-column-width: 50%;
 
-.landing-wrapper{
+.landing-wrapper {
   display: $landing-display;
   flex-direction: $landing-flex-direction;
   position: relative;
- // font-stack: Helvetica;
 
-    .landing-first-block{
+  .landing-first-block {
     width: 100%;
-    height:$landing-block-height;
+    height: 100vh;
     margin: $landing-block-margin;
     background: #6ed4c0;
     background: linear-gradient(to right, #6ed4c0 0%, #459bd5 100%);
   }
 
-    .landing-first-block-description{
-      display: $landing-display;
-      flex-direction: $landing-flex-direction;
-      justify-content:$landing-justify-content;
-      align-items: $landing-align-items;
-      height: 622px;
+  .landing-first-block-description {
+    display: $landing-display;
+    flex-direction: $landing-flex-direction;
+    justify-content: $landing-justify-content;
+    align-items: $landing-align-items;
+    height: 622px;
 
-      .big-logo{
-        width: 700px;
-      }
-      .landing-h{
-        margin: 30px 60px 0px 60px;
-        text-align: $landing-text-align;
-        padding: 0px 100px;
-        line-height: normal;
-        color: $text-white;
-        width: 70%;
-      }
-      .landing-started-button{
-        margin-top: 50px;
-        padding: 20px;
-        //border-radius: 10px;
-        background-color: $text-white;
-        color: $light-blue;
-        line-height: 25px;
-        font-weight: 700;
-        text-transform: none;
-        font-size: 18px;
-        text-align: $landing-text-align;
-        text-decoration: none;
-        box-shadow: $box-shadow;
-      }
-        .landing-started-button:hover {
-          background-color:$blue;
-          color: $text-white;
-          transition: $transition-background;
-        }
+    .big-logo {
+      width: 700px;
     }
-
+    .landing-h {
+      margin: 30px 60px 0 60px;
+      text-align: $landing-text-align;
+      padding: 0 100px;
+      line-height: normal;
+      color: $text-white;
+      width: 70%;
+    }
+    .landing-started-button {
+      margin-top: 50px;
+      padding: 20px;
+      background-color: $text-white;
+      color: $light-blue;
+      line-height: 25px;
+      font-weight: 700;
+      text-transform: none;
+      font-size: 18px;
+      text-align: $landing-text-align;
+      text-decoration: none;
+      box-shadow: $box-shadow;
+    }
+    .landing-started-button-hidden {
+      margin-top: 75px;
+      padding: 20px;
+    }
+    .landing-started-button:hover {
+      background-color: $blue;
+      color: $text-white;
+      transition: $transition-background;
+    }
+  }
 
   /*--------------------MANAGE BlOCK------------------------*/
-  .landing-manage-block{
+  .landing-manage-block {
     margin: $landing-block-margin;
 
-    .landing-manage-block-description{
+    .landing-manage-block-description {
       width: $landing-block-column-width;
       text-align: $landing-text-align;
       height: $landing-block-height;
       float: left;
       display: $landing-display;
       flex-direction: $landing-flex-direction;
-      justify-content:$landing-justify-content;
+      justify-content: $landing-justify-content;
       align-items: $landing-align-items;
       background: $light-green;
 
-      .landing-manage-h{
+      .landing-manage-h {
         padding-right: 60px;
         padding-left: 60px;
         color: #fff;
       }
 
-      .landing-manage-p{
+      .landing-manage-p {
         padding-right: 60px;
         padding-left: 60px;
         color: #35363d;
@@ -93,22 +94,20 @@ $landing-block-column-width:50%;
       }
     }
 
-    .landing-manage-block-img{
-      background-image: url("../../images/gantt-chart.png");
+    .landing-manage-block-img {
+      background-image: url("../../../images/gantt-chart.png");
       width: $landing-block-column-width;
       text-align: $landing-text-align;
       height: $landing-block-height;
       display: $landing-display;
       flex-direction: $landing-flex-direction;
-      justify-content:$landing-justify-content;
+      justify-content: $landing-justify-content;
       align-items: $landing-align-items;
     }
   }
 
-
-
   /*--------------------INFO BlOCK------------------------*/
-  .landing-info-block{
+  .landing-info-block {
     height: 400px;
     display: $landing-display;
     flex-direction: $landing-flex-direction;
@@ -116,9 +115,9 @@ $landing-block-column-width:50%;
     background-color: #f5f7f9;
     opacity: 1;
     color: $text-black;
-    margin:$landing-block-margin;
+    margin: $landing-block-margin;
 
-    .landiang-info-h{
+    .landing-info-h {
       position: static;
       padding: 40px 20px 20px;
       clear: none;
@@ -126,7 +125,7 @@ $landing-block-column-width:50%;
       text-align: $landing-text-align;
     }
 
-    .landing-info-p{
+    .landing-info-p {
       width: $landing-block-column-width;
       padding-right: 60px;
       padding-left: 60px;
@@ -143,8 +142,8 @@ $landing-block-column-width:50%;
   .landing-section {
     height: $landing-block-height;
   }
-  .landing-colum-l{
-    background-image: url('../../images/discussion.png');
+  .landing-column-l {
+    background-image: url('../../../images/discussion.png');
     background-size: cover;
     width: $landing-block-column-width;
     text-align: $landing-text-align;
@@ -152,11 +151,11 @@ $landing-block-column-width:50%;
     float: left;
     display: $landing-display;
     flex-direction: $landing-flex-direction;
-    justify-content:$landing-justify-content;
+    justify-content: $landing-justify-content;
     align-items: $landing-align-items;
   }
 
-  .landing-colum-r{
+  .landing-column-r {
     background-color: $light-blue;
     width: $landing-block-column-width;
     text-align: $landing-text-align;
@@ -171,34 +170,34 @@ $landing-block-column-width:50%;
       padding-left: 60px;
       color: $text-white;
     }
-    .landing-manage-p{
+    .landing-manage-p {
       padding-right: 60px;
       padding-left: 60px;
       color: #35363d;
       font-size: 20px;
       line-height: 25px;
-      .advantages-description{
+      .advantages-description {
         font-weight: bold;
       }
     }
   }
 
-  /*--------------------FEACHERS BlOCK------------------------*/
-  .landing-features-block{
+  /*--------------------FEATURES BlOCK------------------------*/
+  .landing-features-block {
     height: 750px;
 
-    .landing-h-features{
+    .landing-h-features {
       text-align: $landing-text-align;
-      padding:  80px 0px 0px 0px;
+      padding: 80px 0 0 0;
     }
 
-    .landing-features-block-description{
+    .landing-features-block-description {
       height: 700px;
       width: $landing-block-column-width;
       float: left;
       display: $landing-display;
       flex-direction: $landing-flex-direction;
-      justify-content:$landing-justify-content;
+      justify-content: $landing-justify-content;
       align-items: $landing-align-items;
     }
 
@@ -207,32 +206,32 @@ $landing-block-column-width:50%;
       flex: 0 0 auto;
     }
 
-    .landing-icon-p{
+    .landing-icon-p {
       width: 250px;
       height: 70%;
       float: right;
       clear: none;
     }
 
-    .landing-icon-style{
+    .landing-icon-style {
       display: flex;
       height: 180px;
       justify-content: center;
       border: 0;
     }
 
-    .landing-icon-h{
+    .landing-icon-h {
       width: 300px;
       font-size: 18px;
     }
 
-    .landing-icon-p{
-      width:  300px;
+    .landing-icon-p {
+      width: 300px;
       font-size: 16px;
     }
   }
 
-  .landing-footer{
+  .landing-footer {
     height: 40px;
     left: 0;
     bottom: 0;
@@ -242,6 +241,7 @@ $landing-block-column-width:50%;
     width: 100%;
     color: #fff;
     background-color: $light-blue;
-    margin-top:45px;
+    margin-top: 45px;
   }
 }
+

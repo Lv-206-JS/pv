@@ -51,8 +51,9 @@ define([
         },
 
         onSync: function () {
-            return this.renderViews(this.collection.first().get('id'));
-
+            if(this.collection.length !== 0) {
+                this.renderViews(this.collection.first().get('id'));
+            }
         },
 
         onSelect: function (id) {

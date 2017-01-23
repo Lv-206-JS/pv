@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', 'JST', 'moment'], function (Backbone, _, JST, Moment) {
+define(['backbone', 'underscore', 'JST', 'moment', 'backbone-validation'], function (Backbone, _, JST, Moment) {
     'use strict';
 
     var SettingsView = Backbone.View.extend({
@@ -16,6 +16,7 @@ define(['backbone', 'underscore', 'JST', 'moment'], function (Backbone, _, JST, 
             this.model = options.model;
             this.settings = this.model.get('settings');
             this.moment = Moment;
+            Backbone.Validation.bind(this);
         },
 
 
@@ -43,6 +44,7 @@ define(['backbone', 'underscore', 'JST', 'moment'], function (Backbone, _, JST, 
         },
 
         saveSettings: function saveSettings () {
+
             var newName = this.$el.find('.name').val();
             this.model.set({name: newName});
             var newAuthor = this.$el.find('.author').val();
@@ -63,7 +65,16 @@ define(['backbone', 'underscore', 'JST', 'moment'], function (Backbone, _, JST, 
             this.settings.dayStart = this.moment.duration(+newDayStart,'hours').asSeconds();
             this.settings.dayDuration = this.moment.duration(+newDayDuration,'hours').asSeconds();
             this.model.set('settings', this.settings);
-            this.model.save();
+
+            console.log(this.model);
+
+            console.log(this.model.isValid(['settings.dayStart']));
+            if (this.model.isValid(['settings.dayStart'])) {
+                this.model.save();
+            }else{
+                console.log("Handle ERRORS!");
+            }
+
             event.preventDefault();
             this.$el.remove();
         },

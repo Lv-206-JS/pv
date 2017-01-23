@@ -1,7 +1,7 @@
 define([
         'jquery',
         'backbone',
-        'views/landing',
+        'views/common/landingMain',
         'views/common/mainView',
         'views/common/login',
         'views/common/register'
@@ -43,12 +43,9 @@ define([
                     this.landingView = null;
                 }
 
-
                 if (!this.mainView) {
                     // Create new view.
                     this.mainView = new MainView();
-                    // Clean body element and append new view element.
-
                 }
 
                 $('body').html(this.mainView.render().$el);
@@ -85,6 +82,7 @@ define([
 
                 $('.auth').html(this.logInView.render().$el);
             },
+
             registrationForm: function registrationForm() {
 
                 if (!this.registrationView) {

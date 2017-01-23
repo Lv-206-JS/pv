@@ -375,6 +375,7 @@ define([
 
             renderTasks: function () {
                 this.ganttTasks = new GanttTasks({
+                    model: this.model,
                     tasks: this.tasks,
                     tasksPositions: this.tasksPositions,
                     dayDuration: this.dayDuration,

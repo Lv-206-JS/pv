@@ -121,12 +121,12 @@ $icon-hover-opacity: 1; // hover
 }
 
 .icon-as-background {
-  @extend .icon;
-  background-position: 0 0;
-  background-size: contain;
-  width: 20px;
-  height: 20px;
-}
+   @extend .icon;
+   background-position: 0 0;
+   background-size: contain;
+   width: 20px;
+   height: 20px;
+ }
 
 /* Pencil icon */
 .icon-edit {
@@ -144,6 +144,14 @@ $icon-hover-opacity: 1; // hover
 .icon-open {
   @extend .icon-as-background;
   background-image: url("/images/icon-link.svg");
+}
+/* Open icon for mobile devices */
+.icon-open-mobile {
+  @extend .icon-as-background;
+  background-image: url("/images/icon-projects-list.svg");
+  width: 100px;
+  height: 100px;
+  align-self: center;
 }
 
 /* Container or rows */

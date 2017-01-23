@@ -1,11 +1,15 @@
-@import 'single-project/project-view';
-@import 'landing-view';
-@import "landing-menu-view";
-@import "common-styles";
+@import "common/common-styles";
+@import "common/landing-main-view";
+@import "common/landing-view";
+@import "common/landing-menu-view";
+@import "common/landing-mobile-view";
 @import "common/main-view";
 @import "common/main-menu-view";
 @import "common/login-view";
+@import "common/login-mobile-view";
 @import "common/register-view";
+@import 'single-project/project-view';
+@import "single-project/mobile-project-view";
 @import "single-project/gantt-chart-view";
 @import "single-project/info-bar-view";
 @import "single-project/milestone-view";
@@ -22,6 +26,7 @@
 @import "single-project/ownership-view";
 @import "single-project/edit-resource-view";
 @import "projects/main-projects-view";
+@import "projects/mobile-projects-view";
 @import "projects/projects-about-view";
 @import "projects/projects-area-view";
 @import "projects/projects-header-view";
@@ -48,13 +53,13 @@ html, body {
   box-sizing: border-box;
 }
 p {
-  //display: inline;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
+
 a {
   display: inline;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   cursor: pointer;
 }
