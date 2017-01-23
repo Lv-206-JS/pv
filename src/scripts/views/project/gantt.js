@@ -5,9 +5,10 @@ define([
         'views/project/tasksList',
         'views/project/ganttChart',
         'timeLine',
-        'moment'
+        'moment',
+        'CriticalPath'
     ],
-    function (Backbone, _, JST, TasksListView, GanttChartView, TimeLine, Moment) {
+    function (Backbone, _, JST, TasksListView, GanttChartView, TimeLine, Moment, CriticalPath) {
         'use strict';
 
         var GanttContainerView = Backbone.View.extend({
@@ -86,7 +87,7 @@ define([
                 }
             },
 
-            decreaseZoom: function(){
+            decreaseZoom: function() {
                 if(this.zoom > 20) {
                     this.zoom -= 20;
                     this.hourLength /= 2;
@@ -181,7 +182,50 @@ define([
                     });
                     return 0;
                 })();
+            },
+
+            showOrHideCriticalPath: function () {
+                var toolCriticalPath = $('.tool-critical-way');
+                if (toolCriticalPath.hasClass('active')) {
+                    toolCriticalPath.removeClass('active');
+                    this.hideCriticalPath();
+                } else {
+                    toolCriticalPath.addClass('active');
+                    this.drawCriticalPath();
+                }
+            },
+
+            drawCriticalPath: function () {
+                var criticalPath = new CriticalPath(this.tasks);
+                var criticalPathTasks = criticalPath.startAlgorithm(),
+                    criticalPathTasks = criticalPathTasks[1];
+                for (var i = 0; i < this.tasks.length; i++) {
+                    $('.'+this.tasks[i].taskId).css('opacity', 0.8);
+                    // $('.'+this.tasks[i].taskId).css('fill', '#2ecc71');
+                }
+                for (i = 0; i < criticalPathTasks.length; i++) {
+                    var criticalPathTask = $('.'+criticalPathTasks[i]);
+                    criticalPathTask.addClass('critical');
+                    criticalPathTask.css('fill', '#d80027');
+                    criticalPathTask.css('opacity', 1);
+                }
+            },
+
+            hideCriticalPath: function () {
+                var criticalPath = new CriticalPath(this.tasks);
+                var criticalPathTasks = criticalPath.startAlgorithm(),
+                    criticalPathTasks = criticalPathTasks[1];
+                for (var i = 0; i < this.tasks.length; i++) {
+                    $('.'+this.tasks[i].taskId).css('opacity', 1);
+                    // $('.'+this.tasks[i].taskId).css('fill', '#28b463');
+                }
+                for (i = 0; i < criticalPathTasks.length; i++) {
+                    var criticalPathTask = $('.'+criticalPathTasks[i]);
+                    criticalPathTask.removeClass('critical');
+                    criticalPathTask.css('fill', '#28b463');
+                }
             }
+
         });
 
         return GanttContainerView;
