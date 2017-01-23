@@ -24,9 +24,11 @@ define([
                 this.tasks = options.model.get('tasks');
                 this.milestones = options.model.get('milestones');
                 this.initialZoom = 100; // zoom value in %
-                this.zoomK = 20;
+                this.zoomK = 5;
                 this.zoom = this.initialZoom;
-                this.hourLength = 3; // hour length in px
+                this.maxZoom = 300;
+                this.minZoom = 20;
+                this.hourLength = 4; // hour length in px
                 this.rowHeight = 40;
                 this.padding = 20;
                 this.moment = Moment;
@@ -81,18 +83,18 @@ define([
             },
 
             increaseZoom: function(){
-                if(this.zoom < 200) {
-                    this.zoom += this.zoomK;
-                    this.hourLength *= this.zoomK/10;
+                if(this.zoom < this.maxZoom) {
+                    this.zoom += this.initialZoom/this.zoomK;
+                    this.hourLength *= 1 + 2*((this.initialZoom/this.zoomK) / this.initialZoom);
                     this.findPositionsForTasks();
                     document.getElementById('zoom-value').innerHTML = this.zoom + '%';
                 }
             },
 
             decreaseZoom: function() {
-                if(this.zoom > 20) {
-                    this.zoom -= this.zoomK;
-                    this.hourLength /= this.zoomK/10;
+                if(this.zoom > this.minZoom) {
+                    this.zoom -= this.initialZoom/this.zoomK;
+                    this.hourLength *= 1 - 2*((this.initialZoom/this.zoomK) / this.initialZoom);
                     this.findPositionsForTasks();
                     document.getElementById('zoom-value').innerHTML = this.zoom + '%';
                 }
