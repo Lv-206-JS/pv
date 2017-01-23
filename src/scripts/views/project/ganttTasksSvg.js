@@ -79,11 +79,6 @@ define([
                             fill: "#28b463",
                             class: this.tasksPositions[row].taskId
                         });
-                        // if($('.'+this.tasksPositions[row].taskId).hasClass('critical')) {
-                        //     rect.attr({
-                        //         fill: "#d80027"
-                        //     });
-                        // }
                         var rectElem = document.getElementsByClassName(this.tasksPositions[row].taskId)[part];
                         rectElem.addEventListener('click', this.showTaskInfo.bind(this), true);
                     }

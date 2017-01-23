@@ -23,8 +23,10 @@ define([
                 this.model = options.model;
                 this.tasks = options.model.get('tasks');
                 this.milestones = options.model.get('milestones');
-                this.zoom = 100; // zoom value in %
-                this.hourLength = 6; // hour length in px
+                this.initialZoom = 100; // zoom value in %
+                this.zoomK = 20;
+                this.zoom = this.initialZoom;
+                this.hourLength = 3; // hour length in px
                 this.rowHeight = 40;
                 this.padding = 20;
                 this.moment = Moment;
@@ -80,8 +82,8 @@ define([
 
             increaseZoom: function(){
                 if(this.zoom < 200) {
-                    this.zoom += 20;
-                    this.hourLength *= 2;
+                    this.zoom += this.zoomK;
+                    this.hourLength *= this.zoomK/10;
                     this.findPositionsForTasks();
                     document.getElementById('zoom-value').innerHTML = this.zoom + '%';
                 }
@@ -89,8 +91,8 @@ define([
 
             decreaseZoom: function() {
                 if(this.zoom > 20) {
-                    this.zoom -= 20;
-                    this.hourLength /= 2;
+                    this.zoom -= this.zoomK;
+                    this.hourLength /= this.zoomK/10;
                     this.findPositionsForTasks();
                     document.getElementById('zoom-value').innerHTML = this.zoom + '%';
                 }
@@ -121,8 +123,12 @@ define([
                 var tasksPositions = [];
                 //change width of 1 hour
                 for(var i = 0; i < tasks.length; i++){
-                    var singleTask = {taskId: tasks[i].taskId, singleTaskPositions: []};
-                    var task = timeLine.getWorkDays(tasks[i].startDate,tasks[i].estimateTime);
+                    var singleTask = {
+                        taskId: tasks[i].taskId,
+                        singleTaskPositions: []
+                    };
+
+                    var task = timeLine.getWorkDays( tasks[i].startDate, tasks[i].estimateTime );
                     var projectStartDate = timeLine.toDate(0);
                     var projectStartDay = this.moment.unix(projectStartDate,'seconds').format("e");
                     for( var j = 0; j < task.length; j++){
@@ -147,8 +153,10 @@ define([
                         var width = (task[j].workHours)*(this.hourLength/3600);
                         singleTask.singleTaskPositions[j] = {positionX: positionX, width: width};
                     }
-                    tasksPositions[tasksPositions.length] = singleTask;
+
+                    tasksPositions.push(singleTask);
                 }
+
                 this.ganttChartView = new GanttChartView({
                     model: this.model,
                     tasksPositions: tasksPositions,
