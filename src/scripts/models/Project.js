@@ -20,8 +20,12 @@ define([
                 msg: 'Please, fill in Project Description field.',
             }, {
                 rangeLength: [0, 45],
-                msg: 'Description is expected to longer!'
-            }]
+                msg: 'Description is expected to be longer!'
+            }],
+            'settings.dayStart': {
+                range: [0, 86400],
+                msg: 'Choose start of the working day between 0 - 24!'
+            }
 
 
         },

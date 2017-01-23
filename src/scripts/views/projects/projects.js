@@ -25,20 +25,13 @@ define([
         },
 
         renderViews: function renderViews() {
-            // // TODO Change Append to concrete div or element
-            this.projectsHeaderView = new ProjectsTitleView().render();
-            this.$el.append(this.projectsHeaderView.$el);
+            this.projectsTitleView = new ProjectsTitleView().render();
+            this.$el.append(this.projectsTitleView.$el);
 
             this.projectsAreaView = new ProjectsAreaView().render();
             this.$el.append(this.projectsAreaView.$el);
 
             return this;
-        },
-
-        onChange: function onChange() {
-            // TODO delete this cleaning and add new rendering of elements to renderViews
-            this.$el.html('');
-            this.renderViews();
         },
 
         onEditProject: function showProjectsEditPopup() {

@@ -11,6 +11,7 @@ define([
     var MainView = Backbone.View.extend({
         template: JST['common:main'],
         className: 'main-view',
+
         initialize: function () {
         },
 

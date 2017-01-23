@@ -2,15 +2,16 @@ define([
         'jquery',
         'backbone',
         'views/common/landingMobile',
-        'views/common/mainView',
-        'views/common/login',
-        'views/common/register'
+        'views/common/loginMobile',
+        'views/projects/projectsListMobile',
+        'views/project/projectMobile'
     ],
     function ($,
               Backbone,
               LandingMobileView,
-              LogInView
-    ) {
+              LoginMobileView,
+              MobileProjectsView,
+              ProjectMobileView) {
         'use strict';
 
         var MobileRouter = Backbone.Router.extend({
@@ -18,35 +19,61 @@ define([
                 'projects': 'openProjects',
                 'project/:projectId': 'openSingleProject',
                 'project/:projectId/task/:taskId': 'openProjectAndTask',
-                'users/login': 'loginForm',
-                'users/registration': 'registrationForm',
+                'login': 'loginMobileForm',
                 '*path': 'openLandingMobilePage'
             },
 
             openLandingMobilePage: function openLandingMobilePage() {
-                if (this.mainMobileView) {
-                    this.mainMobileView.remove();
-                    this.mainMobileView = null;
-                }
 
                 this.landingMobileView = new LandingMobileView();
                 $('body').html(this.landingMobileView.render().$el);
             },
 
+
             openProjects: function () {
+
+                //If view exists kill it!!!
+                if (this.loginMobileView) {
+                    this.loginMobileView.remove();
+                    this.loginMobileView = null;
+                }
+
+                // Create new view.
+                if (!this.mobileProjectsView) {
+                    this.mobileProjectsView = new MobileProjectsView();
+                }
+                $('body').html(this.mobileProjectsView.$el);
+
             },
 
             openSingleProject: function openSingleProject(projectId) {
+                // If view exists kill it!!!
+                if (this.mobileProjectsView) {
+                    this.mobileProjectsView.remove();
+                    this.mobileProjectsView = null;
+                }
+
+                if (!this.projectMobileView) {
+                    // Create new view.
+                    this.projectMobileView = new ProjectMobileView(projectId);
+                }
+                $('body').html(this.projectMobileView.$el);
             },
 
             openProjectAndTask: function openProjectAndTask(projectId) {
             },
 
-            loginForm: function loginForm() {
-            },
+            loginMobileForm: function loginMobileForm() {
+                if (this.loginMobileView) {
+                    this.loginMobileView.remove();
+                    this.loginMobileView = null;
+                }
+                this.loginMobileView = new LoginMobileView();
 
-            registrationForm: function registrationForm() {
+                $('body').html(this.loginMobileView.render().$el);
+
             }
+
         });
 
         return MobileRouter;

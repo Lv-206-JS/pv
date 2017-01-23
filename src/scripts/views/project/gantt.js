@@ -7,7 +7,7 @@ define([
         'timeLine',
         'moment'
     ],
-    function (Backbone, _, JST, TasksListView, GanttChartView, TimeLineLib, Moment) {
+    function (Backbone, _, JST, TasksListView, GanttChartView, TimeLine, Moment) {
         'use strict';
 
         var GanttContainerView = Backbone.View.extend({
@@ -27,6 +27,7 @@ define([
                 this.rowHeight = 40;
                 this.padding = 20;
                 this.moment = Moment;
+                this.timeLine = new TimeLine (this.model);
             },
 
             render: function render() {
@@ -79,7 +80,8 @@ define([
             increaseZoom: function(){
                 if(this.zoom < 200) {
                     this.zoom += 20;
-                    this.findPositionsForTasks(true);
+                    this.hourLength *= 2;
+                    this.findPositionsForTasks();
                     document.getElementById('zoom-value').innerHTML = this.zoom + '%';
                 }
             },
@@ -87,21 +89,36 @@ define([
             decreaseZoom: function(){
                 if(this.zoom > 20) {
                     this.zoom -= 20;
-                    this.findPositionsForTasks(false);
+                    this.hourLength /= 2;
+                    this.findPositionsForTasks();
                     document.getElementById('zoom-value').innerHTML = this.zoom + '%';
                 }
             },
 
-            findPositionsForTasks: function(trigger){
+            fitProjectToScreen: function () {
+                var projectWidth = this.ganttChartView.getProjectWidth();
+                var ganttWidth =  parseInt($('#gantt-chart-container').css('width'), 10);
+                if (projectWidth > ganttWidth) {
+                    while (projectWidth > ganttWidth) {
+                        this.decreaseZoom();
+                        projectWidth = this.ganttChartView.getProjectWidth();
+                    }
+                } else if (projectWidth < ganttWidth) {
+                    while (projectWidth < ganttWidth) {
+                        this.increaseZoom();
+                        projectWidth = this.ganttChartView.getProjectWidth();
+                    }
+                    if (projectWidth > ganttWidth) {
+                        this.decreaseZoom();
+                    }
+                }
+            },
+
+            findPositionsForTasks: function(){
                 var tasks = this.model.get('tasks');
-                var timeLine = new TimeLineLib(this.model);
+                var timeLine = new TimeLine(this.model);
                 var tasksPositions = [];
                 //change width of 1 hour
-                if( trigger === true) {
-                    this.hourLength *= 2;
-                } else if(trigger === false) {
-                    this.hourLength /= 2;
-                }
                 for(var i = 0; i < tasks.length; i++){
                     var singleTask = {taskId: tasks[i].taskId, singleTaskPositions: []};
                     var task = timeLine.getWorkDays(tasks[i].startDate,tasks[i].estimateTime);

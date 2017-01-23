@@ -1,0 +1,10 @@
+<div class="projects-header"><h3>Projects List</h3></div>
+
+<ul class="projects-list-mobile">
+    <% for(var i = 0; i < projects.length; i++) {%>
+    <li class="projects-list-item" data-id="<%= projects[i].id %>">
+        <a class="projects-name"> <%= projects[i].name %> </a>
+        <a class="projects-link icon-open-mobile" title="Open" data-id="<%= projects[i].id %>"></a>
+    </li>
+    <% } %>
+</ul>

@@ -1,0 +1,83 @@
+$light-blue: #5499c7;
+$blue: #2980b9;
+$white: #fff;
+
+.login-mobile-view {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+
+  .mobile-form-title {
+    width: 100%;
+    height: 40%;
+    padding: 0 50px 0 50px;
+    margin-bottom: 50px;
+    background: linear-gradient(to right, #6ed4c0 0%, #459bd5 100%);
+    text-align: center;
+    font-family: "Roboto", serif;
+    font-weight: 600;
+    font-size: 6rem;
+    color: white;
+    text-shadow: 4px 3px 10px rgba(150, 150, 150, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .mobile-tab-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .mobile-form-input-text {
+      width: 90%;
+      height: 200px;
+      font-size: 4rem;
+      padding: 0 20px 0 20px;
+
+      &:last-of-type {
+        margin-bottom: 50px;
+      }
+    }
+  }
+
+  .mobile-login-form-bottom {
+    width: 90%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+
+    .mobile-form-button {
+      width: 100%;
+      height: 150px;
+      color: $white;
+      border: 1px solid transparent;
+      outline: none;
+      background-color: $light-blue;
+      transition: background-color 500ms ease;
+      font-weight: 700;
+      font-size: 4rem;
+      text-transform: uppercase;
+
+      &:first-child {
+        border-bottom: 2px solid ghostwhite;
+      }
+
+      &:hover {
+        background-color: $blue;
+      }
+
+      &::selection {
+        background-color: transparent;
+      }
+    }
+
+  }
+
+}
