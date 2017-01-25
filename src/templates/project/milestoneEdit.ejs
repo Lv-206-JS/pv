@@ -3,12 +3,6 @@
         <div class="form-title">
             <div>Milestone Edit</div>
         </div>
-        <div class="tabs">
-            <div class="tabs-menu ">
-                <a class="tab-link tab-general w--current">General</a>
-                <a class="tab-link tab-dependencies hide-content">Edit</a>
-            </div>
-        </div>
         <div class="milestones-container">
             <div class="tab-container">
                 <div class="tab-container general-content show-content">
@@ -35,43 +29,6 @@
                         <div class="table-cell-milestone"><%= moment.unix(milestones[i].date).format('DD/MM/YY HH:mm') %></div>
                     </div>
                     <% } %>
-                </div>
-
-                <div class="tab-container dependencies-content hide-content">
-                    <div class="set-milestone-name">
-                        <label>Name:</label>
-                        <input class="milestone-form-input-text" id="milestone-settings-name" type="text"
-                               value="<%= milestoneEdit.name %>" required>
-                    </div>
-                    <label class="dependancy-label form-label">Task List</label>
-                    <label class="dependancy-label form-label">Depends On</label>
-                    <div class="milestone-clone">
-                        <div class="milestone-drop-list scrollable">
-                            <table id="milestone-tasks-list">
-                                <tbody>
-                                <% for(var i = 0;i < tasksList.length; i++) { %>
-                                <tr class="milestone-task-item" id="<%= tasksList[i].taskId %>">
-                                    <td> <%= tasksList[i].name %></td>
-                                </tr>
-                                <% } %>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="milestone-drop-list scrollable">
-                            <table id="dependencies-list">
-                                <tbody>
-                                <% for(var i = 0; i < dependenciesList.length; i++) { %>
-                                <tr class="milestone-task-item" id="<%= dependenciesList[i].taskId %>">
-                                    <td><%= dependenciesList[i].name %></td>
-                                </tr>
-                                </tbody>
-                                <% } %>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="milestone-button-wrapper">
-                        <button class="save-milestones-button" data-name="<%=milestoneEdit.name%>">Save</button>
-                    </div>
                 </div>
             </div>
         </div>
