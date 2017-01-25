@@ -3,6 +3,14 @@ $light-blue: #5499c7;
 $blue: #2980b9;
 $white: #fff;
 
+.landing-mobile-h{
+  color: $white;
+  text-align: center;
+  padding: 40px;
+  line-height: 40px;
+  font-size: 35px;
+}
+
 .landing-mobile-view {
   display: flex;
   flex-direction: column;
@@ -29,7 +37,8 @@ $white: #fff;
       font-family: "Roboto", serif;
       font-size: 4rem;
       text-align: center;
-      margin: 0 auto;
+     // margin: 0 auto;
+      margin: 20px 0 0 0;
     }
 
     .mobile-form-button {

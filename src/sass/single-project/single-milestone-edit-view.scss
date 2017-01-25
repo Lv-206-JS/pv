@@ -1,0 +1,61 @@
+@import "../common/basic-popup-view";
+
+.single-milestone-edit-view {
+  @extend .basic-popup-view;
+}
+
+.form-wrapper {
+  margin-top: 8%;
+}
+
+.save-milestones-button {
+  width: 80px;
+  height: 35px;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  background-color: #5499c7;
+  -webkit-transition: background-color 500ms ease;
+  transition: background-color 500ms ease;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 1%;
+}
+
+.milestone-drop-list {
+  display: inline-block;
+  overflow-y: auto;
+  width: 44%;
+  height: 100%;
+  margin-right: 2%;
+  margin-left: 2%;
+  border: 1px solid $dark-grey;
+  padding-left: 5px;
+  background-color: $drop-list-background-color;
+}
+
+.milestone-form-input-text {
+  display: inline-block;
+  width: 160px;
+  border-radius: 10px;
+  border: 1px solid #a9a9a9;
+  padding: 8px 12px;
+  font-family: Roboto, sans-serif;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+.set-milestone-name {
+  margin-left: 25%;
+}
+
+.milestone-clone {
+  position: relative;
+  width: inherit;
+  height: 64%;
+  padding-left: 15px;
+}
+
+.milestone-button-wrapper {
+  text-align: center;
+}
