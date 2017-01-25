@@ -309,14 +309,14 @@ define([
             },
 
             adjustYearWidth: function(bottomDates, bottomW) {
-                var topW = [];
+                var topWidth = [];
                 for (var mnth = 0, year = 0; mnth < bottomDates.length; mnth++) {
-                    topW[year] = topW[year] === undefined ? bottomW : topW[year] + bottomW;
+                    topWidth[year] = topWidth[year] === undefined ? bottomW : topWidth[year] + bottomW;
                     if(Moment().month(bottomDates[mnth]).format("M") == 12) {
                         year++
                     }
                 }
-                return topW;
+                return topWidth;
             },
 
             adjustMonthWidth: function (topDates, bottomDates, bottomW, monthWidth, dayWidth) {

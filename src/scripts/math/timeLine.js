@@ -1,6 +1,8 @@
 define(['backbone', 'moment'], function (Backbone, Moment) {
     'use strict';
 
+
+
     var TimeLineLib = function (model) {
         this.startDate =  model.get('startDate');
         this.settings = model.get('settings');

@@ -99,21 +99,40 @@ define([
             showTaskInfo: function (event) {
                 event.stopPropagation();
                 var taskId = event.target.classList.value;
-                var task = this.findTaskById(taskId);
+
+                //remove active class and style from currently active task
+                var activeTask = $('.active-task');
+                activeTask.css('fill', '#28b463');
+                activeTask.removeClass('active-task');
+
+                //change style of current task
+                $('.'+taskId).addClass('active-task');
+                $('.'+taskId).css('fill', '#2980b9');
+
+                //hide info-bar-view
                 $('#info-bar-view-container').css('display', 'none');
+
+                var task = this.findTaskById(taskId);
                 var taskInfo = new TaskInfoView({
                     model: this.model,
                     task: task,
                     el: $('#task-info-view-container')[0]
                 }).render();
+
+                //show task-info-view
                 $('#task-info-view').css('display', 'flex');
-                console.log('showTaskInfo');
             },
 
             hideTaskInfo: function () {
+                var taskId = event.target.classList.value;
+
+                //remove active class and style from currently active task
+                var activeTask = $('.active-task');
+                activeTask.css('fill', '#28b463');
+                activeTask.removeClass('active-task');
+
                 $('#task-info-view').css('display', 'none');
                 $('#info-bar-view-container').css('display', 'flex');
-                console.log('hideTaskInfo');
             },
 
             drawVerticalDateLines: function () {

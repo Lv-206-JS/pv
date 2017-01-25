@@ -39,7 +39,8 @@ define([
             'click .tool-zoom-out' : 'decreaseZoom',
             'click .tool-undo' : 'setUndo',
             'click .tool-redo' : 'setRedo',
-            'click .tool-fit' : 'fitProjectToScreen'
+            'click .tool-fit' : 'fitProjectToScreen',
+            'click .tool-critical-way' : 'initCriticalPath'
         },
 
         initialize: function (options) {
@@ -137,6 +138,10 @@ define([
 
         fitProjectToScreen: function(){
             this.ganttContainerView.fitProjectToScreen();
+        },
+
+        initCriticalPath: function () {
+          this.ganttContainerView.showOrHideCriticalPath();
         },
 
         createId: function(allTasks){
