@@ -46,6 +46,12 @@ $tab-height: 40px;
       font-size: 14px;
       line-height: 20px;
       font-weight: 700;
+      .close-btn{
+        height: $tab-height;
+        background-image: url('../../../images/ic_highlight_off_white_24px.svg');
+        background-size: cover;
+       // background: ic_highlight_off_white_24px.svg;
+      }
     }
 
     .tabs-menu {
