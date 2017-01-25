@@ -34,10 +34,9 @@ define([
             this.$el.html(this.template({projectId: project}));
             this.slideout = new Slideout({
                 'panel': document.getElementById('panel'),
-                'menu': document.getElementById('menu')
-            });
-            this.slideout.on('translate', function(translated) {
-                console.log('Translate: ' + translated); // 120 in px
+                'menu': document.getElementById('menu'),
+                'padding': 600,
+                'tolerance': 70
             });
 
             return this;
