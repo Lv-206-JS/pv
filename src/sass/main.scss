@@ -8,12 +8,14 @@
 @import "common/login-view";
 @import "common/login-mobile-view";
 @import "common/register-view";
+@import "common/basic-popup-view";
 @import 'single-project/project-view';
 @import "single-project/mobile-project-view";
 @import "single-project/gantt-chart-view";
 @import "single-project/info-bar-view";
 @import "single-project/milestone-view";
 @import "single-project/milestone-edit-view";
+@import "single-project/single-milestone-edit-view";
 @import "single-project/tasks-list";
 @import "single-project/task-view";
 @import "single-project/attachments-view";
