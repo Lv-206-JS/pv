@@ -211,7 +211,6 @@ define([
                     criticalPathTasks = criticalPathTasks[1];
                 for (var i = 0; i < this.tasks.length; i++) {
                     $('.'+this.tasks[i].taskId).css('opacity', 0.8);
-                    // $('.'+this.tasks[i].taskId).css('fill', '#2ecc71');
                 }
                 for (i = 0; i < criticalPathTasks.length; i++) {
                     var criticalPathTask = $('.'+criticalPathTasks[i]);
@@ -227,7 +226,6 @@ define([
                     criticalPathTasks = criticalPathTasks[1];
                 for (var i = 0; i < this.tasks.length; i++) {
                     $('.'+this.tasks[i].taskId).css('opacity', 1);
-                    // $('.'+this.tasks[i].taskId).css('fill', '#28b463');
                 }
                 for (i = 0; i < criticalPathTasks.length; i++) {
                     var criticalPathTask = $('.'+criticalPathTasks[i]);
