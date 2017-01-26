@@ -1,7 +1,9 @@
 <div class="form-wrapper">
     <form class="main-form">
         <div class="form-title">
-            <div>Milestone Edit</div>
+            <div class="left">Milestone Edit</div>
+            <div class="center"></div>
+            <div class="right"><input class="close-btn form-button cancel-button" type="button" value="" > </div>
         </div>
         <div class="milestones-container">
             <div class="tab-container">
@@ -21,7 +23,7 @@
                                  data-name="<%= milestones[i].name %>"><%= milestones[i].name %></div>
                         </div>
                         <div class="table-cell-milestone">
-                            <span class="milestone-link edit-milestone" title="Edit"
+                            <span class="milestone-link edit-single-milestone" title="Edit"
                                   data-name="<%= milestones[i].name %>"></span>
                             <span class="milestone-link remove-milestone" title="Delete"
                                   data-name="<%= milestones[i].name %>"></span>
