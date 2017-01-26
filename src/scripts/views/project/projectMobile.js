@@ -7,9 +7,11 @@ define([
     'JST',
     'slideout',
     'models/Project',
+    './projectInfoMobile',
     './tasksListMobile'
 
-], function (Backbone, JST, Slideout, Model, TaskListMobileView) {
+
+], function (Backbone, JST, Slideout, Model, ProjectInfoMobileView, TaskListMobileView) {
 
     'use strict';
 
@@ -19,7 +21,10 @@ define([
         events: {
             'click .toggle-button': 'showDrawer',
             'click .back-to-projects': 'onBackToProjects',
-            'click .show-task-list': 'showTaskList',
+            'click .show-tasks-list': 'showTasksList',
+            'click .show-ganttchart': 'showGanttchart',
+            'click .show-milestones': 'showMilestones',
+            'click .show-resources': 'showResources',
             'click .sign-out-button': 'onSignOut'
         },
 
@@ -36,7 +41,6 @@ define([
 
         render: function () {
             var project = this.model.toJSON();
-            console.log(project);
             this.$el.html(this.template({project: project}));
             this.slideout = new Slideout({
                 'panel': document.getElementById('panel'),
@@ -50,6 +54,7 @@ define([
 
         onChange: function () {
             this.render();
+            this.showProjectInfo();
         },
 
         showDrawer: function showDrawer() {
@@ -60,18 +65,32 @@ define([
             PV.router.navigate('projects', {trigger: true});
         },
 
-        showTaskList: function showTasklist() {
+        showProjectInfo: function showProjectInfo() {
+            this.projectInfoMobileView = new ProjectInfoMobileView({
+                model: this.model
+            });
+            this.$el.find('.mobile-project-content').html(this.projectInfoMobileView.render().$el);
+        },
+
+        showTasksList: function showTasklist() {
             this.taskListMobileView = new TaskListMobileView({
-                model:this.model
+                model: this.model
             });
             this.slideout.toggle();
 
             this.$el.find('.mobile-project-content').html(this.taskListMobileView.render().$el);
         },
 
-        renderTasks: function (projectId) {
-            this.projectMobileView = new ProjectMobileView({projectId: projectId}).render();
-            this.$el.find('.mobile-project-content').html(this.projectMobileView.$el);
+        showGanttchart: function showGanttchart() {
+
+        },
+
+        showMilestones: function showMilestones() {
+
+        },
+
+        showResources: function showResources() {
+
         },
 
         onSignOut: function onSingOut() {

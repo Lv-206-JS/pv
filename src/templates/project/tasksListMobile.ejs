@@ -1,1 +1,13 @@
-<h1> THIS IS TASKS LIST</h1>
+
+<div class="mobile-tasks-header">
+    <span class="mobile-tasks-header-title">Tasks List</span>
+</div>
+
+<ul class="mobile-tasks-list">
+    <% for(var i = 0; i < tasks.length; i++) {%>
+    <li class="tasks-list-item" data-id="<%= tasks[i].id %>">
+        <a class="tasks-name"> <%= tasks[i].name %> </a>
+        <a class="tasks-link icon-open-mobile" title="Open" data-id="<%= tasks[i].id %>"></a>
+    </li>
+    <% } %>
+</ul>

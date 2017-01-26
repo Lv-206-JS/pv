@@ -20,7 +20,7 @@ define([
             routes: {
                 'projects': 'openProjects',
                 'project/:projectId': 'openSingleProject',
-                'project/:projectId/task/:taskId': 'openTask',
+                'project/:projectId/task/:taskId': 'openTasks',
                 'login': 'loginMobileForm',
                 '*path': 'openLandingMobilePage'
             },
@@ -66,18 +66,17 @@ define([
                 $('body').html(this.projectMobileView.$el);
             },
 
-            openTask: function openTask(projectId) {
+            openTasks: function openTask(projectId) {
 
-                if (this.taskListMobileView) {
-                    this.taskListMobileView.remove();
-                    this.taskListMobileView = null;
+                if (this.tasksListMobileView) {
+                    this.tasksListMobileView.remove();
+                    this.tasksListMobileView = null;
                 }
                 if (!this.projectMobileView) {
                     // Create new view.
                     this.projectMobileView = new ProjectMobileView(projectId);
-                    $('body').html(this.taskListMobileView.render().$el);
+                    $('body').html(this.tasksListMobileView.render().$el);
                 }
-                this.projectMobileView.renderTasks(projectId);
 
             },
 
