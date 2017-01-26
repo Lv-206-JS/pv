@@ -6,9 +6,10 @@ define([
     'backbone',
     'JST',
     'slideout',
-    'models/Project'
+    'models/Project',
+    './listMobile'
 
-], function (Backbone, JST, Slideout, Model) {
+], function (Backbone, JST, Slideout, Model, TaskListMobileView) {
 
     'use strict';
 
@@ -37,7 +38,6 @@ define([
         render: function () {
             var project = this.model.toJSON();
             this.$el.html(this.template({projectId: project, name: this.model.get('name')}));
-            console.log(name);
             this.slideout = new Slideout({
                 'panel': document.getElementById('panel'),
                 'menu': document.getElementById('menu'),
@@ -61,8 +61,20 @@ define([
             PV.router.navigate('projects', {trigger: true});
         },
 
-        showTaskList: function showTasklist(projectId) {
-            PV.router.navigate('project/:projectId/task/:taskId', {trigger: true});
+        showTaskList: function showTasklist() {
+            // PV.router.navigate('project/:projectId/task/:taskId', {trigger: true});
+            // var tasks = this.model.get('tasks');
+            this.taskListMobileView = new TaskListMobileView({
+                model:this.model
+            });
+            this.taskListMobileView.render();
+            this.$el.append(this.taskListMobileView.$el);
+        },
+
+        renderTasks: function (projectId) {
+
+            this.projectMobileView = new ProjectMobileView({projectId: projectId}).render();
+            this.$el.find('.mobile-project-content').html(this.projectMobileView.$el);
         },
 
         onSignOut: function onSingOut() {

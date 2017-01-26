@@ -4,16 +4,15 @@ define([
         'views/common/landingMobile',
         'views/common/loginMobile',
         'views/projects/projectsListMobile',
-        'views/project/projectMobile',
-        'views/project/taskListMobile'
+        'views/project/projectMobile'
     ],
     function ($,
               Backbone,
               LandingMobileView,
               LoginMobileView,
               MobileProjectsView,
-              ProjectMobileView,
-              TaskListMobileView
+              ProjectMobileView
+
     ) {
         'use strict';
 
@@ -51,9 +50,9 @@ define([
 
             openSingleProject: function openSingleProject(projectId) {
                 // If view exists kill it!!!
-                if (this.mobileProjectsView) {
-                    this.mobileProjectsView.remove();
-                    this.mobileProjectsView = null;
+                if (this.projectMobileView) {
+                    this.projectMobileView.remove();
+                    this.projectMobileView = null;
                 }
 
                 if (!this.projectMobileView) {
@@ -65,16 +64,17 @@ define([
 
             openTask: function openTask(projectId) {
 
-                if (this.projectMobileView) {
-                    this.projectMobileView.remove();
-                    this.projectMobileView = null;
+                if (this.taskListMobileView) {
+                    this.taskListMobileView.remove();
+                    this.taskListMobileView = null;
                 }
-
-                if (!this.taskListMobileView) {
+                if (!this.projectMobileView) {
                     // Create new view.
-                    this.taskListMobileView = new TaskListMobileView(projectId);
+                    this.projectMobileView = new ProjectMobileView(projectId);
+                    $('body').html(this.taskListMobileView.render().$el);
                 }
-                $('body').html(this.taskListMobileView.render().$el);
+                this.projectMobileView.renderTasks(projectId);
+
             },
 
             loginMobileForm: function loginMobileForm() {
