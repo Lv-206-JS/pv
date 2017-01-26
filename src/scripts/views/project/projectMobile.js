@@ -18,6 +18,7 @@ define([
         events: {
             'click .toggle-button': 'showDrawer',
             'click .back-to-projects': 'onBackToProjects',
+            'click .show-task-list': 'showTaskList',
             'click .sign-out-button': 'onSignOut'
         },
 
@@ -58,6 +59,10 @@ define([
 
         onBackToProjects: function onBackToProjects() {
             PV.router.navigate('projects', {trigger: true});
+        },
+
+        showTaskList: function showTasklist(projectId) {
+            PV.router.navigate('project/:projectId/task/:taskId', {trigger: true});
         },
 
         onSignOut: function onSingOut() {
