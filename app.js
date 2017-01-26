@@ -12,9 +12,6 @@ var flash = require('connect-flash');
 var expressValidator = require('express-validator');
 var session = require('express-session');
 
-
-//mongoose connection
-var morgan = require('morgan');
 var mongoose = require('mongoose');
 mongoose.connect(DATABASE_URL);
 
@@ -71,9 +68,6 @@ app.use(expressValidator({
 }));
 //set ejs as default engiene
 app.set('view engine', 'ejs');
-
-//Logger
-app.use(morgan('dev'));
 
 
 
