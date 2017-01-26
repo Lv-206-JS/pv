@@ -32,7 +32,7 @@ define(['backbone',
             'click .ok-button': 'saveChanges',
             'click .remove-milestone': 'confirmDeleteMilestone',
             'dblclick .milestone-task-name': 'showSingleMilestone',
-            'click #create-milestone': 'showSingleMilestone'
+            'click #create-milestone, .edit-single-milestone': 'showSingleMilestone'
         },
 
         showSingleMilestone: function (event) {
