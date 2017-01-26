@@ -307,3 +307,4 @@ define([
 
     return ProjectView;
 });
+
