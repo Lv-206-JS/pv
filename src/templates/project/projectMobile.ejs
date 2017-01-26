@@ -20,13 +20,14 @@
 <main id="panel" class="panel slideout-panel slideout-panel-left">
     <header class="panel-header">
         <button class="toggle-button">&#9776;</button>
-        <span class="mobile-panel-header-title"> <%= name %></span>
+        <span class="mobile-panel-header-title"> <%= project.name %></span>
     </header>
-    <div class="mobile-project-content">
+    <div class="project-description">
         <!--CONTENT OF MOBILE SINGLE PROJECT GOES HERE!!!-->
         <!--<h3>Single Project Main Page</h3>-->
         <!--<p>Put description or Gannt Chart Here</p><br>-->
-        <!--<p>Render POPUps for Milestones, Resources, Ownership!</p>-->
+        <p><%= project.description %></p>
     </div>
+    <div class="mobile-project-content"></div>
 </main>
 

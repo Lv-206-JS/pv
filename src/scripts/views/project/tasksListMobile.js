@@ -10,7 +10,7 @@ define([
         'use strict';
 
         var TaskListMobileView = Backbone.View.extend({
-            template: JST['project:taskListMobile'],
+            template: JST['project:tasksListMobile'],
 
 
             initialize: function (options) {

@@ -33,11 +33,15 @@ define([
 
 
             openProjects: function () {
-
                 //If view exists kill it!!!
                 if (this.loginMobileView) {
                     this.loginMobileView.remove();
                     this.loginMobileView = null;
+                }
+
+                if (this.projectMobileView) {
+                    this.projectMobileView.remove();
+                    this.projectMobileView = null;
                 }
 
                 // Create new view.
@@ -50,9 +54,9 @@ define([
 
             openSingleProject: function openSingleProject(projectId) {
                 // If view exists kill it!!!
-                if (this.projectMobileView) {
-                    this.projectMobileView.remove();
-                    this.projectMobileView = null;
+                if (this.mobileProjectsView) {
+                    this.mobileProjectsView.remove();
+                    this.mobileProjectsView = null;
                 }
 
                 if (!this.projectMobileView) {

@@ -7,7 +7,7 @@ define([
     'JST',
     'slideout',
     'models/Project',
-    './listMobile'
+    './tasksListMobile'
 
 ], function (Backbone, JST, Slideout, Model, TaskListMobileView) {
 
@@ -32,12 +32,12 @@ define([
             this.model.setUrl(this.projectId);
             this.model.fetch();
             this.model.on('sync', _.bind(this.onChange, this));
-
         },
 
         render: function () {
             var project = this.model.toJSON();
-            this.$el.html(this.template({projectId: project, name: this.model.get('name')}));
+            console.log(project);
+            this.$el.html(this.template({project: project}));
             this.slideout = new Slideout({
                 'panel': document.getElementById('panel'),
                 'menu': document.getElementById('menu'),
@@ -53,7 +53,6 @@ define([
         },
 
         showDrawer: function showDrawer() {
-
             this.slideout.toggle();
         },
 
@@ -62,17 +61,15 @@ define([
         },
 
         showTaskList: function showTasklist() {
-            // PV.router.navigate('project/:projectId/task/:taskId', {trigger: true});
-            // var tasks = this.model.get('tasks');
             this.taskListMobileView = new TaskListMobileView({
                 model:this.model
             });
-            this.taskListMobileView.render();
-            this.$el.append(this.taskListMobileView.$el);
+            this.slideout.toggle();
+
+            this.$el.find('.mobile-project-content').html(this.taskListMobileView.render().$el);
         },
 
         renderTasks: function (projectId) {
-
             this.projectMobileView = new ProjectMobileView({projectId: projectId}).render();
             this.$el.find('.mobile-project-content').html(this.projectMobileView.$el);
         },
@@ -82,7 +79,6 @@ define([
             PV.userModel.clear().set(this.userModel.defaults);
             PV.router.navigate('/', {trigger: true});
         }
-
     });
 
     return ProjectMobileView;
