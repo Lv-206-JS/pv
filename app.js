@@ -15,9 +15,7 @@ var session = require('express-session');
 var mongoose = require('mongoose');
 mongoose.connect(process.env.DATABASE_URL);
 
-/*
 var MongoStore = require('connect-mongo')(session);
-*/
 
 var app = express();
 //routes
@@ -77,11 +75,11 @@ app.use(session({
     saveUninitialized: true,
     resave: true,
     maxAge: new Date(Date.now() + 3600000),
-    secret: 'secret'/*,
+    secret: 'secret',
     store: new MongoStore({
         mongooseConnection: mongoose.connection,
         collection: 'session'
-    })*/
+    })
 }));
 
 // Passport init
