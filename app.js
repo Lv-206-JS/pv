@@ -16,14 +16,9 @@ var session = require('express-session');
 //mongoose connection
 var morgan = require('morgan');
 var mongoose = require('mongoose');
-mongoose.connect("localhost:27017/ganttcharts");
-/*
- //*********** if you need to use global db, uncomment this strings ***********
- mongoose.connect('mongodb://ganttcharts:softserve@ds055905.mlab.com:55905/ganttcharts');
-*/
+mongoose.connect(DATABASE_URL);
 
 var MongoStore = require('connect-mongo')(session);
-
 
 var app = express();
 //routes
