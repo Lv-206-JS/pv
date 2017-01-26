@@ -13,7 +13,7 @@ var expressValidator = require('express-validator');
 var session = require('express-session');
 
 var mongoose = require('mongoose');
-mongoose.connect(DATABASE_URL);
+mongoose.connect(process.env.DATABASE_URL);
 
 var MongoStore = require('connect-mongo')(session);
 
