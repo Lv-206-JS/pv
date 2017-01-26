@@ -40,6 +40,8 @@ jspm_packages
 
 .idea
 
+*.map
+
 .DS_Store
 
 attachments
