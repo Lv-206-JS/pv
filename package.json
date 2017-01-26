@@ -67,7 +67,7 @@
   },
   "scripts": {
     "start": "node ./bin/www",
-    "postinstall": "bower install && gulp"
+    "postinstall": "bower install"
   },
   "repository": {
     "type": "git",
