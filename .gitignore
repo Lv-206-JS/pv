@@ -42,8 +42,6 @@ jspm_packages
 
 *.map
 
-*.css
-
 scripts/templates.js
 
 .DS_Store
