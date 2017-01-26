@@ -70,7 +70,7 @@ app.use(expressValidator({
 app.set('view engine', 'ejs');
 
 
-
+/*
 app.use(session({
     saveUninitialized: true,
     resave: true,
@@ -80,7 +80,7 @@ app.use(session({
         mongooseConnection: mongoose.connection,
         collection: 'session'
     })
-}));
+}));*/
 
 // Passport init
 app.use(passport.initialize());
