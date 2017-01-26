@@ -15,7 +15,8 @@ requirejs.config({
         TaskAlgorithm: '/src/scripts/math/taskAlgorithm',
         undoRedoAlgorithm: '/src/scripts/math/undoRedoAlgorithm',
         bowser : '/bower_components/bowser/src/bowser',
-        CriticalPath: '/src/scripts/math/criticalPath'
+        CriticalPath: '/src/scripts/math/criticalPath',
+        mousetrap: '/node_modules/mousetrap/mousetrap.min'
     },
     baseUrl: '/src/scripts'
 });

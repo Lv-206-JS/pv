@@ -3,8 +3,9 @@ define(['backbone',
     'JST',
     'Draggabilly',
     'moment',
-    '../common/confirmDelete'],
-    function (Backbone, _, JST, Draggabilly, Moment, renderConfirmDeleteView) {
+    '../common/confirmDelete',
+    'mousetrap'],
+    function (Backbone, _, JST, Draggabilly, Moment, renderConfirmDeleteView, Mousetrap) {
     'use strict';
 
     var TaskView = Backbone.View.extend({
@@ -49,6 +50,9 @@ define(['backbone',
                 moment: this.moment,
                 deleteTask: this.delete
             }));
+
+            var me = this;
+            Mousetrap.bind('esc', function(event){ me.hideTaskView(event); });
             return this;
         },
 
@@ -62,6 +66,7 @@ define(['backbone',
             'change #add-attachment-file' : 'addAttachment',
             'click #delete-attachment' : 'confirmDeleteAttachment',
             'dblclick .task-item' : 'addTaskToList'
+            //'keypress .form-wrapper': 'pressEsc'
         },
 
         getTasksList: function(el){
@@ -338,6 +343,7 @@ define(['backbone',
 
         hideTaskView: function(event){
             event.preventDefault();
+            //unbind mousetrap
             this.$el.remove();
         },
 
