@@ -8,10 +8,13 @@ define([
     'slideout',
     'models/Project',
     './projectInfoMobile',
-    './tasksListMobile'
+    './tasksListMobile',
+    './ganttChartMobile',
+    './milestoneMobile',
+    './resourcesMobile'
 
 
-], function (Backbone, JST, Slideout, Model, ProjectInfoMobileView, TaskListMobileView) {
+], function (Backbone, JST, Slideout, Model, ProjectInfoMobileView, TaskListMobileView, ChartMobileView, MilestoneMobileView, ResourceMobileView) {
 
     'use strict';
 
@@ -82,15 +85,30 @@ define([
         },
 
         showGanttchart: function showGanttchart() {
+            this.chartMobileView = new ChartMobileView({
+                model: this.model
+            });
+            this.slideout.toggle();
 
+            this.$el.find('.mobile-project-content').html(this.chartMobileView.render().$el);
         },
 
         showMilestones: function showMilestones() {
+            this.milestoneMobileView = new MilestoneMobileView({
+                model: this.model
+            });
+            this.slideout.toggle();
 
+            this.$el.find('.mobile-project-content').html(this.milestoneMobileView.render().$el);
         },
 
         showResources: function showResources() {
+            this.resourceMobileView = new ResourceMobileView({
+                model: this.model
+            });
+            this.slideout.toggle();
 
+            this.$el.find('.mobile-project-content').html(this.resourceMobileView.render().$el);
         },
 
         onSignOut: function onSingOut() {

@@ -55,6 +55,12 @@ define([
             this.undoRedo = new UndoRedoAlgorithm();
         },
 
+        unfocusTaskEditButton: function () {
+            $('.task-link').focus(function () {
+                $('.task-link').blur();
+            });
+        },
+
         onBackToLandingPage: function onBackToLandingPage() {
             PV.router.navigate('/', {trigger: true});
         },
@@ -79,6 +85,7 @@ define([
                 model: this.model,
                 el: this.$el.find('#gantt-view-container')[0]
             }).render();
+            this.unfocusTaskEditButton();
             this.listenTo(this.ganttContainerView.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
             this.listenTo(this.ganttContainerView.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
             return this;
