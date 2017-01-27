@@ -64,7 +64,9 @@ define(['backbone', 'underscore', 'JST', 'moment', 'backbone-validation'], funct
             var newDayStart = this.$el.find('.working-day-start').val();
             this.settings.dayStart = this.moment.duration(+newDayStart,'hours').asSeconds();
             this.settings.dayDuration = this.moment.duration(+newDayDuration,'hours').asSeconds();
-            this.settings.icon = this.uploadAttachment();
+            if($("#add-attachment-file").prop('files')[0]) {
+                this.settings.icon = this.uploadAttachment();
+            }
             this.model.set('settings', this.settings);
 
             if (this.model.isValid(['settings.dayStart'])) {
