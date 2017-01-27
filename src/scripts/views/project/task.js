@@ -4,11 +4,13 @@ define(['backbone',
     'Draggabilly',
     'moment',
     '../common/confirmDelete',
-    'mousetrap'],
-    function (Backbone, _, JST, Draggabilly, Moment, renderConfirmDeleteView, Mousetrap) {
+    'mousetrap',
+    '../modalView'
+    ],
+    function (Backbone, _, JST, Draggabilly, Moment, renderConfirmDeleteView, Mousetrap, ModalView) {
     'use strict';
 
-    var TaskView = Backbone.View.extend({
+    var TaskView = ModalView.extend({
         template: JST['project:task'],
         className: 'task-view show-content',
 
@@ -37,6 +39,7 @@ define(['backbone',
             this.dependenciesList = this.getTasksList(false);
             this.mimetypesList = this.getMimetypesList(this.task.attachments);
             this.moment = Moment;
+            this.showModalView();
         },
 
         render: function render() {
@@ -51,8 +54,10 @@ define(['backbone',
                 deleteTask: this.delete
             }));
 
+            /*
             var me = this;
             Mousetrap.bind('esc', function(event){ me.hideTaskView(event); });
+            */
             return this;
         },
 
@@ -60,13 +65,13 @@ define(['backbone',
             'click .tab-general' : 'taskGeneralInformation',
             'click .tab-dependencies' : 'taskDependenciesInformation',
             'click .tab-attachments' : 'taskAttachmentslInformation',
-            'click .cancel-button' : 'hideTaskView',
+            //'click .cancel-button' : 'hideTaskView',
+            'click .cancel-button' : 'hideModalView',
             'click .ok-button' : 'onSubmitChanges',
-            'click .delete-task' : 'confirmDelete',
+            'click .delete-task' : 'showConfirmDeleteView',
             'change #add-attachment-file' : 'addAttachment',
-            'click #delete-attachment' : 'confirmDeleteAttachment',
+            //'click #delete-attachment' : 'confirmDeleteAttachment',
             'dblclick .task-item' : 'addTaskToList'
-            //'keypress .form-wrapper': 'pressEsc'
         },
 
         getTasksList: function(el){
@@ -337,15 +342,19 @@ define(['backbone',
             this.$el.remove();
         },
 
+        /*
         confirmDelete: function(event){
             renderConfirmDeleteView(event, this, this.deleteTask);
         },
+
 
         hideTaskView: function(event){
             event.preventDefault();
             //unbind mousetrap
             this.$el.remove();
+            this.hideModalView();
         },
+        */
 
         onSubmitChanges: function onSubmitChanges (event){
             event.preventDefault();
@@ -368,7 +377,17 @@ define(['backbone',
             }
             this.trigger('upsertTask', this.tasks, this.task);
             this.$el.remove();
+        },
+
+        confirmDelete: function confirmDelete() {
+            this.deleteTask();
         }
+
+        /*
+        onEnter: function onEnter() {
+            this.showConfirmDeleteView();
+        }
+        */
 
     });
 

@@ -27,7 +27,9 @@ define(['backbone', 'JST'], function(Backbone, JST) {
         }
     });
 
+    return ConfirmDeleteView;
     //method creates Confirm Delete View that will handle the deletion
+    /*
     var renderConfirmDeleteView = function(event, elem, callback) {
             //param event - the 'click' event passed to event handler in events:{}
             //param elem - view instance object (this)
@@ -39,6 +41,7 @@ define(['backbone', 'JST'], function(Backbone, JST) {
     };
 
     return renderConfirmDeleteView;
+    */
     /*
         To create a Confirm Delete View:
 
