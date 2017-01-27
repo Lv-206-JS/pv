@@ -16,6 +16,7 @@ define([
         initialize: function () {
             this.collection = PV.projectsCollection;
             this.collection.fetch();
+            this.collection.off('sync');
             this.collection.on('sync', _.bind(this.onSync, this));
         },
 
@@ -28,6 +29,7 @@ define([
 
         onSelectProject: function (e) {
             var id = this.getTargetId(e);
+
             PV.router.navigate('project/' + id, {trigger: true});
         },
 
@@ -38,7 +40,7 @@ define([
         },
 
         onSync: function () {
-                this.render();
+            this.render();
         }
 
     });

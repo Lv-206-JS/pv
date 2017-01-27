@@ -64,10 +64,10 @@ $tab-height: 40px;
         float:right;
         width:100px;
         justify-content: flex-end;
-        
+
         .close-btn{
-          width: 40px;
-          height: $tab-height;
+          width: 30px;
+          height: 30px;
           background-image: url('../../../images/close_icon.svg');
           background-size: contain;
           background-repeat: no-repeat;
