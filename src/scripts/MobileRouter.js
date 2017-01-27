@@ -11,14 +11,16 @@ define([
               LandingMobileView,
               LoginMobileView,
               MobileProjectsView,
-              ProjectMobileView) {
+              ProjectMobileView
+
+    ) {
         'use strict';
 
         var MobileRouter = Backbone.Router.extend({
             routes: {
                 'projects': 'openProjects',
                 'project/:projectId': 'openSingleProject',
-                'project/:projectId/task/:taskId': 'openProjectAndTask',
+                'project/:projectId/task/:taskId': 'openTasks',
                 'login': 'loginMobileForm',
                 '*path': 'openLandingMobilePage'
             },
@@ -31,11 +33,15 @@ define([
 
 
             openProjects: function () {
-
                 //If view exists kill it!!!
                 if (this.loginMobileView) {
                     this.loginMobileView.remove();
                     this.loginMobileView = null;
+                }
+
+                if (this.projectMobileView) {
+                    this.projectMobileView.remove();
+                    this.projectMobileView = null;
                 }
 
                 // Create new view.
@@ -60,7 +66,18 @@ define([
                 $('body').html(this.projectMobileView.$el);
             },
 
-            openProjectAndTask: function openProjectAndTask(projectId) {
+            openTasks: function openTask(projectId) {
+
+                if (this.tasksListMobileView) {
+                    this.tasksListMobileView.remove();
+                    this.tasksListMobileView = null;
+                }
+                if (!this.projectMobileView) {
+                    // Create new view.
+                    this.projectMobileView = new ProjectMobileView(projectId);
+                    $('body').html(this.tasksListMobileView.render().$el);
+                }
+
             },
 
             loginMobileForm: function loginMobileForm() {

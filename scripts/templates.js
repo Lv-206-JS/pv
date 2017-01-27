@@ -86,7 +86,7 @@ __p += '\n        <img class="big-logo" src="images/plan-view-logo-1.svg">\n    
 ((__t = ( userName )) == null ? '' : __t) +
 ' </span>\n            <input class="go-to-projects mobile-form-button" type="submit" value="my projects">\n            <input class="sign-out-button mobile-form-button" type="submit" value="sign out">\n\n        ';
  } else { ;
-__p += '\n             <input class="login-btn mobile-form-button" type="submit" value="sign in">\n        ';
+__p += '\n                <img class="big-logo-signin" src="images/plan-view-logo-1.svg">\n                <input class="login-btn mobile-form-button" type="submit" value="sign in">\n        ';
  } ;
 __p += '\n\n    </div>\n<!--</div>-->\n';
 
@@ -163,131 +163,12 @@ return __p
 (function() {
 window["JST"] = window["JST"] || {};
 
-window["JST"]["projects:projectsAbout"] = function(obj) {
-obj || (obj = {});
-var __t, __p = '';
-with (obj) {
-__p += '\n<div class="project-description-header"><h3>Currently selected project description</h3></div>\n\n<div class="project-description"> ' +
-((__t = ( description )) == null ? '' : __t) +
-'</div>\n';
-
-}
-return __p
-}})();
-(function() {
-window["JST"] = window["JST"] || {};
-
-window["JST"]["projects:projectsArea"] = function(obj) {
-obj || (obj = {});
-var __t, __p = '';
-with (obj) {
-__p += '<div class="create-button-container">\n    <button class="create-project">New Project</button>\n</div>\n<div class="projects-list-block"></div>\n<div class="project-about-block"></div>\n<div class="popup-container"></div>\n';
-
-}
-return __p
-}})();
-(function() {
-window["JST"] = window["JST"] || {};
-
-window["JST"]["projects:projectsEdit"] = function(obj) {
-obj || (obj = {});
-var __t, __p = '', __j = Array.prototype.join;
-function print() { __p += __j.call(arguments, '') }
-with (obj) {
-__p += '<div class="form-wrapper">\n    <div class="main-form">\n\n        <div class="form-title">\n            <div>Project Edit</div>\n        </div>\n\n        <div class="tab-container">\n\n            <label class="form-label">' +
-((__t = ( project.name ? 'Update' : 'Create' )) == null ? '' : __t) +
-' Project</label>\n            <input class="form-input-text form-control" id="name" type="text" name="name" placeholder="Project Name"\n                   value="' +
-((__t = ( project.name )) == null ? '' : __t) +
-'">\n            <div class="form-error name-error"></div>\n\n            <label class="form-label description-label">Description</label>\n            <textarea class="form-input-description form-control" id="description" maxlength="50" name="description"\n                      placeholder="Description">' +
-((__t = ( project.description )) == null ? '' : __t) +
-'</textarea>\n            <div class="form-error description-error"></div>\n            ';
- if(project) { ;
-__p += '\n            <input type="hidden" name="id" value="' +
-((__t = ( project.id )) == null ? '' : __t) +
-'"/>\n            ';
- } ;
-__p += '\n        </div>\n\n        <div class="form-bottom">\n            <input class="form-button ok-button" type="submit" value="' +
-((__t = ( project.name ? 'Update' : 'Create' )) == null ? '' : __t) +
-'">\n            <input class="form-button cancel-button" type="submit" value="cancel">\n        </div>\n\n    </div>\n</div>\n';
-
-}
-return __p
-}})();
-(function() {
-window["JST"] = window["JST"] || {};
-
-window["JST"]["projects:projectsList"] = function(obj) {
-obj || (obj = {});
-var __t, __p = '', __j = Array.prototype.join;
-function print() { __p += __j.call(arguments, '') }
-with (obj) {
-__p += '\n<div class="projects-list-header"><h3>Projects List</h3></div>\n\n<ul>\n    ';
- for(var i = 0; i < projects.length; i++) {;
-__p += '\n        <li class="projects-list-item ';
- if (projects[i].id === activeId) { ;
-__p += 'active';
- } ;
-__p += '" data-id="' +
-((__t = ( projects[i].id )) == null ? '' : __t) +
-'">\n            <a class="projects-link-name"> ' +
-((__t = ( projects[i].name )) == null ? '' : __t) +
-' </a>\n            <a class="project-link icon-edit" title="Edit" data-id="' +
-((__t = ( projects[i].id )) == null ? '' : __t) +
-'"></a>\n            <a class="project-link icon-remove" title="Delete" data-id="' +
-((__t = ( projects[i].id )) == null ? '' : __t) +
-'"></a>\n            <a class="project-link icon-open" title="Open" data-id="' +
-((__t = ( projects[i].id )) == null ? '' : __t) +
-'"></a>\n        </li>\n    ';
- } ;
-__p += '\n</ul>\n';
-
-}
-return __p
-}})();
-(function() {
-window["JST"] = window["JST"] || {};
-
-window["JST"]["projects:projectsListMobile"] = function(obj) {
-obj || (obj = {});
-var __t, __p = '', __j = Array.prototype.join;
-function print() { __p += __j.call(arguments, '') }
-with (obj) {
-__p += '<div class="projects-header"><h3>Projects List</h3></div>\n\n<ul class="projects-list-mobile">\n    ';
- for(var i = 0; i < projects.length; i++) {;
-__p += '\n    <li class="projects-list-item" data-id="' +
-((__t = ( projects[i].id )) == null ? '' : __t) +
-'">\n        <a class="projects-name"> ' +
-((__t = ( projects[i].name )) == null ? '' : __t) +
-' </a>\n        <a class="projects-link icon-open-mobile" title="Open" data-id="' +
-((__t = ( projects[i].id )) == null ? '' : __t) +
-'"></a>\n    </li>\n    ';
- } ;
-__p += '\n</ul>';
-
-}
-return __p
-}})();
-(function() {
-window["JST"] = window["JST"] || {};
-
-window["JST"]["projects:projectsTitle"] = function(obj) {
-obj || (obj = {});
-var __t, __p = '';
-with (obj) {
-__p += '<div class="projects-title">\n\n    <div class="project-title-text">\n            <p><strong>Click on project name to see it\'s description and use doubleclick or "Go to!" button to visit it\'s\n                page! Press New to create project or Edit/Remove signs for existing one.</strong></p>\n    </div>\n\n</div>';
-
-}
-return __p
-}})();
-(function() {
-window["JST"] = window["JST"] || {};
-
 window["JST"]["project:attachments"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 with (obj) {
-__p += '<div class="form-wrapper">\n    <div class="form-title">\n        <div>Attachments</div>\n    </div>\n    <div class="attachments-container">\n        <div class="tab-container">\n            <div class="add-attachment">\n                <div class="form-input-file">\n                    <label>\n                        <input id="add-attachment-file" type="file" name="file"/>\n                        <img class="add-img" src="/images/add.svg">\n                        <span>Upload File</span>\n                    </label>\n                </div>\n            </div>\n            <div class="attachments-attachments">\n                ';
+__p += '<div class="form-wrapper">\n    <div class="form-title">\n        <div class="left">Attachments</div>\n        <div class="center"></div>\n        <div class="right"><input class="close-btn ok-button form-button cancel-button" type="button" value="" > </div>\n    </div>\n    <div class="attachments-container">\n        <div class="tab-container">\n            <div class="add-attachment">\n                <div class="form-input-file">\n                    <label>\n                        <input id="add-attachment-file" type="file" name="file"/>\n                        <img class="add-img" src="/images/add.svg">\n                        <span>Upload File</span>\n                    </label>\n                </div>\n            </div>\n            <div class="attachments-attachments">\n                ';
  for( var i = 0; i < attachments.length; i++) { ;
 __p += '\n                <div class="attachment-item">\n                    <div id="delete-attachment" data-id="' +
 ((__t = ( attachments[i].attachmentId )) == null ? '' : __t) +
@@ -458,13 +339,13 @@ obj || (obj = {});
 var __t, __p = '', __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 with (obj) {
-__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <div>Milestone Edit</div>\n        </div>\n        <div class="milestones-container">\n            <div class="tab-container">\n                <div class="tab-container general-content show-content">\n                    <div class="table-milestone-header-row">\n                        <div class="table-header-milestone-cell">Name</div>\n                        <div class="table-header-milestone-cell">Start date</div>\n                    </div>\n                    <div class="table-row">\n                        <img class="add-milestone-img" src="../../../images/add.svg">\n                        <a class="add-milestone-link" id="create-milestone">Milestone</a>\n                    </div>\n                    ';
+__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <div class="left">Milestone Edit</div>\n            <div class="center"></div>\n            <div class="right"><input class="close-btn form-button cancel-button" type="button" value="" > </div>\n        </div>\n        <div class="milestones-container">\n            <div class="tab-container">\n                <div class="tab-container general-content show-content">\n                    <div class="table-milestone-header-row">\n                        <div class="table-header-milestone-cell">Name</div>\n                        <div class="table-header-milestone-cell">Start date</div>\n                    </div>\n                    <div class="table-row">\n                        <img class="add-milestone-img" src="../../../images/add.svg">\n                        <a class="add-milestone-link" id="create-milestone">Milestone</a>\n                    </div>\n                    ';
  for(var i = 0; i < milestones.length; i++) { ;
 __p += '\n                    <div class="table-milestone-row">\n                        <div class="table-cell-milestone">\n                            <div class="milestone-task-name"\n                                 data-name="' +
 ((__t = ( milestones[i].name )) == null ? '' : __t) +
 '">' +
 ((__t = ( milestones[i].name )) == null ? '' : __t) +
-'</div>\n                        </div>\n                        <div class="table-cell-milestone">\n                            <span class="milestone-link edit-milestone" title="Edit"\n                                  data-name="' +
+'</div>\n                        </div>\n                        <div class="table-cell-milestone">\n                            <span class="milestone-link edit-single-milestone" title="Edit"\n                                  data-name="' +
 ((__t = ( milestones[i].name )) == null ? '' : __t) +
 '"></span>\n                            <span class="milestone-link remove-milestone" title="Delete"\n                                  data-name="' +
 ((__t = ( milestones[i].name )) == null ? '' : __t) +
@@ -485,7 +366,7 @@ obj || (obj = {});
 var __t, __p = '', __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 with (obj) {
-__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <p>Ownership</p>\n        </div>\n        <div class="ownership-container">\n            <div class="ownership-input-container">\n                <label class="form-label">Input user email:</label>\n                <form class="add-ownership">\n                    <input class="ownership-form-input-text user-email" type="email" required>\n                    <button class="add-ownership-button">Add</button>\n                </form>\n                <div class="ownerhip-radio">\n                    <input type="radio" id="reader" name="ownership" value="reader" checked="checked">reader\n                    <input type="radio" id="editor" name="ownership" value="editor">editor\n                </div>\n            </div>\n            <label class="ownership-form-label">Readers</label>\n            <label class="ownership-form-label">Editors</label>\n            <div class="ownership-drop-list">\n                <table id="ownership-readers-list">\n                    <tbody>\n                    ';
+__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <p class="left">Ownership</p>\n            <div class="center"></div>\n            <div class="right"><input class="close-btn form-button cancel-button" type="button" value="" > </div>\n        </div>\n        <div class="ownership-container">\n            <div class="ownership-input-container">\n                <label class="form-label">Input user email:</label>\n                <form class="add-ownership">\n                    <input class="ownership-form-input-text user-email" type="email" required>\n                    <button class="add-ownership-button">Add</button>\n                </form>\n                <div class="ownerhip-radio">\n                    <input type="radio" id="reader" name="ownership" value="reader" checked="checked">reader\n                    <input type="radio" id="editor" name="ownership" value="editor">editor\n                </div>\n            </div>\n            <label class="ownership-form-label">Readers</label>\n            <label class="ownership-form-label">Editors</label>\n            <div class="ownership-drop-list">\n                <table id="ownership-readers-list">\n                    <tbody>\n                    ';
  for(var i = 0;i < readersList.length; i++) { ;
 __p += '\n                    <tr class="task-item" id="' +
 ((__t = ( readersList[i].email )) == null ? '' : __t) +
@@ -518,7 +399,7 @@ obj || (obj = {});
 var __t, __p = '', __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 with (obj) {
-__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <div>Project Price</div>\n        </div>\n        <div class="tab-container">\n            <div class="tab-container">\n                <label class="form-label project-price">Project Price:</label>\n                <div class="price-container">\n                    <div class="table-price-header">\n                        <div class="table-item">Name</div>\n                        <div class="table-item">Price</div>\n                    </div>\n                    <div class="resources-prices">\n                        ';
+__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <div class="left">Project Price</div>\n            <div class="center"></div>\n            <div class="right"><input class="close-btn form-button cancel-button ok-button" type="button" value="" > </div>\n        </div>\n        <div class="tab-container">\n            <div class="tab-container">\n                <label class="form-label project-price">Project Price:</label>\n                <div class="price-container">\n                    <div class="table-price-header">\n                        <div class="table-item">Name</div>\n                        <div class="table-item">Price</div>\n                    </div>\n                    <div class="resources-prices">\n                        ';
  for(var i = 0; i < resources.length; i++) { ;
 __p += '\n                            <div class="table-resource-row">\n                                <div class="price-item">' +
 ((__t = ( resources[i].resourceName )) == null ? '' : __t) +
@@ -555,11 +436,31 @@ return __p
 (function() {
 window["JST"] = window["JST"] || {};
 
+window["JST"]["project:projectInfoMobile"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '';
+with (obj) {
+__p += '<div class="project-info-mobile">\n    <h3>Single Project Main Page</h3><br>\n    <p>Description: ' +
+((__t = ( project.description )) == null ? '' : __t) +
+'</p><br>\n    <p>Author: ' +
+((__t = ( project.author )) == null ? '' : __t) +
+'</p><br>\n    <p>StartDate: ' +
+((__t = ( project.startDate )) == null ? '' : __t) +
+'</p><br>\n</div>';
+
+}
+return __p
+}})();
+(function() {
+window["JST"] = window["JST"] || {};
+
 window["JST"]["project:projectMobile"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '';
 with (obj) {
-__p += '\n<nav id="menu" class="menu-mobile slideout-menu slideout-menu-left">\n\n    <header class="mobile-menu-header">\n        <span class="mobile-menu-header-title">Project Menu</span>\n    </header>\n\n    <div class="mobile-menu-section">\n    <ul class="mobile-menu-section-list">\n        <li class="mobile-menu-section-item"><a>Tasks</a></li>\n        <li class="mobile-menu-section-item"><a>Resources</a></li>\n        <li class="mobile-menu-section-item"><a>Milestones</a></li>\n        <li class="mobile-menu-section-item"><a>Ownership</a></li>\n        <li class="mobile-menu-section-item"><a>Sign Out</a></li>\n    </ul>\n    </div>\n</nav>\n\n<main id="panel" class="panel slideout-panel slideout-panel-left">\n    <header class="panel-header">\n        <button class="toggle-button">&#9776;</button>\n        <h2>Single Project Name</h2>\n    </header>\n    <div class="mobile-project-content">\n        <!--CONTENT OF MOBILE SINGLE PROJECT GOES HERE!!!-->\n        <h2>Single Project Main Page</h2>\n        <p>Put description or Gannt Chart Here</p><br>\n        <p>Render POPUps for Milestones, Resources, Ownership!</p>\n    </div>\n</main>\n\n';
+__p += '<nav id="menu" class="menu-mobile slideout-menu slideout-menu-left">\n\n    <header class="mobile-menu-header">\n        <span class="mobile-menu-header-title">Project Menu</span>\n    </header>\n\n    <div class="mobile-menu-section">\n        <ul class="mobile-menu-section-list">\n            <li class="mobile-menu-section-item"><a class="back-to-projects">List of Projects</a></li>\n            <li class="mobile-menu-section-item"><a class="show-tasks-list">Tasks</a></li>\n            <li class="mobile-menu-section-item"><a class="show-ganttchart\'">Gantt Chart</a></li>\n            <li class="mobile-menu-section-item"><a class="show-milestones">Milestones</a></li>\n            <li class="mobile-menu-section-item"><a class="show-resources">Resources</a></li>\n            <li class="mobile-menu-section-item"><a class="sign-out-button">Sign Out</a></li>\n        </ul>\n    </div>\n</nav>\n\n<main id="panel" class="panel slideout-panel slideout-panel-left">\n    <header class="panel-header">\n        <button class="toggle-button">&#9776;</button>\n        <span class="mobile-panel-header-title"> ' +
+((__t = ( project.name )) == null ? '' : __t) +
+'</span>\n    </header>\n    <!--This empty CONTENT div below is for rendering our views like: ProjectInfo, TasksList, Milestones, Resources-->\n    <div class="mobile-project-content"></div>\n</main>\n\n';
 
 }
 return __p
@@ -572,7 +473,7 @@ obj || (obj = {});
 var __t, __p = '', __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 with (obj) {
-__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <div>Resources</div>\n        </div>\n        <div class="resources-container">\n            <div class="tab-container">\n                <div class="tab-container tab-general-content show-content">\n                    <div class="table-resource-header-row">\n                        <div class="table-header-resource-cell">Name</div>\n                        <div class="table-header-resource-cell rate">Rate</div>\n                        <div class="table-header-resource-cell type">Type</div>\n                    </div>\n                    <div class="table-row">\n                        <img class="add-resource-img" src="../../../images/add.svg">\n                        <a class="add-resource-link" id="create-resource">Resource</a>\n                    </div>\n                    <div class="resources-list">\n                        ';
+__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <div class="left">Resources</div>\n            <div class="center"></div>\n            <div class="right"><input class="close-btn form-button cancel-button" type="button" value="" > </div>\n        </div>\n        <div class="resources-container">\n            <div class="tab-container">\n                <div class="tab-container tab-general-content show-content">\n                    <div class="table-resource-header-row">\n                        <div class="table-header-resource-cell">Name</div>\n                        <div class="table-header-resource-cell rate">Rate</div>\n                        <div class="table-header-resource-cell type">Type</div>\n                    </div>\n                    <div class="table-row">\n                        <img class="add-resource-img" src="../../../images/add.svg">\n                        <a class="add-resource-link" id="create-resource">Resource</a>\n                    </div>\n                    <div class="resources-list">\n                        ';
 for(var i = 0; i < resources.length; i++) {;
 __p += '\n                        <div class="table-resource-row">\n                            <div class="table-cell-resource">\n                                <div class="edit" id="' +
 ((__t = ( i )) == null ? '' : __t) +
@@ -600,13 +501,13 @@ window["JST"]["project:settings"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '';
 with (obj) {
-__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <div>Settings</div>\n            <!--<input class="close-btn form-button cancel-button" type="button" value="" >-->\n        </div>\n        <div class="tabs">\n            <div class="tabs-menu ">\n                <a class="tab-link tab-general w--current">General</a>\n                <a class="tab-link tab-time-settings">Time Settings</a>\n            </div>\n            <div class="settings-container">\n                <div class="tab-container">\n                    <div class="tab-container general-content show-content">\n                        <label class="form-label">Name:</label>\n                        <input class="form-input-text name" maxlength="256" value="' +
+__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <div class="left">Settings</div>\n            <div class="center"></div>\n           <div class="right"><input class="close-btn form-button cancel-button" type="button" value="" > </div>\n        </div>\n        <div class="tabs">\n            <div class="tabs-menu ">\n                <a class="tab-link tab-general w--current">General</a>\n                <a class="tab-link tab-time-settings">Time Settings</a>\n            </div>\n            <div class="settings-container">\n                <div class="tab-container">\n                    <div class="tab-container general-content show-content">\n                        <label class="form-label">Name:</label>\n                        <input class="form-input-text name" maxlength="256" value="' +
 ((__t = ( model.name )) == null ? '' : __t) +
 '" placeholder="Project Name" type="text">\n                        <label class="form-label">Author:</label>\n                        <input class="form-input-text author" maxlength="256" value="' +
 ((__t = ( model.author )) == null ? '' : __t) +
 '" placeholder="Author" type="text">\n                        <label class="form-label description-label">Description:</label>\n                        <textarea class="form-input-description description" maxlength="5000" placeholder="Project Description">' +
 ((__t = ( model.description )) == null ? '' : __t) +
-'</textarea>\n\n                       <div class="add-project-icon ">\n                           <label class="form-label pr-icon">Project icon:</label>\n                        <div class="add-attachment" >\n                            <div class="form-input-file input-project-icon">\n                                <label>\n                                    <input id="add-attachment-file" type="file" name="file" accept="image/*" />\n                                    <img class="add-img" src="/images/add.svg">\n                                    <span>Add img</span>\n                                </label>\n                            </div>\n                        </div>\n                       </div>\n                    </div>\n                    <div class="tab-container settings-content hide-content">\n                        <label class="form-label">Start Date:</label>\n                        <input class="form-input-text start-date" value="' +
+'</textarea>\n\n                       <div class="add-project-icon ">\n                           <label class="form-label pr-icon">Project icon:</label>\n                        <div class="add-attachment" >\n                            <div class="form-input-file input-project-icon">\n                                <label>\n                                    <input id="add-attachment-file" type="file" name="file" accept="image/*" />\n                                    <img class="add-img" src="/images/add.svg">\n                                    <span>Add img</span>\n                                </label>\n                            </div>\n                        </div>\n\n                       </div>\n                    </div>\n                    <div class="tab-container settings-content hide-content">\n                        <label class="form-label">Start Date:</label>\n                        <input class="form-input-text start-date" value="' +
 ((__t = ( moment.unix(+model.startDate).format('YYYY-MM-DD'))) == null ? '' : __t) +
 '" placeholder="Project Start Date" type="date">\n                        <label class="form-label day-start-label">Working Day Start:</label>\n                        <input class="form-input-text working-day-start" value="' +
 ((__t = ( moment.duration(+settings.dayStart, 'seconds').asHours() )) == null ? '' : __t) +
@@ -658,7 +559,7 @@ obj || (obj = {});
 var __t, __p = '', __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 with (obj) {
-__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <div>Task Edit</div>\n        </div>\n        <div class="tabs">\n            <div class="tabs-menu ">\n                <a class="tab-link tab-general w--current">General</a>\n                <a class="tab-link tab-dependencies">Depends On</a>\n                <a class="tab-link tab-attachments">Attachments</a>\n            </div>\n            <div class="tasks-container">\n                <div class="tab-container">\n                    <div class="tab-container general-content show-content">\n                        <label class="form-label">Task Name:</label>\n                        <input class="form-input-text task-name" maxlength="256" value="' +
+__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <div class="left">Task Edit</div>\n            <div class="center"></div>\n            <div class="right"><input class="close-btn form-button cancel-button" type="button" value="" > </div>\n        </div>\n        <div class="tabs">\n            <div class="tabs-menu ">\n                <a class="tab-link tab-general w--current">General</a>\n                <a class="tab-link tab-dependencies">Depends On</a>\n                <a class="tab-link tab-attachments">Attachments</a>\n            </div>\n\n            <div class="tasks-container">\n                <div class="tab-container">\n                    <div class="tab-container general-content show-content">\n                        <label class="form-label">Task Name:</label>\n                        <input class="form-input-text task-name" maxlength="256" value="' +
 ((__t = ( task.name )) == null ? '' : __t) +
 '" placeholder="Task Name" required="required" type="text">\n                        <label class="form-label">Assignee:</label>\n                        ';
  var resourceName = ''; ;
@@ -824,6 +725,148 @@ obj || (obj = {});
 var __t, __p = '';
 with (obj) {
 __p += '<div class="table-task-header">\n    <div class="table-header-row">\n    </div>\n    <div class="table-header-row">\n        <div class="table-cell-task">\n            <a class="add-task add-task-icon" title="Add task"></a>\n            Task Name\n        </div>\n        <div class="table-cell">Estimate (man*hrs)</div>\n        <div class="table-cell">Start Date</div>\n        <div class="table-cell">Assignee</div>\n    </div>\n</div>';
+
+}
+return __p
+}})();
+(function() {
+window["JST"] = window["JST"] || {};
+
+window["JST"]["project:tasksListMobile"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __j = Array.prototype.join;
+function print() { __p += __j.call(arguments, '') }
+with (obj) {
+__p += '\n<div class="mobile-tasks-header">\n    <span class="mobile-tasks-header-title">Tasks List</span>\n</div>\n\n<ul class="mobile-tasks-list">\n    ';
+ for(var i = 0; i < tasks.length; i++) {;
+__p += '\n    <li class="tasks-list-item" data-id="' +
+((__t = ( tasks[i].id )) == null ? '' : __t) +
+'">\n        <a class="tasks-name"> ' +
+((__t = ( tasks[i].name )) == null ? '' : __t) +
+' </a>\n        <a class="tasks-link icon-open-mobile" title="Open" data-id="' +
+((__t = ( tasks[i].id )) == null ? '' : __t) +
+'"></a>\n    </li>\n    ';
+ } ;
+__p += '\n</ul>';
+
+}
+return __p
+}})();
+(function() {
+window["JST"] = window["JST"] || {};
+
+window["JST"]["projects:projectsAbout"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '';
+with (obj) {
+__p += '\n<div class="project-description-header"><h3>Currently selected project description</h3></div>\n\n<div class="project-description"> ' +
+((__t = ( description )) == null ? '' : __t) +
+'</div>\n';
+
+}
+return __p
+}})();
+(function() {
+window["JST"] = window["JST"] || {};
+
+window["JST"]["projects:projectsArea"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '';
+with (obj) {
+__p += '<div class="create-button-container">\n    <button class="create-project">New Project</button>\n</div>\n<div class="projects-list-block"></div>\n<div class="project-about-block"></div>\n<div class="popup-container"></div>\n';
+
+}
+return __p
+}})();
+(function() {
+window["JST"] = window["JST"] || {};
+
+window["JST"]["projects:projectsEdit"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __j = Array.prototype.join;
+function print() { __p += __j.call(arguments, '') }
+with (obj) {
+__p += '<div class="form-wrapper">\n    <div class="main-form">\n\n        <div class="form-title">\n            <div>Project Edit</div>\n            <div class="center"></div>\n            <div class="right"><input class="close-btn form-button cancel-button" type="button" value="" > </div>\n        </div>\n\n        <div class="tab-container">\n\n            <label class="form-label">' +
+((__t = ( project.name ? 'Update' : 'Create' )) == null ? '' : __t) +
+' Project</label>\n            <input class="form-input-text form-control" id="name" type="text" name="name" placeholder="Project Name"\n                   value="' +
+((__t = ( project.name )) == null ? '' : __t) +
+'">\n            <div class="form-error name-error"></div>\n\n            <label class="form-label description-label">Description</label>\n            <textarea class="form-input-description form-control" id="description" maxlength="50" name="description"\n                      placeholder="Description">' +
+((__t = ( project.description )) == null ? '' : __t) +
+'</textarea>\n            <div class="form-error description-error"></div>\n            ';
+ if(project) { ;
+__p += '\n            <input type="hidden" name="id" value="' +
+((__t = ( project.id )) == null ? '' : __t) +
+'"/>\n            ';
+ } ;
+__p += '\n        </div>\n\n        <div class="form-bottom">\n            <input class="form-button ok-button" type="submit" value="' +
+((__t = ( project.name ? 'Update' : 'Create' )) == null ? '' : __t) +
+'">\n            <input class="form-button cancel-button" type="submit" value="cancel">\n        </div>\n\n    </div>\n</div>\n';
+
+}
+return __p
+}})();
+(function() {
+window["JST"] = window["JST"] || {};
+
+window["JST"]["projects:projectsList"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __j = Array.prototype.join;
+function print() { __p += __j.call(arguments, '') }
+with (obj) {
+__p += '\n<div class="projects-list-header"><h3>Projects List</h3></div>\n\n<ul>\n    ';
+ for(var i = 0; i < projects.length; i++) {;
+__p += '\n        <li class="projects-list-item ';
+ if (projects[i].id === activeId) { ;
+__p += 'active';
+ } ;
+__p += '" data-id="' +
+((__t = ( projects[i].id )) == null ? '' : __t) +
+'">\n            <a class="projects-link-name"> ' +
+((__t = ( projects[i].name )) == null ? '' : __t) +
+' </a>\n            <a class="project-link icon-edit" title="Edit" data-id="' +
+((__t = ( projects[i].id )) == null ? '' : __t) +
+'"></a>\n            <a class="project-link icon-remove" title="Delete" data-id="' +
+((__t = ( projects[i].id )) == null ? '' : __t) +
+'"></a>\n            <a class="project-link icon-open" title="Open" data-id="' +
+((__t = ( projects[i].id )) == null ? '' : __t) +
+'"></a>\n        </li>\n    ';
+ } ;
+__p += '\n</ul>\n';
+
+}
+return __p
+}})();
+(function() {
+window["JST"] = window["JST"] || {};
+
+window["JST"]["projects:projectsListMobile"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __j = Array.prototype.join;
+function print() { __p += __j.call(arguments, '') }
+with (obj) {
+__p += '<div class="mobile-projects-header">\n    <span class="mobile-projects-header-title">Projects List</span>\n</div>\n\n<ul class="mobile-projects-list">\n    ';
+ for(var i = 0; i < projects.length; i++) {;
+__p += '\n    <li class="projects-list-item" data-id="' +
+((__t = ( projects[i].id )) == null ? '' : __t) +
+'">\n        <a class="projects-name"> ' +
+((__t = ( projects[i].name )) == null ? '' : __t) +
+' </a>\n        <a class="projects-link icon-open-mobile" title="Open" data-id="' +
+((__t = ( projects[i].id )) == null ? '' : __t) +
+'"></a>\n    </li>\n    ';
+ } ;
+__p += '\n</ul>';
+
+}
+return __p
+}})();
+(function() {
+window["JST"] = window["JST"] || {};
+
+window["JST"]["projects:projectsTitle"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '';
+with (obj) {
+__p += '<div class="projects-title">\n\n    <div class="project-title-text">\n            <p><strong>Click on project name to see it\'s description and use doubleclick or "Go to!" button to visit it\'s\n                page! Press New to create project or Edit/Remove signs for existing one.</strong></p>\n    </div>\n\n</div>';
 
 }
 return __p

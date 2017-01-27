@@ -64,11 +64,11 @@ define(['backbone', 'underscore', 'JST', 'moment', 'backbone-validation'], funct
             var newDayStart = this.$el.find('.working-day-start').val();
             this.settings.dayStart = this.moment.duration(+newDayStart,'hours').asSeconds();
             this.settings.dayDuration = this.moment.duration(+newDayDuration,'hours').asSeconds();
+            if($("#add-attachment-file").prop('files')[0]) {
+                this.settings.icon = this.uploadAttachment();
+            }
             this.model.set('settings', this.settings);
 
-            console.log(this.model);
-
-            console.log(this.model.isValid(['settings.dayStart']));
             if (this.model.isValid(['settings.dayStart'])) {
                 this.model.save();
             }else{
@@ -79,10 +79,24 @@ define(['backbone', 'underscore', 'JST', 'moment', 'backbone-validation'], funct
             this.$el.remove();
         },
 
+        uploadAttachment: function () {
+            var uploadfile = new FormData();
+            uploadfile.append('file', $("#add-attachment-file").prop('files')[0]);
+            var response = $.ajax({
+                url: '/rest/attachments',
+                type: 'POST',
+                data: uploadfile,
+                contentType: false,
+                processData: false,
+                async: false
+            });
+            return JSON.parse(response.responseText).relativePath;
+        },
+
         cancelSettings : function cancelSettings (event){
             event.preventDefault();
             this.$el.remove();
-        },
+        }
 
     });
     return SettingsView;

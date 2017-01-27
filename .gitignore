@@ -41,7 +41,8 @@ jspm_packages
 .idea
 
 *.map
-
+*.css
+scripts/templates.js
 .DS_Store
 
 attachments
