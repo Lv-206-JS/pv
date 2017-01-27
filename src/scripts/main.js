@@ -22,7 +22,7 @@ requirejs.config({
 
 requirejs(['jquery', 'backbone', 'userModel', 'projectsCollection', 'Router', 'MobileRouter', 'bowser'], function ($, Backbone, UserModel, ProjectsCollection, DesktopRouter, MobileRouter, Bowser) {
     'use strict';
-    document.ready(function () {
+    $(document).ready(function () {
 
         $(function () {
             //
