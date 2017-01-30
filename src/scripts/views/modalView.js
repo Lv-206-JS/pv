@@ -12,11 +12,7 @@ define([
 
 
         initialize: function () {
-            console.log('test');
-            //this.bindMousetrap();
-            Mousetrap.bind('5', function (e) {
-                console.log("test mousetrap in modal view");
-            });
+
         },
 
         showModalView: function showModalView() {
@@ -49,10 +45,18 @@ define([
         },
 
         bindMousetrap: function bindMousetrap() {
+            console.log('test');
+            //this.bindMousetrap();
+            Mousetrap.bind('5', function (e) {
+                console.log("test mousetrap in modal view");
+            });
+
+            /*
             //var elem = this.$el;
             Mousetrap.reset();
             var mousetrap = new Mousetrap(this.$el);
             mousetrap.bind('esc', this.hideModalView);
+            */
         }
 
         /*

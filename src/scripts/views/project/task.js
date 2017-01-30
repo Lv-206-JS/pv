@@ -40,6 +40,7 @@ define(['backbone',
             this.mimetypesList = this.getMimetypesList(this.task.attachments);
             this.moment = Moment;
             this.showModalView();
+            this.bindMousetrap();
         },
 
         render: function render() {
