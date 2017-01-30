@@ -1,14 +1,16 @@
 <div class="form-wrapper">
     <form class="main-form">
         <div class="form-title">
-            <p>Ownership</p>
+            <p class="left">Ownership</p>
+            <div class="center"></div>
+            <div class="right"><input class="close-btn form-button cancel-button" type="button" value="" > </div>
         </div>
         <div class="ownership-container">
             <div class="ownership-input-container">
                 <label class="form-label">Input user email:</label>
                 <form class="add-ownership">
-                    <input class="ownership-form-input-text user-email" type="email" required="">
-                    <button type="submit" class="add-ownership-button">Add</button>
+                    <input class="ownership-form-input-text user-email" type="email" required>
+                    <button class="add-ownership-button">Add</button>
                 </form>
                 <div class="ownerhip-radio">
                     <input type="radio" id="reader" name="ownership" value="reader" checked="checked">reader
@@ -21,11 +23,11 @@
                 <table id="ownership-readers-list">
                     <tbody>
                     <% for(var i = 0;i < readersList.length; i++) { %>
-                    <tr class="task-item" id="<%= readersList[i].email%>">
+                    <tr class="task-item" id="<%= readersList[i].email %>">
                         <td> <%= readersList[i].email %>
-                            <span class="ownership-link delete-ownership" data-email="<%= readersList[i].email %>"></span>
+                            <span class="ownership-link delete-ownership"
+                                  data-email="<%= readersList[i].email %>"></span>
                         </td>
-
                     </tr>
                     <% } %>
                     </tbody>
@@ -35,9 +37,10 @@
                 <table id="ownership-editors-list">
                     <tbody>
                     <% for(var i = 0;i < editorsList.length; i++) { %>
-                    <tr class="task-item" id="<%= editorsList[i].email%>">
+                    <tr class="task-item" id="<%= editorsList[i].email %>">
                         <td> <%= editorsList[i].email %>
-                            <span class="ownership-link delete-ownership" data-email="<%= editorsList[i].email %>"></span>
+                            <span class="ownership-link delete-ownership"
+                                  data-email="<%= editorsList[i].email %>"></span>
                         </td>
 
                     </tr>
@@ -48,8 +51,8 @@
         </div>
 
         <div class="form-bottom">
-            <input class="form-button ok-button" type="submit" value="ok">
-            <input class="form-button cancel-button" type="submit" value="cancel">
+            <input class="form-button ok-button" value="ok">
+            <input class="form-button cancel-button" value="cancel">
         </div>
     </form>
 </div>

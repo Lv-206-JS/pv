@@ -4,7 +4,7 @@ define([
     './mainMenu',
     '../projects/projects',
     '../project/project'
-], function (Backbone, JST, MainMenuView, ProjectsView, ProjectView ) {
+], function (Backbone, JST, MainMenuView, ProjectsView, ProjectView) {
 
     'use strict';
 

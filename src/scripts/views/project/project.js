@@ -39,7 +39,8 @@ define([
             'click .tool-zoom-out' : 'decreaseZoom',
             'click .tool-undo' : 'setUndo',
             'click .tool-redo' : 'setRedo',
-            'click .tool-fit' : 'fitProjectToScreen'
+            'click .tool-fit' : 'fitProjectToScreen',
+            'click .tool-critical-way' : 'initCriticalPath'
         },
 
         initialize: function (options) {
@@ -52,6 +53,12 @@ define([
             this.moment = Moment;
             this.flagSchedule = true;
             this.undoRedo = new UndoRedoAlgorithm();
+        },
+
+        unfocusTaskEditButton: function () {
+            $('.task-link').focus(function () {
+                $('.task-link').blur();
+            });
         },
 
         onBackToLandingPage: function onBackToLandingPage() {
@@ -78,6 +85,7 @@ define([
                 model: this.model,
                 el: this.$el.find('#gantt-view-container')[0]
             }).render();
+            this.unfocusTaskEditButton();
             this.listenTo(this.ganttContainerView.tasksListView, 'showTaskEditPopup', this.showTaskEditPopup);
             this.listenTo(this.ganttContainerView.tasksListView, 'showTaskAddPopup', this.showTaskAddPopup);
             return this;
@@ -137,6 +145,10 @@ define([
 
         fitProjectToScreen: function(){
             this.ganttContainerView.fitProjectToScreen();
+        },
+
+        initCriticalPath: function () {
+          this.ganttContainerView.showOrHideCriticalPath();
         },
 
         createId: function(allTasks){
@@ -302,3 +314,4 @@ define([
 
     return ProjectView;
 });
+

@@ -1,6 +1,8 @@
-<div class="projects-header"><h3>Projects List</h3></div>
+<div class="mobile-projects-header">
+    <span class="mobile-projects-header-title">Projects List</span>
+</div>
 
-<ul class="projects-list-mobile">
+<ul class="mobile-projects-list">
     <% for(var i = 0; i < projects.length; i++) {%>
     <li class="projects-list-item" data-id="<%= projects[i].id %>">
         <a class="projects-name"> <%= projects[i].name %> </a>

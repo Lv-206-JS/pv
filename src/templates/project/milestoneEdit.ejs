@@ -1,13 +1,9 @@
 <div class="form-wrapper">
     <form class="main-form">
         <div class="form-title">
-            <div>Milestone Edit</div>
-        </div>
-        <div class="tabs">
-            <div class="tabs-menu ">
-                <a class="tab-link tab-general w--current">General</a>
-                <a class="tab-link tab-dependencies hide-content">Edit</a>
-            </div>
+            <div class="left">Milestone Edit</div>
+            <div class="center"></div>
+            <div class="right"><input class="close-btn form-button cancel-button" type="button" value="" > </div>
         </div>
         <div class="milestones-container">
             <div class="tab-container">
@@ -27,7 +23,7 @@
                                  data-name="<%= milestones[i].name %>"><%= milestones[i].name %></div>
                         </div>
                         <div class="table-cell-milestone">
-                            <span class="milestone-link edit-milestone" title="Edit"
+                            <span class="milestone-link edit-single-milestone" title="Edit"
                                   data-name="<%= milestones[i].name %>"></span>
                             <span class="milestone-link remove-milestone" title="Delete"
                                   data-name="<%= milestones[i].name %>"></span>
@@ -35,43 +31,6 @@
                         <div class="table-cell-milestone"><%= moment.unix(milestones[i].date).format('DD/MM/YY HH:mm') %></div>
                     </div>
                     <% } %>
-                </div>
-
-                <div class="tab-container dependencies-content hide-content">
-                    <div class="set-milestone-name">
-                        <label>Name:</label>
-                        <input class="milestone-form-input-text" id="milestone-settings-name" type="text"
-                               value="<%= milestoneEdit.name %>" required>
-                    </div>
-                    <label class="dependancy-label form-label">Task List</label>
-                    <label class="dependancy-label form-label">Depends On</label>
-                    <div class="milestone-clone">
-                        <div class="milestone-drop-list scrollable">
-                            <table id="milestone-tasks-list">
-                                <tbody>
-                                <% for(var i = 0;i < tasksList.length; i++) { %>
-                                <tr class="milestone-task-item" id="<%= tasksList[i].taskId %>">
-                                    <td> <%= tasksList[i].name %></td>
-                                </tr>
-                                <% } %>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="milestone-drop-list scrollable">
-                            <table id="dependencies-list">
-                                <tbody>
-                                <% for(var i = 0; i < dependenciesList.length; i++) { %>
-                                <tr class="milestone-task-item" id="<%= dependenciesList[i].taskId %>">
-                                    <td><%= dependenciesList[i].name %></td>
-                                </tr>
-                                </tbody>
-                                <% } %>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="milestone-button-wrapper">
-                        <button class="save-milestones-button" data-name="<%=milestoneEdit.name%>">Save</button>
-                    </div>
                 </div>
             </div>
         </div>

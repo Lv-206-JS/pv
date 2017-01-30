@@ -8,20 +8,26 @@
 @import "common/login-view";
 @import "common/login-mobile-view";
 @import "common/register-view";
+@import "common/basic-popup-view";
 @import 'single-project/project-view';
 @import "single-project/mobile-project-view";
 @import "single-project/gantt-chart-view";
 @import "single-project/info-bar-view";
 @import "single-project/milestone-view";
+@import "single-project/mobile-milestone-view";
 @import "single-project/milestone-edit-view";
+@import "single-project/single-milestone-edit-view";
 @import "single-project/tasks-list";
+@import "single-project/mobile-tasks-list";
 @import "single-project/task-view";
 @import "single-project/attachments-view";
 @import "single-project/settings-view";
 @import "single-project/project-view";
 @import "single-project/resources-view";
+@import "single-project/mobile-resources-view";
 @import "single-project/project-price";
 @import "single-project/gantt-container";
+@import  "single-project/mobile-gantt-chart";
 @import "single-project/ownership-view";
 @import "single-project/edit-resource-view";
 @import "projects/main-projects-view";
@@ -51,14 +57,7 @@ html, body {
 * {
   box-sizing: border-box;
 }
-p {
-  margin: 0;
-  padding: 0;
-}
 
 a {
-  display: inline;
-  margin: 0;
-  padding: 0;
   cursor: pointer;
 }

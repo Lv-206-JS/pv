@@ -50,7 +50,7 @@ define([
                     lastElem = this.$el.find('.table-task-header'),
                     tasksHeight = Math.floor(this.getTasksHeight())/this.rowHeight,
                     tasksAmount = this.tasks.length,
-                    additionalHeight = tasksHeight - tasksAmount - 1;
+                    additionalHeight = tasksHeight - tasksAmount;
                 for (var i = 0; i < tasksAmount; i++) {
                     task = this.tasks[i];
                     this.taskRowView = new TaskRowView({

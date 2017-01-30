@@ -1,9 +1,11 @@
 <div class="form-wrapper">
     <div class="form-title">
-        <div>Attachments</div>
+        <div class="left">Attachments</div>
+        <div class="center"></div>
+        <div class="right"><input class="close-btn ok-button form-button cancel-button" type="button" value="" > </div>
     </div>
     <div class="attachments-container">
-        <div class="tab-container" >
+        <div class="tab-container">
             <div class="add-attachment">
                 <div class="form-input-file">
                     <label>
@@ -14,31 +16,33 @@
                 </div>
             </div>
             <div class="attachments-attachments">
-                <% for( var i=0; i<attachments.length; i++) { %>
+                <% for( var i = 0; i < attachments.length; i++) { %>
                 <div class="attachment-item">
-                    <div id="delete-attachment" data-id="<%= attachments[i].attachmentId %>" >
-                        <img src="/images/cancel.svg" class="delete"  alt="delete attachment"/>
+                    <div id="delete-attachment" data-id="<%= attachments[i].attachmentId %>">
+                        <img src="/images/delete-button.png" class="delete" alt="delete attachment"/>
                     </div>
-                    <%var mimetype = attachments[i].mimetype;
-                    var copyMimetype = mimetype.slice(0, mimetype.indexOf('/'));
-                    switch(copyMimetype){
-                        case 'application':
-                            if(mimetype == 'application/pdf') {
-                                copyMimetype = mimetype.slice(mimetype.indexOf('/'));
-                            }
-                            else if(mimetype == 'application/msword'){
-                                copyMimetype = mimetype.slice(mimetype.indexOf('/'));
-                            }
-                            else {
-                                copyMimetype = 'text';
-                            }
-                    }
-                    var scrMimetype = '/images/mimetype_icons/' + copyMimetype + '.png';
+                    <% var mimetype = attachments[i].mimetype;
+                        var copyMimetype = mimetype.slice(0, mimetype.indexOf('/'));
+                        switch (copyMimetype) {
+                            case 'application':
+                                if (mimetype == 'application/pdf') {
+                                    copyMimetype = mimetype.slice(mimetype.indexOf('/'));
+                                }
+                                else if (mimetype == 'application/msword') {
+                                    copyMimetype = mimetype.slice(mimetype.indexOf('/'));
+                                }
+                                else {
+                                    copyMimetype = 'text';
+                                }
+                        }
+                        var scrMimetype = '/images/mimetype_icons/' + copyMimetype + '.png';
                     %>
-                    <a class="file-reference" download href="<%=attachments[i].relativePath%>" target="_blank">
-                        <img src="<%=scrMimetype%>" class="attachment-image" alt="attachment image"/>
+                    <a class="file-reference" download href="<%= attachments[i].relativePath %>" target="_blank">
+                        <img src="<%= scrMimetype %>" class="attachment-image" alt="attachment image"/>
                         <% var str = attachments[i].fileName; %>
-                        <% if(attachments[i].fileName.length>9)  { str = attachments[i].fileName.substring(0,9)+'..';} %>
+                        <% if (attachments[i].fileName.length > 9) {
+                            str = attachments[i].fileName.substring(0, 9) + '..';
+                        } %>
 
                         <div class="attachment-name" id="reference-name"><%= str %></div>
                     </a>

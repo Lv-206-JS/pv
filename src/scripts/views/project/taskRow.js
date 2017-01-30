@@ -10,7 +10,6 @@ define([
 
         var TaskRowView = Backbone.View.extend({
             template: JST['project:taskRow'],
-            className: 'table-task-row',
 
             initialize: function (options) {
                 this.model = options.model;
@@ -18,30 +17,35 @@ define([
                 this.task = options.task;
                 this.rowHeight = options.rowHeight;
                 this.padding = options.padding;
-                this.moment = Moment;
                 this.timeLine = new TimeLine(this.model);
                 // convert dates from PTL to unix
-                this.estimateTime = this.moment.duration(this.task.estimateTime, 'seconds').asHours();
-                this.startDate = Number(this.task.startDate);
-                this.startDate = this.timeLine.toDate(this.startDate);
-                this.startDate = this.moment.unix(this.startDate, 's').format('DD/MM/YY');
-                this.el.id = options.task.taskId;
+                this.estimateTime = Moment.duration(this.task.estimateTime, 'seconds').asHours();
+                this.startDate = this.getStartDate(this.task.startDate);
+                $('.table-task-row').data('dataTaskId', options.task.taskId)
             },
 
             events: {
-                'click .cell-task': 'scrollGanttChart'
-                // 'click .table-cell-task': 'initClick',
-                // 'click .table-cell': 'initClick'
-                // 'click .table-task-row': 'scrollGanttChart'
+                'click .table-task-row': 'scrollGanttChart'
             },
 
-            initClick: function () {
-                event.initEvent("click", true, false);
+            getStartDate: function (startDate) {
+                var startDate = startDate - 0;
+                startDate = this.timeLine.toDate(startDate);
+                startDate = Moment.unix(startDate, 's').format('DD/MM/YY');
+                return startDate;
             },
 
             scrollGanttChart: function (event) {
-                var taskId = event.target.id;
-                // var taskId = event.target.className.value; // for .table-task-row
+                if (event.target.className === 'table-task-row') {
+                    var taskId = event.target.attributes.data.value;
+                }
+                else {
+                    var taskRow = event.target;
+                    while(taskRow.className !== 'table-task-row') {
+                        taskRow = taskRow.parentNode;
+                    }
+                    var taskId = taskRow.attributes.data.value;
+                }
                 var rect = document.getElementsByClassName(taskId)[0];
                 var positionX = rect.x.baseVal.value;
                 $('#gantt-chart-container').scrollLeft(positionX);

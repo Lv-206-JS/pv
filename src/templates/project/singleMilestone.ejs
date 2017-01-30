@@ -1,0 +1,48 @@
+<div class="form-wrapper">
+    <form class="main-form">
+        <div class="form-title">
+            <div><%= milestone.name ? 'Edit milestone' : 'Create milestone' %></div>
+        </div>
+        <div class="milestones-container">
+            <div class="tab-container">
+                <div class="tab-container dependencies-content">
+                    <div class="set-milestone-name">
+                        <label>Name:</label>
+                        <input class="milestone-form-input-text" id="milestone-settings-name" type="text"
+                               value="<%= milestone.name %>" required>
+                    </div>
+                    <label class="dependancy-label form-label">Task List</label>
+                    <label class="dependancy-label form-label">Depends On</label>
+                    <div class="milestone-clone">
+                        <div class="milestone-drop-list scrollable">
+                            <table id="milestone-tasks-list">
+                                <tbody>
+                                <% for(var i = 0;i < tasksList.length; i++) { %>
+                                <tr class="milestone-task-item" id="<%= tasksList[i].taskId %>">
+                                    <td> <%= tasksList[i].name %></td>
+                                </tr>
+                                <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="milestone-drop-list scrollable">
+                            <table id="dependencies-list">
+                                <tbody>
+                                <% for(var i = 0; i < dependenciesList.length; i++) { %>
+                                <tr class="milestone-task-item" id="<%= dependenciesList[i].taskId %>">
+                                    <td><%= dependenciesList[i].name %></td>
+                                </tr>
+                                </tbody>
+                                <% } %>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-bottom">
+            <input class="form-button ok-button" type="button" value="save">
+            <input class="form-button cancel-button" type="button" value="cancel">
+        </div>
+    </form>
+</div>

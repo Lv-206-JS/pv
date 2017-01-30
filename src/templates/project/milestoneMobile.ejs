@@ -1,0 +1,25 @@
+<div class="mobile-milestone-header">
+    <span class="mobile-milestone-header-title">Milestones</span>
+</div>
+<div class="mobile-milestone-container">
+    <ul class="mobile-milestones-list">
+        <% for(var i = 0; i < milestones.length; i++) {%>
+        <li class="mobile-milestones-list-item">
+            <div class="mobile-milestones-menu-item">
+                <span class="mobile-milestone-name"><%= milestones[i].name %></span>
+                <span class="icon-open-mobile"></>
+            </div>
+            <div class="mobile-milestone-about">
+                <p>Start Date: </p>
+                <p>End Date: </p>
+                <p>Depends On:</p>
+                <ul class="milestone-tasks">
+                    <% for (var j = 0; j < milestones[i].dependsOn.length; j++) {%>
+                        <li class="mobile-milestone-task"><%= milestones[i].dependsOn[j].taskName %></li>
+                    <%}%>
+                </ul>
+            </div>
+        </li>
+        <% } %>
+    </ul>
+</div>

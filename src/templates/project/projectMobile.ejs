@@ -1,29 +1,27 @@
-
 <nav id="menu" class="menu-mobile slideout-menu slideout-menu-left">
 
     <header class="mobile-menu-header">
-        <span class="mobile-menu-header-title">Single Project Name</span>
+        <span class="mobile-menu-header-title">Project Menu</span>
     </header>
 
     <div class="mobile-menu-section">
-    <h3 class="mobile-menu-section-title">Select where to Go</h3>
-    <ul class="mobile-menu-section-list">
-        <li><a>Milestones</a></li>
-        <li><a>Resources</a></li>
-        <li><a>Tasks</a></li>
-        <li><a>Ownership</a></li>
-    </ul>
+        <ul class="mobile-menu-section-list">
+            <li class="mobile-menu-section-item"><a class="back-to-projects">List of Projects</a></li>
+            <li class="mobile-menu-section-item"><a class="show-tasks-list">Tasks</a></li>
+            <li class="mobile-menu-section-item"><a class="show-ganttchart">Gantt Chart</a></li>
+            <li class="mobile-menu-section-item"><a class="show-milestones">Milestones</a></li>
+            <li class="mobile-menu-section-item"><a class="show-resources">Resources</a></li>
+            <li class="mobile-menu-section-item"><a class="sign-out-button">Sign Out</a></li>
+        </ul>
     </div>
 </nav>
 
 <main id="panel" class="panel slideout-panel slideout-panel-left">
     <header class="panel-header">
         <button class="toggle-button">&#9776;</button>
-        <h2>Single Project Main Page</h2>
+        <span class="mobile-panel-header-title"> <%= project.name %></span>
     </header>
-    <div class="mobile-project-content">
-        <!--CONTENT OF MOBILE SINGLE PROJECT GOES HERE!!!-->
-        <p>Put description or Gannt Chart Here</p><br>
-        <p>Render POPUps for Milestones, Resources, Ownership!</p>
-    </div>
+    <!--This empty CONTENT div below is for rendering our views like: ProjectInfo, TasksList, Milestones, Resources-->
+    <div class="mobile-project-content"></div>
 </main>
+
