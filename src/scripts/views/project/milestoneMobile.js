@@ -5,9 +5,10 @@
 define([
         'backbone',
         'underscore',
-        'JST'
+        'JST',
+        'timeLine'
     ],
-    function (Backbone, _, JST) {
+    function (Backbone, _, JST, TimeLine) {
         'use strict';
 
         var MilestoneMobileView = Backbone.View.extend({
@@ -17,12 +18,18 @@ define([
 
             initialize: function (options) {
                 this.model = options.model;
+
+                this.timeLine = new TimeLine(this.model);
+                this.projectEstimateTime = this.timeLine.calculateEstimateTime();
             },
 
             render: function render() {
                 // this.tasks = this.model.get('tasks');
                 // this.$el.html(this.template({tasks: this.tasks}));
-                this.$el.html(this.template({project: this.model.toJSON()}));
+                this.milestones = this.model.get('milestones');
+                this.$el.html(this.template({
+                    milestones: this.milestones
+                }));
 
                 return this;
             }
