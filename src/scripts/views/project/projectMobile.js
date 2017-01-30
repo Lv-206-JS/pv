@@ -11,10 +11,11 @@ define([
     './tasksListMobile',
     './ganttChartMobile',
     './milestoneMobile',
-    './resourcesMobile'
+    './resourcesMobile',
+    './singleTaskInfoMobile'
 
 
-], function (Backbone, JST, Slideout, Model, ProjectInfoMobileView, TaskListMobileView, ChartMobileView, MilestoneMobileView, ResourceMobileView) {
+], function (Backbone, JST, Slideout, Model, ProjectInfoMobileView, TaskListMobileView, ChartMobileView, MilestoneMobileView, ResourceMobileView, TaskInfoMobileView) {
 
     'use strict';
 
@@ -28,7 +29,8 @@ define([
             'click .show-ganttchart': 'showGanttchart',
             'click .show-milestones': 'showMilestones',
             'click .show-resources': 'showResources',
-            'click .sign-out-button': 'onSignOut'
+            'click .sign-out-button': 'onSignOut',
+            'click .tasks-list-item': 'showTaskInfo'
         },
 
         initialize: function (projectId) {
@@ -79,6 +81,7 @@ define([
             this.taskListMobileView = new TaskListMobileView({
                 model: this.model
             });
+            this.listenTo(this.tasksListMobileView, 'showTaskInfo', this.showTaskInfo);
             this.slideout.toggle();
 
             this.$el.find('.mobile-project-content').html(this.taskListMobileView.render().$el);
@@ -116,6 +119,16 @@ define([
                 PV.userModel.clear().set(this.userModel.defaults);
                 PV.router.navigate('/', {trigger: true});
             }.bind(this)});
+        },
+
+        showTaskInfo: function showTaskInfo() {
+            this.taskInfoMobileView = new TaskInfoMobileView({
+                model: this.model
+            });
+            // this.slideout.toggle();
+
+            this.$el.find('.mobile-project-content').html(this.taskInfoMobileView.render().$el);
+
         }
     });
 
