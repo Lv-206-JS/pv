@@ -5,9 +5,10 @@
 define([
         'backbone',
         'underscore',
-        'JST'
+        'JST',
+        'moment'
     ],
-    function (Backbone, _, JST) {
+    function (Backbone, _, JST, Moment) {
         'use strict';
 
         var ProjectInfoMobileView = Backbone.View.extend({
@@ -19,7 +20,7 @@ define([
             },
 
             render: function render() {
-                this.$el.html(this.template({project: this.model.toJSON()}));
+                this.$el.html(this.template({project: this.model.toJSON(), moment: Moment}));
                 return this;
             }
 
