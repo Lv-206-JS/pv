@@ -112,9 +112,10 @@ define([
         },
 
         onSignOut: function onSingOut() {
-            $.ajax({url: '/users/logout'});
-            PV.userModel.clear().set(this.userModel.defaults);
-            PV.router.navigate('/', {trigger: true});
+            $.ajax({url: '/users/logout', success: function () {
+                PV.userModel.clear().set(this.userModel.defaults);
+                PV.router.navigate('/', {trigger: true});
+            }.bind(this)});
         }
     });
 
