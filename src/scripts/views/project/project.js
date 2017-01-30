@@ -153,7 +153,7 @@ define([
 
         createId: function(allTasks){
             var max = 0;
-            for (var i = 0; i < allTasks.length - 1; i++) {
+            for (var i = 0; i < allTasks.length; i++) {
                 if (max < allTasks[i].taskId)
                     max = allTasks[i].taskId;
             }
