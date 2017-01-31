@@ -5,7 +5,7 @@ define(['backbone', 'JST', '../modalView'],
         var ConfirmDeleteView = ModalView.extend({
             template: JST['common:confirmDelete'],
             className: 'confirm-delete-view show-content',
-
+            //customClassName: '',
             initialize: function () {
                 this.showModalView();
                 //this.bindMousetrap();
@@ -23,13 +23,13 @@ define(['backbone', 'JST', '../modalView'],
 
             doDelete: function doDelete(event) {
                 //event.preventDefault();
-                this.trigger('doDelete');
+                this.trigger('doDelete', event);
                 this.hideModalView();
             },
 
             showConfirmDeleteView: function showConfirmDeleteView(event) {
                 //event.preventDefault();
-                //debugger;
+                debugger;
                 this.confirmDeleteView = new ConfirmDeleteView().render();
                 this.$el.append(this.confirmDeleteView.$el);
                 this.listenTo(this.confirmDeleteView, 'doDelete', this.doDeleteClicked);

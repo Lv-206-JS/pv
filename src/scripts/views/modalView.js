@@ -16,6 +16,9 @@ define([
         */
         showModalView: function showModalView() {
             modalViewStack.push(this.$el);
+            console.log('--pushed to stack---');
+            console.log(modalViewStack);
+            console.log('--------------------');
         },
 
         hideModalView: function hideModalView(event) {
@@ -23,16 +26,18 @@ define([
             var lastView = modalViewStack.pop();
             if (lastView) {
                 lastView.remove();
-                console.log('Last Modal View hided');
+                console.log('--removed to stack---');
+                console.log(modalViewStack);
+                console.log('--------------------');
             }
             //Mousetrap.reset();
         },
 
-        doDeleteClicked: function doDeleteClicked() {
-            this.confirmDelete();
+        doDeleteClicked: function doDeleteClicked(event) {
+            this.confirmDelete(event);
         },
 
-        confirmDelete: function confirmDelete() {
+        confirmDelete: function confirmDelete(event) {
 
         },
 

@@ -315,16 +315,32 @@ define([
 
 
         bindMainMousetrap: function bindMainMousetrap() {
-            Mousetrap.bind('5', function (event) {
-                if (this.settingsView) {
-                    console.log('test cntr+N');
+            var me = this;
+            Mousetrap.bind(['ctrl+z', 'meta+z'], function (event) {
+                if ($(".show-content").length == 0) {
+                    if ($(".main-project-view").length > 0) {
+                        me.setUndo();
+                    }
                 }
-            //     if (this.hasOwnProperty(settingsView) /*== this.taskView == this.attachmentsView == this.milestoneView == this.projectPriceView == this.resourcesView == this.ownershipView == "undefined"*/) {
-            //         console.log("test cntr+N");
-            //         //this.showTaskAddPopup();
-            //     }
+            });
+            Mousetrap.bind(['ctrl+y', 'meta+y'], function (event) {
+                if ($(".show-content").length == 0) {
+                    if ($(".main-project-view").length > 0) {
+                        me.setRedo();
+                    }
+                }
+            });
+            Mousetrap.unbind('n');
+            Mousetrap.bind('n', function (event) {
+                if ($(".show-content").length == 0) {
+                    if ($(".main-project-view").length > 0) {
+                        var tasks = me.model.get('tasks');
+                        me.showTaskAddPopup(tasks);
+                    }
+                }
             });
         }
+
     });
 
     return ProjectView;

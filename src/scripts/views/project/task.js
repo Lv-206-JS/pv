@@ -66,12 +66,11 @@ define(['backbone',
             'click .tab-general' : 'taskGeneralInformation',
             'click .tab-dependencies' : 'taskDependenciesInformation',
             'click .tab-attachments' : 'taskAttachmentslInformation',
-            //'click .cancel-button' : 'hideTaskView',
             'click .cancel-button' : 'hideModalView',
             'click .ok-button' : 'onSubmitChanges',
             'click .delete-task' : 'showConfirmDeleteView',
             'change #add-attachment-file' : 'addAttachment',
-            //'click #delete-attachment' : 'confirmDeleteAttachment',
+            'click #delete-attachment' : 'confirmDeleteAttachment',
             'dblclick .task-item' : 'addTaskToList'
         },
 
@@ -344,20 +343,6 @@ define(['backbone',
             this.hideModalView();
         },
 
-        /*
-        confirmDelete: function(event){
-            renderConfirmDeleteView(event, this, this.deleteTask);
-        },
-
-
-        hideTaskView: function(event){
-            event.preventDefault();
-            //unbind mousetrap
-            this.$el.remove();
-            this.hideModalView();
-        },
-        */
-
         onSubmitChanges: function onSubmitChanges (event){
             event.preventDefault();
             this.task.name = this.$el.find('.task-name').val();
@@ -378,11 +363,16 @@ define(['backbone',
                 this.task.dependsOn = [];
             }
             this.trigger('upsertTask', this.tasks, this.task);
-            this.$el.remove();
+            this.hideModalView();
         },
 
-        confirmDelete: function confirmDelete() {
+        confirmDelete: function confirmDelete(event) {
             this.deleteTask();
+
+            // debugger;
+            // if ($(event.target).hasClass("delete-task")) {
+            //     this.deleteTask();
+            // }
         }
 
     });
