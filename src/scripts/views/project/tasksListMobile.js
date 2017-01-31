@@ -12,6 +12,9 @@ define([
         var TasksListMobileView = Backbone.View.extend({
             template: JST['project:tasksListMobile'],
             className: 'mobile-tasks-list',
+            events: {
+                'click .tasks-list-item': 'onSelectTask'
+            },
 
 
             initialize: function (options) {
@@ -23,6 +26,21 @@ define([
                 this.$el.html(this.template({tasks: this.tasks}));
 
                 return this;
+            },
+
+            onSelectTask: function onSelectTask(e) {
+                var taskId = this.getTargetId(e);
+                var task = _.findWhere(this.tasks, {taskId : taskId});
+                console.log(taskId + " taskId");
+                console.log(task);
+
+                // PV.router.navigate('project/' + taskId, {trigger: true});
+            },
+
+            getTargetId: function getTargetId(e) {
+                var target = $(e.currentTarget);
+
+                return target.data('id');
             }
 
         });

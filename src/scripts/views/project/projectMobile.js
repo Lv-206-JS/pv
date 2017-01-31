@@ -81,7 +81,6 @@ define([
             this.taskListMobileView = new TaskListMobileView({
                 model: this.model
             });
-            this.listenTo(this.tasksListMobileView, 'showTaskInfo', this.showTaskInfo);
             this.slideout.toggle();
 
             this.$el.find('.mobile-project-content').html(this.taskListMobileView.render().$el);
@@ -122,6 +121,7 @@ define([
         },
 
         showTaskInfo: function showTaskInfo() {
+
             this.taskInfoMobileView = new TaskInfoMobileView({
                 model: this.model
             });

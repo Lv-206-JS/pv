@@ -20,9 +20,12 @@ define([
             },
 
             render: function render() {
-                this.tasks = this.model.get('tasks');
-                console.log(this.tasks);
-                this.$el.html(this.template({tasks: this.tasks, moment: Moment}));
+                var task = this.task;
+                console.log(task);
+                this.$el.html(this.template({task: task, moment: Moment}));
+                // this.tasks = this.model.get('tasks');
+                // console.log(this.tasks);
+                // this.$el.html(this.template({tasks: this.tasks, moment: Moment}));
                 return this;
             }
 

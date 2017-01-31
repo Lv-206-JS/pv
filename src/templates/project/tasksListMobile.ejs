@@ -5,9 +5,9 @@
 
 <ul class="mobile-tasks-list">
     <% for(var i = 0; i < tasks.length; i++) {%>
-    <li class="tasks-list-item" data-id="<%= tasks[i].id %>">
+    <li class="tasks-list-item" data-id="<%= tasks[i].taskId %>">
         <a class="tasks-name"> <%= tasks[i].name %> </a>
-        <a class="tasks-link icon-open-mobile" title="Open" data-id="<%= tasks[i].id %>"></a>
+        <a class="tasks-link icon-open-mobile" title="Open" data-id="<%= tasks[i].taskId %>"></a>
     </li>
     <% } %>
 </ul>
