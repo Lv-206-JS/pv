@@ -19,6 +19,7 @@ define([
 
             initialize: function (options) {
                 this.model = options.model;
+                this.task = options.task;
             },
 
             render: function render() {
@@ -30,11 +31,14 @@ define([
 
             onSelectTask: function onSelectTask(e) {
                 var taskId = this.getTargetId(e);
-                var task = _.findWhere(this.tasks, {taskId : taskId});
-                console.log(taskId + " taskId");
-                console.log(task);
+                var task;
+                for (var i = 0; i < this.tasks.length; i++) {
+                    if (this.tasks[i].taskId == taskId) {
+                        task = this.tasks[i];
+                    }
+                }
+                this.trigger('showTaskInfo', task);
 
-                // PV.router.navigate('project/' + taskId, {trigger: true});
             },
 
             getTargetId: function getTargetId(e) {

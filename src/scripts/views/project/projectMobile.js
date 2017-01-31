@@ -84,6 +84,8 @@ define([
             this.slideout.toggle();
 
             this.$el.find('.mobile-project-content').html(this.taskListMobileView.render().$el);
+            this.listenTo(this.taskListMobileView, 'showTaskInfo', this.showTaskInfo);
+
         },
 
         showGanttchart: function showGanttchart() {
@@ -120,10 +122,10 @@ define([
             }.bind(this)});
         },
 
-        showTaskInfo: function showTaskInfo() {
-
+        showTaskInfo: function showTaskInfo(task) {
             this.taskInfoMobileView = new TaskInfoMobileView({
-                model: this.model
+                model: this.model,
+                task: task
             });
             // this.slideout.toggle();
 

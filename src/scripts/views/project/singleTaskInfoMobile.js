@@ -17,15 +17,12 @@ define([
 
             initialize: function (options) {
                 this.model = options.model;
+                this.task = options.task;
             },
 
             render: function render() {
-                var task = this.task;
-                console.log(task);
-                this.$el.html(this.template({task: task, moment: Moment}));
-                // this.tasks = this.model.get('tasks');
-                // console.log(this.tasks);
-                // this.$el.html(this.template({tasks: this.tasks, moment: Moment}));
+
+                this.$el.html(this.template({task: this.task, moment: Moment}));
                 return this;
             }
 
