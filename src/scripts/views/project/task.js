@@ -349,7 +349,7 @@ define(['backbone',
             var resourceValue = this.$el.find('.task-resource').val();
             for( var i = 0; i < this.resources.length; i++){
                 if(resourceValue == this.resources[i].resourceName)
-                    this.task.resource = this.resources[i].resourceId;
+                    this.task.resource = this.resources[i].resourceName;
             }
             this.task.description = this.$el.find('.task-description').val();
             this.task.dependsOn = [];

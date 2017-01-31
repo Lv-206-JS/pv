@@ -20,7 +20,7 @@
                         <label class="form-label">Assignee:</label>
                         <% var resourceName = ''; %>
                         <% for(var i = 0; i < resources.length; i++) { %>
-                        <%    if(task.resource === resources[i].resourceId) { %>
+                        <%    if(task.resource === resources[i].resourceName) { %>
                         <%         resourceName = resources[i].resourceName; %>
                         <%    } %>
                         <% } %>
