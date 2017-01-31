@@ -18,8 +18,9 @@ define([
     'timeLine',
     'moment',
     'TaskAlgorithm',
-    'undoRedoAlgorithm'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, ProjectPriceView, TimeLineLib, Moment, TaskAlgorithm, UndoRedoAlgorithm) {
+    'undoRedoAlgorithm',
+    'mousetrap'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, ProjectPriceView, TimeLineLib, Moment, TaskAlgorithm, UndoRedoAlgorithm, Mousetrap) {
 
     'use strict';
 
@@ -53,6 +54,7 @@ define([
             this.moment = Moment;
             this.flagSchedule = true;
             this.undoRedo = new UndoRedoAlgorithm();
+            this.bindMainMousetrap();
         },
 
         unfocusTaskEditButton: function () {
@@ -309,6 +311,19 @@ define([
                 this.updateProjectName(this.model.get('name'));
             }
 
+        },
+
+
+        bindMainMousetrap: function bindMainMousetrap() {
+            Mousetrap.bind('5', function (event) {
+                if (this.settingsView) {
+                    console.log('test cntr+N');
+                }
+            //     if (this.hasOwnProperty(settingsView) /*== this.taskView == this.attachmentsView == this.milestoneView == this.projectPriceView == this.resourcesView == this.ownershipView == "undefined"*/) {
+            //         console.log("test cntr+N");
+            //         //this.showTaskAddPopup();
+            //     }
+            });
         }
     });
 

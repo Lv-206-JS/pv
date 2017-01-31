@@ -7,10 +7,10 @@ define(['backbone',
     'mousetrap',
     '../modalView'
     ],
-    function (Backbone, _, JST, Draggabilly, Moment, renderConfirmDeleteView, Mousetrap, ModalView) {
+    function (Backbone, _, JST, Draggabilly, Moment, ConfirmDeleteView, Mousetrap, ModalView) {
     'use strict';
 
-    var TaskView = ModalView.extend({
+    var TaskView = ConfirmDeleteView.extend({
         template: JST['project:task'],
         className: 'task-view show-content',
 
@@ -340,7 +340,8 @@ define(['backbone',
             }
             this.model.set('milestones', milestones);
             this.trigger('deleteTask', this.tasks);
-            this.$el.remove();
+            //this.$el.remove();
+            this.hideModalView();
         },
 
         /*
@@ -383,12 +384,6 @@ define(['backbone',
         confirmDelete: function confirmDelete() {
             this.deleteTask();
         }
-
-        /*
-        onEnter: function onEnter() {
-            this.showConfirmDeleteView();
-        }
-        */
 
     });
 
