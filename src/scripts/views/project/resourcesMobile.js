@@ -17,12 +17,11 @@ define([
 
             initialize: function (options) {
                 this.model = options.model;
+                this.resources = this.model.get('resources');
             },
 
             render: function render() {
-                // this.tasks = this.model.get('tasks');
-                // this.$el.html(this.template({tasks: this.tasks}));
-                this.$el.html(this.template({project: this.model.toJSON()}));
+                this.$el.html(this.template({resources: this.resources}));
 
                 return this;
             }

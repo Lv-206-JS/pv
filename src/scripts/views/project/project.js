@@ -67,7 +67,8 @@ define([
 
         render: function () {
             this.$el.html(this.template({
-                page: this.page
+                page: this.page,
+                icon: this.model.get('settings').icon
             }));
             return this;
         },
@@ -293,6 +294,10 @@ define([
             this.flagSchedule = false;
         },
 
+        updateLogo: function (icon) {
+            this.$el.find('.project-logo').attr("src", icon);
+        },
+
         onChange: function () {
             if (this.flagSchedule) {
                 this.startDateSchedule();
@@ -307,6 +312,7 @@ define([
                 this.renderViews();
                 Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
                 this.updateProjectName(this.model.get('name'));
+                this.updateLogo(this.model.get('settings').icon);
             }
 
         }

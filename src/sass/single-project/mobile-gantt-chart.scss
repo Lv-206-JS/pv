@@ -5,20 +5,18 @@
   align-items: center;
   color: #fff;
   font-family: "Roboto", serif;
-  font-size: 3rem;
-  height: 100vh;
-  overflow-y: scroll;
+  font-size: 1.5rem;
 
   .mobile-chart-header {
     width: 100%;
-    height: 100px;
+    height: 40px;
     background-color: #5499c7;
     display: flex;
     justify-content: center;
     align-items: center;
 
     .mobile-chart-header-title {
-      font-size: 4rem;
+      font-size: 2rem;
     }
   }
   .mobile-chart-container {

@@ -149,8 +149,8 @@ $icon-hover-opacity: 1; // hover
 .icon-open-mobile {
   @extend .icon-as-background;
   background-image: url("/images/icon-projects-list.svg");
-  width: 100px;
-  height: 100px;
+  width: 40px;
+  height: 40px;
   align-self: center;
 }
 
@@ -219,6 +219,10 @@ $table-row-height: 40px;
   }
 }
 
+.project-logo {
+  max-width: 25px;
+  max-height: 25px;
+}
 
 
 
