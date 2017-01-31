@@ -55,9 +55,6 @@ define(['backbone', 'underscore', 'JST', 'moment', 'backbone-validation'], funct
             } else {
                 this.model.set({description: null});
             }
-            // var newProjectIcon = this.$el.find('.project-icon').val();
-            // this.model.set({projectIcon: newProjectIcon})
-
             var newStartDateInSeconds = this.moment(this.$el.find('.start-date').val()).unix();
             this.model.set({startDate: newStartDateInSeconds});
             var newDayDuration = this.$el.find('.day-duration').val();
