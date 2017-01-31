@@ -13,6 +13,7 @@ define([
 
         var TaskInfoMobileView = Backbone.View.extend({
             template: JST['project:taskInfoMobile'],
+            className: 'mobile-task-info-view',
 
 
             initialize: function (options) {

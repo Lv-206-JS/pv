@@ -1,7 +1,11 @@
-<div class="task-info-mobile">
-    <h3>Single Task Page</h3><br>
-    <p>Name: <%= task.name %></p><br>
-    <p>Description: <%= task.description %></p><br>
-    <p>StartDate: <%= moment.unix(task.startDate).format('DD/MM/YY HH:mm') %></p><br>
-    <p>Resource: <%= task.resource %></p><br>
+<div class="mobile-task-info-header">
+    <span class="mobile-task-info-header-title">Task Info</span>
 </div>
+
+<ul class="task-info-mobile">
+    <span class="task-info-mobile-item">Name: <%= task.name %></span>
+    <span class="task-info-mobile-item">Resource: <%= task.resource %></span>
+    <span class="task-info-mobile-item">StartDate: <%= moment.unix(task.startDate).format('DD/MM/YY HH:mm') %></span>
+    <span class="task-info-mobile-item">Description:</span>
+    <span class="task-info-mobile-block"> <%= task.description %></span>
+</ul>

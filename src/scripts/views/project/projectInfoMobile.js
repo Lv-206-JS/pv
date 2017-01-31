@@ -13,6 +13,7 @@ define([
 
         var ProjectInfoMobileView = Backbone.View.extend({
             template: JST['project:projectInfoMobile'],
+            className: 'mobile-project-info-view',
 
 
             initialize: function (options) {

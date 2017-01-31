@@ -1,6 +1,10 @@
-<div class="project-info-mobile">
-    <h3>Single Project Main Page</h3><br>
-    <p>Description: <%= project.description %></p><br>
-    <p>Author: <%= project.author %></p><br>
-    <p>StartDate: <%= moment.unix(project.startDate).format('DD/MM/YY HH:mm') %></p><br>
+<div class="mobile-project-info-header">
+    <span class="mobile-project-info-header-title">Project Info</span>
 </div>
+
+<ul class="project-info-mobile">
+    <span class="project-info-mobile-item">Author: <%= project.author %></span>
+    <span class="project-info-mobile-item">StartDate: <%= moment.unix(project.startDate).format('DD/MM/YY HH:mm') %></span>
+    <span class="project-info-mobile-item">Description:</span>
+    <span class="project-info-mobile-block"> <%= project.description %></span>
+</ul>

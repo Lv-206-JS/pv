@@ -50,7 +50,7 @@ define([
             this.slideout = new Slideout({
                 'panel': document.getElementById('panel'),
                 'menu': document.getElementById('menu'),
-                'padding': 600,
+                'padding': 256,
                 'tolerance': 70
             });
 
