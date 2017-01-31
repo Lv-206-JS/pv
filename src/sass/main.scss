@@ -13,6 +13,7 @@
 @import "single-project/mobile-project-view";
 @import "single-project/gantt-chart-view";
 @import "single-project/info-bar-view";
+@import "single-project/mobile-project-info-view";
 @import "single-project/milestone-view";
 @import "single-project/mobile-milestone-view";
 @import "single-project/milestone-edit-view";
@@ -20,6 +21,7 @@
 @import "single-project/tasks-list";
 @import "single-project/mobile-tasks-list";
 @import "single-project/task-view";
+@import "single-project/mobile-task-info-view";
 @import "single-project/attachments-view";
 @import "single-project/settings-view";
 @import "single-project/project-view";
@@ -44,9 +46,7 @@ html, body {
   padding: 0;
   margin: 0;
   width: 100%;
-  min-width: 768px;
   height: 100%;
-  //overflow-y: hidden;
   overflow-x: hidden;
   font-family: Roboto, sans-serif;
   font-size: $font-size;

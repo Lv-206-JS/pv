@@ -1,12 +1,13 @@
 <div class="mobile-resource-header">
     <span class="mobile-resource-header-title">Resources</span>
 </div>
+
 <div class="mobile-resource-container">
-    <% for(var i = 0; i < resources.length; i++) {%>
+    <% for(var i = 0; i < resources.length; i++) { %>
     <li class="resources-list-item" data-id="<%= resources[i].resourceId %>">
         <a class="resources-name"> <%= resources[i].resourceName %> </a>
-        <a class="resources-name"> <%= resources[i].rate %> rate($) </a>
+        <a class="resources-name"> Rate: <%= resources[i].rate %> ($) </a>
         <a class="resources-name"> <%= resources[i].type %> </a>
-    <% } %>
+        <% } %>
     </li>
 </div>
