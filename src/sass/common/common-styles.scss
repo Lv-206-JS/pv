@@ -111,6 +111,12 @@ button {
 $icon-opacity: 0.5; // normal
 $icon-hover-opacity: 1; // hover
 
+.project-logo {
+  max-width: 25px;
+  max-height: 25px;
+  margin-right: 10px;
+}
+
 .icon {
   display: inline-block;
   opacity: $icon-opacity;
@@ -219,10 +225,6 @@ $table-row-height: 40px;
   }
 }
 
-.project-logo {
-  max-width: 25px;
-  max-height: 25px;
-}
 
 
 
