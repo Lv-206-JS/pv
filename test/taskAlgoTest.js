@@ -201,7 +201,7 @@ describe('Test tasks startDate algorithm', function () {
     });
 
     /*
-     *   Test 3 task without dependencies and 1 developers
+     *   Test 3 task with dependencies and 2 developers
      */
 
     describe('Test 3 task with dependencies and 2 developers', function () {
@@ -241,6 +241,52 @@ describe('Test tasks startDate algorithm', function () {
         it('start date should be equal to 0, 10, 10', function (done) {
             expect(result[0].startDate).to.equal(0);
             expect(result[1].startDate).to.equal(10);
+            expect(result[2].startDate).to.equal(10);
+            done();
+        });
+    });
+
+    /*
+     *   Test 3 task with dependecies and 2 developers
+     */
+
+    describe('Test 3 task with dependencies and 2 developers', function () {
+        var task = [
+            {
+                taskId: 10,
+                dependsOn: [],
+                resource: 'Developer 1',
+                estimateTime: 15
+            },
+            {
+                taskId: 25,
+                dependsOn: [],
+                resource: 'Developer 22',
+                estimateTime: 10
+            },
+            {
+                taskId: 55,
+                dependsOn: [{
+                    taskId: 25
+                }],
+                resource: 'Developer 22',
+                estimateTime: 10
+            }
+        ];
+        var result = startAlgo.startAlgorithm(task);
+        it('it should be an array', function (done) {
+            expect(result).to.be.an('array');
+            done();
+        });
+
+        it('length should be 3', function (done) {
+            expect(result.length).to.equal(3);
+            done();
+        });
+
+        it('start date should be equal to 0, 10, 10', function (done) {
+            expect(result[0].startDate).to.equal(0);
+            expect(result[1].startDate).to.equal(0);
             expect(result[2].startDate).to.equal(10);
             done();
         });
