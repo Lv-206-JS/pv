@@ -1,5 +1,5 @@
 /**
- * Created by Hazard on 27.01.2017.
+ * Created by Hazard on 30.01.2017.
  */
 
 define([
@@ -11,21 +11,23 @@ define([
     function (Backbone, _, JST, Moment) {
         'use strict';
 
-        var ProjectInfoMobileView = Backbone.View.extend({
-            template: JST['project:projectInfoMobile'],
-            className: 'mobile-project-info-view',
+        var TaskInfoMobileView = Backbone.View.extend({
+            template: JST['project:taskInfoMobile'],
+            className: 'mobile-task-info-view',
 
 
             initialize: function (options) {
                 this.model = options.model;
+                this.task = options.task;
             },
 
             render: function render() {
-                this.$el.html(this.template({project: this.model.toJSON(), moment: Moment}));
+
+                this.$el.html(this.template({task: this.task, moment: Moment}));
                 return this;
             }
 
         });
 
-        return ProjectInfoMobileView;
+        return TaskInfoMobileView;
     });

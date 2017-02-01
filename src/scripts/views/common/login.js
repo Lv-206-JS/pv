@@ -36,8 +36,6 @@ define([
 
             this.model.setUrl('/users/login/');
 
-            console.log(this.model.isValid(['email', 'password']));
-
             if (this.model.isValid(['email', 'password'])) {
 
                 //We are making validation before saving, that's why we set it to false inside save()

@@ -46,7 +46,7 @@ define([
             this.model.setUrl(this.model.get('id') || '');
 
             if (this.model.isValid(['name', 'description'])) {
-                this.model.save().then(
+                this.model.save({},{validate: false}).then(
                     function() {
                         that.trigger('editedProject', that.model);
 

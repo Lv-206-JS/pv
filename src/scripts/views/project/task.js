@@ -3,11 +3,14 @@ define(['backbone',
     'JST',
     'Draggabilly',
     'moment',
-    '../common/confirmDelete'],
-    function (Backbone, _, JST, Draggabilly, Moment, renderConfirmDeleteView) {
+    '../common/confirmDelete',
+    'mousetrap',
+    '../modalView'
+    ],
+    function (Backbone, _, JST, Draggabilly, Moment, ConfirmDeleteView, Mousetrap, ModalView) {
     'use strict';
 
-    var TaskView = Backbone.View.extend({
+    var TaskView = ConfirmDeleteView.extend({
         template: JST['project:task'],
         className: 'task-view show-content',
 
@@ -36,6 +39,8 @@ define(['backbone',
             this.dependenciesList = this.getTasksList(false);
             this.mimetypesList = this.getMimetypesList(this.task.attachments);
             this.moment = Moment;
+            this.showModalView();
+            this.bindMousetrap();
         },
 
         render: function render() {
@@ -56,11 +61,12 @@ define(['backbone',
             'click .tab-general' : 'taskGeneralInformation',
             'click .tab-dependencies' : 'taskDependenciesInformation',
             'click .tab-attachments' : 'taskAttachmentslInformation',
-            'click .cancel-button' : 'hideTaskView',
+            'click .cancel-button' : 'hideModalView',
             'click .ok-button' : 'onSubmitChanges',
-            'click .delete-task' : 'confirmDelete',
+            'click .delete-task' : 'showConfirmDeleteView',
             'change #add-attachment-file' : 'addAttachment',
-            'click #delete-attachment' : 'confirmDeleteAttachment',
+            //'click #delete-attachment' : 'confirmDeleteAttachment',
+            'click #delete-attachment' : 'showConfirmDeleteView',
             'dblclick .task-item' : 'addTaskToList'
         },
 
@@ -253,9 +259,9 @@ define(['backbone',
             this.addAttachmentItem(this.task.attachments.length-1);
         },
 
-        deleteAttachment: function (event) {
-            event.preventDefault();
-            var target = $(event.currentTarget);
+        deleteAttachment: function (target) {
+            //event.preventDefault();
+            debugger;
             var attachmentId = target.data('id');
             var attachmentNumber;
             for(var i = 0; i < this.task.attachments.length; i++){
@@ -271,10 +277,6 @@ define(['backbone',
             });
             this.task.attachments.splice(attachmentNumber,1);
             this.deleteAttachmentItem(attachmentId);
-        },
-
-        confirmDeleteAttachment: function(event){
-            renderConfirmDeleteView(event, this, _.bind(this.deleteAttachment, this, event));
         },
 
         addAttachmentItem: function(i){
@@ -329,16 +331,8 @@ define(['backbone',
             }
             this.model.set('milestones', milestones);
             this.trigger('deleteTask', this.tasks);
-            this.$el.remove();
-        },
-
-        confirmDelete: function(event){
-            renderConfirmDeleteView(event, this, this.deleteTask);
-        },
-
-        hideTaskView: function(event){
-            event.preventDefault();
-            this.$el.remove();
+            //this.$el.remove();
+            this.hideModalView();
         },
 
         onSubmitChanges: function onSubmitChanges (event){
@@ -361,7 +355,17 @@ define(['backbone',
                 this.task.dependsOn = [];
             }
             this.trigger('upsertTask', this.tasks, this.task);
-            this.$el.remove();
+            this.hideModalView();
+        },
+
+        confirmDelete: function confirmDelete(event) {
+            debugger;
+            if ($(this.targetButton).attr('id') == 'delete-task') {
+                this.deleteTask();
+            } else if ($(this.targetButton).attr('id') == 'delete-attachment') {
+                this.deleteAttachment($(this.targetButton));
+            }
+
         }
 
     });

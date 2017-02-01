@@ -6,7 +6,7 @@ define([
     './projectsTitle',
     './projectsArea',
     './projectsEdit'
-], function (Backbone, JST, MainMenuView, ProjectsTitleView, ProjectsAreaView, ProjectsEditView ) {
+], function (Backbone, JST, MainMenuView, ProjectsTitleView, ProjectsAreaView, ProjectsEditView) {
     'use strict';
 
     var MainProjectsView = Backbone.View.extend({
@@ -16,7 +16,6 @@ define([
         },
 
         initialize: function () {
-
         },
 
         render: function render() {
@@ -48,6 +47,7 @@ define([
         onGoToProjects: function onGoToProjects() {
             PV.router.navigate('projects', {trigger: true});
         }
+
     });
 
     return MainProjectsView;
