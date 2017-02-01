@@ -9,7 +9,7 @@ define([
     'models/Project',
     './projectInfoMobile',
     './tasksListMobile',
-    './ganttChartMobile',
+    './ganttMobile',
     './milestoneMobile',
     './resourcesMobile'
 
@@ -86,7 +86,8 @@ define([
 
         showGanttchart: function showGanttchart() {
             this.chartMobileView = new ChartMobileView({
-                model: this.model
+                model: this.model,
+                el: this.$el.find('#gantt-view-container')[0]
             });
             this.slideout.toggle();
 
