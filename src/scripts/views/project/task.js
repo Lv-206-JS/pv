@@ -54,11 +54,6 @@ define(['backbone',
                 moment: this.moment,
                 deleteTask: this.delete
             }));
-
-            /*
-            var me = this;
-            Mousetrap.bind('esc', function(event){ me.hideTaskView(event); });
-            */
             return this;
         },
 
@@ -70,7 +65,8 @@ define(['backbone',
             'click .ok-button' : 'onSubmitChanges',
             'click .delete-task' : 'showConfirmDeleteView',
             'change #add-attachment-file' : 'addAttachment',
-            'click #delete-attachment' : 'confirmDeleteAttachment',
+            //'click #delete-attachment' : 'confirmDeleteAttachment',
+            'click #delete-attachment' : 'showConfirmDeleteView',
             'dblclick .task-item' : 'addTaskToList'
         },
 
@@ -263,9 +259,9 @@ define(['backbone',
             this.addAttachmentItem(this.task.attachments.length-1);
         },
 
-        deleteAttachment: function (event) {
-            event.preventDefault();
-            var target = $(event.currentTarget);
+        deleteAttachment: function (target) {
+            //event.preventDefault();
+            debugger;
             var attachmentId = target.data('id');
             var attachmentNumber;
             for(var i = 0; i < this.task.attachments.length; i++){
@@ -281,10 +277,6 @@ define(['backbone',
             });
             this.task.attachments.splice(attachmentNumber,1);
             this.deleteAttachmentItem(attachmentId);
-        },
-
-        confirmDeleteAttachment: function(event){
-            renderConfirmDeleteView(event, this, _.bind(this.deleteAttachment, this, event));
         },
 
         addAttachmentItem: function(i){
@@ -367,12 +359,13 @@ define(['backbone',
         },
 
         confirmDelete: function confirmDelete(event) {
-            this.deleteTask();
+            debugger;
+            if ($(this.targetButton).attr('id') == 'delete-task') {
+                this.deleteTask();
+            } else if ($(this.targetButton).attr('id') == 'delete-attachment') {
+                this.deleteAttachment($(this.targetButton));
+            }
 
-            // debugger;
-            // if ($(event.target).hasClass("delete-task")) {
-            //     this.deleteTask();
-            // }
         }
 
     });

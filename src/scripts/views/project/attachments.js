@@ -4,7 +4,7 @@ define(['backbone',
     '../common/confirmDelete'], function (Backbone, _, JST, ConfirmDeleteView) {
     'use strict';
 
-    var AttachmentsView = Backbone.View.extend({
+    var AttachmentsView = ConfirmDeleteView.extend({
         template: JST['project:attachments'],
         className: 'attachments-view show-content',
 
@@ -12,6 +12,8 @@ define(['backbone',
         initialize: function (options) {
             this.model = options.model;
             this.attachments = options.attachments;
+            this.showModalView();
+            this.bindMousetrap();
         },
 
         render: function render() {
@@ -20,9 +22,9 @@ define(['backbone',
         },
 
         events: {
-            'click .ok-button': 'hideAttachmentsView',
+            'click .ok-button': 'hideModalView',
             'change #add-attachment-file': 'addAttachmentByButton',
-            'click #delete-attachment': 'confirmDeleteAtt',
+            'click #delete-attachment': 'showConfirmDeleteView',
             'drop .tab-container': 'dragNDropAtt',
             'dragover .tab-container': 'overrideDragover'
         },
@@ -94,14 +96,15 @@ define(['backbone',
             event.preventDefault();
         },
 
-        confirmDeleteAtt: function onDeleteProject(e) {
-            e.stopPropagation();
-            ConfirmDeleteView(e, this, _.bind(this.deleteAttachment, this, e));
+        confirmDelete: function (e) {
+            //e.stopPropagation();
+            //ConfirmDeleteView(e, this, _.bind(this.deleteAttachment, this, e));
+            debugger;
+            this.deleteAttachment($(this.targetButton));
         },
 
-        deleteAttachment: function (event) {
-            event.preventDefault();
-            var target = $(event.currentTarget);
+        deleteAttachment: function (target) {
+            //event.preventDefault();
             var attachmentId = target.data('id');
             var response = $.ajax({
                 url: '/rest/attachments/' + attachmentId,
@@ -113,10 +116,10 @@ define(['backbone',
             this.saveModel(response.responseText, 'Delete', attachmentId);
         },
 
-        hideAttachmentsView: function (event) {
-            event.preventDefault();
-            this.$el.remove();
-        },
+        // hideAttachmentsView: function (event) {
+        //     event.preventDefault();
+        //     this.$el.remove();
+        // },
 
         updateAttachmentsPopup: function () {
             this.render();

@@ -9,11 +9,6 @@ define([
 
     var ModalView = Backbone.View.extend({
 
-        /*
-        initialize: function () {
-
-        },
-        */
         showModalView: function showModalView() {
             modalViewStack.push(this.$el);
             console.log('--pushed to stack---');
@@ -22,7 +17,6 @@ define([
         },
 
         hideModalView: function hideModalView(event) {
-            //event.preventDefault();
             var lastView = modalViewStack.pop();
             if (lastView) {
                 lastView.remove();
@@ -30,7 +24,6 @@ define([
                 console.log(modalViewStack);
                 console.log('--------------------');
             }
-            //Mousetrap.reset();
         },
 
         doDeleteClicked: function doDeleteClicked(event) {
@@ -42,7 +35,6 @@ define([
         },
 
         bindMousetrap: function bindMousetrap() {
-            //Mousetrap.reset();
             var me = this;
             Mousetrap.bind('esc', function(event) {
                 me.hideModalView(event);

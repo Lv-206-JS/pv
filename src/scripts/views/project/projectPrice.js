@@ -2,11 +2,13 @@ define(['backbone',
         'underscore',
         'JST',
         'moment',
-        'timeLine'],
-    function (Backbone, _, JST, Moment, TimeLineLib) {
+        'timeLine',
+        '../modalView'
+    ],
+    function (Backbone, _, JST, Moment, TimeLineLib, ModalView) {
         'use strict';
 
-        var ProjectPriceView = Backbone.View.extend({
+        var ProjectPriceView = ModalView.extend({
             template: JST['project:price'],
             className: 'project-price-view show-content',
 
@@ -17,6 +19,8 @@ define(['backbone',
                 this.tasks = this.model.get('tasks');
                 this.price = this.calculatePrice();
                 this.duration = this.calculateDuration();
+                this.showModalView();
+                this.bindMousetrap();
             },
 
             render: function render() {
@@ -134,8 +138,7 @@ define(['backbone',
             },
 
             onSubmitChanges: function onSubmitChanges (event){
-                event.preventDefault();
-                this.$el.remove();
+                this.hideModalView();
             }
 
         });
