@@ -57,7 +57,7 @@ define(['backbone',
                 'click #create-resource' : 'showResourceEdit',
                 'click .edit-resource' : 'showResourceEdit',
                 'click .edit' : 'showResourceEdit',
-                'click .remove-resource': 'confirmDeleteResource',
+                'click .remove-resource': 'deleteResource',
                 'click .cancel-button' : 'hideTaskView',
                 'click .ok-button' : 'submitChanges'
             },

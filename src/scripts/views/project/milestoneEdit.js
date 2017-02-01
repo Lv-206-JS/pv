@@ -33,7 +33,7 @@ define(['backbone',
         events: {
             'click .cancel-button': 'hideModalView',
             'click .ok-button': 'saveChanges',
-            'click .remove-milestone': 'showConfirmDeleteView',
+            'click .remove-milestone': 'deleteMilestone',
             'dblclick .milestone-task-name': 'showSingleMilestone',
             'click #create-milestone, .edit-single-milestone': 'showSingleMilestone'
         },

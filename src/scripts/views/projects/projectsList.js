@@ -14,7 +14,7 @@ define([
             'click .projects-list-item': 'onClick',
             'click .icon-open': 'onSelectProject',
             'click .icon-edit': 'onEditProject',
-            'click .icon-remove': 'onDeleteProject'
+            'click .icon-remove': 'onDeleteConfirm'
         },
 
         initialize: function (options) {
