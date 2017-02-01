@@ -14,13 +14,16 @@
                 <div class="tab-container">
                     <div class="tab-container general-content show-content">
                         <label class="form-label">Name:</label>
-                        <input class="form-input-text name" maxlength="256" value="<%= model.name %>" placeholder="Project Name" type="text">
+                        <input class="form-input-text form-control name" maxlength="256" value="<%= model.name %>" name="name" placeholder="Project Name" type="text">
+                        <!--<div class="form-error name-error"></div>-->
                         <label class="form-label">Author:</label>
-                        <input class="form-input-text author" maxlength="256" value="<%= model.author %>" placeholder="Author" type="text">
+                        <input class="form-input-text form-control author" maxlength="256" value="<%= model.author %>" name="author" placeholder="Author" type="text">
+                        <!--<div class="form-error author-error"></div>-->
                         <label class="form-label description-label">Description:</label>
-                        <textarea class="form-input-description description" maxlength="5000" placeholder="Project Description"><%= model.description %></textarea>
+                        <textarea class="form-input-description form-control description" maxlength="5000" name="description" placeholder="Project Description"><%= model.description %></textarea>
+                        <!--<div class="form-error description-error"></div>-->
 
-                       <div class="add-project-icon ">
+                        <div class="add-project-icon ">
                            <label class="form-label pr-icon">Project icon:</label>
                         <div class="add-attachment" >
                             <div class="form-input-file input-project-icon">
@@ -36,11 +39,14 @@
                     </div>
                     <div class="tab-container settings-content hide-content">
                         <label class="form-label">Start Date:</label>
-                        <input class="form-input-text start-date" value="<%= moment.unix(+model.startDate).format('YYYY-MM-DD')%>" placeholder="Project Start Date" type="date">
+                        <input class="form-input-text form-control start-date" value="<%= moment.unix(+model.startDate).format('YYYY-MM-DD')%>"  name="startDate" placeholder="Project Start Date" type="date">
+                        <!--<div class="form-error startDate-error"></div>-->
                         <label class="form-label day-start-label">Working Day Start:</label>
-                        <input class="form-input-text working-day-start" value="<%= moment.duration(+settings.dayStart, 'seconds').asHours() %>" placeholder="Working Day Start" type="number" min="0" max="24">
+                        <input class="form-input-text form-control working-day-start" value="<%= moment.duration(+settings.dayStart, 'seconds').asHours() %>" name="dayStart" placeholder="Working Day Start" type="number" min="0" max="24">
+                        <!--<div class="form-error dayStart-error"></div>-->
                         <label class="form-label">Hours Per Day:</label>
-                        <input class="form-input-text day-duration" value="<%= moment.duration(+settings.dayDuration, 'seconds').asHours() %>" placeholder="Working Hours Per Day" type="number" min="0" max="24">
+                        <input class="form-input-text form-control day-duration" value="<%= moment.duration(+settings.dayDuration, 'seconds').asHours() %>" name="dayDuration" placeholder="Working Hours Per Day" type="number" min="0" max="24">
+                        <!--<div class="form-error dayDuration-error"></div>-->
                     </div>
                 </div>
             </div>

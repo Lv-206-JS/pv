@@ -15,7 +15,7 @@ define([
         events: {
             'click .ok-button': 'onSubmit',
             'click #exit-button': 'hideLoginView',
-            'keydown .form-control': 'removeErrors'
+            'keydown .mobile-form-control': 'removeErrors'
         },
 
         initialize: function initialize() {
@@ -69,7 +69,7 @@ define([
         handleErrors: function () {
             var that = this,
                 errors = this.model.validate(),
-                inputs = this.$el.find('.form-control');
+                inputs = this.$el.find('.mobile-form-control');
 
             _.each(inputs, function(input) {
                 var inputName = $(input).attr('name');
