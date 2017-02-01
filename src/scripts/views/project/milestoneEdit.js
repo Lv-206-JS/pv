@@ -4,11 +4,12 @@ define(['backbone',
     'Draggabilly',
     'moment',
     '../common/confirmDelete',
-    'views/project/singleMilestoneEdit'
-], function (Backbone, _, JST, Draggabilly, Moment, ConfirmDeleteView, SingleMilestoneEdit) {
+    'views/project/singleMilestoneEdit',
+    '../modalView',
+], function (Backbone, _, JST, Draggabilly, Moment, ConfirmDeleteView, SingleMilestoneEdit, ModalView) {
     'use strict';
 
-    var MilestoneEditView = Backbone.View.extend({
+    var MilestoneEditView = ConfirmDeleteView.extend({
         template: JST['project:milestoneEdit'],
         className: 'milestone-edit-view show-content',
 
@@ -17,6 +18,8 @@ define(['backbone',
             this.milestones = options.milestones;
             this.tasks = this.model.get('tasks');
             this.moment = Moment;
+            this.showModalView();
+            this.bindMousetrap();
         },
 
         render: function render() {
@@ -28,9 +31,9 @@ define(['backbone',
         },
 
         events: {
-            'click .cancel-button': 'hideMilestoneEditView',
+            'click .cancel-button': 'hideModalView',
             'click .ok-button': 'saveChanges',
-            'click .remove-milestone': 'confirmDeleteMilestone',
+            'click .remove-milestone': 'showConfirmDeleteView',
             'dblclick .milestone-task-name': 'showSingleMilestone',
             'click #create-milestone, .edit-single-milestone': 'showSingleMilestone'
         },
@@ -112,11 +115,7 @@ define(['backbone',
 
         saveChanges: function () {
             this.model.save();
-            this.$el.remove();
-        },
-
-        hideMilestoneEditView: function () {
-            this.$el.remove();
+            this.hideModalView();
         }
     });
 
