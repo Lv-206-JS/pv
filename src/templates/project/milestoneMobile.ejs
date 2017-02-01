@@ -2,5 +2,14 @@
     <span class="mobile-milestone-header-title">Milestones</span>
 </div>
 <div class="mobile-milestone-container">
-    <p>Milestones Go here!</p>
+    <% for (var i = 0; i < milestones.length; i++) {%>
+    <div>
+        <p class="milestone-name"><%= milestones[i].name %></p>
+        <p>Date: <%= milestonesDates[i] %></p>
+        <p>Depends on tasks:</p>
+        <% for (var j = 0; j < milestones[i].dependsOn.length; j++) {%>
+        <p class="tasks"><%= milestones[i].dependsOn[j].taskName %></p>
+        <%}%>
+    </div>
+    <%}%>
 </div>

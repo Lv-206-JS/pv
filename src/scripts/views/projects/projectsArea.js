@@ -4,14 +4,16 @@ define([
     'models/Project',
     'views/projects/projectsList',
     'views/projects/projectsAbout',
-    './projectsEdit'
+    './projectsEdit',
+    'mousetrap'
 ], function (
     Backbone,
     JST,
     ProjectModel,
     ProjectsListView,
     ProjectsAboutView,
-    ProjectsEditPopup
+    ProjectsEditPopup,
+    Mousetrap
 ) {
     'use strict';
 
@@ -29,6 +31,7 @@ define([
             this.collection.on('sync', _.bind(this.onSync, this));
             Backbone.Events.off('selectProject');
             Backbone.Events.on('selectProject', _.bind(this.onSelect, this));
+            this.bindProjectsMousetrap();
         },
 
         render: function render() {
@@ -76,7 +79,20 @@ define([
             this.renderViews(model);
             this.projectsEditPopup.remove();
             this.projectsEditPopup = null;
+        },
+
+        bindProjectsMousetrap: function bindProjectsMousetrap() {
+            var me = this;
+            Mousetrap.unbind('n');
+            Mousetrap.bind('n', function (event) {
+                if ($(".show-content").length == 0) {
+                    if ($(".main-projects-view").length > 0) {
+                        me.onEditProject();
+                    }
+                }
+            });
         }
+
     });
 
     return ProjectsAreaView;

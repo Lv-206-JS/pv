@@ -2,11 +2,12 @@ define(['backbone',
     'underscore',
     'JST',
     'Draggabilly',
-    'timeLine'
-], function (Backbone, _, JST, Draggabilly, TimeLine) {
+    'timeLine',
+    '../modalView'
+], function (Backbone, _, JST, Draggabilly, TimeLine, ModalView) {
     'use strict';
 
-    var SingleMilestoneEdit = Backbone.View.extend({
+    var SingleMilestoneEdit = ModalView.extend({
         template: JST['project:singleMilestone'],
         className: 'single-milestone-edit-view',
 
@@ -19,6 +20,8 @@ define(['backbone',
             this.currentName = options.currentName;
             this.makeTasksDraggable(this.tasksList, this.dependenciesList);
             this.timeLine = new TimeLine(this.model);
+            this.showModalView();
+            this.bindMousetrap();
         },
 
         render: function render() {
@@ -32,7 +35,7 @@ define(['backbone',
         },
 
         events: {
-            'click .cancel-button': 'hideSingleMilestoneEditView',
+            'click .cancel-button': 'hideModalView',
             'click .ok-button': 'saveMilestoneSettings',
             'dblclick .milestone-task-item': 'addTaskToList'
         },
@@ -66,7 +69,7 @@ define(['backbone',
             }
             this.trigger('showMilestoneChanges', this.singleMilestoneEdit);
             event.preventDefault();
-            this.$el.remove();
+            this.hideModalView();
         },
 
         makeTasksDraggable: function (tasksList, dependenciesList) {
@@ -147,10 +150,6 @@ define(['backbone',
             var milestonePTLdate = this.timeLine.calculateEstimateTime(dependsOn);
             var milestoneDate = this.timeLine.toDate(milestonePTLdate);
             return milestoneDate;
-        },
-
-        hideSingleMilestoneEditView: function () {
-            this.$el.remove();
         }
     });
 

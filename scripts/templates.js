@@ -80,15 +80,15 @@ obj || (obj = {});
 var __t, __p = '', __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 with (obj) {
-__p += '<!--<div class="">-->\n\n    <div class="mobile-landing-actions">\n        ';
+__p += '\n    <div class="mobile-landing-actions">\n        ';
  if (userId) { ;
-__p += '\n        <img class="big-logo" src="images/plan-view-logo-1.svg">\n        <h1 class="landing-mobile-h">Create a beautiful project plan in minutes with Plan&amp;View free gantt chart software.</h1>\n            <span class="show-user-name user-name">hello, ' +
+__p += '\n        <img class="mobile-logo" src="images/plan-view-logo-1.svg">\n        <h1 class="landing-mobile-h">Create a beautiful project plan in minutes with Plan&amp;View free gantt chart software.</h1>\n            <span class="show-user-name user-name">hello, ' +
 ((__t = ( userName )) == null ? '' : __t) +
 ' </span>\n            <input class="go-to-projects mobile-form-button" type="submit" value="my projects">\n            <input class="sign-out-button mobile-form-button" type="submit" value="sign out">\n\n        ';
  } else { ;
-__p += '\n                <img class="big-logo-signin" src="images/plan-view-logo-1.svg">\n                <input class="login-btn mobile-form-button" type="submit" value="sign in">\n        ';
+__p += '\n                <img class="mobile-logo" src="images/plan-view-logo-1.svg">\n                <input class="login-btn mobile-form-button" type="submit" value="sign in">\n        ';
  } ;
-__p += '\n\n    </div>\n<!--</div>-->\n';
+__p += '\n\n    </div>\n';
 
 }
 return __p
@@ -112,7 +112,7 @@ window["JST"]["common:loginMobile"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '';
 with (obj) {
-__p += '\n<div class="mobile-form-title">\n    <img class="mobile-logo" src="images/plan-view-logo-1.svg">\n    <span>Sign In with Account</span>\n</div>\n\n<div class="mobile-tab-container">\n    <input class="mobile-form-input-text mobile-form-control" maxlength="50" name="email" placeholder="Email"\n       type="email">\n    <div class="mobile-form-error email-error"></div>\n\n    <input class="mobile-form-input-text mobile-form-control" maxlength="50" name="password" placeholder="Password"\n       type="password">\n    <div class="mobile-form-error password-error"></div>\n</div>\n\n<div class="mobile-login-form-bottom">\n    <input class="mobile-form-button ok-button" type="submit" value="ok">\n    <input class="mobile-form-button cancel-button" id="exit-button" type="submit" value="cancel">\n</div>\n\n';
+__p += '\n<div class="mobile-form-title">\n    <img class="mobile-logo" src="images/plan-view-logo-1.svg">\n    <span>Sign In with Account</span>\n</div>\n\n<div class="mobile-tab-container">\n    <input class="mobile-form-input-text mobile-form-control" maxlength="50" name="email" placeholder="Email"\n       type="email">\n\n    <input class="mobile-form-input-text mobile-form-control" maxlength="50" name="password" placeholder="Password"\n       type="password">\n    <div class="mobile-form-error email-error"></div>\n    <div class="mobile-form-error password-error"></div>\n</div>\n\n<div class="mobile-login-form-bottom">\n    <input class="mobile-form-button ok-button" type="submit" value="ok">\n    <input class="mobile-form-button cancel-button" id="exit-button" type="submit" value="cancel">\n</div>\n\n';
 
 }
 return __p
@@ -256,6 +256,18 @@ return __p
 (function() {
 window["JST"] = window["JST"] || {};
 
+window["JST"]["project:ganttChartMobile"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '';
+with (obj) {
+__p += '<svg id="dates" width="100%" height="100%" class="table-task-header gantt-date-header" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">\n    <svg id="topDates" class="table-header-row gantt-date-top" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>\n    <svg id="bottomDates" class="table-header-row gantt-date-bottom" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>\n</svg>';
+
+}
+return __p
+}})();
+(function() {
+window["JST"] = window["JST"] || {};
+
 window["JST"]["project:ganttContainer"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __j = Array.prototype.join;
@@ -276,6 +288,18 @@ return __p
 window["JST"] = window["JST"] || {};
 
 window["JST"]["project:ganttTaskRow"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '';
+with (obj) {
+__p += '<svg id="gantt-chart-svg" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>';
+
+}
+return __p
+}})();
+(function() {
+window["JST"] = window["JST"] || {};
+
+window["JST"]["project:ganttTaskRowMobile"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '';
 with (obj) {
@@ -361,6 +385,33 @@ return __p
 (function() {
 window["JST"] = window["JST"] || {};
 
+window["JST"]["project:milestoneMobile"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __j = Array.prototype.join;
+function print() { __p += __j.call(arguments, '') }
+with (obj) {
+__p += '<div class="mobile-milestone-header">\n    <span class="mobile-milestone-header-title">Milestones</span>\n</div>\n<div class="mobile-milestone-container">\n    ';
+ for (var i = 0; i < milestones.length; i++) {;
+__p += '\n    <div>\n        <p class="milestone-name">' +
+((__t = ( milestones[i].name )) == null ? '' : __t) +
+'</p>\n        <p>Date: ' +
+((__t = ( milestonesDates[i] )) == null ? '' : __t) +
+'</p>\n        <p>Depends on tasks:</p>\n        ';
+ for (var j = 0; j < milestones[i].dependsOn.length; j++) {;
+__p += '\n        <p class="tasks">' +
+((__t = ( milestones[i].dependsOn[j].taskName )) == null ? '' : __t) +
+'</p>\n        ';
+};
+__p += '\n    </div>\n    ';
+};
+__p += '\n</div>';
+
+}
+return __p
+}})();
+(function() {
+window["JST"] = window["JST"] || {};
+
 window["JST"]["project:ownership"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __j = Array.prototype.join;
@@ -399,7 +450,7 @@ obj || (obj = {});
 var __t, __p = '', __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 with (obj) {
-__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <div class="left">Project Price</div>\n            <div class="center"></div>\n            <div class="right"><input class="close-btn form-button cancel-button ok-button" type="button" value="" > </div>\n        </div>\n        <div class="tab-container">\n            <div class="tab-container">\n                <label class="form-label project-price">Project Price:</label>\n                <div class="price-container">\n                    <div class="table-price-header">\n                        <div class="table-item">Name</div>\n                        <div class="table-item">Price</div>\n                    </div>\n                    <div class="resources-prices">\n                        ';
+__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <div class="left">Project Price</div>\n            <div class="center"></div>\n            <div class="right"><button class="close-btn form-button cancel-button ok-button" type="button"></button></div>\n        </div>\n        <div class="tab-container">\n            <div class="tab-container">\n                <label class="form-label project-price">Project Price:</label>\n                <div class="price-container">\n                    <div class="table-price-header">\n                        <div class="table-item">Name</div>\n                        <div class="table-item">Price</div>\n                    </div>\n                    <div class="resources-prices">\n                        ';
  for(var i = 0; i < resources.length; i++) { ;
 __p += '\n                            <div class="table-resource-row">\n                                <div class="price-item">' +
 ((__t = ( resources[i].resourceName )) == null ? '' : __t) +
@@ -411,7 +462,7 @@ __p += '\n                    </div>\n                    <br>\n                
 ((__t = ( price.price )) == null ? '' : __t) +
 '</div>\n                </div>\n                <br>\n                <label class="form-label project-duratione">Project Duration:</label>\n                <div class="duration-value">' +
 ((__t = ( duration )) == null ? '' : __t) +
-'</div>\n            </div>\n        </div>\n        <div class="project-price-form-bottom">\n            <input type="button" class="form-button ok-button" value="ok">\n        </div>\n    </form>\n</div>\n';
+'</div>\n            </div>\n        </div>\n        <div class="project-price-form-bottom">\n            <button type="button" class="form-button ok-button">ok</button>\n        </div>\n    </form>\n</div>\n';
 
 }
 return __p
@@ -424,11 +475,11 @@ obj || (obj = {});
 var __t, __p = '', __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 with (obj) {
-__p += '<div class="menu-toolbar">\n    ';
+__p += '<div class="menu-toolbar">\n    <div class="project-name-and-icon">\n    ';
  if (page !== 'projects') { ;
-__p += '\n    <p class="show-project-name"> </p>\n    ';
+__p += '\n    <div>\n        <img class="project-logo" src="">\n    </div>\n    <p class="show-project-name"> </p>\n    ';
  } ;
-__p += '\n    <div class="tool-bar">\n        <a class="tool-img tool-zoom-out" title="Zoom Out"></a>\n        <label id="zoom-value" class="zoom-value">100%</label>\n        <a class="tool-img tool-zoom-in" title="Zoom In"></a>\n        <a class="tool-img tool-fit" title="Fit To Screen"></a>\n        <a class="tool-img tool-undo" title="Undo" id="undo" disabled="disabled"></a>\n        <a class="tool-img tool-redo" title="Redo" id="redo" disabled="disabled"></a>\n        <a class="tool-img tool-price" title="Project Price" id="price"></a>\n        <a class="edit-milestone tool-img tool-milestone" title="Milestones"></a>\n        <a class="tool-critical-way tool-img" title="Critical Path"></a>\n        <a class="show-attachments tool-attachment tool-img" title="Attachments"></a>\n        <a class="show-resources tool-resources tool-img" title="Resources"></a>\n        <a class="show-ownership tool-ownership tool-img" title="Ownership"></a>\n        <a class="show-settings tool-settings tool-img" title="Settings"></a>\n    </div>\n</div>\n<div id="milestone-view-container"></div>\n<!--Added class resible to show splitter between inner containers-->\n<div id="gantt-view-container" class="resizable"></div>\n<div id="info-bar-view-container"></div>\n<div id="task-info-view-container"></div>';
+__p += '\n    </div>\n    <div class="tool-bar">\n        <a class="tool-img tool-zoom-out" title="Zoom Out"></a>\n        <label id="zoom-value" class="zoom-value">100%</label>\n        <a class="tool-img tool-zoom-in" title="Zoom In"></a>\n        <a class="tool-img tool-fit" title="Fit To Screen"></a>\n        <a class="tool-img tool-undo" title="Undo" id="undo" disabled="disabled"></a>\n        <a class="tool-img tool-redo" title="Redo" id="redo" disabled="disabled"></a>\n        <a class="tool-img tool-price" title="Project Price" id="price"></a>\n        <a class="edit-milestone tool-img tool-milestone" title="Milestones"></a>\n        <a class="tool-critical-way tool-img" title="Critical Path"></a>\n        <a class="show-attachments tool-attachment tool-img" title="Attachments"></a>\n        <a class="show-resources tool-resources tool-img" title="Resources"></a>\n        <a class="show-ownership tool-ownership tool-img" title="Ownership"></a>\n        <a class="show-settings tool-settings tool-img" title="Settings"></a>\n    </div>\n</div>\n<div id="milestone-view-container"></div>\n<!--Added class resible to show splitter between inner containers-->\n<div id="gantt-view-container" class="resizable"></div>\n<div id="info-bar-view-container"></div>\n<div id="task-info-view-container"></div>';
 
 }
 return __p
@@ -440,13 +491,13 @@ window["JST"]["project:projectInfoMobile"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '';
 with (obj) {
-__p += '<div class="project-info-mobile">\n    <h3>Single Project Main Page</h3><br>\n    <p>Description: ' +
-((__t = ( project.description )) == null ? '' : __t) +
-'</p><br>\n    <p>Author: ' +
+__p += '<div class="mobile-project-info-header">\n    <span class="mobile-project-info-header-title">Project Info</span>\n</div>\n\n<ul class="project-info-mobile">\n    <span class="project-info-mobile-item">Author: ' +
 ((__t = ( project.author )) == null ? '' : __t) +
-'</p><br>\n    <p>StartDate: ' +
-((__t = ( project.startDate )) == null ? '' : __t) +
-'</p><br>\n</div>';
+'</span>\n    <span class="project-info-mobile-item">StartDate: ' +
+((__t = ( moment.unix(project.startDate).format('DD/MM/YY HH:mm') )) == null ? '' : __t) +
+'</span>\n    <span class="project-info-mobile-item">Description:</span>\n    <span class="project-info-mobile-block"> ' +
+((__t = ( project.description )) == null ? '' : __t) +
+'</span>\n</ul>\n';
 
 }
 return __p
@@ -458,7 +509,7 @@ window["JST"]["project:projectMobile"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '';
 with (obj) {
-__p += '<nav id="menu" class="menu-mobile slideout-menu slideout-menu-left">\n\n    <header class="mobile-menu-header">\n        <span class="mobile-menu-header-title">Project Menu</span>\n    </header>\n\n    <div class="mobile-menu-section">\n        <ul class="mobile-menu-section-list">\n            <li class="mobile-menu-section-item"><a class="back-to-projects">List of Projects</a></li>\n            <li class="mobile-menu-section-item"><a class="show-tasks-list">Tasks</a></li>\n            <li class="mobile-menu-section-item"><a class="show-ganttchart\'">Gantt Chart</a></li>\n            <li class="mobile-menu-section-item"><a class="show-milestones">Milestones</a></li>\n            <li class="mobile-menu-section-item"><a class="show-resources">Resources</a></li>\n            <li class="mobile-menu-section-item"><a class="sign-out-button">Sign Out</a></li>\n        </ul>\n    </div>\n</nav>\n\n<main id="panel" class="panel slideout-panel slideout-panel-left">\n    <header class="panel-header">\n        <button class="toggle-button">&#9776;</button>\n        <span class="mobile-panel-header-title"> ' +
+__p += '<nav id="menu" class="menu-mobile slideout-menu slideout-menu-left">\n\n    <header class="mobile-menu-header">\n        <span class="mobile-menu-header-title">Project Menu</span>\n    </header>\n\n    <div class="mobile-menu-section">\n        <ul class="mobile-menu-section-list">\n            <li class="mobile-menu-section-item"><a class="back-to-projects">List of Projects</a></li>\n            <li class="mobile-menu-section-item"><a class="show-tasks-list">Tasks</a></li>\n            <li class="mobile-menu-section-item"><a class="show-ganttchart">Gantt Chart</a></li>\n            <li class="mobile-menu-section-item"><a class="show-milestones">Milestones</a></li>\n            <li class="mobile-menu-section-item"><a class="show-resources">Resources</a></li>\n            <li class="mobile-menu-section-item"><a class="sign-out-button">Sign Out</a></li>\n        </ul>\n    </div>\n</nav>\n\n<main id="panel" class="panel slideout-panel slideout-panel-left">\n    <header class="panel-header">\n        <button class="toggle-button">&#9776;</button>\n        <span class="mobile-panel-header-title"> ' +
 ((__t = ( project.name )) == null ? '' : __t) +
 '</span>\n    </header>\n    <!--This empty CONTENT div below is for rendering our views like: ProjectInfo, TasksList, Milestones, Resources-->\n    <div class="mobile-project-content"></div>\n</main>\n\n';
 
@@ -497,23 +548,48 @@ return __p
 (function() {
 window["JST"] = window["JST"] || {};
 
+window["JST"]["project:resourcesMobile"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __j = Array.prototype.join;
+function print() { __p += __j.call(arguments, '') }
+with (obj) {
+__p += '<div class="mobile-resource-header">\n    <span class="mobile-resource-header-title">Resources</span>\n</div>\n\n<div class="mobile-resource-container">\n    ';
+ for(var i = 0; i < resources.length; i++) { ;
+__p += '\n    <li class="resources-list-item" data-id="' +
+((__t = ( resources[i].resourceId )) == null ? '' : __t) +
+'">\n        <a class="resources-name"> ' +
+((__t = ( resources[i].resourceName )) == null ? '' : __t) +
+' </a>\n        <a class="resources-name"> Rate: ' +
+((__t = ( resources[i].rate )) == null ? '' : __t) +
+' ($) </a>\n        <a class="resources-name"> ' +
+((__t = ( resources[i].type )) == null ? '' : __t) +
+' </a>\n        ';
+ } ;
+__p += '\n    </li>\n</div>\n';
+
+}
+return __p
+}})();
+(function() {
+window["JST"] = window["JST"] || {};
+
 window["JST"]["project:settings"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '';
 with (obj) {
-__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <div class="left">Settings</div>\n            <div class="center"></div>\n           <div class="right"><input class="close-btn form-button cancel-button" type="button" value="" > </div>\n        </div>\n        <div class="tabs">\n            <div class="tabs-menu ">\n                <a class="tab-link tab-general w--current">General</a>\n                <a class="tab-link tab-time-settings">Time Settings</a>\n            </div>\n            <div class="settings-container">\n                <div class="tab-container">\n                    <div class="tab-container general-content show-content">\n                        <label class="form-label">Name:</label>\n                        <input class="form-input-text name" maxlength="256" value="' +
+__p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div class="form-title">\n            <div class="left">Settings</div>\n            <div class="center"></div>\n           <div class="right"><input class="close-btn form-button cancel-button" type="button" value="" > </div>\n        </div>\n        <div class="tabs">\n            <div class="tabs-menu ">\n                <a class="tab-link tab-general w--current">General</a>\n                <a class="tab-link tab-time-settings">Time Settings</a>\n            </div>\n            <div class="settings-container">\n                <div class="tab-container">\n                    <div class="tab-container general-content show-content">\n                        <label class="form-label">Name:</label>\n                        <input class="form-input-text form-control name" maxlength="256" value="' +
 ((__t = ( model.name )) == null ? '' : __t) +
-'" placeholder="Project Name" type="text">\n                        <label class="form-label">Author:</label>\n                        <input class="form-input-text author" maxlength="256" value="' +
+'" name="name" placeholder="Project Name" type="text">\n                        <!--<div class="form-error name-error"></div>-->\n                        <label class="form-label">Author:</label>\n                        <input class="form-input-text form-control author" maxlength="256" value="' +
 ((__t = ( model.author )) == null ? '' : __t) +
-'" placeholder="Author" type="text">\n                        <label class="form-label description-label">Description:</label>\n                        <textarea class="form-input-description description" maxlength="5000" placeholder="Project Description">' +
+'" name="author" placeholder="Author" type="text">\n                        <!--<div class="form-error author-error"></div>-->\n                        <label class="form-label description-label">Description:</label>\n                        <textarea class="form-input-description form-control description" maxlength="5000" name="description" placeholder="Project Description">' +
 ((__t = ( model.description )) == null ? '' : __t) +
-'</textarea>\n\n                       <div class="add-project-icon ">\n                           <label class="form-label pr-icon">Project icon:</label>\n                        <div class="add-attachment" >\n                            <div class="form-input-file input-project-icon">\n                                <label>\n                                    <input id="add-attachment-file" type="file" name="file" accept="image/*" />\n                                    <img class="add-img" src="/images/add.svg">\n                                    <span>Add img</span>\n                                </label>\n                            </div>\n                        </div>\n\n                       </div>\n                    </div>\n                    <div class="tab-container settings-content hide-content">\n                        <label class="form-label">Start Date:</label>\n                        <input class="form-input-text start-date" value="' +
+'</textarea>\n                        <!--<div class="form-error description-error"></div>-->\n\n                        <div class="add-project-icon ">\n                           <label class="form-label pr-icon">Project icon:</label>\n                        <div class="add-attachment" >\n                            <div class="form-input-file input-project-icon">\n                                <label>\n                                    <input id="add-attachment-file" type="file" name="file" accept="image/*" />\n                                    <img class="add-img" src="/images/add.svg">\n                                    <span>Add img</span>\n                                </label>\n                            </div>\n                        </div>\n\n                       </div>\n                    </div>\n                    <div class="tab-container settings-content hide-content">\n                        <label class="form-label">Start Date:</label>\n                        <input class="form-input-text form-control start-date" value="' +
 ((__t = ( moment.unix(+model.startDate).format('YYYY-MM-DD'))) == null ? '' : __t) +
-'" placeholder="Project Start Date" type="date">\n                        <label class="form-label day-start-label">Working Day Start:</label>\n                        <input class="form-input-text working-day-start" value="' +
+'"  name="startDate" placeholder="Project Start Date" type="date">\n                        <!--<div class="form-error startDate-error"></div>-->\n                        <label class="form-label day-start-label">Working Day Start:</label>\n                        <input class="form-input-text form-control working-day-start" value="' +
 ((__t = ( moment.duration(+settings.dayStart, 'seconds').asHours() )) == null ? '' : __t) +
-'" placeholder="Working Day Start" type="number" min="0" max="24">\n                        <label class="form-label">Hours Per Day:</label>\n                        <input class="form-input-text day-duration" value="' +
+'" name="dayStart" placeholder="Working Day Start" type="number" min="0" max="24">\n                        <!--<div class="form-error dayStart-error"></div>-->\n                        <label class="form-label">Hours Per Day:</label>\n                        <input class="form-input-text form-control day-duration" value="' +
 ((__t = ( moment.duration(+settings.dayDuration, 'seconds').asHours() )) == null ? '' : __t) +
-'" placeholder="Working Hours Per Day" type="number" min="0" max="24">\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class="settings-form-bottom">\n            <input class="form-button ok-button" type="button" value="ok">\n            <input class="form-button cancel-button" type="button" value="cancel">\n        </div>\n    </form>\n</div>\n\n\n\n';
+'" name="dayDuration" placeholder="Working Hours Per Day" type="number" min="0" max="24">\n                        <!--<div class="form-error dayDuration-error"></div>-->\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class="settings-form-bottom">\n            <input class="form-button ok-button" type="button" value="ok">\n            <input class="form-button cancel-button" type="button" value="cancel">\n        </div>\n    </form>\n</div>\n\n\n\n';
 
 }
 return __p
@@ -566,7 +642,7 @@ __p += '<div class="form-wrapper">\n    <form class="main-form">\n        <div c
 __p += '\n                        ';
  for(var i = 0; i < resources.length; i++) { ;
 __p += '\n                        ';
-    if(task.resource === resources[i].resourceId) { ;
+    if(task.resource === resources[i].resourceName) { ;
 __p += '\n                        ';
          resourceName = resources[i].resourceName; ;
 __p += '\n                        ';
@@ -623,7 +699,7 @@ __p += '\n                                    <div class="attachment-name" id="r
 ((__t = ( str )) == null ? '' : __t) +
 '</div>\n                                </a>\n                            </div>\n                            ';
  } ;
-__p += '\n                        </div>\n                    </div>\n                </div>\n\n            </div>\n        </div>\n        <div class="task-form-bottom">\n            <input type="button" id="delete-task" class="form-button delete-task ';
+__p += '\n                        </div>\n                    </div>\n                </div>\n\n            </div>\n        </div>\n        <div class="task-form-bottom">\n            <button type="button" id="delete-task" class="form-button delete-task ';
  if (deleteTask === true) { ;
 __p += ' hide-content ';
  } ;
@@ -631,7 +707,7 @@ __p += ' ';
  if (deleteTask === false) { ;
 __p += ' show-content ';
  } ;
-__p += '" value="delete">\n            <input type="button" class="form-button ok-button" value="ok">\n            <input type="button" class="form-button cancel-button" value="cancel">\n        </div>\n    </form>\n</div>\n';
+__p += '">delete</button>\n            <input type="button" class="form-button ok-button" value="ok">\n            <input type="button" class="form-button cancel-button" value="cancel">\n        </div>\n    </form>\n</div>\n';
 
 }
 return __p
@@ -658,6 +734,26 @@ __p += '<div class="info-bar-item">\n    <div class="info-bar-label">' +
 '</div>\n</div>\n<div class="info-bar-item">\n    <div class="info-bar-label">Depends On Tasks: ' +
 ((__t = ( dependsOn )) == null ? '' : __t) +
 '</div>\n</div>';
+
+}
+return __p
+}})();
+(function() {
+window["JST"] = window["JST"] || {};
+
+window["JST"]["project:taskInfoMobile"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '';
+with (obj) {
+__p += '<div class="mobile-task-info-header">\n    <span class="mobile-task-info-header-title">Task Info</span>\n</div>\n\n<ul class="task-info-mobile">\n    <span class="task-info-mobile-item">Name: ' +
+((__t = ( task.name )) == null ? '' : __t) +
+'</span>\n    <span class="task-info-mobile-item">Resource: ' +
+((__t = ( task.resource )) == null ? '' : __t) +
+'</span>\n    <span class="task-info-mobile-item">StartDate: ' +
+((__t = ( moment.unix(task.startDate).format('DD/MM/YY HH:mm') )) == null ? '' : __t) +
+'</span>\n    <span class="task-info-mobile-item">Description:</span>\n    <span class="task-info-mobile-block"> ' +
+((__t = ( task.description )) == null ? '' : __t) +
+'</span>\n</ul>\n';
 
 }
 return __p
@@ -740,11 +836,11 @@ with (obj) {
 __p += '\n<div class="mobile-tasks-header">\n    <span class="mobile-tasks-header-title">Tasks List</span>\n</div>\n\n<ul class="mobile-tasks-list">\n    ';
  for(var i = 0; i < tasks.length; i++) {;
 __p += '\n    <li class="tasks-list-item" data-id="' +
-((__t = ( tasks[i].id )) == null ? '' : __t) +
+((__t = ( tasks[i].taskId )) == null ? '' : __t) +
 '">\n        <a class="tasks-name"> ' +
 ((__t = ( tasks[i].name )) == null ? '' : __t) +
 ' </a>\n        <a class="tasks-link icon-open-mobile" title="Open" data-id="' +
-((__t = ( tasks[i].id )) == null ? '' : __t) +
+((__t = ( tasks[i].taskId )) == null ? '' : __t) +
 '"></a>\n    </li>\n    ';
  } ;
 __p += '\n</ul>';

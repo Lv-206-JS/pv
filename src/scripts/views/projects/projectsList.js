@@ -14,7 +14,7 @@ define([
             'click .projects-list-item': 'onClick',
             'click .icon-open': 'onSelectProject',
             'click .icon-edit': 'onEditProject',
-            'click .icon-remove': 'onDeleteProject'
+            'click .icon-remove': 'onDeleteConfirm'
         },
 
         initialize: function (options) {
@@ -25,7 +25,8 @@ define([
 
         render: function render() {
             var projects = this.collection.toJSON();
-            this.$el.html(this.template({projects: projects, activeId: this.activeId}));
+            this.$el.html(this.template({
+                projects: projects, activeId: this.activeId}));
 
             return this;
         },

@@ -18,8 +18,9 @@ define([
     'timeLine',
     'moment',
     'TaskAlgorithm',
-    'undoRedoAlgorithm'
-], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, ProjectPriceView, TimeLineLib, Moment, TaskAlgorithm, UndoRedoAlgorithm) {
+    'undoRedoAlgorithm',
+    'mousetrap'
+], function (Backbone, JST, Model, MainMenuView, MilestoneView, GanttContainerView, TasksListView, TaskView, GanttChartView, InfoBarView, AttachmentsView, SettingsView, MilestoneEditView, OwnershipView, ResourcesView, ProjectPriceView, TimeLineLib, Moment, TaskAlgorithm, UndoRedoAlgorithm, Mousetrap) {
 
     'use strict';
 
@@ -53,6 +54,7 @@ define([
             this.moment = Moment;
             this.flagSchedule = true;
             this.undoRedo = new UndoRedoAlgorithm();
+            this.bindMainMousetrap();
         },
 
         unfocusTaskEditButton: function () {
@@ -67,7 +69,8 @@ define([
 
         render: function () {
             this.$el.html(this.template({
-                page: this.page
+                page: this.page,
+                icon: this.model.get('settings').icon
             }));
             return this;
         },
@@ -293,6 +296,10 @@ define([
             this.flagSchedule = false;
         },
 
+        updateLogo: function (icon) {
+            this.$el.find('.project-logo').attr("src", icon);
+        },
+
         onChange: function () {
             if (this.flagSchedule) {
                 this.startDateSchedule();
@@ -307,9 +314,39 @@ define([
                 this.renderViews();
                 Backbone.Events.trigger('onProjectNameReceived', this.model.get('name'));
                 this.updateProjectName(this.model.get('name'));
+                this.updateLogo(this.model.get('settings').icon);
             }
 
+        },
+
+
+        bindMainMousetrap: function bindMainMousetrap() {
+            var me = this;
+            Mousetrap.bind(['ctrl+z', 'meta+z'], function (event) {
+                if ($(".show-content").length == 0) {
+                    if ($(".main-project-view").length > 0) {
+                        me.setUndo();
+                    }
+                }
+            });
+            Mousetrap.bind(['ctrl+y', 'meta+y'], function (event) {
+                if ($(".show-content").length == 0) {
+                    if ($(".main-project-view").length > 0) {
+                        me.setRedo();
+                    }
+                }
+            });
+            Mousetrap.unbind('n');
+            Mousetrap.bind('n', function (event) {
+                if ($(".show-content").length == 0) {
+                    if ($(".main-project-view").length > 0) {
+                        var tasks = me.model.get('tasks');
+                        me.showTaskAddPopup(tasks);
+                    }
+                }
+            });
         }
+
     });
 
     return ProjectView;

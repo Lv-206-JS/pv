@@ -9,12 +9,18 @@
   background-color: #fff;
   box-shadow: $box-shadow;
 }
+.project-name-and-icon{
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
 .show-project-name {
   display: inline-block;
   padding: 10px 0px;
   font-weight: 700;
   color: $text-blue;
+  }
 }
 
 .tool-bar {

@@ -16,6 +16,9 @@ requirejs.config({
         undoRedoAlgorithm: '/src/scripts/math/undoRedoAlgorithm',
         bowser: '/bower_components/bowser/src/bowser',
         CriticalPath: '/src/scripts/math/criticalPath'
+        bowser : '/bower_components/bowser/src/bowser',
+        CriticalPath: '/src/scripts/math/criticalPath',
+        mousetrap: '/node_modules/mousetrap/mousetrap.min'
     },
     baseUrl: '/src/scripts'
 });

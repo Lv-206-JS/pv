@@ -13,13 +13,13 @@ $white: #fff;
   .mobile-form-title {
     width: 100%;
     height: 40%;
-    padding: 0 50px 0 50px;
+    padding: 0 20px 0 20px;
     margin-bottom: 50px;
     background: linear-gradient(to right, #459bd5 0%, #6ed4c0 100%);
     text-align: center;
     font-family: "Roboto", serif;
     font-weight: 600;
-    font-size: 6rem;
+    font-size: 2rem;
     color: white;
     text-shadow: 4px 3px 10px rgba(150, 150, 150, 1);
     display: flex;
@@ -37,32 +37,33 @@ $white: #fff;
 
     .mobile-form-input-text {
       width: 90%;
-      height: 200px;
-      font-size: 4rem;
+      height: 70px;
+      font-size: 1.5rem;
       padding: 0 20px 0 20px;
-
-      &:last-of-type {
-        margin-bottom: 50px;
-      }
+    }
+    .mobile-form-error {
+      color: red;
+      height: 25px;
+      font-size: 0.9rem;
     }
   }
 
   .mobile-login-form-bottom {
     width: 90%;
-    height: 300px;
+    height: 160px;
     display: flex;
     flex-direction: column;
 
     .mobile-form-button {
       width: 100%;
-      height: 150px;
+      height: 100px;
       color: $white;
       border: 1px solid transparent;
       outline: none;
       background-color: $light-blue;
       transition: background-color 500ms ease;
       font-weight: 700;
-      font-size: 4rem;
+      font-size: 1.5rem;
       text-transform: uppercase;
 
       &:first-child {

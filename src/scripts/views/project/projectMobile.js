@@ -9,12 +9,13 @@ define([
     'models/Project',
     './projectInfoMobile',
     './tasksListMobile',
-    './ganttChartMobile',
+    './ganttMobile',
     './milestoneMobile',
-    './resourcesMobile'
+    './resourcesMobile',
+    './singleTaskInfoMobile'
 
 
-], function (Backbone, JST, Slideout, Model, ProjectInfoMobileView, TaskListMobileView, ChartMobileView, MilestoneMobileView, ResourceMobileView) {
+], function (Backbone, JST, Slideout, Model, ProjectInfoMobileView, TaskListMobileView, ChartMobileView, MilestoneMobileView, ResourceMobileView, TaskInfoMobileView) {
 
     'use strict';
 
@@ -28,7 +29,8 @@ define([
             'click .show-ganttchart': 'showGanttchart',
             'click .show-milestones': 'showMilestones',
             'click .show-resources': 'showResources',
-            'click .sign-out-button': 'onSignOut'
+            'click .sign-out-button': 'onSignOut',
+            'click .tasks-list-item': 'showTaskInfo'
         },
 
         initialize: function (projectId) {
@@ -48,7 +50,7 @@ define([
             this.slideout = new Slideout({
                 'panel': document.getElementById('panel'),
                 'menu': document.getElementById('menu'),
-                'padding': 600,
+                'padding': 256,
                 'tolerance': 70
             });
 
@@ -82,11 +84,14 @@ define([
             this.slideout.toggle();
 
             this.$el.find('.mobile-project-content').html(this.taskListMobileView.render().$el);
+            this.listenTo(this.taskListMobileView, 'showTaskInfo', this.showTaskInfo);
+
         },
 
         showGanttchart: function showGanttchart() {
             this.chartMobileView = new ChartMobileView({
-                model: this.model
+                model: this.model,
+                el: this.$el.find('#gantt-view-container')[0]
             });
             this.slideout.toggle();
 
@@ -116,6 +121,17 @@ define([
                 PV.userModel.clear().set(this.userModel.defaults);
                 PV.router.navigate('/', {trigger: true});
             }.bind(this)});
+        },
+
+        showTaskInfo: function showTaskInfo(task) {
+            this.taskInfoMobileView = new TaskInfoMobileView({
+                model: this.model,
+                task: task
+            });
+            // this.slideout.toggle();
+
+            this.$el.find('.mobile-project-content').html(this.taskInfoMobileView.render().$el);
+
         }
     });
 
