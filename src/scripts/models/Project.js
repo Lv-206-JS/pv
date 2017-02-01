@@ -22,9 +22,17 @@ define([
                 rangeLength: [0, 45],
                 msg: 'Description is expected to be longer!'
             }],
+            author: {
+                required: true,
+                msg: 'Please, fill in Author field.'
+            },
             'settings.dayStart': {
                 range: [0, 86400],
                 msg: 'Choose start of the working day between 0 - 24!'
+            },
+            'settings.dayDuration': {
+                range: [0, 86400],
+                msg: 'Choose duration between 0 - 8!'
             }
 
 
