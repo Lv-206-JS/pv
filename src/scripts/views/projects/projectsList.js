@@ -25,7 +25,8 @@ define([
 
         render: function render() {
             var projects = this.collection.toJSON();
-            this.$el.html(this.template({projects: projects, activeId: this.activeId}));
+            this.$el.html(this.template({
+                projects: projects, activeId: this.activeId}));
 
             return this;
         },

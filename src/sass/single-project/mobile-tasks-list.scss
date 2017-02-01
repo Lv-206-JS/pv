@@ -6,20 +6,18 @@
   align-items: center;
   color: #fff;
   font-family: "Roboto", serif;
-  font-size: 3rem;
-  height: 100vh;
-  overflow-y: scroll;
+  font-size: 1.2rem;
 
   .mobile-tasks-header {
     width: 100%;
-    height: 100px;
+    height: 44px;
     background-color: #5499c7;
     display: flex;
     justify-content: center;
     align-items: center;
 
     .mobile-tasks-header-title {
-      font-size: 4rem;
+      font-size: 2rem;
     }
   }
 
@@ -29,14 +27,13 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    overflow-x: hidden;
     overflow-y: scroll;
 
     .tasks-list-item {
       width: 100%;
-      height: 150px;
+      height: 60px;
       color: black;
-      padding: 0 50px 0 50px;
+      padding: 0 20px 0 20px;
       border-bottom: 1px solid darkgrey;
       display: flex;
       flex-direction: row;
@@ -51,6 +48,5 @@
         justify-content: center;
       }
     }
-
   }
 }
